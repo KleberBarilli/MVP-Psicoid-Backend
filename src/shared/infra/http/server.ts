@@ -2,8 +2,10 @@ import 'dotenv/config';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'express-async-errors';
-import AppError from '@shared/errors/AppError';
+import mongoose from '../mongoose';
+import AppError from '../../errors/AppError';
 
+mongoose();
 const app = express();
 
 app.use(cors);
