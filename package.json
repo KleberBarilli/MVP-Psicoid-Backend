@@ -1,6 +1,6 @@
 {
   "name": "psicoid-backend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "repository": "https://github.com/Digital-Inspires/psicoid-backend.git",
   "author": "kleberbarilli <kleber.barilli73@gmail.com>",
