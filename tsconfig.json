@@ -3,23 +3,12 @@
 	  "target": "es5",
 	  "module": "commonjs",
 	  "lib": ["es6"],
-	  "allowJs": false,
+	  "allowJs": true,
 	  "outDir": "build",
 	  "strict": true,
 	  "noImplicitAny": true,
 	  "strictPropertyInitialization": false,
 	  "baseUrl": "./",
-	  "paths": {
-		"@config/*": [
-		  "src/config/*"
-		],
-		"@modules/*": [
-		  "src/modules/*"
-		],
-		"@shared/*": [
-		  "src/shared/*"
-		]
-	  },
 	  "typeRoots": [
 		"@types",
 		"./node_modules/@types"
