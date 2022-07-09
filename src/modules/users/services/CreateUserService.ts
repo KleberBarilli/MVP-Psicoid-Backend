@@ -1,4 +1,4 @@
-import AppError from '@shared/errors/AppError';
+import AppError from '../../../shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
 import { ICreateUser } from '../domain/models/ICreateUser';
 import { IUser } from '../domain/models/IUser';
@@ -9,7 +9,7 @@ import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
 export default class CreateUserService {
 	constructor(
 		@inject('UsersRepository') private usersRepository: IUsersRepository,
-		@inject('HashProvider')
+		//@inject('HashProvider')
 		private hashProvider: IHashProvider,
 	) {}
 	public async execute({
@@ -23,12 +23,12 @@ export default class CreateUserService {
 			throw new AppError('Email already exist');
 		}
 
-		const hashedPassword = await this.hashProvider.generateHash(password);
+		//c; //onst hashedPassword = await this.hashProvider.generateHash(password);
 
 		const user = await this.usersRepository.create({
 			name,
 			email,
-			password: hashedPassword,
+			password,
 		});
 
 		return user;

@@ -1,19 +1,14 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 import express, { Request, Response, NextFunction } from 'express';
-import cors from 'cors';
 import 'express-async-errors';
-import morgan from 'morgan';
-
-import mongoose from '../mongoose';
 import routes from './routes';
+import cors from 'cors';
 import '../../container';
 import AppError from '../../errors/AppError';
 
-mongoose();
 const app = express();
 
-app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 app.use(routes);
@@ -33,4 +28,5 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 
 app.listen(process.env.PORT, () => {
 	console.log(`Rodando na porta ${process.env.PORT}`);
+	console.log(`Ambiente ${process.env.NODE_ENV}`);
 });
