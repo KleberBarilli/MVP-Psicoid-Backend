@@ -1,58 +1,24 @@
 import { ICreateUser } from '../../../domain/models/ICreateUser';
-import { Model } from 'mongoose';
+import { IUserCreated } from '../../../domain/models/IUserCreated';
 import { IUsersRepository } from '../../../domain/repositories/IUsersRepository';
-import { User } from '../schemas/User';
-
+import { UsersModel } from '../schemas/User';
 export default class UsersRepository implements IUsersRepository {
-	private model;
+	private usersRepository: IUsersRepository;
 	constructor() {
-		this.model = User;
+		this.usersRepository = UsersModel;
 	}
 
-	public async create({ name, email, password }: ICreateUser): Promise<any> {
-		const user = this.model.create({ name, email, password });
-
-		await this.model.save(user);
-
-		return user;
-	}
-
-	public async save(user: User): Promise<User> {
-		await this.model.save(user);
-
-		return user;
-	}
-
-	public async findByName(name: string): Promise<User | undefined> {
-		const user = await this.model.findOne({
-			where: {
-				name,
-			},
+	public async create({
+		name,
+		email,
+		password,
+	}: ICreateUser): Promise<IUserCreated> {
+		const user = await this.usersRepository.create({
+			name,
+			email,
+			password,
 		});
+
 		return user;
-	}
-
-	public async findById(id: string): Promise<User | undefined> {
-		const user = await this.model.findOne({
-			where: {
-				id,
-			},
-		});
-		return user;
-	}
-
-	public async findByEmail(email: string): Promise<User | undefined> {
-		const user = await this.model.findOne({
-			where: {
-				email,
-			},
-		});
-		return user;
-	}
-
-	public async findAll(): Promise<User[]> {
-		const users = await this.model.find();
-
-		return users;
 	}
 }
