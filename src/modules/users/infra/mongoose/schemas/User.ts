@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { IUser } from '../../../domain/models/IUser';
 
-const userSchema = new Schema<IUser>(
+export const UserSchema = new Schema<IUser>(
 	{
 		name: {
 			type: String,
@@ -13,7 +13,7 @@ const userSchema = new Schema<IUser>(
 		},
 		password: {
 			type: String,
-			required: true,
+			select: false,
 		},
 		avatar: {
 			type: String,
@@ -23,5 +23,10 @@ const userSchema = new Schema<IUser>(
 		timestamps: true,
 	},
 );
+UserSchema.methods.toJSON = function () {
+	const obj = this.toObject();
+	delete obj.password;
+	return obj;
+};
 
-export const User = model<IUser>('User', userSchema);
+export const UsersModel = model('User', UserSchema);

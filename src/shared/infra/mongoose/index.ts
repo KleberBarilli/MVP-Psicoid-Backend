@@ -2,7 +2,9 @@ import mongoose from 'mongoose';
 import AppError from '../../errors/AppError';
 
 export default function connectToDatabase() {
-	mongoose.connect(process.env.MONGODB_URI || '');
+	mongoose.connect(
+		'mongodb+srv://DI-Tech:fPRzgywD7byLn9bQ@digital-inspires-sa-eas.rhv3i.mongodb.net/psicoID_local',
+	);
 }
 
 const db = mongoose.connection;
