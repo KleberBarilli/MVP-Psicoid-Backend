@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import CreateUserService from '../CreateUserService';
 import FakeUsersRepository from '../../domain/repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
+import AppError from '../../../../shared/errors/AppError';
 
 let fakeUsersRepository: FakeUsersRepository;
 let createUserService: CreateUserService;
@@ -24,5 +25,20 @@ describe('CreateUser', () => {
 		});
 
 		expect(user).toHaveProperty('_id');
+	});
+
+	it('Should not be able to create an user with existing email', async () => {
+		await createUserService.execute({
+			name: 'anakin',
+			email: 'darthvader@email.com',
+			password: '123456789',
+		});
+		expect(
+			createUserService.execute({
+				name: 'Darth vader',
+				email: 'darthvader@email.com',
+				password: '123456',
+			}),
+		).rejects.toBeInstanceOf(AppError);
 	});
 });
