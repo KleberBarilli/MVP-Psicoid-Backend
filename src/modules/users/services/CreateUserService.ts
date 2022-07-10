@@ -17,6 +17,10 @@ export default class CreateUserService {
 		email,
 		password,
 	}: ICreateUser): Promise<IUserCreated> {
+		const userExists = await this.usersRepository.findByEmail(email);
+		if (userExists) {
+			throw new AppError('User already exists');
+		}
 		const hashedPassword = await this.hashProvider.generateHash(
 			password || '',
 		);
