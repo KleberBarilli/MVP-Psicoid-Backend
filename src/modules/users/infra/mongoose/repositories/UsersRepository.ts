@@ -26,4 +26,12 @@ export default class UsersRepository implements IUsersRepository {
 	public async findByEmail(email: string): Promise<IUser | undefined | null> {
 		return await this.usersRepository.findOne({ email });
 	}
+
+	public async findById(id: string): Promise<IUser | undefined | null> {
+		return await this.usersRepository.findById(id);
+	}
+
+	public async findAll(): Promise<IUser[] | null> {
+		return await this.usersRepository.find();
+	}
 }
