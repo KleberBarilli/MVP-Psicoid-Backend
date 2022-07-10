@@ -23,12 +23,18 @@ export default class UsersRepository implements IUsersRepository {
 		return user;
 	}
 
-	public async findByEmail(email: string): Promise<IUser | undefined | null> {
-		return await this.usersRepository.findOne({ email });
+	public async findMe(
+		email: string,
+		param: string | null,
+	): Promise<IUser | undefined | null> {
+		return await this.usersRepository.findOne({ email }).select(param);
 	}
 
 	public async findById(id: string): Promise<IUser | undefined | null> {
 		return await this.usersRepository.findById(id);
+	}
+	public async findOne(query: any): Promise<IUser | undefined | null> {
+		return await this.usersRepository.findOne(query);
 	}
 
 	public async findAll(): Promise<IUser[] | null> {

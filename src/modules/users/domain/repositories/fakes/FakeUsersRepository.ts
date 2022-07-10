@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
 import { ICreateUser } from '../../models/ICreateUser';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
-import { UserSchema, UsersModel } from '../../../infra/mongoose/schemas/User';
+import { UsersModel } from '../../../infra/mongoose/schemas/User';
 import { IUser } from '../../models/IUser';
 
 export default class FakeUsersRepository implements IUsersRepository {
@@ -34,22 +33,31 @@ export default class FakeUsersRepository implements IUsersRepository {
 	// 	return user;
 	// }
 
-	// public async findByName(name: string): Promise<User | undefined> {
-	// 	const user = this.users.find(user => user.name === name);
-	// 	return user;
-	// }
+	public async findOne(query: any): Promise<IUser | undefined> {
+		const user = this.users.find(user => query);
+		return user;
+	}
+	public async findByEmail(email: string): Promise<IUser | undefined> {
+		const user = this.users.find(user => user.email === email);
 
-	// public async findById(id: string): Promise<User | undefined> {
-	// 	const user = this.users.find(user => user.id === id);
-	// 	return user;
-	// }
+		return user;
+	}
 
-	public async findByEmail(email: string): Promise<IUser | undefined | null> {
+	public async findById(id: string): Promise<IUser | undefined> {
+		const user = this.users.find(user => user._id === id);
+		return user;
+	}
+
+	public async findMe(
+		email: string,
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		param: string,
+	): Promise<IUser | undefined | null> {
 		const user = this.users.find(user => user.email === email);
 		return user;
 	}
 
-	// public async findAll(): Promise<IUser[] | null> {
-	// 	return null;
-	// }
+	public async findAll(): Promise<IUser[] | null> {
+		return null;
+	}
 }
