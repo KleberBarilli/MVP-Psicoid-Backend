@@ -10,9 +10,9 @@
 
 -   Express - v4.18.1
 
--   MongoDB -v6.4.4
+-   MongoDB
 
--   Mongoose
+-   Mongoose -v6.4.4
 
 ## 🚀 Exec
 
