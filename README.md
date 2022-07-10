@@ -10,7 +10,7 @@
 
 -   Express - v4.18.1
 
--   MongoDB
+-   MongoDB -v6.4.4
 
 -   Mongoose
 
