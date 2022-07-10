@@ -1,19 +1,16 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import CreateUserService from '../../../services/CreateUserService';
+import { validarCadastro } from '../../../validators/UsersValidators';
 
 export default class UsersController {
 	public async create(req: Request, res: Response): Promise<Response> {
-		const { name, email, password } = req.body;
-		const mail = email.toLowerCase();
+		req.body.email = req.body.email.toLowerCase();
 
+		const userValidated = await validarCadastro(req.body);
 		const createUser = container.resolve(CreateUserService);
-		const user = await createUser.execute({
-			name,
-			email: mail,
-			password,
-		});
+		const user = await createUser.execute(userValidated);
 
-		return res.json(user);
+		return res.json({ data: user, message: 'User Created' });
 	}
 }

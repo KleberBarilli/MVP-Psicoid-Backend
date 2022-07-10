@@ -17,7 +17,7 @@ export default class CreateUserService {
 		email,
 		password,
 	}: ICreateUser): Promise<IUserCreated> {
-		const userExists = await this.usersRepository.findOne(email);
+		const userExists = await this.usersRepository.findOne({ email });
 		if (userExists) {
 			throw new AppError('User already exists');
 		}
