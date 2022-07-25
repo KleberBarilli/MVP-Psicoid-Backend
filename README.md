@@ -1,6 +1,6 @@
 # PsicoID - Backend
 
-<img  src="https://digital-inspires-public.s3.amazonaws.com/images/stackmongoosenode.png">
+<img  src="https://digital-inspires-public.s3.amazonaws.com/images/stack.png">
 
 ### Stack
 
