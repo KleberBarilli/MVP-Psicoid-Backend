@@ -1,0 +1,13 @@
+version: '3' # versão do yaml
+
+services: # representam os containers
+  psicoid-express-docker-postgres-database: # nome do serviço
+    image: postgres # imagem que o docker irá se basear para criar o container
+    environment: # variáveis de ambiente
+      POSTGRES_PASSWORD: '1h9Ay4^5ILwM'
+    container_name: psicoid-api-postgres # nome do container
+
+    ports: # portas para acessar o container
+      - '5432:5432'
+    volumes: # onde serão armazenadas as informações do banco
+      - .docker/dbdata:/var/lib/postgresql/data
