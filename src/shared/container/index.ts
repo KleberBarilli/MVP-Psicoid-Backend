@@ -1,9 +1,9 @@
 import { container } from 'tsyringe';
-import { IUsersRepository } from '../../modules/users/domain/repositories/IUsersRepository';
-import UsersRepository from '../../modules/users/infra/mongoose/repositories/UsersRepository';
-import '../../modules/users/providers';
+import { IClientsRepository } from '../../modules/clients/domain/repositories/IClientsRepository';
+import ClientsRepository from '../../modules/clients/infra/prisma/repositories/ClientsRepository';
+import '../../modules/clients/providers';
 
-container.registerSingleton<IUsersRepository>(
-	'UsersRepository',
-	UsersRepository,
+container.registerSingleton<IClientsRepository>(
+	'ClientsRepository',
+	ClientsRepository,
 );

@@ -1,13 +1,28 @@
-version: '3' # versão do yaml
+version: '3'
 
-services: # representam os containers
-  artigo-nestjs-docker-postgres-database: # nome do serviço
-    image: postgres # imagem que o docker irá se basear para criar o container
-    environment: # variáveis de ambiente
-      POSTGRES_PASSWORD: 'postgres'
-    container_name: artigo-nestjs-docker-postgres-database # nome do container
+services:
+  app:
+    build: .
+    entrypoint: .docker/entrypoint.sh
+    container_name: psicoid-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - db
 
-    ports: # portas para acessar o container
-      - '5432:5432'
-    volumes: # onde serão armazenadas as informações do banco
+  db:
+    build: .docker/postgres
+    container_name: psicoid-db
+    image: postgres
+    restart: always
+    tty: true
+    ports:
+      - "5432:5432"
+    volumes:
       - .docker/dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=psicoid
