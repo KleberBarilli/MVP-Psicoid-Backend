@@ -32,6 +32,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.0.3",
+    "@types/uuid": "^8.3.4",
     "@types/yup": "^0.29.14",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
@@ -60,6 +61,7 @@
     "prisma": "^4.1.0",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.7.0",
+    "uuid": "^8.3.2",
     "yup": "^0.32.11"
   }
 }
