@@ -136,8 +136,8 @@ model IndividualIdentity {
 
 model Contact {
     id        String   @id @default(uuid()) @db.Uuid
-    telefone  String?
-    celular   String?
+    telephone String?
+    cellPhone String?  @map("cell_phone")
     email     String?
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()

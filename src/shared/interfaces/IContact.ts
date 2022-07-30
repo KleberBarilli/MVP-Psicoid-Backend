@@ -1,5 +1,5 @@
 export interface IContact {
-	telefone?: string;
-	celular?: string;
+	telephone?: string;
+	cellPhone?: string;
 	email?: string;
 }

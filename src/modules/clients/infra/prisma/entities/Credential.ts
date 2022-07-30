@@ -1,6 +1,6 @@
-import { Provider, Role } from '@prisma/client';
+import { Credential, Provider, Role } from '@prisma/client';
 
-export interface ICredential {
+export class CredentialEntity implements Credential {
 	id: string;
 	provider: Provider;
 	email: string;

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import CreateUserService from '../CreateUserService';
+import CreateUserService from '../CreateClientService';
 import FakeUsersRepository from '../../domain/repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
 import AppError from '../../../../shared/errors/AppError';

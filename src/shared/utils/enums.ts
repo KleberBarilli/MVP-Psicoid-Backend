@@ -27,3 +27,5 @@ export const BRAZIL_STATES = [
 	'SE',
 	'TO',
 ];
+
+export const ROLE_TYPE = ['CLIENT', 'PSYCHOLOGIST'];
