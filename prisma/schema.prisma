@@ -49,9 +49,9 @@ enum BrazilState {
 }
 
 enum Status {
-    APROVADO
-    EM_ANALISE
-    REPROVADO
+    APPROVED
+    UNDER_REVIEW
+    REPPROVED
 }
 
 enum PsychologistType {

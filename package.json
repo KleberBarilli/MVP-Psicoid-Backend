@@ -8,9 +8,14 @@
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir build --copy-files",
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "lint": "eslint . --ext .ts",
-    "lint-fix": "eslint . --ext .ts --fix",
-    "test": "jest"
+    "test": "jest",
+    "migrate:latest": "prisma migrate dev",
+    "migrate:rollback": "prisma migrate reset",
+    "migrate:make": "prisma migrate dev --name",
+    "migrate:make:only": "prisma migrate dev --create-only --name",
+    "migrate:updb": "prisma db push",
+    "prisma:seeds": "prisma db seed",
+    "prisma:studio": "prisma studio --port 5555"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.6",
