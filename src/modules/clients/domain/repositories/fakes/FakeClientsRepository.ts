@@ -1,38 +1,37 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ICreateClient } from '../../../domain/models/ICreateClient';
 import { IClientsRepository } from '../../repositories/IClientsRepository';
-import { ClientEntity } from '../../../infra/prisma/entities/Client';
 import { ICredential } from 'src/shared/interfaces/ICredential';
 import { IClient } from '../../models/IClient';
 import { IIdentity } from 'src/shared/interfaces/IIdentity';
 import { IContact } from 'src/shared/interfaces/IContact';
 import { IAddress } from 'src/shared/interfaces/IAddress';
+import { ClientEntity } from 'src/modules/clients/infra/prisma/entities/Client';
 
 export class ClientEntityFake {
 	id: string;
-	credential: ICredential;
-	identity: IIdentity;
-	contact: IContact;
-	address: IAddress;
+	credentialId: string;
+	individualIdentityId: string;
+	createdAt: Date;
+	updatedAt: Date;
 }
 //https://www.prisma.io/docs/guides/testing/unit-testing
-class FakeClientsRepository implements IClientsRepository {
+class FakeClientsRepository {
 	private clients: ClientEntityFake[] = [];
 
 	public async create({
-		credential,
-		identity,
-		contact,
-		address,
-	}: ICreateClient) {
+		credentialId,
+		individualIdentityId,
+		createdAt,
+		updatedAt,
+	}: ClientEntity) {
 		const client = new ClientEntityFake();
 
 		client.id = uuidv4();
-		client.credential = credential;
-		client.identity = identity;
-		client.contact = contact;
-		client.address = address;
-
+		client.credentialId = credentialId;
+		client.individualIdentityId = individualIdentityId;
+		client.createdAt = new Date();
+		client.updatedAt = new Date();
 		this.clients.push(client);
 
 		return client;

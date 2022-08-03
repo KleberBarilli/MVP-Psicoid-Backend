@@ -4,16 +4,16 @@ import FakeClientsRepository from '../../domain/repositories/fakes/FakeClientsRe
 import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
 import AppError from '../../../../shared/errors/AppError';
 
-let fakeUsersRepository: FakeClientsRepository;
+let fakeClientsRepository: FakeClientsRepository;
 let createClientService: CreateClientService;
 let fakeHashProvider: FakeHashProvider;
 
 describe('CreateClient', () => {
 	beforeEach(() => {
-		fakeUsersRepository = new FakeClientsRepository();
+		fakeClientsRepository = new FakeClientsRepository();
 		fakeHashProvider = new FakeHashProvider();
 		createClientService = new CreateClientService(
-			fakeUsersRepository,
+			fakeClientsRepository,
 			fakeHashProvider,
 		);
 	});
