@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import { ICreateClient } from '../domain/models/ICreateClient';
 import { IClientCreated } from '../domain/models/IClientCreated';
 import { IClientsRepository } from '../domain/repositories/IClientsRepository';
-import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
+import { IHashProvider } from '../../auth/providers/HashProvider/models/IHashProvider';
 
 @injectable()
 export default class CreateClientService {
