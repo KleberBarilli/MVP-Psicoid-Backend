@@ -6,6 +6,8 @@ import { validateIdentity } from '../../../../../shared/utils/validators/Identit
 import { container } from 'tsyringe';
 import CreateClientService from '../../../services/CreateClientService';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { ValidationError } from 'yup';
+import { sendBadRequest } from '../../../../../shared/errors/BadRequest';
 
 export default class ClientsController {
 	public async create(req: Request, res: Response): Promise<Response> {
@@ -40,6 +42,9 @@ export default class ClientsController {
 						error: 'Já existe um CPF igual cadastrado no sistema.',
 					});
 				}
+			}
+			if (error instanceof ValidationError) {
+				return sendBadRequest(req, res, error.inner);
 			}
 			return res.status(400).json({ error });
 		}
