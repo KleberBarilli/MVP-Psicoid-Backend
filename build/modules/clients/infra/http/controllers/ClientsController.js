@@ -19,6 +19,10 @@ var _CreateClientService = _interopRequireDefault(require("../../../services/Cre
 
 var _runtime = require("@prisma/client/runtime");
 
+var _yup = require("yup");
+
+var _BadRequest = require("../../../../../shared/errors/BadRequest");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class ClientsController {
@@ -54,6 +58,10 @@ class ClientsController {
             error: 'Já existe um CPF igual cadastrado no sistema.'
           });
         }
+      }
+
+      if (error instanceof _yup.ValidationError) {
+        return (0, _BadRequest.sendBadRequest)(req, res, error.inner);
       }
 
       return res.status(400).json({

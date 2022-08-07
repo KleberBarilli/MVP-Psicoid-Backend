@@ -106,5 +106,3 @@ dist
 uploads/*
 !uploads/.gitkeep
 .docker/dbdata
-
-build
