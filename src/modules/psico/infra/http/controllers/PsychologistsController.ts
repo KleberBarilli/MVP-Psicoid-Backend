@@ -3,7 +3,6 @@ import { validateCredentials } from '../../../../../shared/utils/validators/Cred
 import { validateAddress } from '../../../../../shared/utils/validators/Address';
 import { validateContact } from '../../../../../shared/utils/validators/Contact';
 import { validateIdentity } from '../../../../../shared/utils/validators/Identity';
-import { validatePsychologist } from '../../../../../shared/utils/validators/Psychologist';
 import { validateCompany } from '../../../../../shared/utils/validators/Company';
 import { container } from 'tsyringe';
 import CreatePsychologistService from '../../../services/CreatePsychologistService';
@@ -26,7 +25,6 @@ export default class PsychologistsController {
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
-				validatePsychologist(types),
 				validateCredentials(credentials),
 				validateIdentity(identity),
 				validateContact(contact),
@@ -63,6 +61,7 @@ export default class PsychologistsController {
 			if (error instanceof ValidationError) {
 				return sendBadRequest(req, res, error.inner);
 			}
+			console.log(error);
 			return res.status(400).json({ error });
 		}
 	}

@@ -101,16 +101,16 @@ model Psychologist {
     id                   String             @id @default(uuid()) @db.Uuid
     credentialId         String             @unique @map("credential_id") @db.Uuid
     individualIdentityId String             @unique @map("individual_identity_id") @db.Uuid
-    companyId            String?            @unique @map("company_id")
+    companyId            String?            @unique @map("company_id") @db.Uuid
     types                PsychologistType[]
     createdAt            DateTime           @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt            DateTime           @updatedAt @map("updated_at") @db.Timestamptz()
 
     credential Credential         @relation(fields: [credentialId], references: [id])
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
+    company    Company?           @relation(fields: [companyId], references: [id])
 
     clients Client[]
-    Company Company[]
 
     @@map("psychologists")
 }
@@ -176,11 +176,9 @@ model Company {
     createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    psichologyst Psychologist? @relation(fields: [psychologistId], references: [id])
-
-    contact        Contact? @relation(fields: [contactId], references: [id])
-    address        Address  @relation(fields: [addressId], references: [id])
-    psychologistId String?  @db.Uuid
+    contact      Contact?      @relation(fields: [contactId], references: [id])
+    address      Address       @relation(fields: [addressId], references: [id])
+    psychologist Psychologist?
 
     @@map("companys")
 }

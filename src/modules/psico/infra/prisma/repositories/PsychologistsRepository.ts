@@ -37,7 +37,13 @@ export default class PsychologistsRepository
 				},
 				...(company
 					? {
-							company: { create: { ...company } },
+							company: {
+								create: {
+									...company,
+									address: { create: { ...company.address } },
+									contact: { create: { ...company.contact } },
+								},
+							},
 					  }
 					: {}),
 			},
