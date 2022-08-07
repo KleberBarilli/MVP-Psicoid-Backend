@@ -1,3 +1,3 @@
-export interface IPsychologyst {
-	types: string[];
+export interface IPsychologist {
+	types: any;
 }
