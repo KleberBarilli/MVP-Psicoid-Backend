@@ -3,6 +3,7 @@ import { validateCredentials } from '../../../../../shared/utils/validators/Cred
 import { validateAddress } from '../../../../../shared/utils/validators/Address';
 import { validateContact } from '../../../../../shared/utils/validators/Contact';
 import { validateIdentity } from '../../../../../shared/utils/validators/Identity';
+import { validatePsychologyst } from '../../../../../shared/utils/validators/Psychologist';
 import { container } from 'tsyringe';
 import CreatePsychologistService from '../../../services/CreatePsychologistService';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
