@@ -3,7 +3,7 @@ import { IAddress } from 'src/shared/interfaces/IAddress';
 import { ICredential } from 'src/shared/interfaces/ICredential';
 import { IIdentity } from 'src/shared/interfaces/IIdentity';
 import { ICompany } from 'src/shared/interfaces/ICompany';
-import { IPsychologyst } from 'src/shared/interfaces/IPsichologyst';
+import { IPsychologist } from 'src/shared/interfaces/IPsichologyst';
 
 export interface ICreatePsychologist {
 	credential: ICredential;
@@ -11,5 +11,5 @@ export interface ICreatePsychologist {
 	contact: IContact;
 	address: IAddress;
 	company?: ICompany;
-	types: IPsychologyst;
+	types: any;
 }

@@ -3,7 +3,7 @@ import { validateCredentials } from '../../../../../shared/utils/validators/Cred
 import { validateAddress } from '../../../../../shared/utils/validators/Address';
 import { validateContact } from '../../../../../shared/utils/validators/Contact';
 import { validateIdentity } from '../../../../../shared/utils/validators/Identity';
-import { validatePsychologyst } from '../../../../../shared/utils/validators/Psychologist';
+import { validatePsychologist } from '../../../../../shared/utils/validators/Psychologist';
 import { validateCompany } from '../../../../../shared/utils/validators/Company';
 import { container } from 'tsyringe';
 import CreatePsychologistService from '../../../services/CreatePsychologistService';
@@ -26,7 +26,7 @@ export default class PsychologistsController {
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
-				validatePsychologyst(types),
+				validatePsychologist(types),
 				validateCredentials(credentials),
 				validateIdentity(identity),
 				validateContact(contact),

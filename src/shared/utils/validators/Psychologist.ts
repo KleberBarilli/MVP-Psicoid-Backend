@@ -5,10 +5,10 @@ interface IPsychologistForm {
 	types: PsychologistType;
 }
 
-export const validatePsychologyst = (psychologyst: IPsychologistForm) =>
+export const validatePsychologist = (psychologist: IPsychologistForm) =>
 	yup
 		.object()
 		.shape({
 			types: yup.array(yup.string().oneOf(PSICO_TYPES)),
 		})
-		.validate(psychologyst, { abortEarly: false, stripUnknown: true });
+		.validate(psychologist, { abortEarly: false, stripUnknown: true });
