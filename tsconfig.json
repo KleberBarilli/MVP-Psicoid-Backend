@@ -24,7 +24,7 @@
 		"@shared/*": [
 		  "src/shared/*"
 		],
-		"@validators/*": ["src/shared/utils/validators/*"]
+		"@validators/*": ["src/shared/utils/validators/*"],
 	  },
 	  "esModuleInterop": true,
 	  "experimentalDecorators": true,
