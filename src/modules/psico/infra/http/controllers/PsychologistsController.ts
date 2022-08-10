@@ -61,6 +61,7 @@ export default class PsychologistsController {
 			if (error instanceof ValidationError) {
 				return sendBadRequest(req, res, error.inner);
 			}
+			console.log(error, 'git');
 			return res.status(400).json({ error });
 		}
 	}
