@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { validateLogin } from '../../../../../shared/utils/validators/Credentials';
 import { container } from 'tsyringe';
-import CreateSessionsService from '../services/CreateSessionsService';
-
+import { validateLogin } from '@validators/Credentials';
+import CreateSessionService from '../services/CreateSessionService';
 export default class SessionsController {
 	public async create(
 		request: Request,
@@ -13,7 +12,7 @@ export default class SessionsController {
 		try {
 			await validateLogin({ email, password });
 
-			const createSession = container.resolve(CreateSessionsService);
+			const createSession = container.resolve(CreateSessionService);
 
 			const user = await createSession.execute({
 				email,

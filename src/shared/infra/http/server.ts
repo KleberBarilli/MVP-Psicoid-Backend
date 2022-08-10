@@ -5,8 +5,8 @@ import cors from 'cors';
 import 'express-async-errors';
 import morgan from 'morgan';
 import routes from './routes';
-import '../../container';
-import AppError from '../../errors/AppError';
+import '@shared/container';
+import AppError from '@shared/errors/AppError';
 
 const app = express();
 

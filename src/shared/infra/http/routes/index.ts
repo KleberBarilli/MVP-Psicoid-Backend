@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import clientRouter from '../../../../modules/clients/infra/http/routes/clients.routes';
-import sessionsRouter from '../../../../modules/auth/infra/http/routes/sessions.routes';
-import psicoRouter from '../../.././../modules/psico/infra/http/routes/psico.routes';
+import clientRouter from '@modules/clients/infra/http/routes/clients.routes';
+import sessionsRouter from '@modules/auth/infra/http/routes/sessions.routes';
+import psicoRouter from '@modules/psico/infra/http/routes/psico.routes';
 
 const routes = Router();
 

@@ -9,11 +9,23 @@
 	  "strict": true,
 	  "noImplicitAny": true,
 	  "strictPropertyInitialization": false,
-	  "baseUrl": "./",
+	  "baseUrl": ".",
 	  "typeRoots": [
 		"@types",
 		"./node_modules/@types"
 	  ],
+	  "paths": {
+		"@config/*": [
+		  "src/config/*"
+		],
+		"@modules/*": [
+		  "src/modules/*"
+		],
+		"@shared/*": [
+		  "src/shared/*"
+		],
+		"@validators/*": ["src/shared/utils/validators/*"],
+	  },
 	  "esModuleInterop": true,
 	  "experimentalDecorators": true,
 	  "emitDecoratorMetadata": true,
@@ -21,6 +33,6 @@
 	  "skipLibCheck": true,
 	  "forceConsistentCasingInFileNames": true
 	},
-	"include": ["src"],
+	"include": ["./src"],
 	"exclude": ["node_modules","build","dist","./docker"]
   }
