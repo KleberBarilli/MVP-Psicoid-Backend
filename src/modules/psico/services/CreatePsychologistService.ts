@@ -1,4 +1,4 @@
-import AppError from '../../../shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
 import { ICreatePsychologist } from '../domain/models/ICreatePsychologist';
 import { IPsychologistCreated } from '../domain/models/IPsychologystCreated';

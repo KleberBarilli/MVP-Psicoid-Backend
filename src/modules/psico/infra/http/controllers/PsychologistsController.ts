@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
-import { validateCredentials } from '../../../../../shared/utils/validators/Credentials';
-import { validateAddress } from '../../../../../shared/utils/validators/Address';
-import { validateContact } from '../../../../../shared/utils/validators/Contact';
-import { validateIdentity } from '../../../../../shared/utils/validators/Identity';
+import { validateCredentials } from '@shared/utils/validators/Credentials';
+import { validateAddress } from '@shared/utils/validators/Address';
+import { validateContact } from '@shared/utils/validators/Contact';
+import { validateIdentity } from '@shared/utils/validators/Identity';
 import { validateCompany } from '@validators/Company';
 import { container } from 'tsyringe';
 import CreatePsychologistService from '../../../services/CreatePsychologistService';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { ValidationError } from 'yup';
-import { sendBadRequest } from '../../../../../shared/errors/BadRequest';
+import { sendBadRequest } from '@shared/errors/BadRequest';
 
 export default class PsychologistsController {
 	public async create(req: Request, res: Response): Promise<Response> {
