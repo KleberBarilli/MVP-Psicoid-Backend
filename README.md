@@ -23,3 +23,12 @@ yarn
 ```
 yarn dev
 ```
+
+## ✰ Migrations Utils
+
+```
+yarn migrate:latest
+```
+```
+yarn migrate:updb
+```
