@@ -10,9 +10,9 @@
 
 -   Express - v4.18.1
 
--   MongoDB
+-   PostgreSQL
 
--   Mongoose -v6.4.4
+-   PrismaDB -v4.1.0
 
 ## 🚀 Exec
 
