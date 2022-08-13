@@ -14,7 +14,7 @@ enum Provider {
 }
 
 enum Role {
-    CLIENT
+    PACIENT
     PSYCHOLOGIST
 }
 
@@ -76,13 +76,13 @@ model Credential {
     createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    Client       Client?
-    Psychologist Psychologist?
+    pacient      Pacient?
+    psychologist Psychologist?
 
     @@map("credentials")
 }
 
-model Client {
+model Pacient {
     id                   String   @id @default(uuid()) @db.Uuid
     credentialId         String   @unique @map("credential_id") @db.Uuid
     individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
@@ -94,7 +94,7 @@ model Client {
 
     psychologists Psychologist[]
 
-    @@map("clients")
+    @@map("pacients")
 }
 
 model Psychologist {
@@ -110,7 +110,7 @@ model Psychologist {
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
     company    Company?           @relation(fields: [companyId], references: [id])
 
-    clients Client[]
+    pacients Pacient[]
 
     @@map("psychologists")
 }
@@ -128,7 +128,7 @@ model IndividualIdentity {
     contact Contact? @relation(fields: [contactId], references: [id])
     address Address  @relation(fields: [addressId], references: [id])
 
-    client       Client?
+    pacient      Pacient?
     Psychologist Psychologist?
 
     @@map("individual_identities")
@@ -169,8 +169,8 @@ model Address {
 model Company {
     id          String   @id @default(uuid()) @db.Uuid
     cnpj        String   @unique
-    name        String //nomeFantasia
-    tradingName String   @map("trading_name") //razaoSocial
+    name        String
+    tradingName String   @map("trading_name")
     contactId   String?  @unique @map("contact_id") @db.Uuid
     addressId   String   @unique @map("address_id") @db.Uuid
     createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()

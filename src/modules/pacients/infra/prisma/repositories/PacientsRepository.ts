@@ -1,10 +1,10 @@
-import { ICreateClient } from '../../../domain/models/ICreateClient';
-import { IClientsRepository } from '../../../domain/repositories/IClientsRepository';
+import { ICreatePacient } from '../../../domain/models/ICreatePacient';
+import { IPacientsRepository } from '../../../domain/repositories/IPacientsRepository';
 import { PrismaClient } from '@prisma/client';
-import { ClientEntity } from '../entities/Client';
+import { PacientEntity } from '../entities/Pacient';
 import { CredentialEntity } from '@shared/entities/Credential';
 
-export default class ClientsRepository implements IClientsRepository {
+export default class PacientsRepository implements IPacientsRepository {
 	#prisma;
 	constructor() {
 		this.#prisma = new PrismaClient();
@@ -15,8 +15,8 @@ export default class ClientsRepository implements IClientsRepository {
 		identity,
 		contact,
 		address,
-	}: ICreateClient): Promise<ClientEntity> {
-		return this.#prisma.client.create({
+	}: ICreatePacient): Promise<PacientEntity> {
+		return this.#prisma.pacient.create({
 			data: {
 				credential: {
 					create: {
@@ -34,8 +34,8 @@ export default class ClientsRepository implements IClientsRepository {
 		});
 	}
 
-	public async findById(id: string): Promise<ClientEntity | null> {
-		return await this.#prisma.client.findUnique({ where: { id } });
+	public async findById(id: string): Promise<PacientEntity | null> {
+		return await this.#prisma.pacient.findUnique({ where: { id } });
 	}
 	public async findByEmail(email: string): Promise<CredentialEntity | null> {
 		return await this.#prisma.credential.findUnique({ where: { email } });

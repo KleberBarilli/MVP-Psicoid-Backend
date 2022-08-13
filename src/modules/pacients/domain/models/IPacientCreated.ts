@@ -1,6 +1,4 @@
-import { Client } from '@prisma/client';
-
-export class ClientEntity implements Client {
+export interface IPacientCreated {
 	id: string;
 	credentialId: string;
 	individualIdentityId: string;

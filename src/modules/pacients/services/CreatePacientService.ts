@@ -1,15 +1,15 @@
 import AppError from '../../../shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
-import { ICreateClient } from '../domain/models/ICreateClient';
-import { IClientCreated } from '../domain/models/IClientCreated';
-import { IClientsRepository } from '../domain/repositories/IClientsRepository';
+import { ICreatePacient } from '../domain/models/ICreatePacient';
+import { IPacientCreated } from '../domain/models/IPacientCreated';
+import { IPacientsRepository } from '../domain/repositories/IPacientsRepository';
 import { IHashProvider } from '../../auth/providers/HashProvider/models/IHashProvider';
 
 @injectable()
-export default class CreateClientService {
+export default class CreatePacientService {
 	constructor(
-		@inject('ClientsRepository')
-		private clientsRepository: IClientsRepository,
+		@inject('PacientsRepository')
+		private pacientsRepository: IPacientsRepository,
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
 	) {}
@@ -18,9 +18,8 @@ export default class CreateClientService {
 		identity,
 		contact,
 		address,
-	}: ICreateClient): Promise<IClientCreated> {
-		//console.log(address);
-		const userExists = await this.clientsRepository.findByEmail(
+	}: ICreatePacient): Promise<IPacientCreated> {
+		const userExists = await this.pacientsRepository.findByEmail(
 			credential.email,
 		);
 		if (userExists) {
@@ -30,7 +29,7 @@ export default class CreateClientService {
 			credential.password || '',
 		);
 
-		return await this.clientsRepository.create({
+		return await this.pacientsRepository.create({
 			credential,
 			identity,
 			contact,

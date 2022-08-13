@@ -4,16 +4,16 @@ import { validateAddress } from '@shared/utils/validators/Address';
 import { validateContact } from '@shared/utils/validators/Contact';
 import { validateIdentity } from '@shared/utils/validators/Identity';
 import { container } from 'tsyringe';
-import CreateClientService from '../../../services/CreateClientService';
+import CreatePacientService from '../../../services/CreatePacientService';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { ValidationError } from 'yup';
 import { sendBadRequest } from '@shared/errors/BadRequest';
 
-export default class ClientsController {
+export default class PacientController {
 	public async create(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				client: { credentials, identity, contact, address },
+				pacient: { credentials, identity, contact, address },
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
@@ -23,8 +23,8 @@ export default class ClientsController {
 				validateAddress(address),
 			]);
 
-			const createClient = container.resolve(CreateClientService);
-			const user = await createClient.execute({
+			const createPacient = container.resolve(CreatePacientService);
+			const user = await createPacient.execute({
 				credential: credentials,
 				identity,
 				contact,
@@ -33,7 +33,7 @@ export default class ClientsController {
 
 			return res.json({
 				data: user,
-				message: 'Client created with success',
+				message: 'Pacient created with success',
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {
