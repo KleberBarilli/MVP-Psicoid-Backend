@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import PacientController from '../controllers/PacientController';
 
 const pacientRouter = Router();

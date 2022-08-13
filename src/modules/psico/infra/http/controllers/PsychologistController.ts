@@ -1,16 +1,18 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import { ValidationError } from 'yup';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+
 import { validateCredentials } from '@shared/utils/validators/Credentials';
 import { validateAddress } from '@shared/utils/validators/Address';
 import { validateContact } from '@shared/utils/validators/Contact';
 import { validateIdentity } from '@shared/utils/validators/Identity';
 import { validateCompany } from '@validators/Company';
-import { container } from 'tsyringe';
-import CreatePsychologistService from '../../../services/CreatePsychologistService';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { ValidationError } from 'yup';
 import { sendBadRequest } from '@shared/errors/BadRequest';
 
-export default class PsychologistsController {
+import CreatePsychologistService from '../../../services/CreatePsychologistService';
+
+export default class PsychologistController {
 	public async create(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
@@ -61,7 +63,6 @@ export default class PsychologistsController {
 			if (error instanceof ValidationError) {
 				return sendBadRequest(req, res, error.inner);
 			}
-			console.log(error, 'git');
 			return res.status(400).json({ error });
 		}
 	}

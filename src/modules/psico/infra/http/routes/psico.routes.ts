@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import PsychologistsController from '../controllers/PsychologistsController';
+
+import PsychologistController from '../controllers/PsychologistController';
 
 const psicoRouter = Router();
-const psicoController = new PsychologistsController();
+const psicoController = new PsychologistController();
 
 psicoRouter.post('/', psicoController.create);
 
