@@ -4,7 +4,7 @@
 
 ### Stack
 
--   NodeJS - v14.19.01 LTS
+-   NodeJS - v16.16.0 LTS
 
 -   Typescript - v4.7.4
 
