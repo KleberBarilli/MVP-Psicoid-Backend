@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+
 import { BRAZIL_STATES } from '../enums';
 
 interface IAddressForm {

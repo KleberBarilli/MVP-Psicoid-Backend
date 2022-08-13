@@ -1,13 +1,15 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import { ValidationError } from 'yup';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+
 import { validateCredentials } from '@shared/utils/validators/Credentials';
 import { validateAddress } from '@shared/utils/validators/Address';
 import { validateContact } from '@shared/utils/validators/Contact';
 import { validateIdentity } from '@shared/utils/validators/Identity';
-import { container } from 'tsyringe';
-import CreatePacientService from '../../../services/CreatePacientService';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { ValidationError } from 'yup';
 import { sendBadRequest } from '@shared/errors/BadRequest';
+
+import CreatePacientService from '../../../services/CreatePacientService';
 
 export default class PacientController {
 	public async create(req: Request, res: Response): Promise<Response> {

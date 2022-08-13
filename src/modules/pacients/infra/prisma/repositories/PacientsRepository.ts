@@ -1,6 +1,7 @@
+import { PrismaClient } from '@prisma/client';
+
 import { ICreatePacient } from '../../../domain/models/ICreatePacient';
 import { IPacientsRepository } from '../../../domain/repositories/IPacientsRepository';
-import { PrismaClient } from '@prisma/client';
 import { PacientEntity } from '../entities/Pacient';
 import { CredentialEntity } from '@shared/entities/Credential';
 

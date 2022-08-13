@@ -4,6 +4,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'express-async-errors';
 import morgan from 'morgan';
+
 import routes from './routes';
 import '@shared/container';
 import AppError from '@shared/errors/AppError';

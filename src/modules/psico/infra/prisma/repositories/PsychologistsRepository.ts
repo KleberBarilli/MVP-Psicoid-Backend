@@ -1,6 +1,7 @@
+import { PrismaClient } from '@prisma/client';
+
 import { ICreatePsychologist } from '../../../domain/models/ICreatePsychologist';
 import { IPsychologistsRepository } from '../../../domain/repositories/IPsychologistsRepository';
-import { PrismaClient } from '@prisma/client';
 import { PsychologistEntity } from '../entities/Psychologist';
 import { CredentialEntity } from '@shared/entities/Credential';
 

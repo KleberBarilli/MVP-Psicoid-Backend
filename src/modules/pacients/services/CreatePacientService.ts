@@ -1,9 +1,10 @@
-import AppError from '../../../shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
+
 import { ICreatePacient } from '../domain/models/ICreatePacient';
 import { IPacientCreated } from '../domain/models/IPacientCreated';
 import { IPacientsRepository } from '../domain/repositories/IPacientsRepository';
-import { IHashProvider } from '../../auth/providers/HashProvider/models/IHashProvider';
+import { IHashProvider } from '@modules/auth/providers/HashProvider/models/IHashProvider';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 export default class CreatePacientService {

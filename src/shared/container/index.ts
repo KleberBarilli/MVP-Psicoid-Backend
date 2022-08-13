@@ -1,9 +1,10 @@
 import { container } from 'tsyringe';
-import { IPacientsRepository } from '@modules/pacients/domain/repositories/IPacientsRepository';
-import PacientsRepository from '@modules/pacients/infra/prisma/repositories/PacientsRepository';
+
 import '@modules/auth/providers';
-import PsychologistsRepository from '@modules/psico/infra/prisma/repositories/PsychologistsRepository';
+import { IPacientsRepository } from '@modules/pacients/domain/repositories/IPacientsRepository';
 import { IPsychologistsRepository } from '@modules/psico/domain/repositories/IPsychologistsRepository';
+import PacientsRepository from '@modules/pacients/infra/prisma/repositories/PacientsRepository';
+import PsychologistsRepository from '@modules/psico/infra/prisma/repositories/PsychologistsRepository';
 
 container.registerSingleton<IPacientsRepository>(
 	'PacientsRepository',

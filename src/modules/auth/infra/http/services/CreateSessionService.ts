@@ -1,10 +1,11 @@
+import { PrismaClient } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
-import AppError from '@shared/errors/AppError';
 import { sign, Secret } from 'jsonwebtoken';
+
 import authConfig from '@config/auth';
+import AppError from '@shared/errors/AppError';
 import { ICreateSession } from '../../../domain/models/ICreateSession';
 import { IHashProvider } from '../../../providers/HashProvider/models/IHashProvider';
-import { PrismaClient } from '@prisma/client';
 
 @injectable()
 class CreateSessionService {

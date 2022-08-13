@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+
 import { validateLogin } from '@validators/Credentials';
 import CreateSessionService from '../services/CreateSessionService';
 export default class SessionsController {
