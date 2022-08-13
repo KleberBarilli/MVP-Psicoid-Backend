@@ -3,7 +3,6 @@ import AppError from '@shared/errors/AppError';
 import { sign, Secret } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 import { ICreateSession } from '../../../domain/models/ICreateSession';
-import { IUserAuthenticated } from '../../../domain/models/IUserAuthenticated';
 import { IHashProvider } from '../../../providers/HashProvider/models/IHashProvider';
 import { PrismaClient } from '@prisma/client';
 

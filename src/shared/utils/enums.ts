@@ -28,7 +28,7 @@ export const BRAZIL_STATES = [
 	'TO',
 ];
 
-export const ROLE_TYPE = ['CLIENT', 'PSYCHOLOGIST'];
+export const ROLE_TYPE = ['PACIENT', 'PSYCHOLOGIST'];
 
 export const PSICO_TYPES = [
 	'ABNORMAL',
