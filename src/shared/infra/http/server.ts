@@ -5,12 +5,10 @@ import cors from 'cors';
 import 'express-async-errors';
 import morgan from 'morgan';
 
-import mongoose from '../mongoose';
 import routes from './routes';
-import '../../container';
-import AppError from '../../errors/AppError';
+import '@shared/container';
+import AppError from '@shared/errors/AppError';
 
-mongoose();
 const app = express();
 
 app.use(morgan('dev'));

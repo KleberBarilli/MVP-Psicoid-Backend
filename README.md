@@ -10,7 +10,9 @@
 
 -   Express - v4.18.1
 
--   PrismaDB - v4.1.0
+-   PostgreSQL
+
+-   PrismaDB -v4.1.0
 
 ## 🚀 Exec
 
@@ -20,4 +22,13 @@ yarn
 
 ```
 yarn dev
+```
+
+## ✰ Migrations Utils
+
+```
+yarn migrate:latest
+```
+```
+yarn migrate:updb
 ```

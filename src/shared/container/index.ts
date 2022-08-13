@@ -1,9 +1,16 @@
 import { container } from 'tsyringe';
-import { IUsersRepository } from '../../modules/users/domain/repositories/IUsersRepository';
-import UsersRepository from '../../modules/users/infra/mongoose/repositories/UsersRepository';
-import '../../modules/users/providers';
 
-container.registerSingleton<IUsersRepository>(
-	'UsersRepository',
-	UsersRepository,
+import '@modules/auth/providers';
+import { IPacientsRepository } from '@modules/pacients/domain/repositories/IPacientsRepository';
+import { IPsychologistsRepository } from '@modules/psico/domain/repositories/IPsychologistsRepository';
+import PacientsRepository from '@modules/pacients/infra/prisma/repositories/PacientsRepository';
+import PsychologistsRepository from '@modules/psico/infra/prisma/repositories/PsychologistsRepository';
+
+container.registerSingleton<IPacientsRepository>(
+	'PacientsRepository',
+	PacientsRepository,
+);
+container.registerSingleton<IPsychologistsRepository>(
+	'PsychologistsRepository',
+	PsychologistsRepository,
 );

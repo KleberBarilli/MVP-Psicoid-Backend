@@ -1,10 +1,13 @@
 import { Router } from 'express';
-import userRouter from '../../../../modules/users/infra/http/routes/users.routes';
-import sessionsRouter from '../../../../modules/users/infra/http/routes/sessions.routes';
+
+import pacientRouter from '@modules/pacients/infra/http/routes/pacient.routes';
+import sessionRouter from '@modules/auth/infra/http/routes/session.routes';
+import psicoRouter from '@modules/psico/infra/http/routes/psico.routes';
 
 const routes = Router();
 
-routes.use('/users', userRouter);
-routes.use('/sessions', sessionsRouter);
+routes.use('/pacient', pacientRouter);
+routes.use('/session', sessionRouter);
+routes.use('/psico', psicoRouter);
 
 export default routes;

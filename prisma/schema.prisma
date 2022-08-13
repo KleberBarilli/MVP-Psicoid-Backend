@@ -1,0 +1,184 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum Provider {
+    APPLE
+    EMAIL
+    GOOGLE
+}
+
+enum Role {
+    PACIENT
+    PSYCHOLOGIST
+}
+
+enum BrazilState {
+    AC
+    AL
+    AP
+    AM
+    BA
+    CE
+    DF
+    ES
+    GO
+    MA
+    MT
+    MS
+    MG
+    PA
+    PB
+    PR
+    PE
+    PI
+    RJ
+    RN
+    RS
+    RO
+    RR
+    SC
+    SP
+    SE
+    TO
+}
+
+enum Status {
+    APPROVED
+    UNDER_REVIEW
+    REPPROVED
+}
+
+enum PsychologistType {
+    ABNORMAL
+    BIO
+    SOCIAL
+    COGNITIVE
+    DEVELOPMENTAL
+    PERSONALITY
+    FORENSIC
+    INDUSTRIAL_ORGANIZATIONAL
+}
+
+model Credential {
+    id            String   @id @default(uuid()) @db.Uuid
+    provider      Provider @default(EMAIL)
+    email         String   @unique
+    password      String   @map("password")
+    tokenRecovery String?  @map("token_recovery")
+    roles         Role[]
+    inactive      Boolean  @default(false)
+    createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    pacient      Pacient?
+    psychologist Psychologist?
+
+    @@map("credentials")
+}
+
+model Pacient {
+    id                   String   @id @default(uuid()) @db.Uuid
+    credentialId         String   @unique @map("credential_id") @db.Uuid
+    individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
+    createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    credential Credential         @relation(fields: [credentialId], references: [id])
+    identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
+
+    psychologists Psychologist[]
+
+    @@map("pacients")
+}
+
+model Psychologist {
+    id                   String             @id @default(uuid()) @db.Uuid
+    credentialId         String             @unique @map("credential_id") @db.Uuid
+    individualIdentityId String             @unique @map("individual_identity_id") @db.Uuid
+    companyId            String?            @unique @map("company_id") @db.Uuid
+    types                PsychologistType[]
+    createdAt            DateTime           @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt            DateTime           @updatedAt @map("updated_at") @db.Timestamptz()
+
+    credential Credential         @relation(fields: [credentialId], references: [id])
+    identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
+    company    Company?           @relation(fields: [companyId], references: [id])
+
+    pacients Pacient[]
+
+    @@map("psychologists")
+}
+
+model IndividualIdentity {
+    id        String   @id @default(uuid()) @db.Uuid
+    firstName String   @map("first_name")
+    lastName  String   @map("last_name")
+    cpf       String   @unique
+    contactId String?  @unique @map("contact_id") @db.Uuid
+    addressId String   @unique @map("address_id") @db.Uuid
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    contact Contact? @relation(fields: [contactId], references: [id])
+    address Address  @relation(fields: [addressId], references: [id])
+
+    pacient      Pacient?
+    Psychologist Psychologist?
+
+    @@map("individual_identities")
+}
+
+model Contact {
+    id        String   @id @default(uuid()) @db.Uuid
+    telephone String?
+    cellPhone String?  @map("cell_phone")
+    email     String?
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    identity IndividualIdentity?
+    company  Company?
+
+    @@map("contacts")
+}
+
+model Address {
+    id           String      @id @default(uuid()) @db.Uuid
+    zipCode      String      @map("zip_code")
+    street       String
+    number       String?
+    complement   String?
+    neighborhood String
+    city         String
+    state        BrazilState
+    createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt    DateTime    @updatedAt @map("updated_at") @db.Timestamptz()
+
+    company  Company?
+    identity IndividualIdentity?
+
+    @@map("addresses")
+}
+
+model Company {
+    id          String   @id @default(uuid()) @db.Uuid
+    cnpj        String   @unique
+    name        String
+    tradingName String   @map("trading_name")
+    contactId   String?  @unique @map("contact_id") @db.Uuid
+    addressId   String   @unique @map("address_id") @db.Uuid
+    createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    contact      Contact?      @relation(fields: [contactId], references: [id])
+    address      Address       @relation(fields: [addressId], references: [id])
+    psychologist Psychologist?
+
+    @@map("companys")
+}

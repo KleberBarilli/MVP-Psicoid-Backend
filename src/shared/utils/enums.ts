@@ -1,0 +1,42 @@
+export const BRAZIL_STATES = [
+	'AC',
+	'AL',
+	'AP',
+	'AM',
+	'BA',
+	'CE',
+	'DF',
+	'ES',
+	'GO',
+	'MA',
+	'MT',
+	'MS',
+	'MG',
+	'PA',
+	'PB',
+	'PR',
+	'PE',
+	'PI',
+	'RJ',
+	'RN',
+	'RS',
+	'RO',
+	'RR',
+	'SC',
+	'SP',
+	'SE',
+	'TO',
+];
+
+export const ROLE_TYPE = ['PACIENT', 'PSYCHOLOGIST'];
+
+export const PSICO_TYPES = [
+	'ABNORMAL',
+	'BIO',
+	'SOCIAL',
+	'COGNITIVE',
+	'DEVELOPMENTAL',
+	'PERSONALITY',
+	'FORENSIC',
+	'INDUSTRIAL_ORGANIZATIONAL',
+];
