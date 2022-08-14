@@ -11,6 +11,7 @@ import { validateCompany } from '@validators/Company';
 import { sendBadRequest } from '@shared/errors/BadRequest';
 
 import CreatePsychologistService from '../../../services/CreatePsychologistService';
+import AppError from '@shared/errors/AppError';
 
 export default class PsychologistController {
 	public async create(req: Request, res: Response): Promise<Response> {
@@ -53,7 +54,15 @@ export default class PsychologistController {
 				}
 			}
 			if (error instanceof ValidationError) {
-				return sendBadRequest(req, res, error.message);
+				return sendBadRequest(req, res, error.message, 400);
+			}
+			if (error instanceof AppError) {
+				return sendBadRequest(
+					req,
+					res,
+					error.message,
+					error.statusCode,
+				);
 			}
 			return res
 				.status(500)
