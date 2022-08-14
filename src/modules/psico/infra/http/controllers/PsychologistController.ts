@@ -16,14 +16,7 @@ export default class PsychologistController {
 	public async create(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				psico: {
-					credentials,
-					types,
-					identity,
-					contact,
-					address,
-					company,
-				},
+				psico: { credentials, identity, contact, address, company },
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
@@ -41,7 +34,6 @@ export default class PsychologistController {
 			);
 			const user = await createPsychologist.execute({
 				credential: credentials,
-				types,
 				identity,
 				contact,
 				address,

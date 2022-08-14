@@ -15,7 +15,6 @@ export default class PsychologistsRepository
 
 	public async create({
 		credential,
-		types,
 		identity,
 		contact,
 		address,
@@ -28,7 +27,6 @@ export default class PsychologistsRepository
 						...credential,
 					},
 				},
-				types,
 				identity: {
 					create: {
 						...identity,

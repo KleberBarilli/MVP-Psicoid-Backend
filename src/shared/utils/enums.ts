@@ -29,14 +29,3 @@ export const BRAZIL_STATES = [
 ];
 
 export const ROLE_TYPE = ['PACIENT', 'PSYCHOLOGIST'];
-
-export const PSICO_TYPES = [
-	'ABNORMAL',
-	'BIO',
-	'SOCIAL',
-	'COGNITIVE',
-	'DEVELOPMENTAL',
-	'PERSONALITY',
-	'FORENSIC',
-	'INDUSTRIAL_ORGANIZATIONAL',
-];

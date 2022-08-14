@@ -10,5 +10,4 @@ export interface ICreatePsychologist {
 	contact: IContact;
 	address: IAddress;
 	company?: ICompany;
-	types: any;
 }

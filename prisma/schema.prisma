@@ -54,17 +54,6 @@ enum Status {
     REPPROVED
 }
 
-enum PsychologistType {
-    ABNORMAL
-    BIO
-    SOCIAL
-    COGNITIVE
-    DEVELOPMENTAL
-    PERSONALITY
-    FORENSIC
-    INDUSTRIAL_ORGANIZATIONAL
-}
-
 model Credential {
     id            String   @id @default(uuid()) @db.Uuid
     provider      Provider @default(EMAIL)
@@ -98,13 +87,12 @@ model Pacient {
 }
 
 model Psychologist {
-    id                   String             @id @default(uuid()) @db.Uuid
-    credentialId         String             @unique @map("credential_id") @db.Uuid
-    individualIdentityId String             @unique @map("individual_identity_id") @db.Uuid
-    companyId            String?            @unique @map("company_id") @db.Uuid
-    types                PsychologistType[]
-    createdAt            DateTime           @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt            DateTime           @updatedAt @map("updated_at") @db.Timestamptz()
+    id                   String   @id @default(uuid()) @db.Uuid
+    credentialId         String   @unique @map("credential_id") @db.Uuid
+    individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
+    companyId            String?  @unique @map("company_id") @db.Uuid
+    createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     credential Credential         @relation(fields: [credentialId], references: [id])
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])

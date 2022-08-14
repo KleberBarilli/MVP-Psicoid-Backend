@@ -3,7 +3,6 @@ export interface IPsychologistCreated {
 	credentialId: string;
 	individualIdentityId: string;
 	companyId: string | null;
-	types: string[];
 	createdAt: Date;
 	updatedAt: Date;
 }

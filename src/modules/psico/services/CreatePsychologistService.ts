@@ -16,7 +16,6 @@ export default class CreatePsychologistService {
 	) {}
 	public async execute({
 		credential,
-		types,
 		identity,
 		contact,
 		address,
@@ -34,7 +33,6 @@ export default class CreatePsychologistService {
 
 		return await this.psychologistsRepository.create({
 			credential,
-			types,
 			identity,
 			contact,
 			address,
