@@ -7,7 +7,6 @@ export default class WhoiamController {
 	public async show(req: Request, res: Response): Promise<Response> {
 		try {
 			const whoiam = container.resolve(WhoiamService);
-			console.log(req);
 			const user = await whoiam.execute(req.user.id, req.user.profile);
 			user.password = null;
 			return res.status(200).json({ message: 'User Found', ...user });

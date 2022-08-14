@@ -41,6 +41,5 @@ export default class WhoiamService {
 				},
 			});
 		}
-		return Promise.reject({ message: 'User not found' });
 	}
 }
