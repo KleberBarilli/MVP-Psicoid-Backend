@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-
+import { cpf } from 'cpf-cnpj-validator';
 interface IIdentityForm {
 	firstName: string;
 	lastName: string;
@@ -12,6 +12,12 @@ export const validateIdentity = (identity: IIdentityForm) =>
 		.shape({
 			firstName: yup.string().required('O nome é obrigatório'),
 			lastName: yup.string().required('O sobrenome é obrigatório'),
-			cpf: yup.string().typeError('CPF Inválido').required(),
+			cpf: yup
+				.string()
+				.test({
+					test: v => !v || cpf.isValid(v),
+					message: 'CPF Inválido',
+				})
+				.required('O CNPJ é obrigatório'),
 		})
 		.validate(identity, { abortEarly: false, stripUnknown: true });
