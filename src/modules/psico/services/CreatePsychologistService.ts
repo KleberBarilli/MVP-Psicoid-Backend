@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 import { ICreatePsychologist } from '../domain/models/ICreatePsychologist';
 import { IPsychologistCreated } from '../domain/models/IPsychologystCreated';
 import { IPsychologistsRepository } from '../domain/repositories/IPsychologistsRepository';
-import { IHashProvider } from '@modules/session/providers/HashProvider/models/IHashProvider';
+import { IHashProvider } from '@modules/auth/providers/HashProvider/models/IHashProvider';
 
 @injectable()
 export default class CreatePsychologistService {

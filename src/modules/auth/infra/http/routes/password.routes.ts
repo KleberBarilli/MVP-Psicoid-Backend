@@ -4,6 +4,6 @@ import ForgotPasswordController from '../controllers/ForgotPasswordController';
 const passwordRouter = Router();
 const forgotPasswordController = new ForgotPasswordController();
 
-passwordRouter.post('/', forgotPasswordController.create);
+passwordRouter.post('/forgot', forgotPasswordController.create);
 
 export default passwordRouter;
