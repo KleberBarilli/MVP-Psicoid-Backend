@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 
-import '@modules/session/providers';
+import '@modules/auth/providers';
 import { IPacientsRepository } from '@modules/pacients/domain/repositories/IPacientsRepository';
 import { IPsychologistsRepository } from '@modules/psico/domain/repositories/IPsychologistsRepository';
 import PacientsRepository from '@modules/pacients/infra/prisma/repositories/PacientsRepository';
