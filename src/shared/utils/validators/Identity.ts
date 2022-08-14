@@ -18,6 +18,6 @@ export const validateIdentity = (identity: IIdentityForm) =>
 					test: v => !v || cpf.isValid(v),
 					message: 'CPF Inválido',
 				})
-				.required('O CNPJ é obrigatório'),
+				.required('O CPF é obrigatório'),
 		})
 		.validate(identity, { abortEarly: false, stripUnknown: true });
