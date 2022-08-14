@@ -21,7 +21,9 @@ export default class SessionsController {
 			});
 			return response.json(user);
 		} catch (err) {
-			return response.status(400).json({ error: 'Error with login' });
+			return response
+				.status(500)
+				.json({ error: 'Erro interno no servidor' });
 		}
 	}
 }

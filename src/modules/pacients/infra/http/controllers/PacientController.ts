@@ -46,9 +46,11 @@ export default class PacientController {
 				}
 			}
 			if (error instanceof ValidationError) {
-				return sendBadRequest(req, res, error.inner);
+				return sendBadRequest(req, res, error.message);
 			}
-			return res.status(400).json({ error });
+			return res
+				.status(500)
+				.json({ message: 'Erro interno no servidor' });
 		}
 	}
 }

@@ -10,6 +10,7 @@
 	  "noImplicitAny": true,
 	  "strictPropertyInitialization": false,
 	  "baseUrl": ".",
+	  "useUnknownInCatchVariables": true,
 	  "typeRoots": [
 		"@types",
 		"./node_modules/@types"
