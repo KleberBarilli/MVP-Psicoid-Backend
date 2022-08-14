@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 import { ISendForgotPasswordEmail } from '../domain/models/ISendForgotPasswordEmail';
 import { generateRandomNumber } from '@shared/utils/etc';
+import { sendEmail } from '@shared/utils/emailBuilder';
 
 export default class SendForgotPasswordEmailService {
 	#prisma;
@@ -24,5 +25,7 @@ export default class SendForgotPasswordEmailService {
 			where: { email },
 			data: { tokenRecovery },
 		});
+
+		await sendEmail(email, tokenRecovery);
 	}
 }
