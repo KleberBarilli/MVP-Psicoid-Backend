@@ -6,4 +6,5 @@ export class PacientEntity implements Pacient {
 	individualIdentityId: string;
 	createdAt: Date;
 	updatedAt: Date;
+	avatar: string | null;
 }

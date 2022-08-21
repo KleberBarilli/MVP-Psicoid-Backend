@@ -19,9 +19,11 @@ export default class PsychologistsRepository
 		contact,
 		address,
 		company,
+		resume,
 	}: ICreatePsychologist): Promise<PsychologistEntity> {
 		return this.#prisma.psychologist.create({
 			data: {
+				resume,
 				credential: {
 					create: {
 						...credential,

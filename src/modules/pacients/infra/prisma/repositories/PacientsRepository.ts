@@ -17,11 +17,14 @@ export default class PacientsRepository implements IPacientsRepository {
 		contact,
 		address,
 	}: ICreatePacient): Promise<PacientEntity> {
+		const { email, password, role } = credential;
 		return this.#prisma.pacient.create({
 			data: {
 				credential: {
 					create: {
-						...credential,
+						email,
+						password,
+						role,
 					},
 				},
 				identity: {
