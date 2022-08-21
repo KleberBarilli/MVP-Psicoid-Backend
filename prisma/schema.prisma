@@ -101,7 +101,8 @@ model Psychologist {
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
     company    Company?           @relation(fields: [companyId], references: [id])
 
-    pacients Pacient[]
+    pacients   Pacient[]
+    approaches TherapeuticApproache[]
 
     @@map("psychologists")
 }
@@ -180,6 +181,8 @@ model TherapeuticApproache {
     description String?
     createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    psychologists Psychologist[]
 
     @@map("therapeutic_approaches")
 }
