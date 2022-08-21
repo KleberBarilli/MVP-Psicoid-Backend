@@ -75,7 +75,6 @@ model Pacient {
     id                   String   @id @default(uuid()) @db.Uuid
     credentialId         String   @unique @map("credential_id") @db.Uuid
     individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
-    avatar               String?
     createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
@@ -93,7 +92,6 @@ model Psychologist {
     individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
     companyId            String?  @unique @map("company_id") @db.Uuid
     resume               String?
-    avatar               String?
     createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
@@ -112,6 +110,7 @@ model IndividualIdentity {
     firstName String   @map("first_name")
     lastName  String   @map("last_name")
     cpf       String   @unique
+    avatarUrl String?  @map("avatar_url")
     contactId String?  @unique @map("contact_id") @db.Uuid
     addressId String   @unique @map("address_id") @db.Uuid
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
