@@ -26,6 +26,10 @@ export default class SendForgotPasswordEmailService {
 			data: { tokenRecovery },
 		});
 
-		await sendEmail(email, tokenRecovery);
+		await sendEmail(
+			email,
+			tokenRecovery,
+			'no-reply-psicoId@psicoid.com.br',
+		);
 	}
 }
