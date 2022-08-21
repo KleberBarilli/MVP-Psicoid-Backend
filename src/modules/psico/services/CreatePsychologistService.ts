@@ -32,7 +32,7 @@ export default class CreatePsychologistService {
 			credential.password || '',
 		);
 
-		return await this.psychologistsRepository.create({
+		return this.psychologistsRepository.create({
 			credential,
 			identity,
 			contact,
