@@ -6,7 +6,7 @@
 
 */
 -- AlterTable
-ALTER TABLE "individual_identities" ADD COLUMN     "avatar" TEXT;
+ALTER TABLE "individual_identities" ADD COLUMN     "avatar_url" TEXT;
 
 -- AlterTable
 ALTER TABLE "pacients" DROP COLUMN "avatar";
