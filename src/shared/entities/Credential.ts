@@ -6,7 +6,7 @@ export class CredentialEntity implements Credential {
 	email: string;
 	password: string;
 	tokenRecovery: string | null;
-	roles: Role[];
+	role: Role;
 	inactive: boolean;
 	createdAt: Date;
 	updatedAt: Date;

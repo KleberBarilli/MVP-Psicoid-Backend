@@ -4,4 +4,5 @@ export interface IPacientCreated {
 	individualIdentityId: string;
 	createdAt: Date;
 	updatedAt: Date;
+	avatar: string | null;
 }

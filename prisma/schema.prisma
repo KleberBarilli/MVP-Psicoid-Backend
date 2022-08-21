@@ -75,6 +75,7 @@ model Pacient {
     id                   String   @id @default(uuid()) @db.Uuid
     credentialId         String   @unique @map("credential_id") @db.Uuid
     individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
+    avatar               String?
     createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
@@ -91,6 +92,8 @@ model Psychologist {
     credentialId         String   @unique @map("credential_id") @db.Uuid
     individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
     companyId            String?  @unique @map("company_id") @db.Uuid
+    resume               String?
+    avatar               String?
     createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
@@ -98,7 +101,8 @@ model Psychologist {
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
     company    Company?           @relation(fields: [companyId], references: [id])
 
-    pacients Pacient[]
+    pacients   Pacient[]
+    approaches TherapeuticApproache[]
 
     @@map("psychologists")
 }
@@ -169,4 +173,16 @@ model Company {
     psychologist Psychologist?
 
     @@map("companys")
+}
+
+model TherapeuticApproache {
+    id          String   @id @default(uuid()) @db.Uuid
+    name        String
+    description String?
+    createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    psychologists Psychologist[]
+
+    @@map("therapeutic_approaches")
 }

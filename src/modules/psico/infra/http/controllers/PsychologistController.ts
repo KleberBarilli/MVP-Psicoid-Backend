@@ -17,7 +17,14 @@ export default class PsychologistController {
 	public async create(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				psico: { credentials, identity, contact, address, company },
+				psico: {
+					credentials,
+					identity,
+					contact,
+					address,
+					company,
+					resume,
+				},
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
@@ -39,6 +46,7 @@ export default class PsychologistController {
 				contact,
 				address,
 				company,
+				resume,
 			});
 
 			return res.json({

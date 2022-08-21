@@ -20,6 +20,7 @@ export default class CreatePsychologistService {
 		contact,
 		address,
 		company,
+		resume,
 	}: ICreatePsychologist): Promise<IPsychologistCreated> {
 		const userExists = await this.psychologistsRepository.findByEmail(
 			credential.email,
@@ -31,12 +32,13 @@ export default class CreatePsychologistService {
 			credential.password || '',
 		);
 
-		return await this.psychologistsRepository.create({
+		return this.psychologistsRepository.create({
 			credential,
 			identity,
 			contact,
 			address,
 			company,
+			resume,
 		});
 	}
 }
