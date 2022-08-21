@@ -8,5 +8,4 @@ export interface ICreatePacient {
 	identity: IIdentity;
 	contact: IContact;
 	address: IAddress;
-	avatar: string | null;
 }

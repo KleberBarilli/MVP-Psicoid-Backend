@@ -10,6 +10,5 @@ export interface ICreatePsychologist {
 	contact: IContact;
 	address: IAddress;
 	company?: ICompany;
-	avatar?: string;
 	resume?: string;
 }
