@@ -14,11 +14,7 @@ export default class SendForgotPasswordEmailService {
 		this.#prisma = new PrismaClient();
 	}
 
-	public async execute({
-		email,
-		token,
-		password,
-	}: IResetPassword): Promise<void> {
+	public async execute({ token, password }: IResetPassword): Promise<void> {
 		const user = await this.#prisma.credential.findFirst({
 			where: { tokenRecovery: token },
 		});
@@ -30,7 +26,7 @@ export default class SendForgotPasswordEmailService {
 			password || '',
 		);
 		await this.#prisma.credential.update({
-			where: { email },
+			where: { id: user.id },
 			data: { password: hashedPassword },
 		});
 	}
