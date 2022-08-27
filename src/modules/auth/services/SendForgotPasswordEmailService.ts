@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
-import AppError from '@shared/errors/AppError';
-import { ISendForgotPasswordEmail } from '../domain/models/ISendForgotPasswordEmail';
-import { generateRandomNumber } from '@shared/utils/etc';
-import { sendEmail } from '@shared/utils/emailBuilder';
+import { PrismaClient } from "@prisma/client";
+import AppError from "@shared/errors/AppError";
+import { ISendForgotPasswordEmail } from "../domain/models/ISendForgotPasswordEmail";
+import { generateRandomNumber } from "@shared/utils/etc";
+import { sendEmail } from "@shared/utils/emailBuilder";
 
 export default class SendForgotPasswordEmailService {
 	#prisma;
@@ -16,7 +16,7 @@ export default class SendForgotPasswordEmailService {
 		});
 
 		if (!user) {
-			throw new AppError('User does not exists.');
+			throw new AppError("User does not exists.");
 		}
 
 		const tokenRecovery = generateRandomNumber(6);
@@ -29,7 +29,7 @@ export default class SendForgotPasswordEmailService {
 		await sendEmail(
 			email,
 			tokenRecovery,
-			'no-reply-psicoId@psicoid.com.br',
+			"no-reply-psicoId@psicoid.com.br",
 		);
 	}
 }

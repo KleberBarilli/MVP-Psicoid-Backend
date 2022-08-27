@@ -1,17 +1,17 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject } from "tsyringe";
 
-import AppError from '@shared/errors/AppError';
-import { ICreatePsychologist } from '../domain/models/ICreatePsychologist';
-import { IPsychologistCreated } from '../domain/models/IPsychologystCreated';
-import { IPsychologistsRepository } from '../domain/repositories/IPsychologistsRepository';
-import { IHashProvider } from '@modules/auth/providers/HashProvider/models/IHashProvider';
+import AppError from "@shared/errors/AppError";
+import { ICreatePsychologist } from "../domain/models/ICreatePsychologist";
+import { IPsychologistCreated } from "../domain/models/IPsychologystCreated";
+import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
+import { IHashProvider } from "@modules/auth/providers/HashProvider/models/IHashProvider";
 
 @injectable()
 export default class CreatePsychologistService {
 	constructor(
-		@inject('PsychologistsRepository')
+		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,
-		@inject('HashProvider')
+		@inject("HashProvider")
 		private hashProvider: IHashProvider,
 	) {}
 	public async execute({
@@ -26,10 +26,10 @@ export default class CreatePsychologistService {
 			credential.email,
 		);
 		if (userExists) {
-			throw new AppError('User already exists');
+			throw new AppError("User already exists");
 		}
 		credential.password = await this.hashProvider.generateHash(
-			credential.password || '',
+			credential.password || "",
 		);
 
 		return this.psychologistsRepository.create({

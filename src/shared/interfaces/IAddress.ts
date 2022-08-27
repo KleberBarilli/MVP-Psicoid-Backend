@@ -1,4 +1,4 @@
-import { BrazilState } from '@prisma/client';
+import { BrazilState } from "@prisma/client";
 
 export interface IAddress {
 	zipCode: string;

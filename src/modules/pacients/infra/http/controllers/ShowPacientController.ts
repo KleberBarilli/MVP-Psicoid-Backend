@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { container } from 'tsyringe';
-import ShowPacientService from '../../../services/ShowPacientService';
+import { Request, Response } from "express";
+import { container } from "tsyringe";
+import ShowPacientService from "../../../services/ShowPacientService";
 
 export default class ShowPacientController {
 	public async show(req: Request, res: Response): Promise<Response> {
@@ -12,7 +12,7 @@ export default class ShowPacientController {
 		} catch (error) {
 			return res
 				.status(400)
-				.json({ message: 'Houve um erro ao buscar o usuário' });
+				.json({ message: "Houve um erro ao buscar o usuário" });
 		}
 	}
 }

@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
-import { verify, Secret } from 'jsonwebtoken';
+import { NextFunction, Request, Response } from "express";
+import { verify, Secret } from "jsonwebtoken";
 
-import AppError from '@shared/errors/AppError';
-import authConfig from '@config/auth';
+import AppError from "@shared/errors/AppError";
+import authConfig from "@config/auth";
 
 interface ITokenPayload {
 	iat: number;
@@ -18,9 +18,9 @@ export default function isAuthenticated(
 ): void {
 	const authHeader = req.headers.authorization;
 	if (!authHeader) {
-		throw new AppError('JWT Token is missing.');
+		throw new AppError("JWT Token is missing.");
 	}
-	const [, token] = authHeader.split(' ');
+	const [, token] = authHeader.split(" ");
 
 	try {
 		const decodedToken = verify(token, authConfig.jwt.secret as Secret);
@@ -33,6 +33,6 @@ export default function isAuthenticated(
 		};
 		return next();
 	} catch {
-		throw new AppError('Invalid JWT Token.', 401);
+		throw new AppError("Invalid JWT Token.", 401);
 	}
 }

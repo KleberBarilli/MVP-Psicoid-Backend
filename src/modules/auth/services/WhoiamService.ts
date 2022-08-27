@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import { injectable } from 'tsyringe';
+import { PrismaClient } from "@prisma/client";
+import { injectable } from "tsyringe";
 
 @injectable()
 export default class WhoiamService {
@@ -9,7 +9,7 @@ export default class WhoiamService {
 	}
 
 	public async execute(id: string, role: string): Promise<any> {
-		if (role === 'PACIENT') {
+		if (role === "PACIENT") {
 			return await this.#prisma.credential.findUnique({
 				where: { id },
 				include: {
@@ -23,7 +23,7 @@ export default class WhoiamService {
 				},
 			});
 		}
-		if (role === 'PSYCHOLOGIST') {
+		if (role === "PSYCHOLOGIST") {
 			return await this.#prisma.credential.findUnique({
 				where: { id },
 				include: {

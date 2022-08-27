@@ -1,7 +1,7 @@
-import { ICreatePsychologist } from '../models/ICreatePsychologist';
-import { IPsychologist } from '../models/IPsychologist';
-import { PsychologistEntity } from '../../infra/prisma/entities/Psychologist';
-import { ICredential } from '@shared/interfaces/ICredential';
+import { ICreatePsychologist } from "../models/ICreatePsychologist";
+import { IPsychologist } from "../models/IPsychologist";
+import { PsychologistEntity } from "../../infra/prisma/entities/Psychologist";
+import { ICredential } from "@shared/interfaces/ICredential";
 
 export interface IPsychologistsRepository {
 	create(data: ICreatePsychologist): Promise<PsychologistEntity>;

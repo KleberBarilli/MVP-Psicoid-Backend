@@ -1,4 +1,4 @@
-import { Credential, Provider, Role } from '@prisma/client';
+import { Credential, Provider, Role } from "@prisma/client";
 
 export class CredentialEntity implements Credential {
 	id: string;

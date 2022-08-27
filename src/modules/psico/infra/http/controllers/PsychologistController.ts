@@ -1,17 +1,17 @@
-import { Request, Response } from 'express';
-import { container } from 'tsyringe';
-import { ValidationError } from 'yup';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { Request, Response } from "express";
+import { container } from "tsyringe";
+import { ValidationError } from "yup";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
-import { validateCredentials } from '@shared/utils/validators/Credentials';
-import { validateAddress } from '@shared/utils/validators/Address';
-import { validateContact } from '@shared/utils/validators/Contact';
-import { validateIdentity } from '@shared/utils/validators/Identity';
-import { validateCompany } from '@validators/Company';
-import { sendBadRequest } from '@shared/errors/BadRequest';
+import { validateCredentials } from "@shared/utils/validators/Credentials";
+import { validateAddress } from "@shared/utils/validators/Address";
+import { validateContact } from "@shared/utils/validators/Contact";
+import { validateIdentity } from "@shared/utils/validators/Identity";
+import { validateCompany } from "@validators/Company";
+import { sendBadRequest } from "@shared/errors/BadRequest";
 
-import CreatePsychologistService from '../../../services/CreatePsychologistService';
-import AppError from '@shared/errors/AppError';
+import CreatePsychologistService from "../../../services/CreatePsychologistService";
+import AppError from "@shared/errors/AppError";
 
 export default class PsychologistController {
 	public async create(req: Request, res: Response): Promise<Response> {
@@ -51,13 +51,13 @@ export default class PsychologistController {
 
 			return res.json({
 				data: user,
-				message: 'Psychologist created with success',
+				message: "Psychologist created with success",
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {
-				if (error.code === 'P2002') {
+				if (error.code === "P2002") {
 					return res.status(400).json({
-						error: 'Já existe um CPF ou CNPJ igual cadastrado no sistema.',
+						error: "Já existe um CPF ou CNPJ igual cadastrado no sistema.",
 					});
 				}
 			}
@@ -74,7 +74,7 @@ export default class PsychologistController {
 			}
 			return res
 				.status(500)
-				.json({ message: 'Erro interno no servidor' });
+				.json({ message: "Erro interno no servidor" });
 		}
 	}
 }

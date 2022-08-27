@@ -9,6 +9,7 @@
     "build": "babel src --extensions \".js,.ts\" --out-dir build --copy-files",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --exit-child --ignore-watch node_modules src/shared/infra/http/server.ts",
     "test": "jest",
+    "lint-fix": "eslint . --ext .ts --fix",
     "migrate:latest": "prisma migrate dev",
     "migrate:rollback": "prisma migrate reset",
     "migrate:make": "prisma migrate dev --name",

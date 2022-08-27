@@ -1,4 +1,4 @@
-import { Provider, Role } from '@prisma/client';
+import { Provider, Role } from "@prisma/client";
 
 export interface ICredential {
 	id: string;

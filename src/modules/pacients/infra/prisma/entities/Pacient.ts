@@ -1,4 +1,4 @@
-import { Pacient } from '@prisma/client';
+import { Pacient } from "@prisma/client";
 
 export class PacientEntity implements Pacient {
 	id: string;

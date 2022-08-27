@@ -1,4 +1,4 @@
-import { Address, Contact } from '@prisma/client';
+import { Address, Contact } from "@prisma/client";
 
 export interface ICompany {
 	cnpj: string;

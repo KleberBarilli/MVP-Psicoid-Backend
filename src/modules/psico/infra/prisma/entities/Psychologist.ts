@@ -1,4 +1,4 @@
-import { Psychologist } from '@prisma/client';
+import { Psychologist } from "@prisma/client";
 
 export class PsychologistEntity implements Psychologist {
 	id: string;

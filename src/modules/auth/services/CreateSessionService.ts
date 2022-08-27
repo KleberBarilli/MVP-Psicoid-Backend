@@ -1,17 +1,17 @@
-import { PrismaClient } from '@prisma/client';
-import { inject, injectable } from 'tsyringe';
-import { sign, Secret } from 'jsonwebtoken';
+import { PrismaClient } from "@prisma/client";
+import { inject, injectable } from "tsyringe";
+import { sign, Secret } from "jsonwebtoken";
 
-import authConfig from '@config/auth';
-import AppError from '@shared/errors/AppError';
-import { ICreateSession } from '../domain/models/ICreateSession';
-import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
+import authConfig from "@config/auth";
+import AppError from "@shared/errors/AppError";
+import { ICreateSession } from "../domain/models/ICreateSession";
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 
 @injectable()
 class CreateSessionService {
 	#prisma;
 	constructor(
-		@inject('HashProvider')
+		@inject("HashProvider")
 		private hashProvider: IHashProvider,
 	) {
 		this.#prisma = new PrismaClient();
@@ -23,16 +23,16 @@ class CreateSessionService {
 		});
 
 		if (!user) {
-			throw new AppError('Incorrect email/password combination.', 401);
+			throw new AppError("Incorrect email/password combination.", 401);
 		}
 
 		const passwordConfirmed = await this.hashProvider.compareHash(
-			password || '',
+			password || "",
 			user.password,
 		);
 
 		if (!passwordConfirmed) {
-			throw new AppError('Incorrect email/password combination.', 401);
+			throw new AppError("Incorrect email/password combination.", 401);
 		}
 
 		const token = sign(

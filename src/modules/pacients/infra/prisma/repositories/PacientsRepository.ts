@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
-import { ICreatePacient } from '../../../domain/models/ICreatePacient';
-import { IPacientsRepository } from '../../../domain/repositories/IPacientsRepository';
-import { PacientEntity } from '../entities/Pacient';
-import { CredentialEntity } from '@shared/entities/Credential';
+import { ICreatePacient } from "../../../domain/models/ICreatePacient";
+import { IPacientsRepository } from "../../../domain/repositories/IPacientsRepository";
+import { PacientEntity } from "../entities/Pacient";
+import { CredentialEntity } from "@shared/entities/Credential";
 
 export default class PacientsRepository implements IPacientsRepository {
 	#prisma;

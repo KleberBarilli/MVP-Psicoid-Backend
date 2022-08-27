@@ -1,5 +1,5 @@
-import AWS from 'aws-sdk';
-import { awsConfig } from '@config/aws';
+import AWS from "aws-sdk";
+import { awsConfig } from "@config/aws";
 
 const AWS_SES = new AWS.SES(awsConfig);
 
@@ -9,7 +9,7 @@ export const sendEmail = (
 	source?: string,
 ) => {
 	let params = {
-		Source: source || 'psicoid-contato@psicoid.com.br',
+		Source: source || "psicoid-contato@psicoid.com.br",
 		Destination: {
 			BccAddresses: [recipientEmail],
 		},
@@ -17,12 +17,12 @@ export const sendEmail = (
 		Message: {
 			Body: {
 				Html: {
-					Charset: 'UTF-8',
+					Charset: "UTF-8",
 					Data: `<p> Redefina a sua senha utilizando esse código ${message} </p>`,
 				},
 			},
 			Subject: {
-				Charset: 'UTF-8',
+				Charset: "UTF-8",
 				Data: `Hello`,
 			},
 		},

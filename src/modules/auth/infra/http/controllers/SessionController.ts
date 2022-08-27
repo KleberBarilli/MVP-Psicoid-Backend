@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
-import { container } from 'tsyringe';
+import { Request, Response } from "express";
+import { container } from "tsyringe";
 
-import { validateLogin } from '@validators/Credentials';
-import CreateSessionService from '../../../services/CreateSessionService';
+import { validateLogin } from "@validators/Credentials";
+import CreateSessionService from "../../../services/CreateSessionService";
 export default class SessionsController {
 	public async create(
 		request: Request,
@@ -21,7 +21,7 @@ export default class SessionsController {
 			});
 			return response.json(user);
 		} catch (err) {
-			return response.status(400).json({ error: 'Error with login' });
+			return response.status(400).json({ error: "Error with login" });
 		}
 	}
 }
