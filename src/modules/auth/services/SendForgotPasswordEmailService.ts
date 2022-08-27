@@ -1,19 +1,19 @@
-import { PrismaClient } from "@prisma/client";
+import { inject, injectable } from "tsyringe";
 import AppError from "@shared/errors/AppError";
 import { ISendForgotPasswordEmail } from "../domain/models/ISendForgotPasswordEmail";
 import { generateRandomNumber } from "@shared/utils/etc";
 import { sendEmail } from "@shared/utils/emailBuilder";
+import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 
+@injectable()
 export default class SendForgotPasswordEmailService {
-	#prisma;
-	constructor() {
-		this.#prisma = new PrismaClient();
-	}
+	constructor(
+		@inject("CredentialsRepository")
+		private credentialsRepository: ICredentialsRepository,
+	) {}
 
 	public async execute({ email }: ISendForgotPasswordEmail): Promise<void> {
-		const user = await this.#prisma.credential.findUnique({
-			where: { email },
-		});
+		const user = await this.credentialsRepository.findByEmail(email);
 
 		if (!user) {
 			throw new AppError("User does not exists.");
@@ -21,10 +21,7 @@ export default class SendForgotPasswordEmailService {
 
 		const tokenRecovery = generateRandomNumber(6);
 
-		await this.#prisma.credential.update({
-			where: { email },
-			data: { tokenRecovery },
-		});
+		await this.credentialsRepository.updateToken(user.id, tokenRecovery);
 
 		await sendEmail(
 			email,
