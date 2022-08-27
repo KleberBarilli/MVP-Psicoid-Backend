@@ -1,45 +1,25 @@
-import { PrismaClient } from "@prisma/client";
-import { injectable } from "tsyringe";
+import { ICredential } from "@shared/interfaces/ICredential";
+import { inject, injectable } from "tsyringe";
+import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 
 @injectable()
 export default class WhoiamService {
-	#prisma;
-	constructor() {
-		this.#prisma = new PrismaClient();
-	}
+	constructor(
+		@inject("CredentialsRepository")
+		private credentialsRepository: ICredentialsRepository,
+	) {}
 
-	public async execute(id: string, role: string): Promise<any> {
-		if (role === "PACIENT") {
-			return await this.#prisma.credential.findUnique({
-				where: { id },
-				include: {
-					pacient: {
-						include: {
-							identity: {
-								include: { address: true, contact: true },
-							},
-						},
-					},
-				},
-			});
-		}
-		if (role === "PSYCHOLOGIST") {
-			return await this.#prisma.credential.findUnique({
-				where: { id },
-				include: {
-					psychologist: {
-						include: {
-							company: {
-								include: { address: true, contact: true },
-							},
-							identity: {
-								include: { address: true, contact: true },
-							},
-							pacients: true,
-						},
-					},
-				},
-			});
+	public async execute(
+		id: string,
+		role: string,
+	): Promise<ICredential | null> {
+		switch (role) {
+			case "PACIENT":
+				return await this.credentialsRepository.iAmPacient(id);
+			case "PSYCHOLOGIST":
+				return await this.credentialsRepository.iAmPsico(id);
+			default:
+				return null;
 		}
 	}
 }
