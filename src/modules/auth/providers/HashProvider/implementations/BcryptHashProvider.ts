@@ -7,10 +7,7 @@ export default class ByCryptHashProvider implements IHashProvider {
 		return hash(payload, 8);
 	}
 
-	public async compareHash(
-		payload: string,
-		hashed: string,
-	): Promise<boolean> {
+	public async compareHash(payload: string, hashed: string): Promise<boolean> {
 		return compare(payload, hashed);
 	}
 }

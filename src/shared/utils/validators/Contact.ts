@@ -12,9 +12,6 @@ export const validateContact = (contact: IContactForm) =>
 		.shape({
 			telephone: yup.string(),
 			cellPhone: yup.string(),
-			email: yup
-				.string()
-				.typeError("EMail inválido")
-				.email("Email inválido"),
+			email: yup.string().typeError("EMail inválido").email("Email inválido"),
 		})
 		.validate(contact, { abortEarly: false, stripUnknown: true });

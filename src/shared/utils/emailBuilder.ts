@@ -3,11 +3,7 @@ import { awsConfig } from "@config/aws";
 
 const AWS_SES = new AWS.SES(awsConfig);
 
-export const sendEmail = (
-	recipientEmail: any,
-	message?: string,
-	source?: string,
-) => {
+export const sendEmail = (recipientEmail: any, message?: string, source?: string) => {
 	let params = {
 		Source: source || "psicoid-contato@psicoid.com.br",
 		Destination: {

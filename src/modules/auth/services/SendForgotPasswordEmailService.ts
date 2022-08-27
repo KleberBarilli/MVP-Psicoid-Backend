@@ -23,10 +23,6 @@ export default class SendForgotPasswordEmailService {
 
 		await this.credentialsRepository.updateToken(user.id, tokenRecovery);
 
-		await sendEmail(
-			email,
-			tokenRecovery,
-			"no-reply-psicoId@psicoid.com.br",
-		);
+		await sendEmail(email, tokenRecovery, "no-reply-psicoId@psicoid.com.br");
 	}
 }

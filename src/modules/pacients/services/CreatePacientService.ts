@@ -20,15 +20,11 @@ export default class CreatePacientService {
 		contact,
 		address,
 	}: ICreatePacient): Promise<IPacientCreated> {
-		const userExists = await this.pacientsRepository.findByEmail(
-			credential.email,
-		);
+		const userExists = await this.pacientsRepository.findByEmail(credential.email);
 		if (userExists) {
 			throw new AppError("User already exists");
 		}
-		credential.password = await this.hashProvider.generateHash(
-			credential.password || "",
-		);
+		credential.password = await this.hashProvider.generateHash(credential.password || "");
 
 		return await this.pacientsRepository.create({
 			credential,

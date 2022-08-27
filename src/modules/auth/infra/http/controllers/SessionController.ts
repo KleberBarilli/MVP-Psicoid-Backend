@@ -16,14 +16,12 @@ export default class SessionsController {
 				email,
 				password,
 			});
-			return res.json(user);
+			return res.json({ data: user });
 		} catch (err) {
 			if (err instanceof AppError) {
-				return res
-					.status(err.statusCode)
-					.json({ message: err.message });
+				return res.status(err.statusCode).json({ message: err.message });
 			}
-			return res.status(400).json({ error: "Error with login" });
+			return res.status(500).json({ error: "Erro ao logar" });
 		}
 	}
 }

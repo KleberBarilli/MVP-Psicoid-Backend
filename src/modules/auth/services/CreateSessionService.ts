@@ -34,14 +34,10 @@ class CreateSessionService {
 			throw new AppError("Email ou senha inválidos", 401);
 		}
 
-		const token = sign(
-			{ profile: user.role },
-			authConfig.jwt.secret as Secret,
-			{
-				subject: user.id,
-				expiresIn: authConfig.jwt.expiresIn,
-			},
-		);
+		const token = sign({ profile: user.role }, authConfig.jwt.secret as Secret, {
+			subject: user.id,
+			expiresIn: authConfig.jwt.expiresIn,
+		});
 
 		return {
 			user,

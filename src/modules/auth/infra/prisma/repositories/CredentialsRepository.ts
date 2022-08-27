@@ -24,10 +24,7 @@ export default class CredentialsRepository implements ICredentialsRepository {
 			data: { password },
 		});
 	}
-	public updateToken(
-		id: string,
-		tokenRecovery: string,
-	): Promise<ICredential> {
+	public updateToken(id: string, tokenRecovery: string): Promise<ICredential> {
 		return this.#prisma.credential.update({
 			where: { id },
 			data: { tokenRecovery },

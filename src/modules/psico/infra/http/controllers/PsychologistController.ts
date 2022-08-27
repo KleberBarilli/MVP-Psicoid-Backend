@@ -17,14 +17,7 @@ export default class PsychologistController {
 	public async create(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				psico: {
-					credentials,
-					identity,
-					contact,
-					address,
-					company,
-					resume,
-				},
+				psico: { credentials, identity, contact, address, company, resume },
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
@@ -37,9 +30,7 @@ export default class PsychologistController {
 				await validateCompany(company);
 			}
 
-			const createPsychologist = container.resolve(
-				CreatePsychologistService,
-			);
+			const createPsychologist = container.resolve(CreatePsychologistService);
 			const user = await createPsychologist.execute({
 				credential: credentials,
 				identity,
@@ -65,16 +56,9 @@ export default class PsychologistController {
 				return sendBadRequest(req, res, error.message, 400);
 			}
 			if (error instanceof AppError) {
-				return sendBadRequest(
-					req,
-					res,
-					error.message,
-					error.statusCode,
-				);
+				return sendBadRequest(req, res, error.message, error.statusCode);
 			}
-			return res
-				.status(500)
-				.json({ message: "Erro interno no servidor" });
+			return res.status(500).json({ message: "Erro interno no servidor" });
 		}
 	}
 }

@@ -9,10 +9,7 @@ export default class WhoiamService {
 		private credentialsRepository: ICredentialsRepository,
 	) {}
 
-	public async execute(
-		id: string,
-		role: string,
-	): Promise<ICredential | null> {
+	public async execute(id: string, role: string): Promise<ICredential | null> {
 		switch (role) {
 			case "PACIENT":
 				return await this.credentialsRepository.iAmPacient(id);

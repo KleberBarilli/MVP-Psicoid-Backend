@@ -28,7 +28,10 @@ export default class PacientController {
 
 			const createPacient = container.resolve(CreatePacientService);
 			const user = await createPacient.execute({
-				credential: credentials,
+				credential: {
+					...credentials,
+					email: credentials.email.toLowerCase(),
+				},
 				identity,
 				contact,
 				address,
@@ -50,12 +53,7 @@ export default class PacientController {
 				return sendBadRequest(req, res, error.message, 400);
 			}
 			if (error instanceof AppError) {
-				return sendBadRequest(
-					req,
-					res,
-					error.message,
-					error.statusCode,
-				);
+				return sendBadRequest(req, res, error.message, error.statusCode);
 			}
 			return res.status(500).json({ message: "Internal Error" });
 		}

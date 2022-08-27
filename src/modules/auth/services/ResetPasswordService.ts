@@ -19,12 +19,7 @@ export default class SendForgotPasswordEmailService {
 		if (!user) {
 			throw new AppError("Código inválido");
 		}
-		const hashedPassword = await this.hashProvider.generateHash(
-			password || "",
-		);
-		await this.credentialsRepository.updatePassword(
-			user.id,
-			hashedPassword,
-		);
+		const hashedPassword = await this.hashProvider.generateHash(password || "");
+		await this.credentialsRepository.updatePassword(user.id, hashedPassword);
 	}
 }
