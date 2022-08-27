@@ -19,7 +19,10 @@ class CreateSessionService {
 		const user = await this.credentialsRepository.findByEmail(email);
 
 		if (!user) {
-			throw new AppError("Incorrect email/password combination.", 401);
+			throw new AppError("Usuário não encontrado", 401);
+		}
+		if (user.inactive) {
+			throw new AppError("A conta do usuaŕio está inativa", 403);
 		}
 
 		const passwordConfirmed = await this.hashProvider.compareHash(
@@ -28,7 +31,7 @@ class CreateSessionService {
 		);
 
 		if (!passwordConfirmed) {
-			throw new AppError("Incorrect email/password combination.", 401);
+			throw new AppError("Email ou senha inválidos", 401);
 		}
 
 		const token = sign(

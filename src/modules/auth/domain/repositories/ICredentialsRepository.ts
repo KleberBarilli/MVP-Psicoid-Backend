@@ -8,4 +8,5 @@ export interface ICredentialsRepository {
 	updateToken(id: string, token: string): Promise<ICredential>;
 	iAmPsico(id: string): Promise<ICredential | null>;
 	iAmPacient(id: string): Promise<ICredential | null>;
+	deactivateAccount(id: string): Promise<ICredential>;
 }

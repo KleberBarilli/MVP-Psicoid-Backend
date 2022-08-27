@@ -61,4 +61,10 @@ export default class CredentialsRepository implements ICredentialsRepository {
 			},
 		});
 	}
+	public deactivateAccount(id: string): Promise<ICredential> {
+		return this.#prisma.credential.update({
+			where: { id },
+			data: { inactive: true },
+		});
+	}
 }

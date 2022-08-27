@@ -1,14 +1,11 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-
 import { validateLogin } from "@validators/Credentials";
 import CreateSessionService from "../../../services/CreateSessionService";
+import AppError from "@shared/errors/AppError";
 export default class SessionsController {
-	public async create(
-		request: Request,
-		response: Response,
-	): Promise<Response> {
-		const { email, password } = request.body;
+	public async create(req: Request, res: Response): Promise<Response> {
+		const { email, password } = req.body;
 
 		try {
 			await validateLogin({ email, password });
@@ -19,9 +16,14 @@ export default class SessionsController {
 				email,
 				password,
 			});
-			return response.json(user);
+			return res.json(user);
 		} catch (err) {
-			return response.status(400).json({ error: "Error with login" });
+			if (err instanceof AppError) {
+				return res
+					.status(err.statusCode)
+					.json({ message: err.message });
+			}
+			return res.status(400).json({ error: "Error with login" });
 		}
 	}
 }
