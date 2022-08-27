@@ -10,9 +10,7 @@ export default class ShowPsychologistController {
 			const psychologist = await showPsychologist.execute(id);
 			return res.status(200).json({ data: psychologist });
 		} catch (error) {
-			return res
-				.status(400)
-				.json({ message: "Houve um erro ao buscar o usuário" });
+			return res.status(400).json({ message: "Houve um erro ao buscar o usuário" });
 		}
 	}
 }

@@ -22,15 +22,11 @@ export default class CreatePsychologistService {
 		company,
 		resume,
 	}: ICreatePsychologist): Promise<IPsychologistCreated> {
-		const userExists = await this.psychologistsRepository.findByEmail(
-			credential.email,
-		);
+		const userExists = await this.psychologistsRepository.findByEmail(credential.email);
 		if (userExists) {
 			throw new AppError("User already exists");
 		}
-		credential.password = await this.hashProvider.generateHash(
-			credential.password || "",
-		);
+		credential.password = await this.hashProvider.generateHash(credential.password || "");
 
 		return this.psychologistsRepository.create({
 			credential,

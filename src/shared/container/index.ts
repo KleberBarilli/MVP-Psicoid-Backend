@@ -7,14 +7,8 @@ import PsychologistsRepository from "@modules/psico/infra/prisma/repositories/Ps
 import { ICredentialsRepository } from "@modules/auth/domain/repositories/ICredentialsRepository";
 import CredentialsRepository from "@modules/auth/infra/prisma/repositories/CredentialsRepository";
 
-container.registerSingleton<ICredentialsRepository>(
-	"CredentialsRepository",
-	CredentialsRepository,
-);
-container.registerSingleton<IPacientsRepository>(
-	"PacientsRepository",
-	PacientsRepository,
-);
+container.registerSingleton<ICredentialsRepository>("CredentialsRepository", CredentialsRepository);
+container.registerSingleton<IPacientsRepository>("PacientsRepository", PacientsRepository);
 container.registerSingleton<IPsychologistsRepository>(
 	"PsychologistsRepository",
 	PsychologistsRepository,

@@ -5,10 +5,6 @@ import DeactivateAccountController from "../controllers/DeactivateAccountControl
 const deactivateRouter = Router();
 const deactivateAccountController = new DeactivateAccountController();
 
-deactivateRouter.post(
-	"/deactivate",
-	isAuthenticated,
-	deactivateAccountController.create,
-);
+deactivateRouter.post("/deactivate", isAuthenticated, deactivateAccountController.create);
 
 export default deactivateRouter;

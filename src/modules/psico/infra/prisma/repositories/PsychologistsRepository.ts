@@ -5,9 +5,7 @@ import { IPsychologistsRepository } from "../../../domain/repositories/IPsycholo
 import { PsychologistEntity } from "../entities/Psychologist";
 import { CredentialEntity } from "@shared/entities/Credential";
 
-export default class PsychologistsRepository
-	implements IPsychologistsRepository
-{
+export default class PsychologistsRepository implements IPsychologistsRepository {
 	#prisma;
 	constructor() {
 		this.#prisma = new PrismaClient();

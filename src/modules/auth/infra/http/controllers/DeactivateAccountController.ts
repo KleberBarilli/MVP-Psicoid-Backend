@@ -8,13 +8,9 @@ export default class DeactivateAccountController {
 		try {
 			const deactivate = container.resolve(DeactivateAccountService);
 			await deactivate.execute(id);
-			return res
-				.status(204)
-				.json({ message: "A conta foi desativada com sucesso" });
+			return res.status(204).json({ message: "A conta foi desativada com sucesso" });
 		} catch (error) {
-			return res
-				.status(400)
-				.json({ message: "Erro ao desativar a conta" });
+			return res.status(400).json({ message: "Erro ao desativar a conta" });
 		}
 	}
 }
