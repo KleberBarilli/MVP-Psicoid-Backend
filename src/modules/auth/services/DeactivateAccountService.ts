@@ -1,15 +1,14 @@
-import { PrismaClient } from "@prisma/client";
-import AppError from "@shared/errors/AppError";
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 
 @injectable()
-export default class SendForgotPasswordEmailService {
-	#prisma;
+export default class DeactivateAccountService {
 	constructor(
-	) {
-		this.#prisma = new PrismaClient();
-	}
+		@inject("CredentialsRepository")
+		private credentialsRepository: ICredentialsRepository,
+	) {}
 
 	public async execute(id: string): Promise<void> {
-		
+		await this.credentialsRepository.deactivateAccount(id);
+	}
 }
