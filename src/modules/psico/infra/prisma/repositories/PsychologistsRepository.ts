@@ -52,7 +52,14 @@ export default class PsychologistsRepository
 	}
 
 	public async findById(id: string): Promise<PsychologistEntity | null> {
-		return await this.#prisma.psychologist.findUnique({ where: { id } });
+		return await this.#prisma.psychologist.findUnique({
+			where: { id },
+			include: {
+				company: { include: { address: true, contact: true } },
+				identity: { include: { address: true, contact: true } },
+				approaches: true,
+			},
+		});
 	}
 	public async findByEmail(email: string): Promise<CredentialEntity | null> {
 		return await this.#prisma.credential.findUnique({ where: { email } });

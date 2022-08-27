@@ -39,7 +39,14 @@ export default class PacientsRepository implements IPacientsRepository {
 	}
 
 	public async findById(id: string): Promise<PacientEntity | null> {
-		return await this.#prisma.pacient.findUnique({ where: { id } });
+		return await this.#prisma.pacient.findUnique({
+			where: { id },
+			include: {
+				credential: { select: { email: true } },
+				identity: { include: { address: true, contact: true } },
+				psychologists: true,
+			},
+		});
 	}
 	public async findByEmail(email: string): Promise<CredentialEntity | null> {
 		return await this.#prisma.credential.findUnique({ where: { email } });
