@@ -10,7 +10,7 @@ export default class ShowPacientController {
 			const pacient = await showPacient.execute(id);
 			return res.status(200).json({ data: pacient });
 		} catch (error) {
-			return res.status(400).json({ message: "Houve um erro ao buscar o usuário" });
+			return res.status(400).json({ error: "Houve um erro ao buscar o usuário" });
 		}
 	}
 }

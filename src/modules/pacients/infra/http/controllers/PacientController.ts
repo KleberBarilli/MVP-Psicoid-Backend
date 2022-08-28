@@ -37,7 +37,7 @@ export default class PacientController {
 				address,
 			});
 
-			return res.json({
+			return res.status(201).json({
 				data: user,
 				message: "Pacient created with success",
 			});
@@ -55,7 +55,7 @@ export default class PacientController {
 			if (error instanceof AppError) {
 				return sendBadRequest(req, res, error.message, error.statusCode);
 			}
-			return res.status(500).json({ message: "Internal Error" });
+			return res.status(500).json({ error: "Internal Error" });
 		}
 	}
 }

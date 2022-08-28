@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-	  "target": "ES2015",
+	  "target": "ES2017",
 	  "module": "commonjs",
 	  "lib": ["es6"],
 	  "allowJs": true,
@@ -9,12 +9,7 @@
 	  "strict": true,
 	  "noImplicitAny": true,
 	  "strictPropertyInitialization": false,
-	  "baseUrl": ".",
-	  "useUnknownInCatchVariables": true,
-	  "typeRoots": [
-		"@types",
-		"./node_modules/@types"
-	  ],
+	  "baseUrl": "./",
 	  "paths": {
 		"@config/*": [
 		  "src/config/*"
@@ -25,8 +20,12 @@
 		"@shared/*": [
 		  "src/shared/*"
 		],
-		"@validators/*": ["src/shared/utils/validators/*"],
+		"@validators/*": ["src/shared/utils/validators/*"]
 	  },
+	  "typeRoots": [
+		"@types",
+		"./node_modules/@types"
+	  ],
 	  "esModuleInterop": true,
 	  "experimentalDecorators": true,
 	  "emitDecoratorMetadata": true,
@@ -34,6 +33,6 @@
 	  "skipLibCheck": true,
 	  "forceConsistentCasingInFileNames": true
 	},
-	"include": ["./src"],
+	"include": ["./src", "src/client.tssrc/singleton.tsn.ts"],
 	"exclude": ["node_modules","build","dist","./docker"]
   }
