@@ -24,17 +24,13 @@ describe("Pacient Module E2E", async () => {
 		expect(response.body.error).toBeTruthy();
 	});
 	test("[e2e] Should be able to find a existing pacient", async () => {
-		const response = await request(app).get(`/pacient/${pacientId}`).send({
-			pacient,
-		});
+		const response = await request(app).get(`/pacient/${pacientId}`);
 		expect(response.status).toBe(200);
 		expect(response.body.data).toBeTruthy();
 		expect(response.body.error).toBeFalsy();
 	});
 	test("[e2e] Should not be able to find a inexisting pacient", async () => {
-		const response = await request(app).get(`/pacient/invalidId}`).send({
-			pacient,
-		});
+		const response = await request(app).get(`/pacient/invalidId}`);
 		expect(response.status).toBe(400);
 		expect(response.body.error).toBeTruthy();
 	});

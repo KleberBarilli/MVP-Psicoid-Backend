@@ -1,6 +1,6 @@
 export const pacient = {
 	credentials: {
-		email: "test@example.com",
+		email: "pacient@example.com",
 		password: "pass12346",
 		role: "PACIENT",
 	},
@@ -20,4 +20,29 @@ export const pacient = {
 		city: "Passo Fundo",
 		state: "RS",
 	},
+};
+
+export const psychologist = {
+	credentials: {
+		email: "psico@example.com",
+		password: "pass12346",
+		role: "PSYCHOLOGIST",
+	},
+	identity: {
+		firstName: "Anna",
+		lastName: "Uzumaki",
+		cpf: "98001451097",
+	},
+	contact: {
+		cellPhone: "54-99532383",
+	},
+	address: {
+		zipCode: "99990-000",
+		street: "main avenue",
+		neighborhood: "center",
+		number: "54",
+		city: "Passo Fundo",
+		state: "RS",
+	},
+	resume: "Description..",
 };
