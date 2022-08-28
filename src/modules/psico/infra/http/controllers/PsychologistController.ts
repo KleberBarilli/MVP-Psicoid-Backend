@@ -40,7 +40,7 @@ export default class PsychologistController {
 				resume,
 			});
 
-			return res.json({
+			return res.status(201).json({
 				data: user,
 				message: "Psychologist created with success",
 			});
@@ -58,7 +58,8 @@ export default class PsychologistController {
 			if (error instanceof AppError) {
 				return sendBadRequest(req, res, error.message, error.statusCode);
 			}
-			return res.status(500).json({ message: "Erro interno no servidor" });
+			console.log("asds", error);
+			return res.status(500).json({ error });
 		}
 	}
 }

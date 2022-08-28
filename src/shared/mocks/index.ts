@@ -22,7 +22,7 @@ export const pacient = {
 	},
 };
 
-export const psychologist = {
+export const psico = {
 	credentials: {
 		email: "psico@example.com",
 		password: "pass12346",

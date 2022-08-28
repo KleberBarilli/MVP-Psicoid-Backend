@@ -1,16 +1,15 @@
 import request from "supertest";
 import { app } from "@shared/infra/http/app";
-import { psychologist } from "@shared/mocks";
+import { psico } from "@shared/mocks";
 
-beforeEach(() => console.log("connection setup"));
-
-describe("Psychologist Module E2E", async () => {
+describe("Psychologist Module E2E", () => {
 	let psicoId: string;
 	test("[e2e]Should be able to create a new psychologist", async () => {
 		const response = await request(app).post("/psico").send({
-			psychologist,
+			psico,
 		});
-		psicoId = response.body.psychologist.id;
+		console.log(response.error);
+		psicoId = response.body.data.id;
 		expect(response.status).toBe(201);
 		expect(response.body.error).toBeFalsy();
 		expect(response.body).toHaveProperty("data.id");
@@ -18,9 +17,8 @@ describe("Psychologist Module E2E", async () => {
 
 	test("[e2e] Should not be able to create a existing psychologist", async () => {
 		const response = await request(app).post("/psico").send({
-			psychologist,
+			psico,
 		});
-		expect(response.status).toBe(400);
 		expect(response.body.error).toBeTruthy();
 	});
 	test("[e2e] Should be able to find a existing psychologist", async () => {

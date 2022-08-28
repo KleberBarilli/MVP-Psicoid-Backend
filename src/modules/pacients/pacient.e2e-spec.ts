@@ -2,15 +2,15 @@ import request from "supertest";
 import { app } from "@shared/infra/http/app";
 import { pacient } from "@shared/mocks";
 
-beforeEach(() => console.log("connection setup"));
+//beforeEach(() => console.log("connection setup"));
 
-describe("Pacient Module E2E", async () => {
+describe("Pacient Module E2E", () => {
 	let pacientId: string;
 	test("[e2e]Should be able to create a new pacient", async () => {
 		const response = await request(app).post("/pacient").send({
 			pacient,
 		});
-		pacientId = response.body.pacient.id;
+		pacientId = response.body.data.id;
 		expect(response.status).toBe(201);
 		expect(response.body.error).toBeFalsy();
 		expect(response.body).toHaveProperty("data.id");
