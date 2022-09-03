@@ -1,13 +1,15 @@
 import { Router } from "express";
-
-import PsychologistController from "../controllers/PsychologistController";
+import CreatePsychologistController from "../controllers/CreatePsychologistController";
 import ShowPsychologistController from "../controllers/ShowPsychologistController";
+import UpdatePsychologistController from "../controllers/UpdatePsychologistController";
 
 const psicoRouter = Router();
-const psicoController = new PsychologistController();
+const createPsicoController = new CreatePsychologistController();
 const showPsicoController = new ShowPsychologistController();
+const updatePsicoController = new UpdatePsychologistController();
 
-psicoRouter.post("/", psicoController.create);
+psicoRouter.post("/", createPsicoController.create);
 psicoRouter.get("/:id", showPsicoController.show);
+psicoRouter.put("/:id", updatePsicoController.update);
 
 export default psicoRouter;

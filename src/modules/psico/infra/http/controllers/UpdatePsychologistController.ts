@@ -6,13 +6,13 @@ import { validateUpdateAddress } from "@shared/utils/validators/Address";
 import { validateContact } from "@shared/utils/validators/Contact";
 import { validateUpdateIdentity } from "@shared/utils/validators/Identity";
 import { sendBadRequest } from "@shared/errors/BadRequest";
-import UpdatePacientService from "@modules/pacients/services/UpdatePacientService";
+import UpdatePsychologistService from "@modules/psico/services/UpdatePsychologistService";
 
-export default class UpdatePacientController {
+export default class UpdatePsychologistController {
 	public async update(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				pacient: { identity, contact, address },
+				psico: { identity, contact, address, resume },
 			} = req.body;
 			const { id } = req.params;
 			await Promise.all([
@@ -21,16 +21,17 @@ export default class UpdatePacientController {
 				validateUpdateAddress(address),
 			]);
 
-			const updatePacient = container.resolve(UpdatePacientService);
-			const user = await updatePacient.execute(id, {
+			const updatePsychologist = container.resolve(UpdatePsychologistService);
+			const user = await updatePsychologist.execute(id, {
 				identity,
 				contact,
 				address,
+				resume,
 			});
 
 			return res.status(204).json({
 				data: user,
-				message: "Pacient updated with success",
+				message: "Psychologist updated with success",
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {

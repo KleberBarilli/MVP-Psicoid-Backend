@@ -4,6 +4,7 @@ import { ICreatePsychologist } from "../../../domain/models/ICreatePsychologist"
 import { IPsychologistsRepository } from "../../../domain/repositories/IPsychologistsRepository";
 import { PsychologistEntity } from "../entities/Psychologist";
 import { CredentialEntity } from "@shared/entities/Credential";
+import { IUpdatePsychologist } from "@modules/psico/domain/models/IUpdatePsychologist";
 
 export default class PsychologistsRepository implements IPsychologistsRepository {
 	#prisma;
@@ -61,5 +62,23 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 	}
 	public async findByEmail(email: string): Promise<CredentialEntity | null> {
 		return await this.#prisma.credential.findUnique({ where: { email } });
+	}
+	public update(
+		id: string,
+		{ identity, contact, address, resume }: IUpdatePsychologist,
+	): Promise<PsychologistEntity> {
+		return this.#prisma.psychologist.update({
+			where: { id },
+			data: {
+				resume,
+				identity: {
+					update: {
+						...identity,
+						contact: { update: { ...contact } },
+						address: { update: { ...address } },
+					},
+				},
+			},
+		});
 	}
 }

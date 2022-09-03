@@ -3,6 +3,7 @@ import { Router } from "express";
 import CreatePacientController from "../controllers/CreatePacientController";
 import ShowPacientController from "../controllers/ShowPacientController";
 import UpdatePacientController from "../controllers/UpdatePacientController";
+
 const pacientRouter = Router();
 const createPacientController = new CreatePacientController();
 const showPacient = new ShowPacientController();

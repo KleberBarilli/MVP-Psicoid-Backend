@@ -51,11 +51,10 @@ export default class PacientsRepository implements IPacientsRepository {
 	public async findByEmail(email: string): Promise<CredentialEntity | null> {
 		return await this.#prisma.credential.findUnique({ where: { email } });
 	}
-	public async update(
+	public update(
 		id: string,
 		{ identity, contact, address }: IUpdatePacient,
 	): Promise<PacientEntity> {
-		console.log(id);
 		return this.#prisma.pacient.update({
 			where: { id },
 			data: {
