@@ -9,7 +9,7 @@ import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepos
 export default class SendForgotPasswordEmailService {
 	constructor(
 		@inject("CredentialsRepository")
-		private credentialsRepository: ICredentialsRepository,
+		public credentialsRepository: ICredentialsRepository,
 	) {}
 
 	public async execute({ email }: ISendForgotPasswordEmail): Promise<void> {

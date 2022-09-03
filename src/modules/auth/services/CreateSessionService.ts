@@ -10,9 +10,9 @@ import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepos
 class CreateSessionService {
 	constructor(
 		@inject("CredentialsRepository")
-		private credentialsRepository: ICredentialsRepository,
+		public credentialsRepository: ICredentialsRepository,
 		@inject("HashProvider")
-		private hashProvider: IHashProvider,
+		public hashProvider: IHashProvider,
 	) {}
 
 	public async execute({ email, password }: ICreateSession): Promise<any> {

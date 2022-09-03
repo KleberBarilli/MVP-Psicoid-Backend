@@ -7,7 +7,7 @@ import { IPacient } from "../domain/models/IPacient";
 export default class ShowPacientService {
 	constructor(
 		@inject("PacientsRepository")
-		private pacientsRepository: IPacientsRepository,
+		public pacientsRepository: IPacientsRepository,
 	) {}
 	public async execute(id: string): Promise<IPacient | null> {
 		return await this.pacientsRepository.findById(id);

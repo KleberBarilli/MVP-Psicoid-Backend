@@ -7,7 +7,7 @@ import { PacientEntity } from "../infra/prisma/entities/Pacient";
 export default class UpdatePacientService {
 	constructor(
 		@inject("PacientsRepository")
-		private pacientsRepository: IPacientsRepository,
+		public pacientsRepository: IPacientsRepository,
 	) {}
 	public async execute(
 		id: string,

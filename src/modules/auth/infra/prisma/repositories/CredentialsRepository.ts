@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { ICredentialsRepository } from "@modules/auth/domain/repositories/ICredentialsRepository";
 import { ICredential } from "@shared/interfaces/ICredential";
+import { IUpdateCredential } from "@modules/auth/domain/models/IUpdateCredentials";
 
 export default class CredentialsRepository implements ICredentialsRepository {
 	#prisma;
@@ -63,5 +64,11 @@ export default class CredentialsRepository implements ICredentialsRepository {
 			where: { id },
 			data: { inactive: true },
 		});
+	}
+	public updateCredential(
+		id: string,
+		{ email, password }: IUpdateCredential,
+	): Promise<ICredential> {
+		return this.#prisma.credential.update({ where: { id }, data: { email, password } });
 	}
 }

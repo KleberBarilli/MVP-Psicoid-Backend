@@ -10,9 +10,9 @@ import { IHashProvider } from "@modules/auth/providers/HashProvider/models/IHash
 export default class CreatePsychologistService {
 	constructor(
 		@inject("PsychologistsRepository")
-		private psychologistsRepository: IPsychologistsRepository,
+		public psychologistsRepository: IPsychologistsRepository,
 		@inject("HashProvider")
-		private hashProvider: IHashProvider,
+		public hashProvider: IHashProvider,
 	) {}
 	public async execute({
 		credential,
