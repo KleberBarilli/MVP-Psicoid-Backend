@@ -8,5 +8,7 @@ export interface IPsychologistsRepository {
 	create(data: ICreatePsychologist): Promise<PsychologistEntity>;
 	findById(id: string): Promise<IPsychologist | null>;
 	findByEmail(email: string): Promise<ICredential | null>;
+	findAll(): Promise<IPsychologist[]>;
+	findByCity(city: string): Promise<IPsychologist[]>;
 	update(id: string, data: IUpdatePsychologist): Promise<PsychologistEntity>;
 }
