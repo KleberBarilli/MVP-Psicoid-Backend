@@ -21,3 +21,16 @@ export const validateIdentity = (identity: IIdentityForm) =>
 				.required("O CPF é obrigatório"),
 		})
 		.validate(identity, { abortEarly: false, stripUnknown: true });
+
+export const validateUpdateIdentity = (identity: IIdentityForm) =>
+	yup
+		.object()
+		.shape({
+			firstName: yup.string(),
+			lastName: yup.string(),
+			cpf: yup.string().test({
+				test: v => !v || cpf.isValid(v),
+				message: "CPF Inválido",
+			}),
+		})
+		.validate(identity, { abortEarly: false, stripUnknown: true });

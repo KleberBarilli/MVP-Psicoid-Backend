@@ -19,9 +19,7 @@ export const validateAddress = (address: IAddressForm) =>
 			zipCode: yup
 				.string()
 				.typeError("CEP inválido")
-				.matches(/^\d{5}-\d{3}$/, "CEP inválido")
-				.typeError("CEP inválido")
-				.min(9, "CEP muito curto, digite ao menos 9 caracteres")
+				.min(8, "CEP muito curto, digite ao menos 8 caracteres")
 				.required("Necessário preencher o campo CEP"),
 			street: yup.string().required("Necessário preencher o nome da rua"),
 			number: yup.string(),
@@ -33,5 +31,22 @@ export const validateAddress = (address: IAddressForm) =>
 				.typeError("Estado inválido")
 				.oneOf(BRAZIL_STATES)
 				.required("Necessário preencher o estado"),
+		})
+		.validate(address, { abortEarly: false, stripUnknown: true });
+
+export const validateUpdateAddress = (address: IAddressForm) =>
+	yup
+		.object()
+		.shape({
+			zipCode: yup
+				.string()
+				.typeError("CEP inválido")
+				.min(8, "CEP muito curto, digite ao menos 8 caracteres"),
+			street: yup.string(),
+			number: yup.string(),
+			complement: yup.string(),
+			neighborhood: yup.string(),
+			city: yup.string(),
+			state: yup.string().typeError("Estado inválido").oneOf(BRAZIL_STATES),
 		})
 		.validate(address, { abortEarly: false, stripUnknown: true });
