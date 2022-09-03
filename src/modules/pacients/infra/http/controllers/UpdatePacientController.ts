@@ -14,7 +14,7 @@ export default class UpdatePacientController {
 			const {
 				pacient: { identity, contact, address },
 			} = req.body;
-			const { id } = req.user;
+			const { id } = req.params;
 			await Promise.all([
 				validateUpdateIdentity(identity),
 				validateContact(contact),
@@ -43,6 +43,7 @@ export default class UpdatePacientController {
 			if (error instanceof ValidationError) {
 				return sendBadRequest(req, res, error.message, 400);
 			}
+			console.log(error);
 			return res.status(500).json({ error: "Internal Error" });
 		}
 	}

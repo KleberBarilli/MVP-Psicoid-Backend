@@ -55,6 +55,7 @@ export default class PacientsRepository implements IPacientsRepository {
 		id: string,
 		{ identity, contact, address }: IUpdatePacient,
 	): Promise<PacientEntity> {
+		console.log(id);
 		return this.#prisma.pacient.update({
 			where: { id },
 			data: {
