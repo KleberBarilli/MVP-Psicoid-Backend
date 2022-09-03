@@ -12,7 +12,7 @@ export class PacientEntityFake {
 }
 //https://www.prisma.io/docs/guides/testing/unit-testing
 class FakePacientsRepository {
-	private pacients: PacientEntityFake[] = [];
+	public pacients: PacientEntityFake[] = [];
 
 	public async create({
 		credentialId,

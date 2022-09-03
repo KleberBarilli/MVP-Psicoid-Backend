@@ -7,7 +7,7 @@ import { PsychologistEntity } from "../infra/prisma/entities/Psychologist";
 export default class UpdatePsychologistService {
 	constructor(
 		@inject("PsychologistsRepository")
-		private psychologistsRepository: IPsychologistsRepository,
+		public psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(
 		id: string,

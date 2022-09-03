@@ -10,9 +10,9 @@ import AppError from "@shared/errors/AppError";
 export default class CreatePacientService {
 	constructor(
 		@inject("PacientsRepository")
-		private pacientsRepository: IPacientsRepository,
+		public pacientsRepository: IPacientsRepository,
 		@inject("HashProvider")
-		private hashProvider: IHashProvider,
+		public hashProvider: IHashProvider,
 	) {}
 	public async execute({
 		credential,

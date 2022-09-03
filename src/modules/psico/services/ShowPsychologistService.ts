@@ -7,7 +7,7 @@ import { IPsychologist } from "../domain/models/IPsychologist";
 export default class ShowPsychologistService {
 	constructor(
 		@inject("PsychologistsRepository")
-		private psychologistsRepository: IPsychologistsRepository,
+		public psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(id: string): Promise<IPsychologist | null> {
 		return await this.psychologistsRepository.findById(id);

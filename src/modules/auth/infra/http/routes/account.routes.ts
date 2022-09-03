@@ -1,10 +1,13 @@
 import isAuthenticated from "@shared/infra/http/middlewares/isAuthenticated";
 import { Router } from "express";
 import DeactivateAccountController from "../controllers/DeactivateAccountController";
+import UpdateCredentialsController from "../controllers/UpdateCredentials";
 
-const deactivateRouter = Router();
+const accountRouter = Router();
 const deactivateAccountController = new DeactivateAccountController();
+const updateCredentials = new UpdateCredentialsController();
 
-deactivateRouter.post("/deactivate", isAuthenticated, deactivateAccountController.create);
+accountRouter.post("/deactivate", isAuthenticated, deactivateAccountController.create);
+accountRouter.put("/", isAuthenticated, updateCredentials.update);
 
-export default deactivateRouter;
+export default accountRouter;

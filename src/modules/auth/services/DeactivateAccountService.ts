@@ -5,7 +5,7 @@ import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepos
 export default class DeactivateAccountService {
 	constructor(
 		@inject("CredentialsRepository")
-		private credentialsRepository: ICredentialsRepository,
+		public credentialsRepository: ICredentialsRepository,
 	) {}
 
 	public async execute(id: string): Promise<void> {

@@ -1,11 +1,11 @@
 import AppError from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
-import { IResetPassword } from "../domain/models/IResetPassword";
+import { IUpdateCredential } from "../domain/models/IUpdateCredentials";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 
 @injectable()
-export default class SendForgotPasswordEmailService {
+export default class UpdateCredentialsService {
 	constructor(
 		@inject("CredentialsRepository")
 		public credentialsRepository: ICredentialsRepository,
@@ -13,13 +13,13 @@ export default class SendForgotPasswordEmailService {
 		public hashProvider: IHashProvider,
 	) {}
 
-	public async execute({ token, password }: IResetPassword): Promise<void> {
-		const user = await this.credentialsRepository.findByToken(token);
+	public async execute(id: string, { email, password }: IUpdateCredential): Promise<void> {
+		const user = await this.credentialsRepository.findById(id);
 
 		if (!user) {
-			throw new AppError("Código inválido");
+			throw new AppError("Usuário não encontrado");
 		}
 		const hashedPassword = await this.hashProvider.generateHash(password || "");
-		await this.credentialsRepository.updatePassword(user.id, hashedPassword);
+		await this.credentialsRepository.updateCredential(id, { email, password: hashedPassword });
 	}
 }
