@@ -5,6 +5,7 @@ import { IPsychologistsRepository } from "../../../domain/repositories/IPsycholo
 import { PsychologistEntity } from "../entities/Psychologist";
 import { CredentialEntity } from "@shared/entities/Credential";
 import { IUpdatePsychologist } from "@modules/psico/domain/models/IUpdatePsychologist";
+import { IPsychologist } from "@modules/psico/domain/models/IPsychologist";
 
 export default class PsychologistsRepository implements IPsychologistsRepository {
 	#prisma;
@@ -79,6 +80,17 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 					},
 				},
 			},
+		});
+	}
+	public async findAll(): Promise<IPsychologist[]> {
+		return await this.#prisma.psychologist.findMany({
+			include: { identity: { include: { address: true, contact: true } }, approaches: true },
+		});
+	}
+	public async findByCity(city: string): Promise<IPsychologist[]> {
+		return await this.#prisma.psychologist.findMany({
+			where: { identity: { address: { city } } },
+			include: { identity: { include: { address: true, contact: true } }, approaches: true },
 		});
 	}
 }
