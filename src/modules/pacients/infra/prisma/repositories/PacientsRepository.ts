@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-
 import { ICreatePacient } from "../../../domain/models/ICreatePacient";
 import { IPacientsRepository } from "../../../domain/repositories/IPacientsRepository";
 import { PacientEntity } from "../entities/Pacient";
@@ -54,12 +53,11 @@ export default class PacientsRepository implements IPacientsRepository {
 	}
 	public async update(
 		id: string,
-		{ credential, identity, contact, address }: IUpdatePacient,
+		{ identity, contact, address }: IUpdatePacient,
 	): Promise<PacientEntity> {
 		return this.#prisma.pacient.update({
 			where: { id },
 			data: {
-				credential: { update: { ...credential } },
 				identity: {
 					update: {
 						...identity,
