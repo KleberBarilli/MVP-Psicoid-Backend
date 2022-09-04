@@ -17,7 +17,7 @@ export default class PsychologistController {
 	public async create(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				psico: { credentials, identity, contact, address, company, resume },
+				psico: { credentials, identity, contact, address, office, resume },
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
@@ -26,17 +26,13 @@ export default class PsychologistController {
 				validateContact(contact),
 				validateAddress(address),
 			]);
-			if (company) {
-				await validateCompany(company);
-			}
-
-			const createPsychologist = container.resolve(CreatePsychologistService);
-			const user = await createPsychologist.execute({
+			const service = container.resolve(CreatePsychologistService);
+			const user = await service.execute({
 				credential: credentials,
 				identity,
 				contact,
 				address,
-				company,
+				office,
 				resume,
 			});
 
@@ -58,7 +54,6 @@ export default class PsychologistController {
 			if (error instanceof AppError) {
 				return sendBadRequest(req, res, error.message, error.statusCode);
 			}
-			console.log("asds", error);
 			return res.status(500).json({ error });
 		}
 	}
