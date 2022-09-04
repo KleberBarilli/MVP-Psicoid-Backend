@@ -61,7 +61,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 	}
 	public update(
 		id: string,
-		{ identity, contact, address, resume }: IUpdatePsychologist,
+		{ identity, contact, address, office, resume }: IUpdatePsychologist,
 	): Promise<PsychologistEntity> {
 		return this.#prisma.psychologist.update({
 			where: { id },
@@ -70,6 +70,13 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				identity: {
 					update: {
 						...identity,
+						contact: { update: { ...contact } },
+						address: { update: { ...address } },
+					},
+				},
+				office: {
+					update: {
+						...office,
 						contact: { update: { ...contact } },
 						address: { update: { ...address } },
 					},
