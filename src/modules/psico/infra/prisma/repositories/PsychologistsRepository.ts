@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-
 import { ICreatePsychologist } from "../../../domain/models/ICreatePsychologist";
 import { IPsychologistsRepository } from "../../../domain/repositories/IPsychologistsRepository";
 import { PsychologistEntity } from "../entities/Psychologist";
@@ -18,7 +17,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		identity,
 		contact,
 		address,
-		company,
+		office,
 		resume,
 	}: ICreatePsychologist): Promise<PsychologistEntity> {
 		return this.#prisma.psychologist.create({
@@ -36,17 +35,13 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 						address: { create: { ...address } },
 					},
 				},
-				...(company
-					? {
-							company: {
-								create: {
-									...company,
-									address: { create: { ...company.address } },
-									contact: { create: { ...company.contact } },
-								},
-							},
-					  }
-					: {}),
+				office: {
+					create: {
+						...office,
+						contact: { create: { ...contact } },
+						address: { create: { ...address } },
+					},
+				},
 			},
 		});
 	}
@@ -66,7 +61,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 	}
 	public update(
 		id: string,
-		{ identity, contact, address, resume }: IUpdatePsychologist,
+		{ identity, contact, address, office, resume }: IUpdatePsychologist,
 	): Promise<PsychologistEntity> {
 		return this.#prisma.psychologist.update({
 			where: { id },
@@ -75,6 +70,13 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				identity: {
 					update: {
 						...identity,
+						contact: { update: { ...contact } },
+						address: { update: { ...address } },
+					},
+				},
+				office: {
+					update: {
+						...office,
 						contact: { update: { ...contact } },
 						address: { update: { ...address } },
 					},
