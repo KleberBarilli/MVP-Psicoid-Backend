@@ -91,6 +91,7 @@ model Psychologist {
     credentialId         String   @unique @map("credential_id") @db.Uuid
     individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
     companyId            String?  @unique @map("company_id") @db.Uuid
+    officeId             String?  @unique @map("office_id") @db.Uuid
     resume               String?
     createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
@@ -98,10 +99,10 @@ model Psychologist {
     credential Credential         @relation(fields: [credentialId], references: [id])
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
     company    Company?           @relation(fields: [companyId], references: [id])
+    office     Office?            @relation(fields: [officeId], references: [id])
 
     pacients   Pacient[]
     approaches TherapeuticApproache[]
-    office     Office?
 
     @@map("psychologists")
 }
@@ -190,17 +191,16 @@ model TherapeuticApproache {
 }
 
 model Office {
-    id             String   @id @default(uuid()) @db.Uuid
-    psychologistId String   @unique @map("psychologist_id") @db.Uuid
-    contactId      String?  @unique @map("contact_id") @db.Uuid
-    addressId      String   @unique @map("address_id") @db.Uuid
-    photos         String[]
-    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    id        String   @id @default(uuid()) @db.Uuid
+    contactId String?  @unique @map("contact_id") @db.Uuid
+    addressId String   @unique @map("address_id") @db.Uuid
+    photos    String[]
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    psychologyst Psychologist @relation(fields: [psychologistId], references: [id])
-    contact      Contact?     @relation(fields: [contactId], references: [id])
-    address      Address      @relation(fields: [addressId], references: [id])
+    contact      Contact?      @relation(fields: [contactId], references: [id])
+    address      Address       @relation(fields: [addressId], references: [id])
+    psychologist Psychologist?
 
     @@map("offices")
 }
