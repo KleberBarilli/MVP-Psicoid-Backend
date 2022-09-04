@@ -101,6 +101,7 @@ model Psychologist {
 
     pacients   Pacient[]
     approaches TherapeuticApproache[]
+    office     Office?
 
     @@map("psychologists")
 }
@@ -135,6 +136,7 @@ model Contact {
 
     identity IndividualIdentity?
     company  Company?
+    office   Office?
 
     @@map("contacts")
 }
@@ -153,6 +155,7 @@ model Address {
 
     company  Company?
     identity IndividualIdentity?
+    office   Office?
 
     @@map("addresses")
 }
@@ -184,4 +187,20 @@ model TherapeuticApproache {
     psychologists Psychologist[]
 
     @@map("therapeutic_approaches")
+}
+
+model Office {
+    id             String   @id @default(uuid()) @db.Uuid
+    psychologistId String   @unique @map("psychologist_id") @db.Uuid
+    contactId      String?  @unique @map("contact_id") @db.Uuid
+    addressId      String   @unique @map("address_id") @db.Uuid
+    photos         String[]
+    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    psychologyst Psychologist @relation(fields: [psychologistId], references: [id])
+    contact      Contact?     @relation(fields: [contactId], references: [id])
+    address      Address      @relation(fields: [addressId], references: [id])
+
+    @@map("offices")
 }
