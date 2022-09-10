@@ -5,12 +5,9 @@ import ShowPacientController from "../controllers/ShowPacientController";
 import UpdatePacientController from "../controllers/UpdatePacientController";
 
 const pacientRouter = Router();
-const createPacientController = new CreatePacientController();
-const showPacient = new ShowPacientController();
-const updatePacient = new UpdatePacientController();
 
-pacientRouter.post("/", createPacientController.create);
-pacientRouter.get("/:id", showPacient.show);
-pacientRouter.put("/:id", isAuthenticated, updatePacient.update);
+pacientRouter.post("/", new CreatePacientController().create);
+pacientRouter.get("/:id", new ShowPacientController().show);
+pacientRouter.put("/:id", isAuthenticated, new UpdatePacientController().update);
 
 export default pacientRouter;

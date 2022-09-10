@@ -38,6 +38,7 @@ class CreateSessionService {
 			subject: user.id,
 			expiresIn: authConfig.jwt.expiresIn,
 		});
+		user.password = "";
 
 		return {
 			user,

@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import { validateLogin } from "@validators/Credentials";
 import CreateSessionService from "../../../services/CreateSessionService";
 import AppError from "@shared/errors/AppError";
-export default class SessionsController {
+export default class CreateSessionController {
 	public async create(req: Request, res: Response): Promise<Response> {
 		const { email, password } = req.body;
 

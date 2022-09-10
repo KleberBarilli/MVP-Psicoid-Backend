@@ -4,10 +4,8 @@ import DeactivateAccountController from "../controllers/DeactivateAccountControl
 import UpdateCredentialsController from "../controllers/UpdateCredentials";
 
 const accountRouter = Router();
-const deactivateAccountController = new DeactivateAccountController();
-const updateCredentials = new UpdateCredentialsController();
 
-accountRouter.post("/deactivate", isAuthenticated, deactivateAccountController.create);
-accountRouter.put("/", isAuthenticated, updateCredentials.update);
+accountRouter.post("/deactivate", isAuthenticated, new DeactivateAccountController().create);
+accountRouter.put("/", isAuthenticated, new UpdateCredentialsController().update);
 
 export default accountRouter;
