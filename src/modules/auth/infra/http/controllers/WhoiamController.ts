@@ -4,7 +4,7 @@ import { container } from "tsyringe";
 import WhoiamService from "../../../services/WhoiamService";
 
 export default class WhoiamController {
-	public async show(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const whoiam = container.resolve(WhoiamService);
 			const user = await whoiam.execute(req.user.id, req.user.profile);

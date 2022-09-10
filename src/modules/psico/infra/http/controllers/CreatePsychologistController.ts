@@ -2,19 +2,16 @@ import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { ValidationError } from "yup";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-
 import { validateCredentials } from "@shared/utils/validators/Credentials";
 import { validateAddress } from "@shared/utils/validators/Address";
 import { validateContact } from "@shared/utils/validators/Contact";
 import { validateIdentity } from "@shared/utils/validators/Identity";
-import { validateCompany } from "@validators/Company";
 import { sendBadRequest } from "@shared/errors/BadRequest";
-
 import CreatePsychologistService from "../../../services/CreatePsychologistService";
 import AppError from "@shared/errors/AppError";
 
 export default class PsychologistController {
-	public async create(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
 				psico: { credentials, identity, contact, address, office, resume },

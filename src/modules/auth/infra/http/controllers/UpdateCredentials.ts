@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 import { container } from "tsyringe";
 
 export default class UpdateCredentialsController {
-	public async update(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		const { email, password } = req.body;
 		const { id } = req.user;
 		try {

@@ -13,7 +13,7 @@ import CreatePacientService from "../../../services/CreatePacientService";
 import AppError from "@shared/errors/AppError";
 
 export default class PacientController {
-	public async create(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
 				pacient: { credentials, identity, contact, address },

@@ -9,7 +9,7 @@ import { sendBadRequest } from "@shared/errors/BadRequest";
 import UpdatePacientService from "@modules/pacients/services/UpdatePacientService";
 
 export default class UpdatePacientController {
-	public async update(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
 				pacient: { identity, contact, address },

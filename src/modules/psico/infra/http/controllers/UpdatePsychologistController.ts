@@ -9,7 +9,7 @@ import { sendBadRequest } from "@shared/errors/BadRequest";
 import UpdatePsychologistService from "@modules/psico/services/UpdatePsychologistService";
 
 export default class UpdatePsychologistController {
-	public async update(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
 				psico: { identity, contact, address, office, resume },

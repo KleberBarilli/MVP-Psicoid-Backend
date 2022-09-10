@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import ShowPsychologistService from "../../../services/ShowPsychologistService";
 
 export default class ShowPsychologistController {
-	public async show(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const { id } = req.params;
 			const showPsychologist = container.resolve(ShowPsychologistService);

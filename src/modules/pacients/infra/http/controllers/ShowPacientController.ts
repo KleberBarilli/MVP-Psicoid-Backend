@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import ShowPacientService from "../../../services/ShowPacientService";
 
 export default class ShowPacientController {
-	public async show(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const { id } = req.params;
 			const showPacient = container.resolve(ShowPacientService);

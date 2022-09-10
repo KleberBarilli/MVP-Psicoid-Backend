@@ -6,14 +6,11 @@ import ShowPsychologistController from "../controllers/ShowPsychologistControlle
 import UpdatePsychologistController from "../controllers/UpdatePsychologistController";
 
 const psicoRouter = Router();
-const createPsicoController = new CreatePsychologistController();
-const showPsicoController = new ShowPsychologistController();
-const updatePsicoController = new UpdatePsychologistController();
 const listPsicoController = new ListPsychologistsController();
 
-psicoRouter.post("/", createPsicoController.create);
-psicoRouter.put("/:id", isAuthenticated, updatePsicoController.update);
-psicoRouter.get("/:id", isAuthenticated, showPsicoController.show);
+psicoRouter.post("/", new CreatePsychologistController().handle);
+psicoRouter.put("/:id", isAuthenticated, new UpdatePsychologistController().handle);
+psicoRouter.get("/:id", isAuthenticated, new ShowPsychologistController().handle);
 psicoRouter.get("/", isAuthenticated, listPsicoController.showAll);
 psicoRouter.get("/city/:city", listPsicoController.showByCity);
 
