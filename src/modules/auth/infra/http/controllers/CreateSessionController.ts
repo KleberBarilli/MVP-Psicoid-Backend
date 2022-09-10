@@ -4,7 +4,7 @@ import { validateLogin } from "@validators/Credentials";
 import CreateSessionService from "../../../services/CreateSessionService";
 import AppError from "@shared/errors/AppError";
 export default class CreateSessionController {
-	public async create(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		const { email, password } = req.body;
 
 		try {

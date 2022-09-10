@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import DeactivateAccountService from "@modules/auth/services/DeactivateAccountService";
 
 export default class DeactivateAccountController {
-	public async create(req: Request, res: Response): Promise<Response> {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		const { id } = req.user;
 		try {
 			const deactivate = container.resolve(DeactivateAccountService);
