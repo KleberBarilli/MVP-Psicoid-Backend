@@ -53,7 +53,13 @@ export default class CredentialsRepository implements ICredentialsRepository {
 				pacient: {
 					include: {
 						identity: { include: { address: true, contact: true } },
-						psychologists: true,
+						psychologists: {
+							select: {
+								approaches: true,
+								identity: { include: { address: true, contact: true } },
+								resume: true,
+							},
+						},
 					},
 				},
 			},
