@@ -9,4 +9,5 @@ export interface IPacientsRepository {
 	findById(id: string): Promise<IPacient | null>;
 	findByEmail(email: string): Promise<ICredential | null>;
 	update(id: string, data: IUpdatePacient): Promise<PacientEntity>;
+	addPsychologist(pacientId: string, psicoId: string): Promise<IPacient>;
 }

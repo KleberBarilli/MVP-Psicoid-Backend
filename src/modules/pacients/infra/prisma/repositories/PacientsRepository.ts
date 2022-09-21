@@ -4,6 +4,7 @@ import { IPacientsRepository } from "../../../domain/repositories/IPacientsRepos
 import { PacientEntity } from "../entities/Pacient";
 import { CredentialEntity } from "@shared/entities/Credential";
 import { IUpdatePacient } from "@modules/pacients/domain/models/IUpdatePacient";
+import { IPacient } from "@modules/pacients/domain/models/IPacient";
 
 export default class PacientsRepository implements IPacientsRepository {
 	#prisma;
@@ -66,6 +67,12 @@ export default class PacientsRepository implements IPacientsRepository {
 					},
 				},
 			},
+		});
+	}
+	public addPsychologist(pacientId: string, psicoId: string): Promise<IPacient> {
+		return this.#prisma.pacient.update({
+			where: { id: pacientId },
+			data: { psychologists: { connect: { id: psicoId } } },
 		});
 	}
 }
