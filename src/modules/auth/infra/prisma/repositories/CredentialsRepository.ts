@@ -38,7 +38,7 @@ export default class CredentialsRepository implements ICredentialsRepository {
 				psychologist: {
 					include: {
 						identity: { include: { address: true, contact: true } },
-						company: { include: { address: true, contact: true } },
+						office: { include: { address: true, contact: true } },
 						approaches: true,
 						pacients: true,
 					},

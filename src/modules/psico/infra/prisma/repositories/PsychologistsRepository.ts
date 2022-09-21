@@ -50,7 +50,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		return await this.#prisma.psychologist.findUnique({
 			where: { id },
 			include: {
-				company: { include: { address: true, contact: true } },
+				office: { include: { address: true, contact: true } },
 				identity: { include: { address: true, contact: true } },
 				approaches: true,
 			},
