@@ -2,7 +2,6 @@ import { IContact } from "@shared/interfaces/IContact";
 import { IAddress } from "@shared/interfaces/IAddress";
 import { ICredential } from "@shared/interfaces/ICredential";
 import { IIdentity } from "@shared/interfaces/IIdentity";
-import { ICompany } from "@shared/interfaces/ICompany";
 import { IOffice } from "@shared/interfaces/IOffice";
 
 export interface ICreatePsychologist {
@@ -10,7 +9,6 @@ export interface ICreatePsychologist {
 	identity: IIdentity;
 	contact: IContact;
 	address: IAddress;
-	company?: ICompany;
 	office?: IOffice;
 	resume?: string;
 }
