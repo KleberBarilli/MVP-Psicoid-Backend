@@ -21,7 +21,7 @@ export const validateCredentials = (credentials: ICredentialForm) =>
 				.string()
 				.typeError("Senha inválida")
 				.required("Necessário preencher o campo senha"),
-			roles: yup.array(yup.string().oneOf(ROLE_TYPE)),
+			roles: yup.array(yup.string().oneOf(Object.values(ROLE_TYPE))),
 		})
 		.validate(credentials, { abortEarly: false, stripUnknown: true });
 

@@ -23,6 +23,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		return this.#prisma.psychologist.create({
 			data: {
 				resume,
+				status: "UNDER_REVIEW",
 				credential: {
 					create: {
 						...credential,

@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { cpf } from "cpf-cnpj-validator";
+import { GENDER } from "../enums";
 interface IIdentityForm {
 	firstName: string;
 	lastName: string;
@@ -19,6 +20,7 @@ export const validateIdentity = (identity: IIdentityForm) =>
 					message: "CPF Inválido",
 				})
 				.required("O CPF é obrigatório"),
+			gender: yup.string().oneOf(Object.values(GENDER)),
 		})
 		.validate(identity, { abortEarly: false, stripUnknown: true });
 

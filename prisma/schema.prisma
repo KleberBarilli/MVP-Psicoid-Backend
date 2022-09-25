@@ -88,6 +88,7 @@ model Pacient {
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
 
     psychologists Psychologist[]
+    reviews       Review[]
 
     @@map("pacients")
 }
@@ -98,6 +99,7 @@ model Psychologist {
     individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
     officeId             String?  @unique @map("office_id") @db.Uuid
     resume               String?
+    status               Status   @default(UNDER_REVIEW)
     createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
@@ -107,6 +109,7 @@ model Psychologist {
 
     pacients   Pacient[]
     approaches TherapeuticApproache[]
+    reviews    Review[]
 
     @@map("psychologists")
 }
@@ -117,7 +120,7 @@ model IndividualIdentity {
     lastName  String   @map("last_name")
     cpf       String   @unique
     avatarUrl String?  @map("avatar_url")
-    gender    Gender?
+    gender    String?
     contactId String?  @unique @map("contact_id") @db.Uuid
     addressId String   @unique @map("address_id") @db.Uuid
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -189,4 +192,17 @@ model Office {
     psychologist Psychologist?
 
     @@map("offices")
+}
+
+model Review {
+    id             String  @id @default(uuid()) @db.Uuid
+    pacientId      String  @map("pacient_id") @db.Uuid
+    psychologistId String  @map("psychologist_id") @db.Uuid
+    rating         Int
+    comment        String?
+
+    psychologist Psychologist @relation(fields: [psychologistId], references: [id])
+    pacient      Pacient      @relation(fields: [pacientId], references: [id])
+
+    @@map("reviews")
 }
