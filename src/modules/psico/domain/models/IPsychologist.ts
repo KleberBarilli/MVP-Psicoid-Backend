@@ -7,3 +7,8 @@ export interface IPsychologist {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export interface IListPsychologist {
+	count: number;
+	IPsychologist: [];
+}

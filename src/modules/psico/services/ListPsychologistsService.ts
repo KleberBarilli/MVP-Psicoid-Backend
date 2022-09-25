@@ -1,6 +1,7 @@
 import { injectable, inject } from "tsyringe";
 import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
 import { IPsychologist } from "../domain/models/IPsychologist";
+import { IPagination } from "@shared/infra/http/middlewares/pagination";
 
 @injectable()
 export default class ListPsychologistsService {
@@ -8,10 +9,7 @@ export default class ListPsychologistsService {
 		@inject("PsychologistsRepository")
 		public psychologistsRepository: IPsychologistsRepository,
 	) {}
-	public async listAll(): Promise<IPsychologist[]> {
-		return await this.psychologistsRepository.findAll();
-	}
-	public async listByCity(city: string): Promise<IPsychologist[]> {
-		return await this.psychologistsRepository.findByCity(city);
+	public async listAll(pagination: IPagination): Promise<IPsychologist[]> {
+		return await this.psychologistsRepository.findAll(pagination);
 	}
 }
