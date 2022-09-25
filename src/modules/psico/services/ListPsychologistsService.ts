@@ -8,8 +8,8 @@ export default class ListPsychologistsService {
 		@inject("PsychologistsRepository")
 		public psychologistsRepository: IPsychologistsRepository,
 	) {}
-	public async listAll(): Promise<IPsychologist[]> {
-		return await this.psychologistsRepository.findAll();
+	public async listAll(pagination): Promise<IPsychologist[]> {
+		return await this.psychologistsRepository.findAll(pagination);
 	}
 	public async listByCity(city: string): Promise<IPsychologist[]> {
 		return await this.psychologistsRepository.findByCity(city);

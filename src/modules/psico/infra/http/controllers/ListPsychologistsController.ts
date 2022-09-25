@@ -5,9 +5,10 @@ import { container } from "tsyringe";
 export default class ListPsychologistsController {
 	public async showAll(req: Request, res: Response): Promise<Response> {
 		try {
+			const { pagination } = req;
 			const service = container.resolve(ListPsychologistsService);
-			const psychologists = await service.listAll();
-			return res.status(200).json({ data: psychologists });
+			const [count, psychologists] = await service.listAll(pagination);
+			return res.status(200).json({ count, data: psychologists });
 		} catch (error) {
 			return res.status(500).json({ error: "Houve um erro ao listar" });
 		}
