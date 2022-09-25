@@ -120,7 +120,7 @@ model IndividualIdentity {
     lastName  String   @map("last_name")
     cpf       String   @unique
     avatarUrl String?  @map("avatar_url")
-    gender    Gender
+    gender    String?
     contactId String?  @unique @map("contact_id") @db.Uuid
     addressId String   @unique @map("address_id") @db.Uuid
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()

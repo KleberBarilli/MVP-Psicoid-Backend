@@ -1,4 +1,4 @@
-import { Psychologist } from "@prisma/client";
+import { Psychologist, Status } from "@prisma/client";
 
 export class PsychologistEntity implements Psychologist {
 	id: string;
@@ -6,6 +6,7 @@ export class PsychologistEntity implements Psychologist {
 	individualIdentityId: string;
 	officeId: string | null;
 	resume: string | null;
+	status: Status;
 	createdAt: Date;
 	updatedAt: Date;
 }

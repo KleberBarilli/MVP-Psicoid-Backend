@@ -29,7 +29,7 @@ export const validateAddress = (address: IAddressForm) =>
 			state: yup
 				.string()
 				.typeError("Estado inválido")
-				.oneOf(BRAZIL_STATES)
+				.oneOf(Object.values(BRAZIL_STATES))
 				.required("Necessário preencher o estado"),
 		})
 		.validate(address, { abortEarly: false, stripUnknown: true });
@@ -47,6 +47,6 @@ export const validateUpdateAddress = (address: IAddressForm) =>
 			complement: yup.string(),
 			neighborhood: yup.string(),
 			city: yup.string(),
-			state: yup.string().typeError("Estado inválido").oneOf(BRAZIL_STATES),
+			state: yup.string().typeError("Estado inválido").oneOf(Object.values(BRAZIL_STATES)),
 		})
 		.validate(address, { abortEarly: false, stripUnknown: true });
