@@ -85,7 +85,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 			},
 		});
 	}
-	public async findAll({ skip, take, sort, order, filter }: IPagination): Promise<number & any> {
+	public findAll({ skip, take, sort, order, filter }: IPagination): Promise<number & any> {
 		return Promise.all([
 			this.#prisma.psychologist.count({ where: { ...filter } }),
 			this.#prisma.psychologist.findMany({

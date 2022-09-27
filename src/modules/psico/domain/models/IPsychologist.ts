@@ -1,4 +1,6 @@
 export interface IPsychologist {
+	[x: string]: any;
+	//map(arg0: (el: any) => void): unknown;
 	id: string;
 	credentialId: string;
 	individualIdentityId: string;
@@ -6,6 +8,8 @@ export interface IPsychologist {
 	resume: string | null;
 	createdAt: Date;
 	updatedAt: Date;
+
+	//distance: number;
 }
 
 export interface IListPsychologist {
