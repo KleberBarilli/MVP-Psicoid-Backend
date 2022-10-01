@@ -14,7 +14,7 @@ export default class UpdatePsychologistController {
 			const {
 				psico: { identity, contact, address, office, resume },
 			} = req.body;
-			const { id } = req.params;
+			const { profileId } = req.user;
 			await Promise.all([
 				validateUpdateIdentity(identity),
 				validateContact(contact),
@@ -22,7 +22,7 @@ export default class UpdatePsychologistController {
 			]);
 
 			const service = container.resolve(UpdatePsychologistService);
-			const user = await service.execute(id, {
+			const user = await service.execute(profileId, {
 				identity,
 				contact,
 				address,

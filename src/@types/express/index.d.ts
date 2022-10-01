@@ -3,6 +3,7 @@ declare namespace Express {
 		user: {
 			id: string;
 			profile: string;
+			profileId: string;
 		};
 		pagination: {
 			skip: number;
