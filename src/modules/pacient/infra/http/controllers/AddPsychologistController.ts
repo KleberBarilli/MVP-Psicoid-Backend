@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import AddPsychologistService from "@modules/pacients/services/AddPsychologistService";
+import AddPsychologistService from "@modules/pacient/services/AddPsychologistService";
 
 export default class AddPsychologistController {
 	public async handle(req: Request, res: Response): Promise<Response> {

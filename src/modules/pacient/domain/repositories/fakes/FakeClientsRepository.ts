@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { ICredential } from "src/shared/interfaces/ICredential";
 import { IPacient } from "../../models/IPacient";
-import { PacientEntity } from "@modules/pacients/infra/prisma/entities/Pacient";
+import { PacientEntity } from "@modules/pacient/infra/prisma/entities/Pacient";
 
 export class PacientEntityFake {
 	id: string;
