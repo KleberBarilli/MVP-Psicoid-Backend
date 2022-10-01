@@ -15,7 +15,17 @@ export default class AddPsychologistService {
 	public async execute({
 		pacientId,
 		psychologistId,
+		selected,
 	}: IAddPsychologist): Promise<IPacientCreated> {
-		return this.pacientsRepository.addPsychologist(pacientId, psychologistId);
+		let selectedPsychologistId = psychologistId;
+		if (!selected) {
+			const pacient = await this.pacientsRepository.findById(pacientId);
+			selectedPsychologistId = pacient?.selectedPsychologistId || "";
+		}
+		return this.pacientsRepository.addPsychologist(
+			pacientId,
+			psychologistId,
+			selectedPsychologistId,
+		);
 	}
 }

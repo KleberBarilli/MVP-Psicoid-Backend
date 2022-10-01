@@ -12,7 +12,7 @@ export default class UpdatePacientController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				pacient: { identity, contact, address },
+				pacient: { identity, contact, address, selectedPsychologistId },
 			} = req.body;
 			const { profileId } = req.user;
 			await Promise.all([
@@ -26,6 +26,7 @@ export default class UpdatePacientController {
 				identity,
 				contact,
 				address,
+				selectedPsychologistId,
 			});
 
 			return res.status(204).json({
