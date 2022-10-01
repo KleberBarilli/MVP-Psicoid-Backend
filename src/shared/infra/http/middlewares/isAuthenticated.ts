@@ -9,6 +9,7 @@ interface ITokenPayload {
 	exp: number;
 	sub: string;
 	profile: string;
+	profileId: string;
 }
 
 export default function isAuthenticated(req: Request, res: Response, next: NextFunction): void {
@@ -21,11 +22,12 @@ export default function isAuthenticated(req: Request, res: Response, next: NextF
 	try {
 		const decodedToken = verify(token, authConfig.jwt.secret as Secret);
 
-		const { sub, profile } = decodedToken as ITokenPayload;
+		const { sub, profile, profileId } = decodedToken as ITokenPayload;
 
 		req.user = {
 			id: sub,
 			profile,
+			profileId,
 		};
 		return next();
 	} catch {

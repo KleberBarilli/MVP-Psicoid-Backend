@@ -14,7 +14,7 @@ export default class UpdatePacientController {
 			const {
 				pacient: { identity, contact, address },
 			} = req.body;
-			const { id } = req.params;
+			const { profileId } = req.user;
 			await Promise.all([
 				validateUpdateIdentity(identity),
 				validateContact(contact),
@@ -22,7 +22,7 @@ export default class UpdatePacientController {
 			]);
 
 			const updatePacient = container.resolve(UpdatePacientService);
-			const user = await updatePacient.execute(id, {
+			const user = await updatePacient.execute(profileId, {
 				identity,
 				contact,
 				address,
