@@ -6,7 +6,7 @@ import { validateUpdateAddress } from "@shared/utils/validators/Address";
 import { validateContact } from "@shared/utils/validators/Contact";
 import { validateUpdateIdentity } from "@shared/utils/validators/Identity";
 import { sendBadRequest } from "@shared/errors/BadRequest";
-import UpdatePacientService from "@modules/pacients/services/UpdatePacientService";
+import UpdatePacientService from "@modules/pacient/services/UpdatePacientService";
 
 export default class UpdatePacientController {
 	public async handle(req: Request, res: Response): Promise<Response> {
