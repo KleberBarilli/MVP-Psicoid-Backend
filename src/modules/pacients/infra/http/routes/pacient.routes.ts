@@ -9,7 +9,11 @@ const pacientRouter = Router();
 
 pacientRouter.post("/", new CreatePacientController().handle);
 pacientRouter.get("/:id", new ShowPacientController().handle);
-pacientRouter.put("/:id", isAuthenticated, new UpdatePacientController().handle);
-pacientRouter.post("/add-psychologist", isAuthenticated, new AddPsychologistController().handle);
+pacientRouter.put("/", isAuthenticated, new UpdatePacientController().handle);
+pacientRouter.post(
+	"/add-psychologist/:id",
+	isAuthenticated,
+	new AddPsychologistController().handle,
+);
 
 export default pacientRouter;

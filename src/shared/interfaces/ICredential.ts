@@ -11,3 +11,13 @@ export interface ICredential {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export interface ICredentialResponse {
+	id: string;
+	email: string;
+	password: string;
+	role: Role;
+	inactive: boolean;
+	psychologist: { id: string } | null;
+	pacient: { id: string } | null;
+}

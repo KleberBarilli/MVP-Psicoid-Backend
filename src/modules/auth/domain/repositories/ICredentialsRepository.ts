@@ -1,9 +1,9 @@
-import { ICredential } from "@shared/interfaces/ICredential";
+import { ICredential, ICredentialResponse } from "@shared/interfaces/ICredential";
 import { IUpdateCredential } from "../models/IUpdateCredentials";
 
 export interface ICredentialsRepository {
 	findById(id: string): Promise<ICredential | null>;
-	findByEmail(email: string): Promise<ICredential | null>;
+	findByEmail(email: string): Promise<ICredentialResponse | null>;
 	findByToken(token: string): Promise<ICredential | null>;
 	updateCredential(id: string, data: IUpdateCredential): Promise<ICredential>;
 	updatePassword(id: string, password: string): Promise<ICredential>;

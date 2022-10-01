@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Provider, Role } from "@prisma/client";
 import { ICredentialsRepository } from "@modules/auth/domain/repositories/ICredentialsRepository";
-import { ICredential } from "@shared/interfaces/ICredential";
+import { ICredential, ICredentialResponse } from "@shared/interfaces/ICredential";
 import { IUpdateCredential } from "@modules/auth/domain/models/IUpdateCredentials";
 
 export default class CredentialsRepository implements ICredentialsRepository {
@@ -11,8 +11,11 @@ export default class CredentialsRepository implements ICredentialsRepository {
 	public async findById(id: string): Promise<ICredential | null> {
 		return await this.#prisma.credential.findUnique({ where: { id } });
 	}
-	public async findByEmail(email: string): Promise<ICredential | null> {
-		return await this.#prisma.credential.findUnique({ where: { email } });
+	public async findByEmail(email: string): Promise<ICredentialResponse | null> {
+		return await this.#prisma.credential.findUnique({
+			where: { email },
+			include: { pacient: { select: { id: true } }, psychologist: { select: { id: true } } },
+		});
 	}
 	public async findByToken(token: string): Promise<ICredential | null> {
 		return await this.#prisma.credential.findFirst({
