@@ -54,11 +54,12 @@ export default class PacientsRepository implements IPacientsRepository {
 	}
 	public update(
 		id: string,
-		{ identity, contact, address }: IUpdatePacient,
+		{ identity, contact, address, selectedPsychologistId }: IUpdatePacient,
 	): Promise<PacientEntity> {
 		return this.#prisma.pacient.update({
 			where: { id },
 			data: {
+				selectedPsychologistId,
 				identity: {
 					update: {
 						...identity,
@@ -69,10 +70,14 @@ export default class PacientsRepository implements IPacientsRepository {
 			},
 		});
 	}
-	public addPsychologist(pacientId: string, psicoId: string): Promise<IPacient> {
+	public addPsychologist(
+		pacientId: string,
+		psicoId: string,
+		selectedPsychologistId: string,
+	): Promise<IPacient> {
 		return this.#prisma.pacient.update({
 			where: { id: pacientId },
-			data: { psychologists: { connect: { id: psicoId } } },
+			data: { psychologists: { connect: { id: psicoId } }, selectedPsychologistId },
 		});
 	}
 }
