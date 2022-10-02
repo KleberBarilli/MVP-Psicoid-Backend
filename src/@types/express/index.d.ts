@@ -12,6 +12,7 @@ declare namespace Express {
 			order: string;
 			filter: any;
 			search: any;
+			location: any;
 		};
 	}
 }

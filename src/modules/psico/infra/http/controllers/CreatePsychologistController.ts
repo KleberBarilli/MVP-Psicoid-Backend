@@ -9,8 +9,7 @@ import { validateIdentity } from "@shared/utils/validators/Identity";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import CreatePsychologistService from "../../../services/CreatePsychologistService";
 import AppError from "@shared/errors/AppError";
-
-export default class PsychologistController {
+export default class CreatePsychologistController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
@@ -32,7 +31,6 @@ export default class PsychologistController {
 				office,
 				resume,
 			});
-
 			return res.status(201).json({
 				data: user,
 				message: "Psychologist created with success",

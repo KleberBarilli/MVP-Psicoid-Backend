@@ -1,11 +1,10 @@
 import { injectable, inject } from "tsyringe";
-
 import AppError from "@shared/errors/AppError";
 import { ICreatePsychologist } from "../domain/models/ICreatePsychologist";
 import { IPsychologistCreated } from "../domain/models/IPsychologystCreated";
 import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
 import { IHashProvider } from "@modules/auth/providers/HashProvider/models/IHashProvider";
-
+import { getGeocode } from "@shared/utils/geocoder";
 @injectable()
 export default class CreatePsychologistService {
 	constructor(
@@ -14,6 +13,7 @@ export default class CreatePsychologistService {
 		@inject("HashProvider")
 		public hashProvider: IHashProvider,
 	) {}
+
 	public async execute({
 		credential,
 		identity,
@@ -28,6 +28,12 @@ export default class CreatePsychologistService {
 		}
 		credential.password = await this.hashProvider.generateHash(credential.password || "");
 
+		const location = await getGeocode(
+			`${address.number} ${address.street} ${address.neighborhood} ${address.city}`,
+		);
+
+		address.latitude = location[0].latitude;
+		address.longitude = location[0].longitude;
 		return this.psychologistsRepository.create({
 			credential,
 			identity,

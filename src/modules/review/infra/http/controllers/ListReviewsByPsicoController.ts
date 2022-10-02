@@ -11,7 +11,6 @@ export default class ListReviewsByPsicoController {
 			const reviews = await service.execute(id, pagination);
 			return res.status(200).json({ data: reviews });
 		} catch (error) {
-			console.log(error);
 			return res.status(400).json({ error: "Houve um erro ao buscar as reviews" });
 		}
 	}
