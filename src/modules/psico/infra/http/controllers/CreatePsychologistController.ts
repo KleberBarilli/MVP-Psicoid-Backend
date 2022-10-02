@@ -9,9 +9,6 @@ import { validateIdentity } from "@shared/utils/validators/Identity";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import CreatePsychologistService from "../../../services/CreatePsychologistService";
 import AppError from "@shared/errors/AppError";
-
-import NodeGeocoder from "node-geocoder";
-
 export default class CreatePsychologistController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
@@ -34,13 +31,6 @@ export default class CreatePsychologistController {
 				office,
 				resume,
 			});
-
-			const geocoder = NodeGeocoder({ provider: "google" });
-
-			const response = await geocoder.geocode("29 champs elysée paris");
-
-			console.log(response);
-
 			return res.status(201).json({
 				data: user,
 				message: "Psychologist created with success",

@@ -7,6 +7,6 @@ export interface IAddress {
 	neighborhood: string;
 	city: string;
 	state: BrazilState;
-	latitude: number;
-	longitude: number;
+	latitude: number | undefined;
+	longitude: number | undefined;
 }
