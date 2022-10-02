@@ -86,16 +86,13 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		});
 	}
 	public findAll({ skip, take, sort, order, filter }: IPagination): Promise<number & any> {
-		console.log(filter);
-		// {"cliente":{"identidade":{"cpf":{"contains":"LuC","mode":"insensitive"}}}}
-		// {{ _.psico_id_local_url }}/psico/?page=1&limit=4&sort=createdAt&order=desc&filter={"identity": {"address":{"city": {"contains":"mul","mode":"insensitive"}}}}
-
 		return Promise.all([
 			this.#prisma.psychologist.count({ where: { ...filter } }),
 			this.#prisma.psychologist.findMany({
 				include: {
 					identity: { include: { address: true, contact: true } },
 					approaches: true,
+					reviews: true,
 				},
 				where: { ...filter },
 				orderBy: { [sort]: order },
