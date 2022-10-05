@@ -1,6 +1,6 @@
-import { Role } from '@prisma/client';
-import * as yup from 'yup';
-import { ROLE_TYPE } from '../enums';
+import { Role } from "@prisma/client";
+import * as yup from "yup";
+import { ROLE_TYPE } from "../enums";
 
 interface ICredentialForm {
 	email: string;
@@ -14,14 +14,14 @@ export const validateCredentials = (credentials: ICredentialForm) =>
 		.shape({
 			email: yup
 				.string()
-				.typeError('E-mail inválido')
-				.email('Necessário preencher o campo com um e-mail válido')
-				.required('Necessário preencher o campo e-mail'),
+				.typeError("E-mail inválido")
+				.email("Necessário preencher o campo com um e-mail válido")
+				.required("Necessário preencher o campo e-mail"),
 			password: yup
 				.string()
-				.typeError('Senha inválida')
-				.required('Necessário preencher o campo senha'),
-			roles: yup.array(yup.string().oneOf(ROLE_TYPE)),
+				.typeError("Senha inválida")
+				.required("Necessário preencher o campo senha"),
+			roles: yup.array(yup.string().oneOf(Object.values(ROLE_TYPE))),
 		})
 		.validate(credentials, { abortEarly: false, stripUnknown: true });
 
@@ -36,13 +36,13 @@ export const validateLogin = (login: ILoginForm) =>
 		.shape({
 			email: yup
 				.string()
-				.typeError('E-mail inválido')
-				.email('Necessário preencher o campo com um e-mail válido')
-				.required('Necessário preencher o campo e-mail'),
+				.typeError("E-mail inválido")
+				.email("Necessário preencher o campo com um e-mail válido")
+				.required("Necessário preencher o campo e-mail"),
 			password: yup
 				.string()
-				.typeError('Senha inválida')
-				.min(3, 'Senha muito curta')
-				.required('Necessário preencher o campo senha'),
+				.typeError("Senha inválida")
+				.min(3, "Senha muito curta")
+				.required("Necessário preencher o campo senha"),
 		})
 		.validate(login, { abortEarly: false, stripUnknown: true });

@@ -1,12 +1,7 @@
-import { Request, Response } from 'express';
-import { ValidationError } from 'yup';
+import { Request, Response } from "express";
 
-export const sendBadRequest = (
-	req: Request,
-	res: Response,
-	message: ValidationError[],
-) => {
-	return res.status(400).json({
+export const sendBadRequest = (req: Request, res: Response, message: string, status: number) => {
+	return res.status(status || 400).json({
 		error: message,
 	});
 };

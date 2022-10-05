@@ -1,4 +1,4 @@
-import { Provider, Role } from '@prisma/client';
+import { Provider, Role } from "@prisma/client";
 
 export interface ICredential {
 	id: string;
@@ -6,8 +6,18 @@ export interface ICredential {
 	email: string;
 	password: string;
 	tokenRecovery: string | null;
-	roles: Role[];
+	role: Role;
 	inactive: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+}
+
+export interface ICredentialResponse {
+	id: string;
+	email: string;
+	password: string;
+	role: Role;
+	inactive: boolean;
+	psychologist: { id: string } | null;
+	pacient: { id: string } | null;
 }

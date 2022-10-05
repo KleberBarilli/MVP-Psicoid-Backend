@@ -1,3 +1,4 @@
 export interface IPsychologist {
-	types: any;
+	resume: string | null;
+	status: string[];
 }

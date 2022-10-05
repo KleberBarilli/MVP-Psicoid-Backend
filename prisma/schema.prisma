@@ -54,15 +54,10 @@ enum Status {
     REPPROVED
 }
 
-enum PsychologistType {
-    ABNORMAL
-    BIO
-    SOCIAL
-    COGNITIVE
-    DEVELOPMENTAL
-    PERSONALITY
-    FORENSIC
-    INDUSTRIAL_ORGANIZATIONAL
+enum Gender {
+    MALE
+    FEMALE
+    OTHER
 }
 
 model Credential {
@@ -71,7 +66,7 @@ model Credential {
     email         String   @unique
     password      String   @map("password")
     tokenRecovery String?  @map("token_recovery")
-    roles         Role[]
+    role          Role
     inactive      Boolean  @default(false)
     createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
@@ -83,34 +78,39 @@ model Credential {
 }
 
 model Pacient {
-    id                   String   @id @default(uuid()) @db.Uuid
-    credentialId         String   @unique @map("credential_id") @db.Uuid
-    individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
-    createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    id                     String   @id @default(uuid()) @db.Uuid
+    credentialId           String   @unique @map("credential_id") @db.Uuid
+    individualIdentityId   String   @unique @map("individual_identity_id") @db.Uuid
+    selectedPsychologistId String?  @map("selected_psychologist_id") @db.Uuid
+    createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     credential Credential         @relation(fields: [credentialId], references: [id])
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
 
     psychologists Psychologist[]
+    reviews       Review[]
 
     @@map("pacients")
 }
 
 model Psychologist {
-    id                   String             @id @default(uuid()) @db.Uuid
-    credentialId         String             @unique @map("credential_id") @db.Uuid
-    individualIdentityId String             @unique @map("individual_identity_id") @db.Uuid
-    companyId            String?            @unique @map("company_id") @db.Uuid
-    types                PsychologistType[]
-    createdAt            DateTime           @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt            DateTime           @updatedAt @map("updated_at") @db.Timestamptz()
+    id                   String   @id @default(uuid()) @db.Uuid
+    credentialId         String   @unique @map("credential_id") @db.Uuid
+    individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
+    officeId             String?  @unique @map("office_id") @db.Uuid
+    resume               String?
+    status               Status   @default(UNDER_REVIEW)
+    createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     credential Credential         @relation(fields: [credentialId], references: [id])
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
-    company    Company?           @relation(fields: [companyId], references: [id])
+    office     Office?            @relation(fields: [officeId], references: [id])
 
-    pacients Pacient[]
+    pacients   Pacient[]
+    approaches TherapeuticApproache[]
+    reviews    Review[]
 
     @@map("psychologists")
 }
@@ -120,6 +120,8 @@ model IndividualIdentity {
     firstName String   @map("first_name")
     lastName  String   @map("last_name")
     cpf       String   @unique
+    avatarUrl String?  @map("avatar_url")
+    gender    String?
     contactId String?  @unique @map("contact_id") @db.Uuid
     addressId String   @unique @map("address_id") @db.Uuid
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -143,7 +145,7 @@ model Contact {
     updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     identity IndividualIdentity?
-    company  Company?
+    office   Office?
 
     @@map("contacts")
 }
@@ -157,28 +159,55 @@ model Address {
     neighborhood String
     city         String
     state        BrazilState
+    latitude     Float?
+    longitude    Float?
     createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt    DateTime    @updatedAt @map("updated_at") @db.Timestamptz()
 
-    company  Company?
     identity IndividualIdentity?
+    office   Office?
 
     @@map("addresses")
 }
 
-model Company {
+model TherapeuticApproache {
     id          String   @id @default(uuid()) @db.Uuid
-    cnpj        String   @unique
-    name        String
-    tradingName String   @map("trading_name")
-    contactId   String?  @unique @map("contact_id") @db.Uuid
-    addressId   String   @unique @map("address_id") @db.Uuid
+    name        String   @unique
+    description String?
     createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    psychologists Psychologist[]
+
+    @@map("therapeutic_approaches")
+}
+
+model Office {
+    id        String   @id @default(uuid()) @db.Uuid
+    contactId String?  @unique @map("contact_id") @db.Uuid
+    addressId String   @unique @map("address_id") @db.Uuid
+    photos    String[]
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     contact      Contact?      @relation(fields: [contactId], references: [id])
     address      Address       @relation(fields: [addressId], references: [id])
     psychologist Psychologist?
 
-    @@map("companys")
+    @@map("offices")
+}
+
+model Review {
+    id             String   @id @default(uuid()) @db.Uuid
+    pacientId      String   @map("pacient_id") @db.Uuid
+    psychologistId String   @map("psychologist_id") @db.Uuid
+    rating         Int
+    comment        String?
+    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    psychologist Psychologist @relation(fields: [psychologistId], references: [id])
+    pacient      Pacient      @relation(fields: [pacientId], references: [id])
+
+    @@map("reviews")
 }

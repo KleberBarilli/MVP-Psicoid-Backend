@@ -1,4 +1,4 @@
-import { BrazilState } from '@prisma/client';
+import { BrazilState } from "@prisma/client";
 
 export interface IAddress {
 	zipCode: string;
@@ -7,4 +7,6 @@ export interface IAddress {
 	neighborhood: string;
 	city: string;
 	state: BrazilState;
+	latitude: number | undefined;
+	longitude: number | undefined;
 }

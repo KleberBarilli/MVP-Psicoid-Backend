@@ -29,6 +29,7 @@ yarn dev
 ```
 yarn migrate:latest
 ```
+
 ```
 yarn migrate:updb
 ```

@@ -1,10 +1,12 @@
-import { Router } from 'express';
+import isAuthenticated from "@shared/infra/http/middlewares/isAuthenticated";
+import { Router } from "express";
 
-import SessionController from '../controllers/SessionController';
+import CreateSessionController from "../controllers/CreateSessionController";
+import WhoiamController from "../controllers/WhoiamController";
 
 const sessionRouter = Router();
-const sessionController = new SessionController();
 
-sessionRouter.post('/', sessionController.create);
+sessionRouter.post("/", new CreateSessionController().handle);
+sessionRouter.get("/whoiam", isAuthenticated, new WhoiamController().handle);
 
 export default sessionRouter;

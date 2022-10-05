@@ -2,8 +2,8 @@ export interface IPsychologistCreated {
 	id: string;
 	credentialId: string;
 	individualIdentityId: string;
-	companyId: string | null;
-	types: string[];
+	officeId: string | null;
+	resume: string | null;
 	createdAt: Date;
 	updatedAt: Date;
 }
