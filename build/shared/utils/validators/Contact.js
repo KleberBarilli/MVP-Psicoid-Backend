@@ -14,7 +14,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 const validateContact = contact => yup.object().shape({
   telephone: yup.string(),
   cellPhone: yup.string(),
-  email: yup.string().typeError('EMail inválido').email('Email inválido')
+  email: yup.string().typeError("EMail inválido").email("Email inválido")
 }).validate(contact, {
   abortEarly: false,
   stripUnknown: true

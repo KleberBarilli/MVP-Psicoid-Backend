@@ -6,4 +6,4 @@ var _BcryptHashProvider = _interopRequireDefault(require("./HashProvider/impleme
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_tsyringe.container.registerSingleton('HashProvider', _BcryptHashProvider.default);
+_tsyringe.container.registerSingleton("HashProvider", _BcryptHashProvider.default);

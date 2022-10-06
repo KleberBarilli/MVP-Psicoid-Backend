@@ -6,6 +6,7 @@
   "author": "kleberbarilli <kleber.barilli73@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "NODE_ENV=production node build/shared/infra/http/server.js",
     "build": "babel src --extensions \".js,.ts\" --out-dir build --copy-files",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --exit-child --ignore-watch node_modules src/shared/infra/http/server.ts",
     "test": "jest",

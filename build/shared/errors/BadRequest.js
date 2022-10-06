@@ -5,8 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.sendBadRequest = void 0;
 
-const sendBadRequest = (req, res, message) => {
-  return res.status(400).json({
+const sendBadRequest = (req, res, message, status) => {
+  return res.status(status || 400).json({
     error: message
   });
 };
