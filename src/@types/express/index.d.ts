@@ -12,7 +12,8 @@ declare namespace Express {
 			order: string;
 			filter: any;
 			search: any;
-			location: any;
+			latitude: number;
+			longitude: number;
 		};
 	}
 }
