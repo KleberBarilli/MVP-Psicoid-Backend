@@ -8,11 +8,11 @@ export default class ShowPsychologistController {
 			const { id } = req.params;
 			const { latitude, longitude } = req.query;
 			const showPsychologist = container.resolve(ShowPsychologistService);
-			const [psychologist, distance] = await showPsychologist.execute(id, {
+			const [psychologist, distance, avgRating] = await showPsychologist.execute(id, {
 				latitude,
 				longitude,
 			});
-			return res.status(200).json({ data: { ...psychologist, distance } });
+			return res.status(200).json({ data: { ...psychologist, distance, avgRating } });
 		} catch (error) {
 			return res.status(400).json({ error: "Houve um erro ao buscar o usuário" });
 		}
