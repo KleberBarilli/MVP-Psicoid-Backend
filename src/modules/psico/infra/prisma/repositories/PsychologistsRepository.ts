@@ -5,7 +5,10 @@ import { PsychologistEntity } from "../entities/Psychologist";
 import { CredentialEntity } from "@shared/entities/Credential";
 import { IUpdatePsychologist } from "@modules/psico/domain/models/IUpdatePsychologist";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
-
+import {
+	IPsychologist,
+	IPsychologistShortUpdate,
+} from "@modules/psico/domain/models/IPsychologist";
 export default class PsychologistsRepository implements IPsychologistsRepository {
 	#prisma;
 	constructor() {
@@ -47,13 +50,14 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		});
 	}
 
-	public async findById(id: string): Promise<PsychologistEntity | null> {
+	public async findById(id: string): Promise<any> {
 		return await this.#prisma.psychologist.findUnique({
 			where: { id },
 			include: {
 				office: { include: { address: true, contact: true } },
 				identity: { include: { address: true, contact: true } },
 				approaches: true,
+				reviews: true,
 			},
 		});
 	}
@@ -100,5 +104,40 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				take,
 			}),
 		]);
+	}
+	public findAllApproaches({
+		skip,
+		take,
+		sort,
+		order,
+		filter,
+	}: IPagination): Promise<number & any> {
+		return Promise.all([
+			this.#prisma.therapeuticApproache.count({ where: { ...filter } }),
+			this.#prisma.therapeuticApproache.findMany({
+				where: { ...filter },
+				orderBy: { [sort]: order },
+				skip,
+				take,
+				select: { id: true, name: true, description: true },
+			}),
+		]);
+	}
+	public findOneApproach(
+		id: string,
+	): Promise<{ id: string; name: string; description: string | null } | null> {
+		return this.#prisma.therapeuticApproache.findUnique({ where: { id } });
+	}
+	public addApproach(id: string, psicoId: string): Promise<IPsychologistShortUpdate> {
+		return this.#prisma.psychologist.update({
+			where: { id: psicoId },
+			data: { approaches: { connect: { id } } },
+		});
+	}
+	public removeApproach(id: string, psicoId: string): Promise<IPsychologistShortUpdate> {
+		return this.#prisma.psychologist.update({
+			where: { id: psicoId },
+			data: { approaches: { disconnect: { id } } },
+		});
 	}
 }

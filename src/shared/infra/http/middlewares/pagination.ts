@@ -7,7 +7,8 @@ export interface IPagination {
 	order: string;
 	filter: any;
 	search: any;
-	location: { latitude: number; longitude: number };
+	latitude: number;
+	longitude: number;
 }
 
 export const pagination = (req: any, res: Response, next: NextFunction) => {
@@ -18,7 +19,8 @@ export const pagination = (req: any, res: Response, next: NextFunction) => {
 		order = "desc",
 		filter = "null",
 		search = {},
-		location = {},
+		latitude = 0,
+		longitude = 0,
 	} = req.query;
 	req.pagination = {
 		skip: (page - 1) * take,
@@ -27,7 +29,8 @@ export const pagination = (req: any, res: Response, next: NextFunction) => {
 		order: order.toLowerCase(),
 		filter: JSON.parse(filter),
 		search,
-		location,
+		latitude,
+		longitude,
 	};
 	return next();
 };

@@ -1,4 +1,5 @@
-import { IAddress } from "@shared/interfaces/IAddress";
+import { IApproache } from "@shared/interfaces/IApproache";
+import { IOffice } from "@shared/interfaces/IOffice";
 import { IReview } from "@shared/interfaces/IReview";
 
 export interface IPsychologist {
@@ -13,7 +14,17 @@ export interface IPsychologist {
 	distance: number;
 	avgRating: number;
 	reviews: IReview[];
-	address: IAddress;
+	office: IOffice;
+	approaches: IApproache[];
+}
+export interface IPsychologistShortUpdate {
+	id: string;
+	credentialId: string;
+	individualIdentityId: string;
+	officeId: string | null;
+	resume: string | null;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 export interface IListPsychologist {

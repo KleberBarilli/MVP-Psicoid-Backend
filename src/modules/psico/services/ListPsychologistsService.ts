@@ -13,13 +13,16 @@ export default class ListPsychologistsService {
 		public psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(pagination: IPagination): Promise<IPsychologist[]> {
-		const { latitude, longitude } = pagination.location;
+		const { latitude, longitude } = pagination;
 		const [count, psychologists] = await this.psychologistsRepository.findAll(pagination);
 		let ratings: number[] = [];
 		psychologists.map((psico: IPsychologist) => {
 			psico.distance = getKmDistance(
 				{ latitude, longitude },
-				{ latitude: psico.address.latitude, longitude: psico.address.longitude },
+				{
+					latitude: psico.office.address.latitude || 0,
+					longitude: psico.office.address.longitude || 0,
+				},
 			);
 			psico.reviews.map((review: IReview) => {
 				ratings.push(review.rating);
