@@ -16,7 +16,7 @@
     "migrate:rollback": "prisma migrate reset",
     "migrate:make": "prisma migrate dev --name",
     "migrate:make:only": "prisma migrate dev --create-only --name",
-    "migrate:updb": "prisma db push",
+    "prisma:push": "prisma db push",
     "prisma:seeds": "ts-node-dev prisma/seeds ",
     "prisma:studio": "prisma studio --port 5555"
   },
