@@ -5,9 +5,6 @@ import { PacientEntity } from "../entities/Pacient";
 import { CredentialEntity } from "@shared/entities/Credential";
 import { IUpdatePacient } from "@modules/pacient/domain/models/IUpdatePacient";
 import { IPacient } from "@modules/pacient/domain/models/IPacient";
-import { IAddReview } from "@modules/pacient/domain/models/IAddReview";
-import { IReview } from "@shared/interfaces/IReview";
-import { IUpdateReview } from "@modules/pacient/domain/models/IUpdateReview";
 
 export default class PacientsRepository implements IPacientsRepository {
 	#prisma;
@@ -82,15 +79,5 @@ export default class PacientsRepository implements IPacientsRepository {
 			where: { id: pacientId },
 			data: { psychologists: { connect: { id: psicoId } }, selectedPsychologistId },
 		});
-	}
-
-	public addReview(data: IAddReview): Promise<IReview> {
-		return this.#prisma.review.create({ data });
-	}
-	public updateReview({ id, comment, rating }: IUpdateReview): Promise<IReview> {
-		return this.#prisma.review.update({ where: { id }, data: { comment, rating } });
-	}
-	public removeReview(id: string): Promise<IReview> {
-		return this.#prisma.review.delete({ where: { id } });
 	}
 }
