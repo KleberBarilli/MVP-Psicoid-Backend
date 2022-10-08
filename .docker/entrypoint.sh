@@ -2,4 +2,4 @@
 
 yarn install
 yarn build
-yarn run dev
+yarn dev
