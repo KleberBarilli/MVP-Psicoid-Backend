@@ -25,12 +25,6 @@ export default class SendForgotPasswordEmailService {
 
 		await this.credentialsRepository.updateToken(user.id, tokenRecovery);
 
-		// await sendEmail({
-		// 	recipients: [email],
-		// 	subject: "Recuperação de Senha",
-		// 	html: ForgotPasswordTemplate.message(tokenRecovery),
-		// });
-
 		emailQueue.add({
 			recipients: [email],
 			subject: "Recuperação de Senha",
