@@ -4,6 +4,7 @@ import { ISendForgotPasswordEmail } from "../domain/models/ISendForgotPasswordEm
 import { generateRandomNumber } from "@shared/utils/etc";
 import { sendEmail } from "@shared/utils/emailBuilder";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
+import ForgotPasswordTemplate from "@shared/utils/html-templates/ForgotPasswordTemplate";
 
 @injectable()
 export default class SendForgotPasswordEmailService {
@@ -23,6 +24,10 @@ export default class SendForgotPasswordEmailService {
 
 		await this.credentialsRepository.updateToken(user.id, tokenRecovery);
 
-		await sendEmail(email, tokenRecovery, "no-reply-psicoId@psicoid.com.br");
+		await sendEmail({
+			recipients: [email],
+			subject: "Recuperação de Senha",
+			html: ForgotPasswordTemplate.message(tokenRecovery),
+		});
 	}
 }

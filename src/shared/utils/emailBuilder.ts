@@ -3,23 +3,30 @@ import { awsConfig } from "@config/aws";
 
 const AWS_SES = new AWS.SES(awsConfig);
 
-export const sendEmail = (recipientEmail: any, message?: string, source?: string) => {
+interface ISendMail {
+	recipients: string[];
+	from?: string;
+	html: string;
+	subject: string;
+}
+
+export const sendEmail = ({ from, recipients, subject, html }: ISendMail) => {
 	let params = {
-		Source: source || "psicoid-contato@psicoid.com.br",
+		Source: from || "psicoid-contato@psicoid.com.br",
 		Destination: {
-			BccAddresses: [recipientEmail],
+			BccAddresses: recipients,
 		},
 		ReplyToAddresses: [],
 		Message: {
 			Body: {
 				Html: {
 					Charset: "UTF-8",
-					Data: `<p> Redefina a sua senha utilizando esse código ${message} </p>`,
+					Data: html,
 				},
 			},
 			Subject: {
 				Charset: "UTF-8",
-				Data: `Hello`,
+				Data: subject,
 			},
 		},
 	};
