@@ -5,6 +5,7 @@ import { generateRandomNumber } from "@shared/utils/etc";
 import { sendEmail } from "@shared/lib/ses";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 import ForgotPasswordTemplate from "@shared/utils/html-templates/ForgotPasswordTemplate";
+import { emailQueue } from "@shared/lib/bull/queues/send-mail";
 
 @injectable()
 export default class SendForgotPasswordEmailService {
@@ -24,7 +25,13 @@ export default class SendForgotPasswordEmailService {
 
 		await this.credentialsRepository.updateToken(user.id, tokenRecovery);
 
-		await sendEmail({
+		// await sendEmail({
+		// 	recipients: [email],
+		// 	subject: "Recuperação de Senha",
+		// 	html: ForgotPasswordTemplate.message(tokenRecovery),
+		// });
+
+		emailQueue.add({
 			recipients: [email],
 			subject: "Recuperação de Senha",
 			html: ForgotPasswordTemplate.message(tokenRecovery),
