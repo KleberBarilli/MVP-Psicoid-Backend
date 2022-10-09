@@ -1,6 +1,6 @@
 import { injectable, inject } from "tsyringe";
 import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
-import { getKmDistance } from "@shared/utils/distance";
+import { getKmDistance } from "@shared/lib/distance";
 import { IReview } from "@shared/interfaces/IReview";
 import { arrAvg } from "@shared/utils/etc";
 @injectable()

@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import AppError from "@shared/errors/AppError";
 import { ISendForgotPasswordEmail } from "../domain/models/ISendForgotPasswordEmail";
 import { generateRandomNumber } from "@shared/utils/etc";
-import { sendEmail } from "@shared/utils/emailBuilder";
+import { sendEmail } from "@shared/lib/ses";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 import ForgotPasswordTemplate from "@shared/utils/html-templates/ForgotPasswordTemplate";
 
