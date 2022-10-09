@@ -2,11 +2,9 @@ import { inject, injectable } from "tsyringe";
 import AppError from "@shared/errors/AppError";
 import { ISendForgotPasswordEmail } from "../domain/models/ISendForgotPasswordEmail";
 import { generateRandomNumber } from "@shared/utils/etc";
-import { sendEmail } from "@shared/lib/ses";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 import ForgotPasswordTemplate from "@shared/utils/html-templates/ForgotPasswordTemplate";
-import { emailQueue } from "@shared/lib/bull/queues/send-mail";
-
+import Queue from "@shared/lib/bull/Queue";
 @injectable()
 export default class SendForgotPasswordEmailService {
 	constructor(
@@ -25,7 +23,7 @@ export default class SendForgotPasswordEmailService {
 
 		await this.credentialsRepository.updateToken(user.id, tokenRecovery);
 
-		emailQueue.add({
+		await Queue.add("RegistrationMail", {
 			recipients: [email],
 			subject: "Recuperação de Senha",
 			html: ForgotPasswordTemplate.message(tokenRecovery),

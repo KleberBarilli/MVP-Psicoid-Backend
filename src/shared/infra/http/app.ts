@@ -4,7 +4,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import "express-async-errors";
 import morgan from "morgan";
-
+import Queue from "../../lib/bull/Queue";
 import routes from "./routes";
 import "@shared/container";
 import AppError from "@shared/errors/AppError";
@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 app.use(routes);
-
+Queue.process();
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 	if (error instanceof AppError) {
 		return res.status(error.statusCode).json({
