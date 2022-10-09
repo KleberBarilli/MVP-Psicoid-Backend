@@ -3,7 +3,7 @@ import { injectable, inject } from "tsyringe";
 import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
 import { IPsychologist } from "../domain/models/IPsychologist";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
-import { getKmDistance } from "@shared/utils/distance";
+import { getKmDistance } from "@shared/lib/distance";
 import { IReview } from "@shared/interfaces/IReview";
 import { arrAvg } from "@shared/utils/etc";
 @injectable()

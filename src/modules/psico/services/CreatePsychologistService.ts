@@ -4,7 +4,7 @@ import { ICreatePsychologist } from "../domain/models/ICreatePsychologist";
 import { IPsychologistCreated } from "../domain/models/IPsychologystCreated";
 import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
 import { IHashProvider } from "@modules/auth/providers/HashProvider/models/IHashProvider";
-import { getGeocode } from "@shared/utils/geocoder";
+import { getGeocode } from "@shared/lib/geocoder";
 
 @injectable()
 export default class CreatePsychologistService {

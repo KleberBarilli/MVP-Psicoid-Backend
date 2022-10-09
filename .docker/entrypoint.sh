@@ -2,4 +2,5 @@
 
 yarn install
 yarn build
-yarn run dev
+yarn prisma:push
+yarn dev

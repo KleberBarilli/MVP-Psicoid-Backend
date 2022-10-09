@@ -14,6 +14,12 @@
 
 -   PrismaDB -v4.1.0
 
+## 🚀 Docker Exec
+
+```
+docker-compose up
+```
+
 ## 🚀 Exec
 
 ```
