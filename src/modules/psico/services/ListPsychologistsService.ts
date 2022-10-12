@@ -20,8 +20,8 @@ export default class ListPsychologistsService {
 			psico.distance = getKmDistance(
 				{ latitude, longitude },
 				{
-					latitude: psico.office.address.latitude || 0,
-					longitude: psico.office.address.longitude || 0,
+					latitude: psico.identity.address.latitude || 0,
+					longitude: psico.identity.address.longitude || 0,
 				},
 			);
 			console.log("psico", psico);
