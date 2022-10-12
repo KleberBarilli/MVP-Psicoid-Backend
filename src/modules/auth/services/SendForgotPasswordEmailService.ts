@@ -23,10 +23,10 @@ export default class SendForgotPasswordEmailService {
 
 		await this.credentialsRepository.updateToken(user.id, tokenRecovery);
 
-		// await Queue.add("RegistrationMail", {
-		// 	recipients: [email],
-		// 	subject: "Recuperação de Senha",
-		// 	html: ForgotPasswordTemplate.message(tokenRecovery),
-		// });
+		await Queue.add("RegistrationMail", {
+			recipients: [email],
+			subject: "Recuperação de Senha",
+			html: ForgotPasswordTemplate.message(tokenRecovery),
+		});
 	}
 }

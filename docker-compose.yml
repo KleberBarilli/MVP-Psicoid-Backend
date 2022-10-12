@@ -30,15 +30,8 @@ services:
     image: redis
     container_name: psicoid_redis
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+      - ALLOW_EMPTY_PASSWORD=no
+      - PASSWORD=cNTlvgtCCqhIA1JzpHXXmCKvvjwgPrQZ
     ports:
-      - 6379:6379
-
-  redis-commander:
-    container_name: psicoid_redis-commander
-    image: rediscommander/redis-commander
-    restart: always
-    environment:
-      - REDIS_HOSTS=local:redis:6379
-    ports:
-      - "8081:8081"
+      - 17830:17830
+  
