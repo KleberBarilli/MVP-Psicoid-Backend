@@ -24,6 +24,7 @@ export default class ListPsychologistsService {
 					longitude: psico.office.address.longitude || 0,
 				},
 			);
+			console.log("psico", psico);
 			psico.reviews.map((review: IReview) => {
 				ratings.push(review.rating);
 			});
