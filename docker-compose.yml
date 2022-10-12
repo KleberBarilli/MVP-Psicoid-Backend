@@ -18,6 +18,10 @@ services:
     image: postgres
     restart: always
     tty: true
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=psicoid
     ports:
       - "5432:5432"
     volumes:
