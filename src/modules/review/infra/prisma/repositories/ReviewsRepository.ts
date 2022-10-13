@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { IReviewsRepository } from "../../../domain/repositories/IReviewsRepository";
-import { IAddReview } from "@modules/pacient/domain/models/IAddReview";
+import { ICreateReview } from "@modules/review/domain/models/ICreateReview";
 import { IReview } from "@shared/interfaces/IReview";
-import { IUpdateReview } from "@modules/pacient/domain/models/IUpdateReview";
+import { IUpdateReview } from "@modules/review/domain/models/IUpdateReview";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 
 export default class PacientsRepository implements IReviewsRepository {
@@ -11,11 +11,17 @@ export default class PacientsRepository implements IReviewsRepository {
 		this.#prisma = new PrismaClient();
 	}
 
-	public create(data: IAddReview): Promise<IReview> {
+	public create(data: ICreateReview): Promise<IReview> {
 		return this.#prisma.review.create({ data });
 	}
 	public findById(id: string): Promise<IReview | null> {
-		return this.#prisma.review.findUnique({ where: { id } });
+		return this.#prisma.review.findUnique({
+			where: { id },
+			include: {
+				pacient: { include: { identity: true } },
+				psychologist: { include: { identity: true } },
+			},
+		});
 	}
 	public async findAllByPsico(
 		id: string,
@@ -28,6 +34,10 @@ export default class PacientsRepository implements IReviewsRepository {
 				orderBy: { [sort]: order },
 				skip,
 				take,
+				include: {
+					pacient: { include: { identity: true } },
+					psychologist: { include: { identity: true } },
+				},
 			}),
 		]);
 	}
