@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { ValidationError } from "yup";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { validateUpdateAddress } from "@shared/utils/validators/Address";
 import { validateContact } from "@shared/utils/validators/Contact";
 import { validateUpdateIdentity } from "@shared/utils/validators/Identity";
 import { sendBadRequest } from "@shared/errors/BadRequest";
@@ -12,20 +11,15 @@ export default class UpdatePacientController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				pacient: { identity, contact, address, selectedPsychologistId },
+				pacient: { identity, contact, selectedPsychologistId },
 			} = req.body;
 			const { profileId } = req.user;
-			await Promise.all([
-				validateUpdateIdentity(identity),
-				validateContact(contact),
-				validateUpdateAddress(address),
-			]);
+			await Promise.all([validateUpdateIdentity(identity), validateContact(contact)]);
 
 			const updatePacient = container.resolve(UpdatePacientService);
 			const user = await updatePacient.execute(profileId, {
 				identity,
 				contact,
-				address,
 				selectedPsychologistId,
 			});
 

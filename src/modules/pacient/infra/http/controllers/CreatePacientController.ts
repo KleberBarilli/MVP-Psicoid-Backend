@@ -2,13 +2,10 @@ import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { ValidationError } from "yup";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-
 import { validateCredentials } from "@shared/utils/validators/Credentials";
-import { validateAddress } from "@shared/utils/validators/Address";
 import { validateContact } from "@shared/utils/validators/Contact";
 import { validateIdentity } from "@shared/utils/validators/Identity";
 import { sendBadRequest } from "@shared/errors/BadRequest";
-
 import CreatePacientService from "../../../services/CreatePacientService";
 import AppError from "@shared/errors/AppError";
 
@@ -16,14 +13,13 @@ export default class PacientController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				pacient: { credentials, identity, contact, address },
+				pacient: { credentials, identity, contact },
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
 				validateCredentials(credentials),
 				validateIdentity(identity),
 				validateContact(contact),
-				validateAddress(address),
 			]);
 
 			const createPacient = container.resolve(CreatePacientService);
@@ -34,7 +30,6 @@ export default class PacientController {
 				},
 				identity,
 				contact,
-				address,
 			});
 
 			return res.status(201).json({

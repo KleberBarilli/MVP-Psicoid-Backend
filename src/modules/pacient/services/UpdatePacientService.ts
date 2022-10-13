@@ -11,13 +11,12 @@ export default class UpdatePacientService {
 	) {}
 	public async execute(
 		id: string,
-		{ identity, contact, address, selectedPsychologistId }: IUpdatePacient,
+		{ identity, contact, selectedPsychologistId }: IUpdatePacient,
 	): Promise<PacientEntity> {
 		return await this.pacientsRepository.update(id, {
 			selectedPsychologistId,
 			identity,
 			contact,
-			address,
 		});
 	}
 }

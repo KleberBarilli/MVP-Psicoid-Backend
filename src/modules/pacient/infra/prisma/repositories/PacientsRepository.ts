@@ -1,4 +1,4 @@
-import { PrismaClient, Review } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { ICreatePacient } from "../../../domain/models/ICreatePacient";
 import { IPacientsRepository } from "../../../domain/repositories/IPacientsRepository";
 import { PacientEntity } from "../entities/Pacient";
@@ -12,12 +12,7 @@ export default class PacientsRepository implements IPacientsRepository {
 		this.#prisma = new PrismaClient();
 	}
 
-	public async create({
-		credential,
-		identity,
-		contact,
-		address,
-	}: ICreatePacient): Promise<PacientEntity> {
+	public async create({ credential, identity, contact }: ICreatePacient): Promise<PacientEntity> {
 		const { email, password, role } = credential;
 		return this.#prisma.pacient.create({
 			data: {
@@ -32,7 +27,6 @@ export default class PacientsRepository implements IPacientsRepository {
 					create: {
 						...identity,
 						contact: { create: { ...contact } },
-						address: { create: { ...address } },
 					},
 				},
 			},
@@ -44,7 +38,7 @@ export default class PacientsRepository implements IPacientsRepository {
 			where: { id },
 			include: {
 				credential: { select: { email: true } },
-				identity: { include: { address: true, contact: true } },
+				identity: { include: { contact: true } },
 				psychologists: true,
 			},
 		});
@@ -54,7 +48,7 @@ export default class PacientsRepository implements IPacientsRepository {
 	}
 	public update(
 		id: string,
-		{ identity, contact, address, selectedPsychologistId }: IUpdatePacient,
+		{ identity, contact, selectedPsychologistId }: IUpdatePacient,
 	): Promise<PacientEntity> {
 		return this.#prisma.pacient.update({
 			where: { id },
@@ -64,7 +58,6 @@ export default class PacientsRepository implements IPacientsRepository {
 					update: {
 						...identity,
 						contact: { update: { ...contact } },
-						address: { update: { ...address } },
 					},
 				},
 			},
