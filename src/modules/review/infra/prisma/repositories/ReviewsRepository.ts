@@ -15,7 +15,13 @@ export default class PacientsRepository implements IReviewsRepository {
 		return this.#prisma.review.create({ data });
 	}
 	public findById(id: string): Promise<IReview | null> {
-		return this.#prisma.review.findUnique({ where: { id } });
+		return this.#prisma.review.findUnique({
+			where: { id },
+			include: {
+				pacient: { include: { identity: true } },
+				psychologist: { include: { identity: true } },
+			},
+		});
 	}
 	public async findAllByPsico(
 		id: string,
@@ -28,6 +34,10 @@ export default class PacientsRepository implements IReviewsRepository {
 				orderBy: { [sort]: order },
 				skip,
 				take,
+				include: {
+					pacient: { include: { identity: true } },
+					psychologist: { include: { identity: true } },
+				},
 			}),
 		]);
 	}
