@@ -104,7 +104,7 @@ model Psychologist {
     id                   String   @id @default(uuid()) @db.Uuid
     credentialId         String   @unique @map("credential_id") @db.Uuid
     individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
-    officeId             String?  @unique @map("office_id") @db.Uuid
+    officeId             String   @unique @map("office_id") @db.Uuid
     resume               String?
     status               Status   @default(UNDER_REVIEW)
     createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -112,7 +112,7 @@ model Psychologist {
 
     credential Credential         @relation(fields: [credentialId], references: [id])
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
-    office     Office?            @relation(fields: [officeId], references: [id])
+    office     Office             @relation(fields: [officeId], references: [id])
 
     pacients   Pacient[]
     approaches TherapeuticApproache[]

@@ -12,20 +12,19 @@ export default class UpdatePsychologistController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				psico: { identity, contact, address, office, resume },
+				psico: { identity, office, resume },
 			} = req.body;
 			const { profileId } = req.user;
 			await Promise.all([
 				validateUpdateIdentity(identity),
-				validateContact(contact),
-				validateUpdateAddress(address),
+				validateContact(identity.contact),
+				validateContact(office.contact),
+				validateUpdateAddress(office.address),
 			]);
 
 			const service = container.resolve(UpdatePsychologistService);
 			const user = await service.execute(profileId, {
 				identity,
-				contact,
-				address,
 				office,
 				resume,
 			});

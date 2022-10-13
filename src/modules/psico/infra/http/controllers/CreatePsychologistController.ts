@@ -13,21 +13,20 @@ export default class CreatePsychologistController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				psico: { credentials, identity, contact, address, office, resume },
+				psico: { credentials, identity, office, resume },
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
 				validateCredentials(credentials),
 				validateIdentity(identity),
-				validateContact(contact),
-				validateAddress(address),
+				validateContact(identity.contact),
+				validateContact(office.contact),
+				validateAddress(office.address),
 			]);
 			const service = container.resolve(CreatePsychologistService);
 			const user = await service.execute({
 				credential: credentials,
 				identity,
-				contact,
-				address,
 				office,
 				resume,
 			});
