@@ -4,7 +4,7 @@ export class PsychologistEntity implements Psychologist {
 	id: string;
 	credentialId: string;
 	individualIdentityId: string;
-	officeId: string | null;
+	officeId: string;
 	resume: string | null;
 	status: Status;
 	createdAt: Date;

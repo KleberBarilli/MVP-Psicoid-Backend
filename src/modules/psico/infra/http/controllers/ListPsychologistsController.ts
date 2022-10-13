@@ -10,7 +10,6 @@ export default class ListPsychologistsController {
 
 			return res.status(200).json({ count, data: psychologists });
 		} catch (error) {
-			console.log("erro", error);
 			return res.status(500).json({ error: "Houve um erro ao listar" });
 		}
 	}

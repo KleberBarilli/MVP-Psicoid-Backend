@@ -40,7 +40,7 @@ export default class CredentialsRepository implements ICredentialsRepository {
 			include: {
 				psychologist: {
 					include: {
-						identity: { include: { address: true, contact: true } },
+						identity: { include: { contact: true } },
 						office: { include: { address: true, contact: true } },
 						approaches: true,
 						pacients: true,
@@ -55,12 +55,12 @@ export default class CredentialsRepository implements ICredentialsRepository {
 			include: {
 				pacient: {
 					include: {
-						identity: { include: { address: true, contact: true } },
+						identity: { include: { contact: true } },
 						psychologists: {
 							select: {
 								id: true,
 								approaches: true,
-								identity: { include: { address: true, contact: true } },
+								identity: { include: { contact: true } },
 								resume: true,
 							},
 						},

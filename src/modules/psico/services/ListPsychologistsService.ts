@@ -14,17 +14,18 @@ export default class ListPsychologistsService {
 	) {}
 	public async execute(pagination: IPagination): Promise<IPsychologist[]> {
 		const { latitude, longitude } = pagination;
+
 		const [count, psychologists] = await this.psychologistsRepository.findAll(pagination);
 		let ratings: number[] = [];
 		psychologists.map((psico: IPsychologist) => {
 			psico.distance = getKmDistance(
 				{ latitude, longitude },
 				{
-					latitude: psico.identity.address.latitude || 0,
-					longitude: psico.identity.address.longitude || 0,
+					latitude: psico.office.address.latitude || 0,
+					longitude: psico.office.address.longitude || 0,
 				},
 			);
-			console.log("psico", psico);
+
 			psico.reviews.map((review: IReview) => {
 				ratings.push(review.rating);
 			});

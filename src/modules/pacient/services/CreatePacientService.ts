@@ -18,7 +18,6 @@ export default class CreatePacientService {
 		credential,
 		identity,
 		contact,
-		address,
 	}: ICreatePacient): Promise<IPacientCreated> {
 		const userExists = await this.pacientsRepository.findByEmail(credential.email);
 		if (userExists) {
@@ -30,7 +29,6 @@ export default class CreatePacientService {
 			credential,
 			identity,
 			contact,
-			address,
 		});
 	}
 }

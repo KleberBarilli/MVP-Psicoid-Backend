@@ -7,6 +7,12 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+generator erd {
+    provider = "prisma-erd-generator"
+    output   = "../docs/ER-DIAGRAM.pdf"
+    theme    = "forest"
+}
+
 enum Provider {
     APPLE
     EMAIL
@@ -98,7 +104,7 @@ model Psychologist {
     id                   String   @id @default(uuid()) @db.Uuid
     credentialId         String   @unique @map("credential_id") @db.Uuid
     individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
-    officeId             String?  @unique @map("office_id") @db.Uuid
+    officeId             String   @unique @map("office_id") @db.Uuid
     resume               String?
     status               Status   @default(UNDER_REVIEW)
     createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -106,7 +112,7 @@ model Psychologist {
 
     credential Credential         @relation(fields: [credentialId], references: [id])
     identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
-    office     Office?            @relation(fields: [officeId], references: [id])
+    office     Office             @relation(fields: [officeId], references: [id])
 
     pacients   Pacient[]
     approaches TherapeuticApproache[]
@@ -116,19 +122,18 @@ model Psychologist {
 }
 
 model IndividualIdentity {
-    id        String   @id @default(uuid()) @db.Uuid
-    firstName String   @map("first_name")
-    lastName  String   @map("last_name")
-    cpf       String   @unique
-    avatarUrl String?  @map("avatar_url")
+    id        String  @id @default(uuid()) @db.Uuid
+    firstName String  @map("first_name")
+    lastName  String  @map("last_name")
+    cpf       String  @unique
+    avatarUrl String? @map("avatar_url")
     gender    String?
-    contactId String?  @unique @map("contact_id") @db.Uuid
-    addressId String   @unique @map("address_id") @db.Uuid
+    contactId String? @unique @map("contact_id") @db.Uuid
+
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     contact Contact? @relation(fields: [contactId], references: [id])
-    address Address  @relation(fields: [addressId], references: [id])
 
     pacient      Pacient?
     Psychologist Psychologist?
@@ -164,8 +169,7 @@ model Address {
     createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt    DateTime    @updatedAt @map("updated_at") @db.Timestamptz()
 
-    identity IndividualIdentity?
-    office   Office?
+    office Office?
 
     @@map("addresses")
 }

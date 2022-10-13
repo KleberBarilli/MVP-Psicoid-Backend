@@ -18,8 +18,6 @@ export default class CreatePsychologistService {
 	public async execute({
 		credential,
 		identity,
-		contact,
-		address,
 		office,
 		resume,
 	}: ICreatePsychologist): Promise<IPsychologistCreated> {
@@ -30,16 +28,14 @@ export default class CreatePsychologistService {
 		credential.password = await this.hashProvider.generateHash(credential.password || "");
 
 		const location = await getGeocode(
-			`${address.number} ${address.street} ${address.neighborhood} ${address.city}`,
+			`${office.address.number} ${office.address.street} ${office.address.neighborhood} ${office.address.city}`,
 		);
 
-		address.latitude = location[0].latitude;
-		address.longitude = location[0].longitude;
+		office.address.latitude = location[0].latitude;
+		office.address.longitude = location[0].longitude;
 		return this.psychologistsRepository.create({
 			credential,
 			identity,
-			contact,
-			address,
 			office,
 			resume,
 		});
