@@ -69,14 +69,14 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				identity: {
 					update: {
 						...identity,
-						contact: { update: { ...identity.contact } },
+						contact: { update: { ...identity?.contact } },
 					},
 				},
 				office: {
 					update: {
 						...office,
-						contact: { update: { ...office.contact } },
-						address: { update: { ...office.address } },
+						contact: { update: { ...office?.contact } },
+						address: { update: { ...office?.address } },
 					},
 				},
 			},
@@ -90,6 +90,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 					identity: { include: { contact: true } },
 					approaches: true,
 					reviews: true,
+					office: { include: { address: true } },
 				},
 				where: { ...filter },
 				orderBy: { [sort]: order },

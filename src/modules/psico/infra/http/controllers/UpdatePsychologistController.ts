@@ -17,9 +17,9 @@ export default class UpdatePsychologistController {
 			const { profileId } = req.user;
 			await Promise.all([
 				validateUpdateIdentity(identity),
-				validateContact(identity.contact),
-				validateContact(office.contact),
-				validateUpdateAddress(office.address),
+				validateContact(identity?.contact),
+				validateContact(office?.contact),
+				validateUpdateAddress(office?.address),
 			]);
 
 			const service = container.resolve(UpdatePsychologistService);
