@@ -38,8 +38,8 @@ export default class CreatePacientController {
 				password: credentials.password,
 			});
 			return res.status(201).json({
-				data: { user, session },
 				message: "Pacient created with success",
+				data: { user, session },
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {

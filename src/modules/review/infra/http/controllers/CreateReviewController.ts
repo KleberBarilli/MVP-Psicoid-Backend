@@ -24,8 +24,8 @@ export default class CreateReviewController {
 			});
 
 			return res.status(201).json({
-				data: review,
 				message: "Review adicionada com sucesso",
+				data: review,
 			});
 		} catch (error) {
 			if (error instanceof ValidationError) {

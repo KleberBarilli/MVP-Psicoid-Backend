@@ -21,8 +21,8 @@ export default class CreateGuestPacientController {
 			});
 
 			return res.status(201).json({
-				data: user,
 				message: "Guest Pacient created with success",
+				data: user,
 			});
 		} catch (error) {
 			console.log(error);

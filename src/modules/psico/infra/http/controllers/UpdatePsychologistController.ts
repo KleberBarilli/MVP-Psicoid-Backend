@@ -30,8 +30,8 @@ export default class UpdatePsychologistController {
 			});
 
 			return res.status(204).json({
-				data: user,
 				message: "Psychologist updated with success",
+				data: user,
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {

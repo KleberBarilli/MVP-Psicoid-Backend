@@ -39,8 +39,8 @@ export default class CreatePsychologistController {
 				password,
 			});
 			return res.status(201).json({
-				data: { user, session },
 				message: "Psychologist created with success",
+				data: { user, session },
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {

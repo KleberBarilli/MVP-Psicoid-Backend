@@ -12,8 +12,8 @@ export default class AddApproachController {
 			const user = await service.execute(approachId?.toString() || "", profileId);
 
 			return res.status(204).json({
-				data: user,
 				message: "Abordagem adicionada com sucesso",
+				data: user,
 			});
 		} catch (error) {
 			return res.status(500).json({ error: "Internal Error" });
