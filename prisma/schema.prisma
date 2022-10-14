@@ -85,14 +85,16 @@ model Credential {
 
 model Pacient {
     id                     String   @id @default(uuid()) @db.Uuid
-    credentialId           String   @unique @map("credential_id") @db.Uuid
-    profileId              String   @unique @map("profile_id") @db.Uuid
+    credentialId           String?  @unique @map("credential_id") @db.Uuid
+    profileId              String?  @unique @map("profile_id") @db.Uuid
+    guestId                String?  @unique @map("guest_id") @db.Uuid
     selectedPsychologistId String?  @map("selected_psychologist_id") @db.Uuid
     createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    credential Credential @relation(fields: [credentialId], references: [id])
-    profile    Profile    @relation(fields: [profileId], references: [id])
+    credential Credential?   @relation(fields: [credentialId], references: [id])
+    profile    Profile?      @relation(fields: [profileId], references: [id])
+    guest      GuestPacient? @relation(fields: [guestId], references: [id])
 
     psychologists Psychologist[]
     reviews       Review[]
@@ -101,13 +103,12 @@ model Pacient {
 }
 
 model GuestPacient {
-    id             String  @id @default(uuid()) @db.Uuid
-    psychologistId String? @db.Uuid
-    contactId      String? @db.Uuid
-    name           String
+    id        String  @id @default(uuid()) @db.Uuid
+    contactId String? @db.Uuid
+    name      String
 
-    contact      Contact?      @relation(fields: [contactId], references: [id])
-    psychologist Psychologist? @relation(fields: [psychologistId], references: [id])
+    contact Contact? @relation(fields: [contactId], references: [id])
+    Pacient Pacient?
 
     @@map("guests_pacients")
 }
@@ -127,7 +128,6 @@ model Psychologist {
     office     Office     @relation(fields: [officeId], references: [id])
 
     pacients   Pacient[]
-    guests     GuestPacient[]
     approaches TherapeuticApproache[]
     reviews    Review[]
 
