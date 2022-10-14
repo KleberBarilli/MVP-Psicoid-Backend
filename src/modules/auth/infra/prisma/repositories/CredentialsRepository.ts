@@ -43,7 +43,7 @@ export default class CredentialsRepository implements ICredentialsRepository {
 						identity: { include: { contact: true } },
 						office: { include: { address: true, contact: true } },
 						approaches: true,
-						pacients: true,
+						pacients: { include: { identity: true } },
 					},
 				},
 			},
