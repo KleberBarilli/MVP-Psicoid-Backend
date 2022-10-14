@@ -4,13 +4,15 @@ import CreateReviewService from "@modules/review/services/CreateReviewService";
 import { validateReview } from "@shared/utils/validators/Review";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import { ValidationError } from "yup";
+import AppError from "@shared/errors/AppError";
 
 export default class CreateReviewController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				review: { psychologistId, rating, comment },
+				review: { rating, comment },
 			} = req.body;
+			const { psychologistId } = req.query;
 			const { profileId } = req.user;
 
 			await validateReview({ rating, comment });
@@ -18,7 +20,7 @@ export default class CreateReviewController {
 			const service = container.resolve(CreateReviewService);
 			const review = await service.execute({
 				pacientId: profileId,
-				psychologistId,
+				psychologistId: psychologistId?.toString() || "",
 				rating,
 				comment,
 			});
@@ -28,6 +30,9 @@ export default class CreateReviewController {
 				data: review,
 			});
 		} catch (error) {
+			if (error instanceof AppError) {
+				return sendBadRequest(req, res, error.message, error.statusCode);
+			}
 			if (error instanceof ValidationError) {
 				return sendBadRequest(req, res, error.message, 400);
 			}

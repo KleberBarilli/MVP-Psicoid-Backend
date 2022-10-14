@@ -92,12 +92,13 @@ model Pacient {
     createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    credential Credential?   @relation(fields: [credentialId], references: [id])
+    credential Credential?   @relation(fields: [credentialId], references: [id], onDelete: Cascade)
     profile    Profile?      @relation(fields: [profileId], references: [id])
     guest      GuestPacient? @relation(fields: [guestId], references: [id])
 
     psychologists Psychologist[]
     reviews       Review[]
+    likes         Like[]
 
     @@map("pacients")
 }
@@ -123,7 +124,7 @@ model Psychologist {
     createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    credential Credential @relation(fields: [credentialId], references: [id])
+    credential Credential @relation(fields: [credentialId], references: [id], onDelete: Cascade)
     profile    Profile    @relation(fields: [profileId], references: [id])
     office     Office     @relation(fields: [officeId], references: [id])
 
@@ -216,16 +217,30 @@ model Office {
 }
 
 model Review {
-    id             String   @id @default(uuid()) @db.Uuid
-    pacientId      String   @map("pacient_id") @db.Uuid
-    psychologistId String   @map("psychologist_id") @db.Uuid
+    id             String    @id @default(uuid()) @db.Uuid
+    pacientId      String    @map("pacient_id") @db.Uuid
+    psychologistId String    @map("psychologist_id") @db.Uuid
     rating         Int
     comment        String?
-    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+    deletedAt      DateTime? @map("deleted_at") @db.Timestamptz()
 
-    psychologist Psychologist @relation(fields: [psychologistId], references: [id])
-    pacient      Pacient      @relation(fields: [pacientId], references: [id])
+    psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
+    pacient      Pacient      @relation(fields: [pacientId], references: [id], onDelete: Cascade)
+    likes        Like[]
 
     @@map("reviews")
+}
+
+model Like {
+    reviewId  String   @map("review_id") @db.Uuid
+    pacientId String   @map("pacient_id") @db.Uuid
+    likedAt   DateTime @default(now()) @map("liked_at") @db.Timestamptz()
+
+    review  Review  @relation(fields: [reviewId], references: [id])
+    pacient Pacient @relation(fields: [pacientId], references: [id])
+
+    @@id([reviewId, pacientId])
+    @@map("likes")
 }
