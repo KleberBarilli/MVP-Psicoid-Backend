@@ -6,6 +6,7 @@ import { CredentialEntity } from "@shared/entities/Credential";
 import { IUpdatePacient } from "@modules/pacient/domain/models/IUpdatePacient";
 import { IPacient } from "@modules/pacient/domain/models/IPacient";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
+import { ICreateGuestPacient } from "@modules/pacient/domain/models/ICreateGuestPacient";
 
 export default class PacientsRepository implements IPacientsRepository {
 	#prisma;
@@ -13,7 +14,7 @@ export default class PacientsRepository implements IPacientsRepository {
 		this.#prisma = new PrismaClient();
 	}
 
-	public async create({ credential, profile, contact }: ICreatePacient): Promise<PacientEntity> {
+	public create({ credential, profile, contact }: ICreatePacient): Promise<PacientEntity> {
 		const { email, password, role } = credential;
 		return this.#prisma.pacient.create({
 			data: {
@@ -33,9 +34,20 @@ export default class PacientsRepository implements IPacientsRepository {
 			},
 		});
 	}
+	public createGuest(
+		psicoId: string,
+		{ name, contact }: ICreateGuestPacient,
+	): Promise<PacientEntity> {
+		return this.#prisma.pacient.create({
+			data: {
+				guest: { create: { name, contact: { create: contact } } },
+				psychologists: { connect: { id: psicoId } },
+			},
+		});
+	}
 
-	public async findById(id: string): Promise<PacientEntity | null> {
-		return await this.#prisma.pacient.findUnique({
+	public findById(id: string): Promise<PacientEntity | null> {
+		return this.#prisma.pacient.findUnique({
 			where: { id },
 			include: {
 				credential: { select: { email: true } },
@@ -44,8 +56,8 @@ export default class PacientsRepository implements IPacientsRepository {
 			},
 		});
 	}
-	public async findByEmail(email: string): Promise<CredentialEntity | null> {
-		return await this.#prisma.credential.findUnique({ where: { email } });
+	public findByEmail(email: string): Promise<CredentialEntity | null> {
+		return this.#prisma.credential.findUnique({ where: { email } });
 	}
 	public update(
 		id: string,

@@ -3,6 +3,7 @@ import isAuthenticated from "@shared/infra/http/middlewares/isAuthenticated";
 import { pagination } from "@shared/infra/http/middlewares/pagination";
 import { Router } from "express";
 import AddPsychologistController from "../controllers/AddPsychologistController";
+import CreateGuestPacientController from "../controllers/CreateGuestPacientController";
 import CreatePacientController from "../controllers/CreatePacientController";
 import ListPacientsByPsicoController from "../controllers/ListPacientsByPsicoController";
 import ShowPacientController from "../controllers/ShowPacientController";
@@ -12,11 +13,17 @@ const pacientRouter = Router();
 
 pacientRouter.post("/", new CreatePacientController().handle);
 pacientRouter.post(
-	"/add-psychologist",
+	"/guest",
 	isAuthenticated,
-	handleRole("PACIENT"),
-	new AddPsychologistController().handle,
-);
+	handleRole("PSYCHOLOGIST"),
+	new CreateGuestPacientController().handle,
+),
+	pacientRouter.post(
+		"/add-psychologist",
+		isAuthenticated,
+		handleRole("PACIENT"),
+		new AddPsychologistController().handle,
+	);
 pacientRouter.put("/", isAuthenticated, new UpdatePacientController().handle);
 pacientRouter.get(
 	"/:id",
