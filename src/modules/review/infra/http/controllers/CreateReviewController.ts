@@ -9,8 +9,9 @@ export default class CreateReviewController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				review: { psychologistId, rating, comment },
+				review: { rating, comment },
 			} = req.body;
+			const { psychologistId } = req.query;
 			const { profileId } = req.user;
 
 			await validateReview({ rating, comment });
@@ -18,7 +19,7 @@ export default class CreateReviewController {
 			const service = container.resolve(CreateReviewService);
 			const review = await service.execute({
 				pacientId: profileId,
-				psychologistId,
+				psychologistId: psychologistId?.toString() || "",
 				rating,
 				comment,
 			});
