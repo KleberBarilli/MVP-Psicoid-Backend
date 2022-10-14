@@ -23,8 +23,8 @@ export default class UpdateReviewController {
 			});
 
 			return res.status(204).json({
-				data: review,
 				message: "Review atualizada com sucesso",
+				data: review,
 			});
 		} catch (error) {
 			if (error instanceof ValidationError) {

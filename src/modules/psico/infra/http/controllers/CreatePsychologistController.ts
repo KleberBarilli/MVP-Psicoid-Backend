@@ -8,7 +8,9 @@ import { validateContact } from "@shared/utils/validators/Contact";
 import { validateProfile } from "@shared/utils/validators/Profile";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import CreatePsychologistService from "../../../services/CreatePsychologistService";
+import CreateSessionService from "@modules/auth/services/CreateSessionService";
 import AppError from "@shared/errors/AppError";
+
 export default class CreatePsychologistController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
@@ -23,6 +25,7 @@ export default class CreatePsychologistController {
 				validateContact(office.contact),
 				validateAddress(office.address),
 			]);
+			const password = credentials.password;
 			const service = container.resolve(CreatePsychologistService);
 			const user = await service.execute({
 				credential: credentials,
@@ -30,9 +33,14 @@ export default class CreatePsychologistController {
 				office,
 				resume,
 			});
+			const sessionService = container.resolve(CreateSessionService);
+			const session = await sessionService.execute({
+				email: credentials.email.toLowerCase(),
+				password,
+			});
 			return res.status(201).json({
-				data: user,
 				message: "Psychologist created with success",
+				data: { user, session },
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {

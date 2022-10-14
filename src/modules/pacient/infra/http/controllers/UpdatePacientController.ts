@@ -24,8 +24,8 @@ export default class UpdatePacientController {
 			});
 
 			return res.status(204).json({
-				data: user,
 				message: "Pacient updated with success",
+				data: user,
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {

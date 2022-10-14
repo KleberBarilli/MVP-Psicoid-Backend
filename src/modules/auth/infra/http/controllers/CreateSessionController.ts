@@ -18,7 +18,6 @@ export default class CreateSessionController {
 			});
 			return res.json({ data: user });
 		} catch (err) {
-			console.log(err);
 			if (err instanceof AppError) {
 				return res.status(err.statusCode).json({ message: err.message });
 			}

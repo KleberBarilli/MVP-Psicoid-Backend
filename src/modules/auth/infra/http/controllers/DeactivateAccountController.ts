@@ -10,7 +10,7 @@ export default class DeactivateAccountController {
 			await deactivate.execute(id);
 			return res.status(204).json({ message: "A conta foi desativada com sucesso" });
 		} catch (error) {
-			return res.status(400).json({ message: "Erro ao desativar a conta" });
+			return res.status(400).json({ error: "Erro ao desativar a conta" });
 		}
 	}
 }

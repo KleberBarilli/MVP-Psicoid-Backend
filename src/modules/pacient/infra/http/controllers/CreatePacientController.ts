@@ -7,6 +7,7 @@ import { validateContact } from "@shared/utils/validators/Contact";
 import { validateProfile } from "@shared/utils/validators/Profile";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import CreatePacientService from "../../../services/CreatePacientService";
+import CreateSessionService from "@modules/auth/services/CreateSessionService";
 import AppError from "@shared/errors/AppError";
 
 export default class CreatePacientController {
@@ -31,10 +32,14 @@ export default class CreatePacientController {
 				profile,
 				contact,
 			});
-
+			const sessionService = container.resolve(CreateSessionService);
+			const session = await sessionService.execute({
+				email: credentials.email.toLowerCase(),
+				password: credentials.password,
+			});
 			return res.status(201).json({
-				data: user,
 				message: "Pacient created with success",
+				data: { user, session },
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {
