@@ -53,6 +53,7 @@ export default class PacientsRepository implements IPacientsRepository {
 				credential: { select: { email: true } },
 				profile: { include: { contact: true } },
 				psychologists: true,
+				guest: true,
 			},
 		});
 	}
@@ -100,7 +101,7 @@ export default class PacientsRepository implements IPacientsRepository {
 				orderBy: { [sort]: order },
 				skip,
 				take,
-				select: { id: true, profile: { include: { contact: true } } },
+				select: { id: true, profile: { include: { contact: true } }, guest: true },
 			}),
 		]);
 	}

@@ -43,7 +43,9 @@ export default class CredentialsRepository implements ICredentialsRepository {
 						profile: { include: { contact: true } },
 						office: { include: { address: true, contact: true } },
 						approaches: true,
-						pacients: { include: { profile: true } },
+						pacients: {
+							include: { profile: true, guest: { include: { contact: true } } },
+						},
 					},
 				},
 			},
