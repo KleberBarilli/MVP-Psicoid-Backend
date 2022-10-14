@@ -14,7 +14,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 
 	public async create({
 		credential,
-		identity,
+		profile,
 		office,
 		resume,
 	}: ICreatePsychologist): Promise<PsychologistEntity> {
@@ -27,10 +27,10 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 						...credential,
 					},
 				},
-				identity: {
+				profile: {
 					create: {
-						...identity,
-						contact: { create: { ...identity.contact } },
+						...profile,
+						contact: { create: { ...profile.contact } },
 					},
 				},
 				office: {
@@ -49,7 +49,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 			where: { id },
 			include: {
 				office: { include: { address: true, contact: true } },
-				identity: { include: { contact: true } },
+				profile: { include: { contact: true } },
 				approaches: true,
 				reviews: true,
 			},
@@ -60,16 +60,16 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 	}
 	public update(
 		id: string,
-		{ identity, office, resume }: IUpdatePsychologist,
+		{ profile, office, resume }: IUpdatePsychologist,
 	): Promise<PsychologistEntity> {
 		return this.#prisma.psychologist.update({
 			where: { id },
 			data: {
 				resume,
-				identity: {
+				profile: {
 					update: {
-						...identity,
-						contact: { update: { ...identity?.contact } },
+						...profile,
+						contact: { update: { ...profile?.contact } },
 					},
 				},
 				office: {
@@ -87,7 +87,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 			this.#prisma.psychologist.count({ where: { ...filter } }),
 			this.#prisma.psychologist.findMany({
 				include: {
-					identity: { include: { contact: true } },
+					profile: { include: { contact: true } },
 					approaches: true,
 					reviews: true,
 					office: { include: { address: true } },

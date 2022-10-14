@@ -6,7 +6,7 @@ import { PacientEntity } from "@modules/pacient/infra/prisma/entities/Pacient";
 export class PacientEntityFake {
 	id: string;
 	credentialId: string;
-	individualIdentityId: string;
+	profileId: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -14,17 +14,12 @@ export class PacientEntityFake {
 class FakePacientsRepository {
 	public pacients: PacientEntityFake[] = [];
 
-	public async create({
-		credentialId,
-		individualIdentityId,
-		createdAt,
-		updatedAt,
-	}: PacientEntity) {
+	public async create({ credentialId, profileId, createdAt, updatedAt }: PacientEntity) {
 		const pacient = new PacientEntityFake();
 
 		pacient.id = uuidv4();
 		pacient.credentialId = credentialId;
-		pacient.individualIdentityId = individualIdentityId;
+		pacient.profileId = profileId;
 		pacient.createdAt = new Date();
 		pacient.updatedAt = new Date();
 		this.pacients.push(pacient);

@@ -18,8 +18,8 @@ export default class PacientsRepository implements IReviewsRepository {
 		return this.#prisma.review.findUnique({
 			where: { id },
 			include: {
-				pacient: { include: { identity: true } },
-				psychologist: { include: { identity: true } },
+				pacient: { include: { profile: true } },
+				psychologist: { include: { profile: true } },
 			},
 		});
 	}
@@ -35,8 +35,8 @@ export default class PacientsRepository implements IReviewsRepository {
 				skip,
 				take,
 				include: {
-					pacient: { include: { identity: true } },
-					psychologist: { include: { identity: true } },
+					pacient: { include: { profile: true } },
+					psychologist: { include: { profile: true } },
 				},
 			}),
 		]);

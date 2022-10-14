@@ -5,6 +5,8 @@ import { PacientEntity } from "../entities/Pacient";
 import { CredentialEntity } from "@shared/entities/Credential";
 import { IUpdatePacient } from "@modules/pacient/domain/models/IUpdatePacient";
 import { IPacient } from "@modules/pacient/domain/models/IPacient";
+import { IPagination } from "@shared/infra/http/middlewares/pagination";
+import { ICreateGuestPacient } from "@modules/pacient/domain/models/ICreateGuestPacient";
 
 export default class PacientsRepository implements IPacientsRepository {
 	#prisma;
@@ -12,7 +14,7 @@ export default class PacientsRepository implements IPacientsRepository {
 		this.#prisma = new PrismaClient();
 	}
 
-	public async create({ credential, identity, contact }: ICreatePacient): Promise<PacientEntity> {
+	public create({ credential, profile, contact }: ICreatePacient): Promise<PacientEntity> {
 		const { email, password, role } = credential;
 		return this.#prisma.pacient.create({
 			data: {
@@ -23,40 +25,52 @@ export default class PacientsRepository implements IPacientsRepository {
 						role,
 					},
 				},
-				identity: {
+				profile: {
 					create: {
-						...identity,
+						...profile,
 						contact: { create: { ...contact } },
 					},
 				},
 			},
 		});
 	}
-
-	public async findById(id: string): Promise<PacientEntity | null> {
-		return await this.#prisma.pacient.findUnique({
-			where: { id },
-			include: {
-				credential: { select: { email: true } },
-				identity: { include: { contact: true } },
-				psychologists: true,
+	public createGuest(
+		psicoId: string,
+		{ name, contact }: ICreateGuestPacient,
+	): Promise<PacientEntity> {
+		return this.#prisma.pacient.create({
+			data: {
+				guest: { create: { name, contact: { create: contact } } },
+				psychologists: { connect: { id: psicoId } },
 			},
 		});
 	}
-	public async findByEmail(email: string): Promise<CredentialEntity | null> {
-		return await this.#prisma.credential.findUnique({ where: { email } });
+
+	public findById(id: string): Promise<PacientEntity | null> {
+		return this.#prisma.pacient.findUnique({
+			where: { id },
+			include: {
+				credential: { select: { email: true } },
+				profile: { include: { contact: true } },
+				psychologists: true,
+				guest: true,
+			},
+		});
+	}
+	public findByEmail(email: string): Promise<CredentialEntity | null> {
+		return this.#prisma.credential.findUnique({ where: { email } });
 	}
 	public update(
 		id: string,
-		{ identity, contact, selectedPsychologistId }: IUpdatePacient,
+		{ profile, contact, selectedPsychologistId }: IUpdatePacient,
 	): Promise<PacientEntity> {
 		return this.#prisma.pacient.update({
 			where: { id },
 			data: {
 				selectedPsychologistId,
-				identity: {
+				profile: {
 					update: {
-						...identity,
+						...profile,
 						contact: { update: { ...contact } },
 					},
 				},
@@ -72,5 +86,23 @@ export default class PacientsRepository implements IPacientsRepository {
 			where: { id: pacientId },
 			data: { psychologists: { connect: { id: psicoId } }, selectedPsychologistId },
 		});
+	}
+
+	public findAllByPsico(
+		psicoId: string,
+		{ skip, take, sort, order, filter }: IPagination,
+	): Promise<number & any> {
+		return Promise.all([
+			this.#prisma.pacient.count({
+				where: { psychologists: { some: { id: psicoId } }, ...filter },
+			}),
+			this.#prisma.pacient.findMany({
+				where: { psychologists: { some: { id: psicoId } }, ...filter },
+				orderBy: { [sort]: order },
+				skip,
+				take,
+				select: { id: true, profile: { include: { contact: true } }, guest: true },
+			}),
+		]);
 	}
 }

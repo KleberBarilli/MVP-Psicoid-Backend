@@ -6,7 +6,7 @@ export interface IPsychologist {
 	[x: string]: any;
 	id: string;
 	credentialId: string;
-	individualIdentityId: string;
+	profileId: string;
 	officeId: string;
 	resume: string | null;
 	createdAt: Date;
@@ -20,7 +20,7 @@ export interface IPsychologist {
 export interface IPsychologistShortUpdate {
 	id: string;
 	credentialId: string;
-	individualIdentityId: string;
+	profileId: string;
 	officeId: string;
 	resume: string | null;
 	createdAt: Date;

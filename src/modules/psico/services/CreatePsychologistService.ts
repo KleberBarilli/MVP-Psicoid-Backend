@@ -17,7 +17,7 @@ export default class CreatePsychologistService {
 
 	public async execute({
 		credential,
-		identity,
+		profile,
 		office,
 		resume,
 	}: ICreatePsychologist): Promise<IPsychologistCreated> {
@@ -31,11 +31,11 @@ export default class CreatePsychologistService {
 			`${office.address.number} ${office.address.street} ${office.address.neighborhood} ${office.address.city}`,
 		);
 
-		office.address.latitude = location[0].latitude;
-		office.address.longitude = location[0].longitude;
+		office.address.latitude = location[0].latitude || 0;
+		office.address.longitude = location[0].longitude || 0;
 		return this.psychologistsRepository.create({
 			credential,
-			identity,
+			profile,
 			office,
 			resume,
 		});

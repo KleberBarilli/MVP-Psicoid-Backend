@@ -1,10 +1,10 @@
 import { ICredential } from "@shared/interfaces/ICredential";
-import { IIdentity } from "@shared/interfaces/IIdentity";
+import { IProfile } from "@shared/interfaces/IProfile";
 import { IOffice } from "@shared/interfaces/IOffice";
 
 export interface ICreatePsychologist {
 	credential: ICredential;
-	identity: IIdentity;
+	profile: IProfile;
 	office: IOffice;
 	resume?: string;
 }
