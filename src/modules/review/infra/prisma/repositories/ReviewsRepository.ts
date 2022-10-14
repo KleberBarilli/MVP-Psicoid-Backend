@@ -21,6 +21,7 @@ export default class PacientsRepository implements IReviewsRepository {
 			include: {
 				pacient: { include: { profile: true } },
 				psychologist: { include: { profile: true } },
+				_count: true,
 			},
 		});
 	}
@@ -38,6 +39,7 @@ export default class PacientsRepository implements IReviewsRepository {
 				include: {
 					pacient: { include: { profile: true } },
 					psychologist: { include: { profile: true } },
+					likes: true,
 				},
 			}),
 		]);
@@ -59,7 +61,10 @@ export default class PacientsRepository implements IReviewsRepository {
 			},
 		});
 	}
-	public removeLike(reviewId: string, pacientId: string) {
+	public removeLike(reviewId: string, pacientId: string): Promise<ILike> {
 		return this.#prisma.like.delete({ where: { reviewId_pacientId: { reviewId, pacientId } } });
+	}
+	public findLike(reviewId: string, pacientId: string): Promise<ILike | null> {
+		return this.#prisma.like.findFirst({ where: { reviewId, pacientId } });
 	}
 }

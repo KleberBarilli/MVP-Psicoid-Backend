@@ -16,4 +16,5 @@ export interface IReviewsRepository {
 	findOne(psychologistId: string, pacientId: string): Promise<IReview | null>;
 	addLike(reviewId: string, pacientId: string): Promise<ILike>;
 	removeLike(reviewId: string, pacientId: string): Promise<ILike>;
+	findLike(reviewId: string, pacientId: string): Promise<ILike | null>;
 }
