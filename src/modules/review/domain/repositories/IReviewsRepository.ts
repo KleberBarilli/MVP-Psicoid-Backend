@@ -12,4 +12,5 @@ export interface IReviewsRepository {
 		{ skip, take, sort, order, filter }: IPagination,
 	): Promise<number & any>;
 	remove(id: string): Promise<IReview>;
+	findOne(psychologistId: string, pacientId: string): Promise<IReview | null>;
 }

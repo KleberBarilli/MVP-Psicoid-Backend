@@ -47,4 +47,7 @@ export default class PacientsRepository implements IReviewsRepository {
 	public remove(id: string): Promise<IReview> {
 		return this.#prisma.review.delete({ where: { id } });
 	}
+	public findOne(psychologistId: string, pacientId: string): Promise<IReview | null> {
+		return this.#prisma.review.findFirst({ where: { psychologistId, pacientId } });
+	}
 }

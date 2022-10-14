@@ -4,6 +4,7 @@ import CreateReviewService from "@modules/review/services/CreateReviewService";
 import { validateReview } from "@shared/utils/validators/Review";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import { ValidationError } from "yup";
+import AppError from "@shared/errors/AppError";
 
 export default class CreateReviewController {
 	public async handle(req: Request, res: Response): Promise<Response> {
@@ -29,6 +30,9 @@ export default class CreateReviewController {
 				data: review,
 			});
 		} catch (error) {
+			if (error instanceof AppError) {
+				return sendBadRequest(req, res, error.message, error.statusCode);
+			}
 			if (error instanceof ValidationError) {
 				return sendBadRequest(req, res, error.message, 400);
 			}
