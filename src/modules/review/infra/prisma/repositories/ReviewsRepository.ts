@@ -4,6 +4,7 @@ import { ICreateReview } from "@modules/review/domain/models/ICreateReview";
 import { IReview } from "@shared/interfaces/IReview";
 import { IUpdateReview } from "@modules/review/domain/models/IUpdateReview";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
+import { ILike } from "@modules/review/domain/models/ILike";
 
 export default class PacientsRepository implements IReviewsRepository {
 	#prisma;
@@ -49,5 +50,16 @@ export default class PacientsRepository implements IReviewsRepository {
 	}
 	public findOne(psychologistId: string, pacientId: string): Promise<IReview | null> {
 		return this.#prisma.review.findFirst({ where: { psychologistId, pacientId } });
+	}
+	public addLike(reviewId: string, pacientId: string): Promise<ILike> {
+		return this.#prisma.like.create({
+			data: {
+				review: { connect: { id: reviewId } },
+				pacient: { connect: { id: pacientId } },
+			},
+		});
+	}
+	public removeLike(reviewId: string, pacientId: string) {
+		return this.#prisma.like.delete({ where: { reviewId_pacientId: { reviewId, pacientId } } });
 	}
 }
