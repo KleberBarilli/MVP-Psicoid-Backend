@@ -1,5 +1,6 @@
 import { handleRole } from "@shared/infra/http/middlewares/handleRole";
 import isAuthenticated from "@shared/infra/http/middlewares/isAuthenticated";
+import { pagination } from "@shared/infra/http/middlewares/pagination";
 import { Router } from "express";
 import AddPsychologistController from "../controllers/AddPsychologistController";
 import CreatePacientController from "../controllers/CreatePacientController";
@@ -27,6 +28,7 @@ pacientRouter.get(
 	"/",
 	isAuthenticated,
 	handleRole("PSYCHOLOGIST"),
+	pagination,
 	new ListPacientsByPsicoController().handle,
 );
 

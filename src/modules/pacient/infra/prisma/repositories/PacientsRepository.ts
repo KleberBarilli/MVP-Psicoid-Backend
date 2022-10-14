@@ -88,6 +88,7 @@ export default class PacientsRepository implements IPacientsRepository {
 				orderBy: { [sort]: order },
 				skip,
 				take,
+				select: { id: true, identity: { include: { contact: true } } },
 			}),
 		]);
 	}
