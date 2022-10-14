@@ -5,6 +5,7 @@ import { PacientEntity } from "../entities/Pacient";
 import { CredentialEntity } from "@shared/entities/Credential";
 import { IUpdatePacient } from "@modules/pacient/domain/models/IUpdatePacient";
 import { IPacient } from "@modules/pacient/domain/models/IPacient";
+import { IPagination } from "@shared/infra/http/middlewares/pagination";
 
 export default class PacientsRepository implements IPacientsRepository {
 	#prisma;
@@ -72,5 +73,22 @@ export default class PacientsRepository implements IPacientsRepository {
 			where: { id: pacientId },
 			data: { psychologists: { connect: { id: psicoId } }, selectedPsychologistId },
 		});
+	}
+
+	public findAllByPsico(
+		psicoId: string,
+		{ skip, take, sort, order, filter }: IPagination,
+	): Promise<number & any> {
+		return Promise.all([
+			this.#prisma.pacient.count({
+				where: { psychologists: { some: { id: psicoId } }, ...filter },
+			}),
+			this.#prisma.pacient.findMany({
+				where: { psychologists: { some: { id: psicoId } }, ...filter },
+				orderBy: { [sort]: order },
+				skip,
+				take,
+			}),
+		]);
 	}
 }
