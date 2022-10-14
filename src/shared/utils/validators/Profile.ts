@@ -1,13 +1,13 @@
 import * as yup from "yup";
 import { cpf } from "cpf-cnpj-validator";
 import { GENDER } from "../enums";
-interface IIdentityForm {
+interface IProfileForm {
 	firstName: string;
 	lastName: string;
 	cpf: string;
 }
 
-export const validateIdentity = (identity: IIdentityForm) =>
+export const validateProfile = (profile: IProfileForm) =>
 	yup
 		.object()
 		.shape({
@@ -22,9 +22,9 @@ export const validateIdentity = (identity: IIdentityForm) =>
 				.required("O CPF é obrigatório"),
 			gender: yup.string().oneOf(Object.values(GENDER)),
 		})
-		.validate(identity, { abortEarly: false, stripUnknown: true });
+		.validate(profile, { abortEarly: false, stripUnknown: true });
 
-export const validateUpdateIdentity = (identity: IIdentityForm) =>
+export const validateUpdateProfile = (profile: IProfileForm) =>
 	yup
 		.object()
 		.shape({
@@ -35,4 +35,4 @@ export const validateUpdateIdentity = (identity: IIdentityForm) =>
 				message: "CPF Inválido",
 			}),
 		})
-		.validate(identity, { abortEarly: false, stripUnknown: true });
+		.validate(profile, { abortEarly: false, stripUnknown: true });

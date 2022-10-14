@@ -1,7 +1,7 @@
 import { Contact } from "@prisma/client";
 import { GENDER } from "@shared/utils/enums";
 
-export interface IIdentity {
+export interface IProfile {
 	firstName: string;
 	lastName: string;
 	cpf: string;

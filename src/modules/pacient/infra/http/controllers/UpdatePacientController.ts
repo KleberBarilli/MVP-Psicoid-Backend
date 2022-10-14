@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import { ValidationError } from "yup";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { validateContact } from "@shared/utils/validators/Contact";
-import { validateUpdateIdentity } from "@shared/utils/validators/Identity";
+import { validateUpdateProfile } from "@shared/utils/validators/Profile";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import UpdatePacientService from "@modules/pacient/services/UpdatePacientService";
 
@@ -11,14 +11,14 @@ export default class UpdatePacientController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				pacient: { identity, contact, selectedPsychologistId },
+				pacient: { profile, contact, selectedPsychologistId },
 			} = req.body;
 			const { profileId } = req.user;
-			await Promise.all([validateUpdateIdentity(identity), validateContact(contact)]);
+			await Promise.all([validateUpdateProfile(profile), validateContact(contact)]);
 
 			const updatePacient = container.resolve(UpdatePacientService);
 			const user = await updatePacient.execute(profileId, {
-				identity,
+				profile,
 				contact,
 				selectedPsychologistId,
 			});

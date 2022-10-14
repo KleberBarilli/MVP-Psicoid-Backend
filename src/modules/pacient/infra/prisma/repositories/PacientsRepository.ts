@@ -13,7 +13,7 @@ export default class PacientsRepository implements IPacientsRepository {
 		this.#prisma = new PrismaClient();
 	}
 
-	public async create({ credential, identity, contact }: ICreatePacient): Promise<PacientEntity> {
+	public async create({ credential, profile, contact }: ICreatePacient): Promise<PacientEntity> {
 		const { email, password, role } = credential;
 		return this.#prisma.pacient.create({
 			data: {
@@ -24,9 +24,9 @@ export default class PacientsRepository implements IPacientsRepository {
 						role,
 					},
 				},
-				identity: {
+				profile: {
 					create: {
-						...identity,
+						...profile,
 						contact: { create: { ...contact } },
 					},
 				},
@@ -39,7 +39,7 @@ export default class PacientsRepository implements IPacientsRepository {
 			where: { id },
 			include: {
 				credential: { select: { email: true } },
-				identity: { include: { contact: true } },
+				profile: { include: { contact: true } },
 				psychologists: true,
 			},
 		});
@@ -49,15 +49,15 @@ export default class PacientsRepository implements IPacientsRepository {
 	}
 	public update(
 		id: string,
-		{ identity, contact, selectedPsychologistId }: IUpdatePacient,
+		{ profile, contact, selectedPsychologistId }: IUpdatePacient,
 	): Promise<PacientEntity> {
 		return this.#prisma.pacient.update({
 			where: { id },
 			data: {
 				selectedPsychologistId,
-				identity: {
+				profile: {
 					update: {
-						...identity,
+						...profile,
 						contact: { update: { ...contact } },
 					},
 				},
@@ -88,7 +88,7 @@ export default class PacientsRepository implements IPacientsRepository {
 				orderBy: { [sort]: order },
 				skip,
 				take,
-				select: { id: true, identity: { include: { contact: true } } },
+				select: { id: true, profile: { include: { contact: true } } },
 			}),
 		]);
 	}

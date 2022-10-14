@@ -1,8 +1,8 @@
 import { IContact } from "@shared/interfaces/IContact";
-import { IIdentity } from "@shared/interfaces/IIdentity";
+import { IProfile } from "@shared/interfaces/IProfile";
 
 export interface IUpdatePacient {
 	selectedPsychologistId: string | null;
-	identity: IIdentity;
+	profile: IProfile;
 	contact: IContact;
 }

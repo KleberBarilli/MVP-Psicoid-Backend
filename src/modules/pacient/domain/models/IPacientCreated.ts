@@ -1,7 +1,7 @@
 export interface IPacientCreated {
 	id: string;
 	credentialId: string;
-	individualIdentityId: string;
+	profileId: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

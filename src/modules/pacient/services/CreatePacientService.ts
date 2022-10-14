@@ -16,7 +16,7 @@ export default class CreatePacientService {
 	) {}
 	public async execute({
 		credential,
-		identity,
+		profile,
 		contact,
 	}: ICreatePacient): Promise<IPacientCreated> {
 		const userExists = await this.pacientsRepository.findByEmail(credential.email);
@@ -27,7 +27,7 @@ export default class CreatePacientService {
 
 		return await this.pacientsRepository.create({
 			credential,
-			identity,
+			profile,
 			contact,
 		});
 	}

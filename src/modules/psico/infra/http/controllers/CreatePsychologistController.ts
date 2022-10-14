@@ -5,7 +5,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { validateCredentials } from "@shared/utils/validators/Credentials";
 import { validateAddress } from "@shared/utils/validators/Address";
 import { validateContact } from "@shared/utils/validators/Contact";
-import { validateIdentity } from "@shared/utils/validators/Identity";
+import { validateProfile } from "@shared/utils/validators/Profile";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import CreatePsychologistService from "../../../services/CreatePsychologistService";
 import AppError from "@shared/errors/AppError";
@@ -13,20 +13,20 @@ export default class CreatePsychologistController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
-				psico: { credentials, identity, office, resume },
+				psico: { credentials, profile, office, resume },
 			} = req.body;
 			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
 				validateCredentials(credentials),
-				validateIdentity(identity),
-				validateContact(identity.contact),
+				validateProfile(profile),
+				validateContact(profile.contact),
 				validateContact(office.contact),
 				validateAddress(office.address),
 			]);
 			const service = container.resolve(CreatePsychologistService);
 			const user = await service.execute({
 				credential: credentials,
-				identity,
+				profile,
 				office,
 				resume,
 			});

@@ -86,13 +86,13 @@ model Credential {
 model Pacient {
     id                     String   @id @default(uuid()) @db.Uuid
     credentialId           String   @unique @map("credential_id") @db.Uuid
-    individualIdentityId   String   @unique @map("individual_identity_id") @db.Uuid
+    profileId              String   @unique @map("profile_id") @db.Uuid
     selectedPsychologistId String?  @map("selected_psychologist_id") @db.Uuid
     createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    credential Credential         @relation(fields: [credentialId], references: [id])
-    identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
+    credential Credential @relation(fields: [credentialId], references: [id])
+    profile    Profile    @relation(fields: [profileId], references: [id])
 
     psychologists Psychologist[]
     reviews       Review[]
@@ -108,21 +108,23 @@ model GuestPacient {
 
     contact      Contact?      @relation(fields: [contactId], references: [id])
     psychologist Psychologist? @relation(fields: [psychologistId], references: [id])
+
+    @@map("guests_pacients")
 }
 
 model Psychologist {
-    id                   String   @id @default(uuid()) @db.Uuid
-    credentialId         String   @unique @map("credential_id") @db.Uuid
-    individualIdentityId String   @unique @map("individual_identity_id") @db.Uuid
-    officeId             String   @unique @map("office_id") @db.Uuid
-    resume               String?
-    status               Status   @default(UNDER_REVIEW)
-    createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    id           String   @id @default(uuid()) @db.Uuid
+    credentialId String   @unique @map("credential_id") @db.Uuid
+    profileId    String   @unique @map("profile_id") @db.Uuid
+    officeId     String   @unique @map("office_id") @db.Uuid
+    resume       String?
+    status       Status   @default(UNDER_REVIEW)
+    createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    credential Credential         @relation(fields: [credentialId], references: [id])
-    identity   IndividualIdentity @relation(fields: [individualIdentityId], references: [id])
-    office     Office             @relation(fields: [officeId], references: [id])
+    credential Credential @relation(fields: [credentialId], references: [id])
+    profile    Profile    @relation(fields: [profileId], references: [id])
+    office     Office     @relation(fields: [officeId], references: [id])
 
     pacients   Pacient[]
     guests     GuestPacient[]
@@ -132,7 +134,7 @@ model Psychologist {
     @@map("psychologists")
 }
 
-model IndividualIdentity {
+model Profile {
     id        String  @id @default(uuid()) @db.Uuid
     firstName String  @map("first_name")
     lastName  String  @map("last_name")
@@ -149,7 +151,7 @@ model IndividualIdentity {
     pacient      Pacient?
     Psychologist Psychologist?
 
-    @@map("individual_identities")
+    @@map("profiles")
 }
 
 model Contact {
@@ -160,7 +162,7 @@ model Contact {
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    identity     IndividualIdentity?
+    profile      Profile?
     office       Office?
     GuestPacient GuestPacient[]
 

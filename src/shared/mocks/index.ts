@@ -4,7 +4,7 @@ export const pacient = {
 		password: "pass12346",
 		role: "PACIENT",
 	},
-	identity: {
+	profile: {
 		firstName: "John",
 		lastName: "Douglas",
 		cpf: "79521782021",
@@ -28,7 +28,7 @@ export const psico = {
 		password: "pass12346",
 		role: "PSYCHOLOGIST",
 	},
-	identity: {
+	profile: {
 		firstName: "Anna",
 		lastName: "Uzumaki",
 		cpf: "98001451097",
