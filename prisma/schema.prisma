@@ -60,6 +60,12 @@ enum Status {
     REPPROVED
 }
 
+enum AppointmentStatus {
+    ONGOING
+    CANCELED
+    COMPLETED
+}
+
 enum Gender {
     MALE
     FEMALE
@@ -99,6 +105,7 @@ model Pacient {
     psychologists Psychologist[]
     reviews       Review[]
     likes         Like[]
+    appointments  Appointment[]
 
     @@map("pacients")
 }
@@ -119,6 +126,7 @@ model Psychologist {
     credentialId String   @unique @map("credential_id") @db.Uuid
     profileId    String   @unique @map("profile_id") @db.Uuid
     officeId     String   @unique @map("office_id") @db.Uuid
+    scheduleId   String   @unique @map("schedule_id") @db.Uuid
     resume       String?
     status       Status   @default(UNDER_REVIEW)
     createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -127,10 +135,12 @@ model Psychologist {
     credential Credential @relation(fields: [credentialId], references: [id], onDelete: Cascade)
     profile    Profile    @relation(fields: [profileId], references: [id])
     office     Office     @relation(fields: [officeId], references: [id])
+    schedule   Schedule   @relation(fields: [scheduleId], references: [id])
 
-    pacients   Pacient[]
-    approaches TherapeuticApproache[]
-    reviews    Review[]
+    pacients     Pacient[]
+    approaches   TherapeuticApproache[]
+    reviews      Review[]
+    appointments Appointment[]
 
     @@map("psychologists")
 }
@@ -243,4 +253,34 @@ model Like {
 
     @@id([reviewId, pacientId])
     @@map("likes")
+}
+
+model Appointment {
+    id                 String            @id @default(uuid()) @db.Uuid
+    psychologistId     String            @map("psychologist_id") @db.Uuid
+    pacientId          String            @map("pacient_id") @db.Uuid
+    createdBy          Role              @map("created_by")
+    status             AppointmentStatus @default(ONGOING)
+    cancellationReason String?           @map("cancellation-reason")
+    price              Float?
+    startsAt           DateTime          @map("starts_at") @db.Timestamptz()
+    endsAt             DateTime          @map("ends_at") @db.Timestamptz()
+
+    psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
+    pacient      Pacient      @relation(fields: [pacientId], references: [id], onDelete: Cascade)
+
+    @@map("appointments")
+}
+
+model Schedule {
+    id             String   @id @default(uuid()) @db.Uuid
+    psychologistId String   @map("psychologist_id") @db.Uuid
+    from           DateTime @db.Timestamptz()
+    to             DateTime @db.Timestamptz()
+    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+    Psychologist Psychologist?
+
+    @@map("schedules")
 }
