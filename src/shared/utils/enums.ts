@@ -38,3 +38,9 @@ export enum GENDER {
 	female = "FEMALE",
 	other = "OTHER",
 }
+
+export enum APPOINTMENT_STATUS {
+	ongoing = "ONGOING",
+	canceled = "CANCELED",
+	completed = "COMPLETED",
+}

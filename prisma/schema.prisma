@@ -126,7 +126,6 @@ model Psychologist {
     credentialId String   @unique @map("credential_id") @db.Uuid
     profileId    String   @unique @map("profile_id") @db.Uuid
     officeId     String   @unique @map("office_id") @db.Uuid
-    scheduleId   String   @unique @map("schedule_id") @db.Uuid
     resume       String?
     status       Status   @default(UNDER_REVIEW)
     createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -135,12 +134,12 @@ model Psychologist {
     credential Credential @relation(fields: [credentialId], references: [id], onDelete: Cascade)
     profile    Profile    @relation(fields: [profileId], references: [id])
     office     Office     @relation(fields: [officeId], references: [id])
-    schedule   Schedule   @relation(fields: [scheduleId], references: [id])
 
     pacients     Pacient[]
     approaches   TherapeuticApproache[]
     reviews      Review[]
     appointments Appointment[]
+    schedule     Schedule[]
 
     @@map("psychologists")
 }
@@ -265,6 +264,8 @@ model Appointment {
     price              Float?
     startsAt           DateTime          @map("starts_at") @db.Timestamptz()
     endsAt             DateTime          @map("ends_at") @db.Timestamptz()
+    createdAt          DateTime          @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt          DateTime          @updatedAt @map("updated_at") @db.Timestamptz()
 
     psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
     pacient      Pacient      @relation(fields: [pacientId], references: [id], onDelete: Cascade)
@@ -280,7 +281,7 @@ model Schedule {
     createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    Psychologist Psychologist?
+    psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
 
     @@map("schedules")
 }

@@ -6,7 +6,7 @@ import { IUpdateReview } from "@modules/review/domain/models/IUpdateReview";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { ILike } from "@modules/review/domain/models/ILike";
 
-export default class PacientsRepository implements IReviewsRepository {
+export default class ReviewsRepository implements IReviewsRepository {
 	#prisma;
 	constructor() {
 		this.#prisma = new PrismaClient();

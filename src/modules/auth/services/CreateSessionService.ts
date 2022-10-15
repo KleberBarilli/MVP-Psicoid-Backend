@@ -24,7 +24,6 @@ class CreateSessionService {
 		if (user.inactive) {
 			throw new AppError("A conta do usuaŕio está inativa", 403);
 		}
-		console.log(email, password);
 		const passwordConfirmed = await this.hashProvider.compareHash(
 			password || "",
 			user.password,
