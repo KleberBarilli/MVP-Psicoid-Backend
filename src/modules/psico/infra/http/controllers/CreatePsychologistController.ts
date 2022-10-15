@@ -43,6 +43,7 @@ export default class CreatePsychologistController {
 				data: { user, session },
 			});
 		} catch (error) {
+			console.log(error);
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === "P2002") {
 					return res.status(400).json({

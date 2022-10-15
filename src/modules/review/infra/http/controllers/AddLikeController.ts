@@ -18,6 +18,7 @@ export default class AddLikeController {
 				data: review,
 			});
 		} catch (error) {
+			console.log(error);
 			if (error instanceof AppError) {
 				return sendBadRequest(req, res, error.message, error.statusCode);
 			}
