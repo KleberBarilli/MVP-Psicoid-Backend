@@ -1,27 +1,32 @@
 import { injectable, inject } from "tsyringe";
 import { IAppointment } from "../domain/models/IAppointment";
-import { ICreateAppointment } from "../domain/models/ICreateAppointment";
+import { IUpdateAppointment } from "../domain/models/IUpdateAppointment";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
 
 @injectable()
-export default class CreateAppointmentService {
+export default class UpdateAppointmentService {
 	constructor(
 		@inject("AppointmentsRepository")
 		public appointmentsRepository: IAppointmentsRepository,
 	) {}
-	public async execute({
-		psychologistId,
-		pacientId,
-		createdBy,
-		price,
-		startsAt,
-		endsAt,
-	}: ICreateAppointment): Promise<IAppointment> {
-		return this.appointmentsRepository.create({
+	public async execute(
+		id: string,
+		{
 			psychologistId,
 			pacientId,
-			createdBy,
 			price,
+			status,
+			cancellationReason,
+			startsAt,
+			endsAt,
+		}: IUpdateAppointment,
+	): Promise<IAppointment> {
+		return this.appointmentsRepository.update(id, {
+			psychologistId,
+			pacientId,
+			price,
+			status,
+			cancellationReason,
 			startsAt,
 			endsAt,
 		});
