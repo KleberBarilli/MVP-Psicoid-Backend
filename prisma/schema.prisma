@@ -106,6 +106,7 @@ model Pacient {
     reviews       Review[]
     likes         Like[]
     appointments  Appointment[]
+    logs          Log[]
 
     @@map("pacients")
 }
@@ -140,6 +141,7 @@ model Psychologist {
     reviews      Review[]
     appointments Appointment[]
     schedule     Schedule[]
+    logs         Log[]
 
     @@map("psychologists")
 }
@@ -284,4 +286,19 @@ model Schedule {
     psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
 
     @@map("schedules")
+}
+
+model Log {
+    id             String   @id @default(uuid()) @db.Uuid
+    method         String
+    route          String
+    psychologistId String?  @map("psychologist_id") @db.Uuid
+    pacientId      String?  @map("pacient_id") @db.Uuid
+    data           Json     @db.Json
+    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+    psychologist Psychologist? @relation(fields: [psychologistId], references: [id])
+    pacient      Pacient?      @relation(fields: [pacientId], references: [id])
+
+    @@map("logs")
 }
