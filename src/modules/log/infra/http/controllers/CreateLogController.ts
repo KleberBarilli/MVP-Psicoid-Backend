@@ -5,7 +5,7 @@ export default class CreateLogController {
 	public static handle() {
 		return (req: Request, res: Response) => {
 			try {
-				if (!process.env.LOGS) {
+				if (process.env.LOGS !== "1") {
 					return;
 				}
 				const { profile, profileId } = req.user;
@@ -26,6 +26,7 @@ export default class CreateLogController {
 				);
 
 				Queue.add("SaveLogsOnPg", { profile, profileId, method, path, data });
+				Queue.add("SaveLogsOnMongo", { profile, profileId, method, path, data });
 			} catch (error) {
 				console.log(error);
 			} finally {

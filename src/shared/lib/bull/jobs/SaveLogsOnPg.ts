@@ -1,4 +1,4 @@
-import LogsRepository from "@modules/log/infra/prisma/repositories/LogsRepository";
+import LogsRepository from "@modules/log/infra/orm/repositories/LogsRepository";
 import { ICreateLog } from "@modules/log/domain/models/ICreateLog";
 
 export default {
