@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import { ValidationError } from "yup";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
@@ -9,7 +9,11 @@ import { sendBadRequest } from "@shared/errors/BadRequest";
 import UpdatePsychologistService from "@modules/psico/services/UpdatePsychologistService";
 
 export default class UpdatePsychologistController {
-	public async handle(req: Request, res: Response): Promise<Response> {
+	public async handle(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | undefined> {
 		try {
 			const {
 				psico: { profile, office, resume },
@@ -29,10 +33,11 @@ export default class UpdatePsychologistController {
 				resume,
 			});
 
-			return res.status(204).json({
+			res.status(204).json({
 				message: "Psychologist updated with success",
 				data: user,
 			});
+			next();
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === "P2002") {

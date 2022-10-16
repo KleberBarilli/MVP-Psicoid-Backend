@@ -1,11 +1,15 @@
 import AppError from "@shared/errors/AppError";
 import { sendBadRequest } from "@shared/errors/BadRequest";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import DeleteReviewService from "../../../services/DeleteReviewService";
 
 export default class DeleteReviewController {
-	public async handle(req: Request, res: Response): Promise<Response> {
+	public async handle(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | undefined> {
 		try {
 			const { id } = req.params;
 			const { profileId } = req.user;
@@ -13,7 +17,8 @@ export default class DeleteReviewController {
 			const service = container.resolve(DeleteReviewService);
 			await service.execute(id, profileId);
 
-			return res.status(200).json({ message: "Review removida com sucesso" });
+			res.status(200).json({ message: "Review removida com sucesso" });
+			next();
 		} catch (error) {
 			if (error instanceof AppError) {
 				return sendBadRequest(req, res, error.message, error.statusCode);

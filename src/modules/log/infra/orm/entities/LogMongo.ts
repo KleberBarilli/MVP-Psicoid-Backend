@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 const DataSchema = new mongoose.Schema({
 	params: {
-		type: String,
+		type: mongoose.Schema.Types.Mixed,
 	},
 	query: {
-		type: String,
+		type: mongoose.Schema.Types.Mixed,
 	},
 	body: {
-		type: Object,
+		type: mongoose.Schema.Types.Mixed,
 	},
 });
 

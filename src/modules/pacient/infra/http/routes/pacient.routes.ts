@@ -1,3 +1,4 @@
+import CreateLogController from "@modules/log/infra/http/controllers/CreateLogController";
 import { handleRole } from "@shared/infra/http/middlewares/handleRole";
 import isAuthenticated from "@shared/infra/http/middlewares/isAuthenticated";
 import { pagination } from "@shared/infra/http/middlewares/pagination";
@@ -17,12 +18,14 @@ pacientRouter.post(
 	isAuthenticated,
 	handleRole("PSYCHOLOGIST"),
 	new CreateGuestPacientController().handle,
+	CreateLogController.handle(),
 ),
 	pacientRouter.post(
 		"/add-psychologist",
 		isAuthenticated,
 		handleRole("PACIENT"),
 		new AddPsychologistController().handle,
+		CreateLogController.handle(),
 	);
 pacientRouter.put("/", isAuthenticated, new UpdatePacientController().handle);
 pacientRouter.get(
