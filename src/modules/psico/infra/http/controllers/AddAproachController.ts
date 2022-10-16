@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import AddApproachService from "../../../services/AddApproachService";
 
 export default class AddApproachController {
-	public async handle(req: Request, res: Response): Promise<Response> {
+	public async handle(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | undefined> {
 		try {
 			const { approachId } = req.query;
 			const { profileId } = req.user;
@@ -11,10 +15,11 @@ export default class AddApproachController {
 			const service = container.resolve(AddApproachService);
 			const user = await service.execute(approachId?.toString() || "", profileId);
 
-			return res.status(204).json({
+			res.status(204).json({
 				message: "Abordagem adicionada com sucesso",
 				data: user,
 			});
+			next();
 		} catch (error) {
 			return res.status(500).json({ error: "Internal Error" });
 		}

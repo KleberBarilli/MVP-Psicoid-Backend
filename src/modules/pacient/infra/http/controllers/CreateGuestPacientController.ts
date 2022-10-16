@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import { ValidationError } from "yup";
 import { validateContact } from "@shared/utils/validators/Contact";
@@ -6,7 +6,11 @@ import { sendBadRequest } from "@shared/errors/BadRequest";
 import CreateGuestPacientService from "../../../services/CreateGuestPacientService";
 
 export default class CreateGuestPacientController {
-	public async handle(req: Request, res: Response): Promise<Response> {
+	public async handle(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | undefined> {
 		try {
 			const {
 				guestPacient: { name, contact },
@@ -20,10 +24,11 @@ export default class CreateGuestPacientController {
 				contact,
 			});
 
-			return res.status(201).json({
+			res.status(201).json({
 				message: "Guest Pacient created with success",
 				data: user,
 			});
+			next();
 		} catch (error) {
 			console.log(error);
 			if (error instanceof ValidationError) {

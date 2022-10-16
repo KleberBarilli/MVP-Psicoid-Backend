@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import CreateReviewService from "@modules/review/services/CreateReviewService";
 import { validateReview } from "@shared/utils/validators/Review";
@@ -7,7 +7,11 @@ import { ValidationError } from "yup";
 import AppError from "@shared/errors/AppError";
 
 export default class CreateReviewController {
-	public async handle(req: Request, res: Response): Promise<Response> {
+	public async handle(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | undefined> {
 		try {
 			const {
 				review: { rating, comment },
@@ -25,10 +29,11 @@ export default class CreateReviewController {
 				comment,
 			});
 
-			return res.status(201).json({
+			res.status(201).json({
 				message: "Review adicionada com sucesso",
 				data: review,
 			});
+			next();
 		} catch (error) {
 			if (error instanceof AppError) {
 				return sendBadRequest(req, res, error.message, error.statusCode);

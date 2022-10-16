@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import RemoveApproachService from "../../../services/RemoveApproachService";
 
 export default class RemoveApproachController {
-	public async handle(req: Request, res: Response): Promise<Response> {
+	public async handle(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | undefined> {
 		try {
 			const { approachId } = req.query;
 			const { profileId } = req.user;
@@ -11,10 +15,11 @@ export default class RemoveApproachController {
 			const service = container.resolve(RemoveApproachService);
 			const user = await service.execute(approachId?.toString() || "", profileId);
 
-			return res.status(204).json({
+			res.status(204).json({
 				message: "Abordagem Removida com sucesso",
 				data: user,
 			});
+			next();
 		} catch (error) {
 			return res.status(500).json({ error: "Internal Error" });
 		}

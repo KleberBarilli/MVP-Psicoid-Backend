@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import CreateAppointmentService from "@modules/schedule/services/CreateAppointmentService";
 
 export default class CreateAppointmentController {
-	public async handle(req: Request, res: Response): Promise<Response> {
+	public async handle(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | undefined> {
 		try {
 			const {
 				appointment: { psychologistId, pacientId, createdBy, price, starts, ends },
@@ -21,11 +25,11 @@ export default class CreateAppointmentController {
 				startsAt,
 				endsAt,
 			});
-
-			return res.status(201).json({
+			res.status(201).json({
 				message: "Appointment adicionado com sucesso",
 				data: appointment,
 			});
+			next();
 		} catch (error) {
 			return res.status(500).json({ error: "Internal Error" });
 		}

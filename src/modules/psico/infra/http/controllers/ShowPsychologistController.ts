@@ -1,9 +1,13 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import ShowPsychologistService from "../../../services/ShowPsychologistService";
 
 export default class ShowPsychologistController {
-	public async handle(req: Request, res: Response): Promise<Response> {
+	public async handle(
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | undefined> {
 		try {
 			const { id } = req.params;
 			const { latitude, longitude } = req.query;
@@ -12,7 +16,8 @@ export default class ShowPsychologistController {
 				latitude,
 				longitude,
 			});
-			return res.status(200).json({ data: { ...psychologist, distance, avgRating } });
+			res.status(200).json({ data: { ...psychologist, distance, avgRating } });
+			next();
 		} catch (error) {
 			return res.status(400).json({ error: "Houve um erro ao buscar o usuário" });
 		}
