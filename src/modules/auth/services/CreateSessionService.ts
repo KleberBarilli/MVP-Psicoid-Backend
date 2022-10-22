@@ -5,8 +5,6 @@ import AppError from "@shared/errors/AppError";
 import { ICreateSession } from "../domain/models/ICreateSession";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
-import CriarNotificacao from "../../notification/services/CreateNotificationService";
-import { TypeNotification } from "@prisma/client";
 
 @injectable()
 class CreateSessionService {
@@ -43,12 +41,6 @@ class CreateSessionService {
 				expiresIn: authConfig.jwt.expiresIn,
 			},
 		);
-
-		CriarNotificacao.execute({
-			type: TypeNotification.WELCOME,
-			data: { customerId: "9876a91c-dc50-4e9a-bbd6-5464e4a118c4" },
-			views: { customerId: "9876a91c-dc50-4e9a-bbd6-5464e4a118c4" },
-		});
 		return {
 			user,
 			token,
