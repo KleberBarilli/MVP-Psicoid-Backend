@@ -1,3 +1,3 @@
-export interface IGuestPacient {
+export interface IGuest {
 	name: string;
 }

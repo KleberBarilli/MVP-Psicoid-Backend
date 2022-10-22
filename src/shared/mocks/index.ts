@@ -1,8 +1,8 @@
-export const pacient = {
+export const customer = {
 	credentials: {
-		email: "pacient@example.com",
+		email: "customer@example.com",
 		password: "pass12346",
-		role: "PACIENT",
+		role: "CUSTOMER",
 	},
 	profile: {
 		firstName: "John",

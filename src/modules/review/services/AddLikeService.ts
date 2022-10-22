@@ -9,13 +9,13 @@ export default class AddLikeService {
 		@inject("ReviewsRepository")
 		public reviewsRepository: IReviewsRepository,
 	) {}
-	public async execute(reviewId: string, pacientId: string): Promise<ILikeCreated> {
-		const like = await this.reviewsRepository.findLike(reviewId, pacientId);
+	public async execute(reviewId: string, customerId: string): Promise<ILikeCreated> {
+		const like = await this.reviewsRepository.findLike(reviewId, customerId);
 
 		if (like) {
 			throw new AppError("Você já deu like nesse comentário", 409);
 		}
 
-		return this.reviewsRepository.addLike(reviewId, pacientId);
+		return this.reviewsRepository.addLike(reviewId, customerId);
 	}
 }

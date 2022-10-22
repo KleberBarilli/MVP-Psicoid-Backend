@@ -9,9 +9,9 @@ export default class DeleteReviewService {
 		@inject("ReviewsRepository")
 		public reviewsRepository: IReviewsRepository,
 	) {}
-	public async execute(id: string, pacientId: string): Promise<IReview | null> {
+	public async execute(id: string, customerId: string): Promise<IReview | null> {
 		const review = await this.reviewsRepository.findById(id);
-		if (review?.pacientId !== pacientId) {
+		if (review?.customerId !== customerId) {
 			throw new AppError("Você não pode apagar um comentário de outra pessoa", 409);
 		}
 		return this.reviewsRepository.remove(id);

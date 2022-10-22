@@ -19,7 +19,7 @@ export default class ReviewsRepository implements IReviewsRepository {
 		return this.#prisma.review.findUnique({
 			where: { id },
 			include: {
-				pacient: { include: { profile: true } },
+				customer: { include: { profile: true } },
 				psychologist: { include: { profile: true } },
 				_count: true,
 			},
@@ -37,7 +37,7 @@ export default class ReviewsRepository implements IReviewsRepository {
 				skip,
 				take,
 				include: {
-					pacient: { include: { profile: true } },
+					customer: { include: { profile: true } },
 					psychologist: { include: { profile: true } },
 					likes: true,
 				},
@@ -50,21 +50,23 @@ export default class ReviewsRepository implements IReviewsRepository {
 	public remove(id: string): Promise<IReview> {
 		return this.#prisma.review.delete({ where: { id } });
 	}
-	public findOne(psychologistId: string, pacientId: string): Promise<IReview | null> {
-		return this.#prisma.review.findFirst({ where: { psychologistId, pacientId } });
+	public findOne(psychologistId: string, customerId: string): Promise<IReview | null> {
+		return this.#prisma.review.findFirst({ where: { psychologistId, customerId } });
 	}
-	public addLike(reviewId: string, pacientId: string): Promise<ILike> {
+	public addLike(reviewId: string, customerId: string): Promise<ILike> {
 		return this.#prisma.like.create({
 			data: {
 				review: { connect: { id: reviewId } },
-				pacient: { connect: { id: pacientId } },
+				customer: { connect: { id: customerId } },
 			},
 		});
 	}
-	public removeLike(reviewId: string, pacientId: string): Promise<ILike> {
-		return this.#prisma.like.delete({ where: { reviewId_pacientId: { reviewId, pacientId } } });
+	public removeLike(reviewId: string, customerId: string): Promise<ILike> {
+		return this.#prisma.like.delete({
+			where: { reviewId_customerId: { reviewId, customerId } },
+		});
 	}
-	public findLike(reviewId: string, pacientId: string): Promise<ILike | null> {
-		return this.#prisma.like.findFirst({ where: { reviewId, pacientId } });
+	public findLike(reviewId: string, customerId: string): Promise<ILike | null> {
+		return this.#prisma.like.findFirst({ where: { reviewId, customerId } });
 	}
 }

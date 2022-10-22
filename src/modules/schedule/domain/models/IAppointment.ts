@@ -3,7 +3,7 @@ import { AppointmentStatus, Role } from "@prisma/client";
 export interface IAppointment {
 	id: string;
 	psychologistId: string;
-	pacientId: string;
+	customerId: string;
 	createdBy: Role;
 	status: AppointmentStatus;
 	cancellationReason: string | null;

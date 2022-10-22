@@ -20,7 +20,8 @@ enum Provider {
 }
 
 enum Role {
-    PACIENT
+    BACK_OFFICE
+    CUSTOMER
     PSYCHOLOGIST
 }
 
@@ -83,13 +84,13 @@ model Credential {
     createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    pacient      Pacient?
+    customer     Customer?
     psychologist Psychologist?
 
     @@map("credentials")
 }
 
-model Pacient {
+model Customer {
     id                     String   @id @default(uuid()) @db.Uuid
     credentialId           String?  @unique @map("credential_id") @db.Uuid
     profileId              String?  @unique @map("profile_id") @db.Uuid
@@ -98,9 +99,9 @@ model Pacient {
     createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    credential Credential?   @relation(fields: [credentialId], references: [id], onDelete: Cascade)
-    profile    Profile?      @relation(fields: [profileId], references: [id])
-    guest      GuestPacient? @relation(fields: [guestId], references: [id])
+    credential Credential? @relation(fields: [credentialId], references: [id], onDelete: Cascade)
+    profile    Profile?    @relation(fields: [profileId], references: [id])
+    guest      Guest?      @relation(fields: [guestId], references: [id])
 
     psychologists Psychologist[]
     reviews       Review[]
@@ -108,18 +109,18 @@ model Pacient {
     appointments  Appointment[]
     logs          Log[]
 
-    @@map("pacients")
+    @@map("customers")
 }
 
-model GuestPacient {
+model Guest {
     id        String  @id @default(uuid()) @db.Uuid
     contactId String? @db.Uuid
     name      String
 
-    contact Contact? @relation(fields: [contactId], references: [id])
-    Pacient Pacient?
+    contact  Contact?  @relation(fields: [contactId], references: [id])
+    customer Customer?
 
-    @@map("guests_pacients")
+    @@map("guests")
 }
 
 model Psychologist {
@@ -136,7 +137,7 @@ model Psychologist {
     profile    Profile    @relation(fields: [profileId], references: [id])
     office     Office     @relation(fields: [officeId], references: [id])
 
-    pacients     Pacient[]
+    customers    Customer[]
     approaches   TherapeuticApproache[]
     reviews      Review[]
     appointments Appointment[]
@@ -160,8 +161,8 @@ model Profile {
 
     contact Contact? @relation(fields: [contactId], references: [id])
 
-    pacient      Pacient?
-    Psychologist Psychologist?
+    customer     Customer?
+    psychologist Psychologist?
 
     @@map("profiles")
 }
@@ -174,9 +175,9 @@ model Contact {
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
-    profile      Profile?
-    office       Office?
-    GuestPacient GuestPacient[]
+    profile Profile?
+    office  Office?
+    guest   Guest[]
 
     @@map("contacts")
 }
@@ -229,7 +230,7 @@ model Office {
 
 model Review {
     id             String    @id @default(uuid()) @db.Uuid
-    pacientId      String    @map("pacient_id") @db.Uuid
+    customerId     String    @map("customer_id") @db.Uuid
     psychologistId String    @map("psychologist_id") @db.Uuid
     rating         Int
     comment        String?
@@ -238,28 +239,28 @@ model Review {
     deletedAt      DateTime? @map("deleted_at") @db.Timestamptz()
 
     psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
-    pacient      Pacient      @relation(fields: [pacientId], references: [id], onDelete: Cascade)
+    customer     Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
     likes        Like[]
 
     @@map("reviews")
 }
 
 model Like {
-    reviewId  String   @map("review_id") @db.Uuid
-    pacientId String   @map("pacient_id") @db.Uuid
-    likedAt   DateTime @default(now()) @map("liked_at") @db.Timestamptz()
+    reviewId   String   @map("review_id") @db.Uuid
+    customerId String   @map("customer_id") @db.Uuid
+    likedAt    DateTime @default(now()) @map("liked_at") @db.Timestamptz()
 
-    review  Review  @relation(fields: [reviewId], references: [id])
-    pacient Pacient @relation(fields: [pacientId], references: [id])
+    review   Review   @relation(fields: [reviewId], references: [id])
+    customer Customer @relation(fields: [customerId], references: [id])
 
-    @@id([reviewId, pacientId])
+    @@id([reviewId, customerId])
     @@map("likes")
 }
 
 model Appointment {
     id                 String            @id @default(uuid()) @db.Uuid
     psychologistId     String            @map("psychologist_id") @db.Uuid
-    pacientId          String            @map("pacient_id") @db.Uuid
+    customerId         String            @map("customer_id") @db.Uuid
     createdBy          Role              @map("created_by")
     status             AppointmentStatus @default(ONGOING)
     cancellationReason String?           @map("cancellation-reason")
@@ -270,7 +271,7 @@ model Appointment {
     updatedAt          DateTime          @updatedAt @map("updated_at") @db.Timestamptz()
 
     psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
-    pacient      Pacient      @relation(fields: [pacientId], references: [id], onDelete: Cascade)
+    customer     Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
     @@map("appointments")
 }
@@ -293,12 +294,12 @@ model Log {
     method         String
     route          String
     psychologistId String?  @map("psychologist_id") @db.Uuid
-    pacientId      String?  @map("pacient_id") @db.Uuid
+    customerId     String?  @map("customer_id") @db.Uuid
     data           Json     @db.Json
     createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
     psychologist Psychologist? @relation(fields: [psychologistId], references: [id])
-    pacient      Pacient?      @relation(fields: [pacientId], references: [id])
+    customer     Customer?     @relation(fields: [customerId], references: [id])
 
     @@map("logs")
 }

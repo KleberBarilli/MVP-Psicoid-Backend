@@ -36,21 +36,21 @@ reviewRouter.put(
 reviewRouter.delete(
 	"/:id",
 	isAuthenticated,
-	handleRole("PACIENT"),
+	handleRole("CUSTOMER"),
 	new DeleteReviewController().handle,
 	CreateLogController.handle(),
 );
 reviewRouter.patch(
 	"/:reviewId/like",
 	isAuthenticated,
-	handleRole("PACIENT"),
+	handleRole("CUSTOMER"),
 	new AddLikeController().handle,
 	CreateLogController.handle(),
 );
 reviewRouter.delete(
 	"/:reviewId/like",
 	isAuthenticated,
-	handleRole("PACIENT"),
+	handleRole("CUSTOMER"),
 	new RemoveLikeController().handle,
 	CreateLogController.handle(),
 );

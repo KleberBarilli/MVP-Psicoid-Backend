@@ -13,7 +13,7 @@ export default class UpdateAppointmentService {
 		id: string,
 		{
 			psychologistId,
-			pacientId,
+			customerId,
 			price,
 			status,
 			cancellationReason,
@@ -23,7 +23,7 @@ export default class UpdateAppointmentService {
 	): Promise<IAppointment> {
 		return this.appointmentsRepository.update(id, {
 			psychologistId,
-			pacientId,
+			customerId,
 			price,
 			status,
 			cancellationReason,

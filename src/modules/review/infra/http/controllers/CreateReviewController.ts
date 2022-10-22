@@ -23,7 +23,7 @@ export default class CreateReviewController {
 
 			const service = container.resolve(CreateReviewService);
 			const review = await service.execute({
-				pacientId: profileId,
+				customerId: profileId,
 				psychologistId: psychologistId?.toString() || "",
 				rating,
 				comment,

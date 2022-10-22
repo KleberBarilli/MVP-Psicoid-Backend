@@ -5,7 +5,7 @@ export class LogEntity implements Log {
 	method: string;
 	route: string;
 	psychologistId: string | null;
-	pacientId: string | null;
+	customerId: string | null;
 	data: Prisma.JsonValue;
 	createdAt: Date;
 }

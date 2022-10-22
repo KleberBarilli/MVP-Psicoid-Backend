@@ -1,6 +1,6 @@
 export interface IReviewCreated {
 	id: string;
-	pacientId: string;
+	customerId: string;
 	psychologistId: string;
 	rating: number;
 	comment: string | null;

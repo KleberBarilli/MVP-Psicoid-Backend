@@ -14,7 +14,7 @@ export default class CredentialsRepository implements ICredentialsRepository {
 	public async findByEmail(email: string): Promise<ICredentialResponse | null> {
 		return await this.#prisma.credential.findUnique({
 			where: { email },
-			include: { pacient: { select: { id: true } }, psychologist: { select: { id: true } } },
+			include: { customer: { select: { id: true } }, psychologist: { select: { id: true } } },
 		});
 	}
 	public async findByToken(token: string): Promise<ICredential | null> {
@@ -43,7 +43,7 @@ export default class CredentialsRepository implements ICredentialsRepository {
 						profile: { include: { contact: true } },
 						office: { include: { address: true, contact: true } },
 						approaches: true,
-						pacients: {
+						customers: {
 							include: { profile: true, guest: { include: { contact: true } } },
 						},
 					},
@@ -51,11 +51,11 @@ export default class CredentialsRepository implements ICredentialsRepository {
 			},
 		});
 	}
-	public async iAmPacient(id: string): Promise<ICredential | null> {
+	public async iAmCustomer(id: string): Promise<ICredential | null> {
 		return await this.#prisma.credential.findUnique({
 			where: { id },
 			include: {
-				pacient: {
+				customer: {
 					include: {
 						profile: { include: { contact: true } },
 						psychologists: {

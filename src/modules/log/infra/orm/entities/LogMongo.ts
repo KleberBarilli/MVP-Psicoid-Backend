@@ -25,7 +25,7 @@ const LogSchema = new mongoose.Schema(
 		psychologistId: {
 			type: String,
 		},
-		pacientId: {
+		customerId: {
 			type: String,
 		},
 		data: {

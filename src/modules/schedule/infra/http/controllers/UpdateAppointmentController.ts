@@ -12,7 +12,7 @@ export default class UpdateAppointmentController {
 			const {
 				appointment: {
 					psychologistId,
-					pacientId,
+					customerId,
 					price,
 					status,
 					cancellationReason,
@@ -29,7 +29,7 @@ export default class UpdateAppointmentController {
 
 			const appointment = await service.execute(id, {
 				psychologistId,
-				pacientId,
+				customerId,
 				price,
 				status,
 				cancellationReason,

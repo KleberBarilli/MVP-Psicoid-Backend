@@ -10,7 +10,7 @@ export default class CreateAppointmentController {
 	): Promise<Response | undefined> {
 		try {
 			const {
-				appointment: { psychologistId, pacientId, createdBy, price, starts, ends },
+				appointment: { psychologistId, customerId, createdBy, price, starts, ends },
 			} = req.body;
 
 			const service = container.resolve(CreateAppointmentService);
@@ -19,7 +19,7 @@ export default class CreateAppointmentController {
 
 			const appointment = await service.execute({
 				psychologistId,
-				pacientId,
+				customerId,
 				createdBy,
 				price,
 				startsAt,

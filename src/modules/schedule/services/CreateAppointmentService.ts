@@ -11,7 +11,7 @@ export default class CreateAppointmentService {
 	) {}
 	public async execute({
 		psychologistId,
-		pacientId,
+		customerId,
 		createdBy,
 		price,
 		startsAt,
@@ -19,7 +19,7 @@ export default class CreateAppointmentService {
 	}: ICreateAppointment): Promise<IAppointment> {
 		return this.appointmentsRepository.create({
 			psychologistId,
-			pacientId,
+			customerId,
 			createdBy,
 			price,
 			startsAt,

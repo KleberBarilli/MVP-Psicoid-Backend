@@ -11,12 +11,13 @@ export default class WhoiamService {
 
 	public async execute(id: string, role: string): Promise<ICredential | null> {
 		let user: any;
+		console.log(role);
 		switch (role) {
-			case "PACIENT":
-				user = await this.credentialsRepository.iAmPacient(id);
+			case "CUSTOMER":
+				user = await this.credentialsRepository.iAmCustomer(id);
 
-				user.pacient.psychologists.map((el: { id: string; selected: boolean }) => {
-					if (el.id === user.pacient.selectedPsychologistId) {
+				user.customer.psychologists.map((el: { id: string; selected: boolean }) => {
+					if (el.id === user.customer.selectedPsychologistId) {
 						el.selected = true;
 					}
 					return el;

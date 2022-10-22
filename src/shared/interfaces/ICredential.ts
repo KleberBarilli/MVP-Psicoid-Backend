@@ -19,5 +19,5 @@ export interface ICredentialResponse {
 	role: Role;
 	inactive: boolean;
 	psychologist: { id: string } | null;
-	pacient: { id: string } | null;
+	customer: { id: string } | null;
 }

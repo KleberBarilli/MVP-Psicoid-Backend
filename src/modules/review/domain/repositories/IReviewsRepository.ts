@@ -13,8 +13,8 @@ export interface IReviewsRepository {
 		{ skip, take, sort, order, filter }: IPagination,
 	): Promise<number & any>;
 	remove(id: string): Promise<IReview>;
-	findOne(psychologistId: string, pacientId: string): Promise<IReview | null>;
-	addLike(reviewId: string, pacientId: string): Promise<ILike>;
-	removeLike(reviewId: string, pacientId: string): Promise<ILike>;
-	findLike(reviewId: string, pacientId: string): Promise<ILike | null>;
+	findOne(psychologistId: string, customerId: string): Promise<IReview | null>;
+	addLike(reviewId: string, customerId: string): Promise<ILike>;
+	removeLike(reviewId: string, customerId: string): Promise<ILike>;
+	findLike(reviewId: string, customerId: string): Promise<ILike | null>;
 }

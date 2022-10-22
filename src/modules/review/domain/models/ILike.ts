@@ -1,5 +1,5 @@
 export interface ILike {
-	pacientId: string;
+	customerId: string;
 	reviewId: string;
 	likedAt: Date;
 }

@@ -1,5 +1,5 @@
 export interface ICreateReview {
-	pacientId: string;
+	customerId: string;
 	psychologistId: string;
 	rating: number;
 	comment: string | null;

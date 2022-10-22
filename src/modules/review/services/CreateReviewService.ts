@@ -11,16 +11,16 @@ export default class CreateReviewService {
 		public reviewsRepository: IReviewsRepository,
 	) {}
 	public async execute({
-		pacientId,
+		customerId,
 		psychologistId,
 		rating,
 		comment,
 	}: ICreateReview): Promise<IReviewCreated> {
-		const review = await this.reviewsRepository.findOne(psychologistId, pacientId);
+		const review = await this.reviewsRepository.findOne(psychologistId, customerId);
 
 		if (review) {
 			throw new AppError("Você já realizou uma avaliação");
 		}
-		return this.reviewsRepository.create({ pacientId, psychologistId, rating, comment });
+		return this.reviewsRepository.create({ customerId, psychologistId, rating, comment });
 	}
 }

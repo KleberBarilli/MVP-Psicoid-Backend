@@ -29,7 +29,7 @@ export enum BRAZIL_STATES {
 }
 
 export enum ROLE_TYPE {
-	pacient = "PACIENT",
+	customer = "CUSTOMER",
 	psychologist = "PSYCHOLOGIST",
 }
 

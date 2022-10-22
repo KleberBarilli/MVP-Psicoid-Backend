@@ -8,7 +8,7 @@ export default class RemoveLikeService {
 		@inject("ReviewsRepository")
 		public reviewsRepository: IReviewsRepository,
 	) {}
-	public async execute(reviewId: string, pacientId: string): Promise<ILike> {
-		return this.reviewsRepository.removeLike(reviewId, pacientId);
+	public async execute(reviewId: string, customerId: string): Promise<ILike> {
+		return this.reviewsRepository.removeLike(reviewId, customerId);
 	}
 }

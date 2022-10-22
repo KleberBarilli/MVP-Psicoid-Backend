@@ -12,7 +12,7 @@ export default class AppointmentsRepository implements IAppointmentsRepository {
 
 	public create({
 		psychologistId,
-		pacientId,
+		customerId,
 		createdBy,
 		price,
 		startsAt,
@@ -25,7 +25,7 @@ export default class AppointmentsRepository implements IAppointmentsRepository {
 				startsAt,
 				endsAt,
 				psychologist: { connect: { id: psychologistId } },
-				pacient: { connect: { id: pacientId } },
+				customer: { connect: { id: customerId } },
 			},
 		});
 	}
@@ -34,7 +34,7 @@ export default class AppointmentsRepository implements IAppointmentsRepository {
 		id: string,
 		{
 			psychologistId,
-			pacientId,
+			customerId,
 			price,
 			status,
 			cancellationReason,
@@ -51,7 +51,7 @@ export default class AppointmentsRepository implements IAppointmentsRepository {
 				endsAt,
 				startsAt,
 				psychologist: { connect: { id: psychologistId } },
-				pacient: { connect: { id: pacientId } },
+				customer: { connect: { id: customerId } },
 			},
 		});
 	}

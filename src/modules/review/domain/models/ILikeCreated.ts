@@ -1,5 +1,5 @@
 export interface ILikeCreated {
 	reviewId: string;
-	pacientId: string;
+	customerId: string;
 	likedAt: Date;
 }
