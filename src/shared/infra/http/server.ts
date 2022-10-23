@@ -1,5 +1,5 @@
-import { checkMongo } from "src/database/mongoose";
-import { checkPrisma } from "src/database/prisma";
+import { checkMongo, checkPrisma } from "src/shared/checkDb";
+
 import { app } from "./app";
 
 app.listen(process.env.PORT, () => {

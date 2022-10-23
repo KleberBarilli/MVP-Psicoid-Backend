@@ -41,7 +41,6 @@ class CreateSessionService {
 				expiresIn: authConfig.jwt.expiresIn,
 			},
 		);
-
 		return {
 			user,
 			token,

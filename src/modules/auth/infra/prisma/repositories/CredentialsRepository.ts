@@ -46,6 +46,7 @@ export default class CredentialsRepository implements ICredentialsRepository {
 						customers: {
 							include: { profile: true, guest: { include: { contact: true } } },
 						},
+						views: true,
 					},
 				},
 			},
@@ -66,6 +67,7 @@ export default class CredentialsRepository implements ICredentialsRepository {
 								resume: true,
 							},
 						},
+						views: true,
 					},
 				},
 			},

@@ -73,8 +73,17 @@ enum Gender {
     OTHER
 }
 
+enum TypeNotification {
+    WELCOME
+    CUSTOMER_ADD_PSICO
+    CREATE_APPOINTMENT
+    UPDATE_APPOINTMENT
+    CREATE_REVIEW
+}
+
 model Credential {
-    id            String   @id @default(uuid()) @db.Uuid
+    id String @id @default(uuid()) @db.Uuid
+
     provider      Provider @default(EMAIL)
     email         String   @unique
     password      String   @map("password")
@@ -91,10 +100,12 @@ model Credential {
 }
 
 model Customer {
-    id                     String   @id @default(uuid()) @db.Uuid
-    credentialId           String?  @unique @map("credential_id") @db.Uuid
-    profileId              String?  @unique @map("profile_id") @db.Uuid
-    guestId                String?  @unique @map("guest_id") @db.Uuid
+    id String @id @default(uuid()) @db.Uuid
+
+    credentialId String? @unique @map("credential_id") @db.Uuid
+    profileId    String? @unique @map("profile_id") @db.Uuid
+    guestId      String? @unique @map("guest_id") @db.Uuid
+
     selectedPsychologistId String?  @map("selected_psychologist_id") @db.Uuid
     createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
@@ -108,14 +119,17 @@ model Customer {
     likes         Like[]
     appointments  Appointment[]
     logs          Log[]
+    views         View[]
 
     @@map("customers")
 }
 
 model Guest {
-    id        String  @id @default(uuid()) @db.Uuid
+    id String @id @default(uuid()) @db.Uuid
+
     contactId String? @db.Uuid
-    name      String
+
+    name String
 
     contact  Contact?  @relation(fields: [contactId], references: [id])
     customer Customer?
@@ -124,14 +138,16 @@ model Guest {
 }
 
 model Psychologist {
-    id           String   @id @default(uuid()) @db.Uuid
-    credentialId String   @unique @map("credential_id") @db.Uuid
-    profileId    String   @unique @map("profile_id") @db.Uuid
-    officeId     String   @unique @map("office_id") @db.Uuid
-    resume       String?
-    status       Status   @default(UNDER_REVIEW)
-    createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    id String @id @default(uuid()) @db.Uuid
+
+    credentialId String @unique @map("credential_id") @db.Uuid
+    profileId    String @unique @map("profile_id") @db.Uuid
+    officeId     String @unique @map("office_id") @db.Uuid
+
+    resume    String?
+    status    Status   @default(UNDER_REVIEW)
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     credential Credential @relation(fields: [credentialId], references: [id], onDelete: Cascade)
     profile    Profile    @relation(fields: [profileId], references: [id])
@@ -143,12 +159,14 @@ model Psychologist {
     appointments Appointment[]
     schedule     Schedule[]
     logs         Log[]
+    views        View[]
 
     @@map("psychologists")
 }
 
 model Profile {
-    id        String  @id @default(uuid()) @db.Uuid
+    id String @id @default(uuid()) @db.Uuid
+
     firstName String  @map("first_name")
     lastName  String  @map("last_name")
     cpf       String  @unique
@@ -168,7 +186,8 @@ model Profile {
 }
 
 model Contact {
-    id        String   @id @default(uuid()) @db.Uuid
+    id String @id @default(uuid()) @db.Uuid
+
     telephone String?
     cellPhone String?  @map("cell_phone")
     email     String?
@@ -183,7 +202,8 @@ model Contact {
 }
 
 model Address {
-    id           String      @id @default(uuid()) @db.Uuid
+    id String @id @default(uuid()) @db.Uuid
+
     zipCode      String      @map("zip_code")
     street       String
     number       String?
@@ -202,7 +222,8 @@ model Address {
 }
 
 model TherapeuticApproache {
-    id          String   @id @default(uuid()) @db.Uuid
+    id String @id @default(uuid()) @db.Uuid
+
     name        String   @unique
     description String?
     createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -214,9 +235,11 @@ model TherapeuticApproache {
 }
 
 model Office {
-    id        String   @id @default(uuid()) @db.Uuid
-    contactId String?  @unique @map("contact_id") @db.Uuid
-    addressId String   @unique @map("address_id") @db.Uuid
+    id String @id @default(uuid()) @db.Uuid
+
+    contactId String? @unique @map("contact_id") @db.Uuid
+    addressId String  @unique @map("address_id") @db.Uuid
+
     photos    String[]
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
@@ -229,14 +252,16 @@ model Office {
 }
 
 model Review {
-    id             String    @id @default(uuid()) @db.Uuid
-    customerId     String    @map("customer_id") @db.Uuid
-    psychologistId String    @map("psychologist_id") @db.Uuid
-    rating         Int
-    comment        String?
-    createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
-    deletedAt      DateTime? @map("deleted_at") @db.Timestamptz()
+    id String @id @default(uuid()) @db.Uuid
+
+    customerId     String @map("customer_id") @db.Uuid
+    psychologistId String @map("psychologist_id") @db.Uuid
+
+    rating    Int
+    comment   String?
+    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+    deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
 
     psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
     customer     Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
@@ -258,9 +283,11 @@ model Like {
 }
 
 model Appointment {
-    id                 String            @id @default(uuid()) @db.Uuid
-    psychologistId     String            @map("psychologist_id") @db.Uuid
-    customerId         String            @map("customer_id") @db.Uuid
+    id String @id @default(uuid()) @db.Uuid
+
+    psychologistId String @map("psychologist_id") @db.Uuid
+    customerId     String @map("customer_id") @db.Uuid
+
     createdBy          Role              @map("created_by")
     status             AppointmentStatus @default(ONGOING)
     cancellationReason String?           @map("cancellation-reason")
@@ -277,12 +304,14 @@ model Appointment {
 }
 
 model Schedule {
-    id             String   @id @default(uuid()) @db.Uuid
-    psychologistId String   @map("psychologist_id") @db.Uuid
-    from           DateTime @db.Timestamptz()
-    to             DateTime @db.Timestamptz()
-    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    id String @id @default(uuid()) @db.Uuid
+
+    psychologistId String @map("psychologist_id") @db.Uuid
+
+    from      DateTime @db.Timestamptz()
+    to        DateTime @db.Timestamptz()
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
 
@@ -302,4 +331,35 @@ model Log {
     customer     Customer?     @relation(fields: [customerId], references: [id])
 
     @@map("logs")
+}
+
+model Notification {
+    id String @id @default(uuid()) @db.Uuid
+
+    type TypeNotification
+    data Json             @db.Json
+
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+    views View[]
+
+    @@map("notifications")
+}
+
+model View {
+    id String @id @default(uuid()) @db.Uuid
+
+    isRead Boolean @default(false)
+
+    notificationId String  @map("notification_id") @db.Uuid
+    customerId     String? @map("customer_id") @db.Uuid
+    psychologistId String? @map("psychologist_id") @db.Uuid
+
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+    notification Notification  @relation(fields: [notificationId], references: [id])
+    customer     Customer?     @relation(fields: [customerId], references: [id])
+    psychologist Psychologist? @relation(fields: [psychologistId], references: [id])
+
+    @@map("views")
 }

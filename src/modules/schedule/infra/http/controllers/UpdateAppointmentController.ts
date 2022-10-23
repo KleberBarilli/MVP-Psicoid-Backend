@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import UpdateAppointmentService from "@modules/schedule/services//UpdateAppointmentService";
+import Queue from "@shared/lib/bull/Queue";
+import { TypeNotification } from "@prisma/client";
 
 export default class UpdateAppointmentController {
 	public async handle(
@@ -21,6 +23,7 @@ export default class UpdateAppointmentController {
 				},
 			} = req.body;
 			const { id } = req.params;
+			const { profile } = req.user;
 
 			const service = container.resolve(UpdateAppointmentService);
 
@@ -37,6 +40,20 @@ export default class UpdateAppointmentController {
 				endsAt,
 			});
 
+			await Queue.add("CreateNotification", {
+				type: TypeNotification.UPDATE_APPOINTMENT,
+				data: {
+					appointmentId: id,
+					psychologistId,
+					customerId,
+					price,
+					status,
+					cancellationReason,
+					startsAt,
+					endsAt,
+				},
+				views: profile === "CUSTOMER" ? { customerId } : { psychologistId },
+			});
 			res.status(201).json({
 				message: "Appointment atualizado com sucesso",
 				data: appointment,

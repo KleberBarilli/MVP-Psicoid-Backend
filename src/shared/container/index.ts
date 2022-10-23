@@ -10,6 +10,8 @@ import CredentialsRepository from "@modules/auth/infra/prisma/repositories/Crede
 import ReviewsRepository from "@modules/review/infra/prisma/repositories/ReviewsRepository";
 import AppointmentsRepository from "@modules/schedule/infra/prisma/repositories/AppointmentsRepository";
 import { IAppointmentsRepository } from "@modules/schedule/domain/repositories/IAppointmentsRepository";
+import { INotificationsRepository } from "@modules/notification/domain/repositories/INotificationsRepository";
+import NotificationsRepository from "@modules/notification/infra/prisma/repositories/NotificationsRepository";
 
 container.registerSingleton<ICredentialsRepository>("CredentialsRepository", CredentialsRepository);
 container.registerSingleton<ICustomersRepository>("CustomersRepository", CustomersRepository);
@@ -21,4 +23,8 @@ container.registerSingleton<IReviewsRepository>("ReviewsRepository", ReviewsRepo
 container.registerSingleton<IAppointmentsRepository>(
 	"AppointmentsRepository",
 	AppointmentsRepository,
+);
+container.registerSingleton<INotificationsRepository>(
+	"NotificationsRepository",
+	NotificationsRepository,
 );
