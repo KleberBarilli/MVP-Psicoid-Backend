@@ -5,6 +5,8 @@ import { validateReview } from "@shared/utils/validators/Review";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import { ValidationError } from "yup";
 import AppError from "@shared/errors/AppError";
+import Queue from "@shared/lib/bull/Queue";
+import { TypeNotification } from "@prisma/client";
 
 export default class CreateReviewController {
 	public async handle(
@@ -27,6 +29,16 @@ export default class CreateReviewController {
 				psychologistId: psychologistId?.toString() || "",
 				rating,
 				comment,
+			});
+			await Queue.add("CreateNotification", {
+				type: TypeNotification.CREATE_REVIEW,
+				data: {
+					customerId: profileId,
+					psychologistId,
+					rating,
+					comment,
+				},
+				views: { psychologistId },
 			});
 
 			res.status(201).json({

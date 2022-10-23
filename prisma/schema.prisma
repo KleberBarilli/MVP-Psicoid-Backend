@@ -75,6 +75,10 @@ enum Gender {
 
 enum TypeNotification {
     WELCOME
+    CUSTOMER_ADD_PSICO
+    CREATE_APPOINTMENT
+    UPDATE_APPOINTMENT
+    CREATE_REVIEW
 }
 
 model Credential {
