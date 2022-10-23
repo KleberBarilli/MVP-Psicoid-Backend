@@ -1,5 +1,5 @@
 const config = {
-	SOCKET_URI: process.env.SOCKET_URI || "http://localhost:3339",
+	SOCKET_URI: "http://0.0.0.0:8019",
 };
 
 export default config;

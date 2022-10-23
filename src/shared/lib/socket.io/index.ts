@@ -1,10 +1,11 @@
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 import config from "@config/index";
 
-export const createSocket = (event: any, payload: any) => {
+export const emitEvent = (event: any, payload: any) => {
+	console.log(event, payload);
 	const socket = io(config.SOCKET_URI);
 	socket.on("connect_error", err => {
-		console.log("connect_error", err);
+		console.log("connect_error", err.message, err.name);
 	});
 	socket.on("connect", () => {
 		console.log(`Socket connected: ${socket.id}`);
