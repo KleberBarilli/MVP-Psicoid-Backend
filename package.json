@@ -40,6 +40,7 @@
     "@types/node": "^18.0.3",
     "@types/node-geocoder": "^3.24.5",
     "@types/pg": "^8.6.5",
+    "@types/socket.io-client": "^3.0.0",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^8.3.4",
     "@types/yup": "^0.29.14",
@@ -77,6 +78,7 @@
     "node-geocoder": "^4.2.0",
     "prisma": "^4.1.0",
     "reflect-metadata": "^0.1.13",
+    "socket.io-client": "^4.5.3",
     "tsyringe": "^4.7.0",
     "uuid": "^8.3.2",
     "yup": "^0.32.11"
