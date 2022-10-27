@@ -1,5 +1,5 @@
-import { pathsToModuleNameMapper } from "ts-jest";
-import { compilerOptions } from "./tsconfig.json";
+import { pathsToModuleNameMapper } from 'ts-jest'
+import { compilerOptions } from './tsconfig.json'
 /*
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
@@ -22,10 +22,10 @@ export default {
 	collectCoverage: true,
 
 	// An array of glob patterns indicating a set of files for which coverage information should be collected
-	collectCoverageFrom: ["<rootDir>/src/modules/**/services/*.ts"],
+	collectCoverageFrom: ['<rootDir>/src/modules/**/services/*.ts'],
 
 	// The directory where Jest should output its coverage files
-	coverageDirectory: "coverage",
+	coverageDirectory: 'coverage',
 
 	// An array of regexp pattern strings used to skip coverage collection
 	// coveragePathIgnorePatterns: [
@@ -33,7 +33,7 @@ export default {
 	// ],
 
 	// Indicates which provider should be used to instrument code for coverage
-	coverageProvider: "v8",
+	coverageProvider: 'v8',
 
 	// A list of reporter names that Jest uses when writing coverage reports
 	// coverageReporters: [
@@ -94,7 +94,7 @@ export default {
 	// 	prefix: '<rootDir>/',
 	// }),
 	moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-		prefix: "<rootDir>/",
+		prefix: '<rootDir>/',
 	}),
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -107,7 +107,7 @@ export default {
 	// notifyMode: "failure-change",
 
 	// A preset that is used as a base for Jest's configuration
-	preset: "ts-jest",
+	preset: 'ts-jest',
 
 	// Run tests from one or more projects
 	// projects: undefined,
@@ -160,7 +160,7 @@ export default {
 	// testLocationInResults: false,
 
 	// The glob patterns Jest uses to detect test files
-	testMatch: ["**/*.spec.ts"],
+	testMatch: ['**/*.spec.ts'],
 
 	// An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
 	// testPathIgnorePatterns: [
@@ -196,4 +196,4 @@ export default {
 
 	// Whether to use watchman for file crawling
 	// watchman: true,
-};
+}

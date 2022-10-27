@@ -1,7 +1,7 @@
-import { Address, Contact } from "@prisma/client";
+import { Address, Contact } from '@prisma/client'
 
 export interface IOffice {
-	photos: string[];
-	address: Address;
-	contact: Contact;
+	photos: string[]
+	address: Address
+	contact: Contact
 }

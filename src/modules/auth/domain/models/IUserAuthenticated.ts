@@ -1,4 +1,4 @@
 export interface IUserAuthenticated {
-	user: any;
-	token: string;
+	user: any
+	token: string
 }

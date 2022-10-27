@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const DataSchema = new mongoose.Schema({
 	params: {
@@ -10,7 +10,7 @@ const DataSchema = new mongoose.Schema({
 	body: {
 		type: mongoose.Schema.Types.Mixed,
 	},
-});
+})
 
 const LogSchema = new mongoose.Schema(
 	{
@@ -33,8 +33,8 @@ const LogSchema = new mongoose.Schema(
 		},
 	},
 	{ timestamps: true },
-);
+)
 
-const LogModel = mongoose.model("Logs", LogSchema);
+const LogModel = mongoose.model('Logs', LogSchema)
 
-export default LogModel;
+export default LogModel

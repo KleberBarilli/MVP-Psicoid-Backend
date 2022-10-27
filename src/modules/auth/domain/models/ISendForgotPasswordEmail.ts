@@ -1,3 +1,3 @@
 export interface ISendForgotPasswordEmail {
-	email: string;
+	email: string
 }

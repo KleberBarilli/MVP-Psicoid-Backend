@@ -1,13 +1,13 @@
-import { PrismaClient } from "@prisma/client";
-import { IAppointmentsRepository } from "@modules/schedule/domain/repositories/IAppointmentsRepository";
-import { ICreateAppointment } from "@modules/schedule/domain/models/ICreateAppointment";
-import { IAppointment } from "@modules/schedule/domain/models/IAppointment";
-import { IUpdateAppointment } from "@modules/schedule/domain/models/IUpdateAppointment";
+import { PrismaClient } from '@prisma/client'
+import { IAppointmentsRepository } from '@modules/schedule/domain/repositories/IAppointmentsRepository'
+import { ICreateAppointment } from '@modules/schedule/domain/models/ICreateAppointment'
+import { IAppointment } from '@modules/schedule/domain/models/IAppointment'
+import { IUpdateAppointment } from '@modules/schedule/domain/models/IUpdateAppointment'
 
 export default class AppointmentsRepository implements IAppointmentsRepository {
-	#prisma;
+	#prisma
 	constructor() {
-		this.#prisma = new PrismaClient();
+		this.#prisma = new PrismaClient()
 	}
 
 	public create({
@@ -27,7 +27,7 @@ export default class AppointmentsRepository implements IAppointmentsRepository {
 				psychologist: { connect: { id: psychologistId } },
 				customer: { connect: { id: customerId } },
 			},
-		});
+		})
 	}
 
 	public update(
@@ -53,6 +53,6 @@ export default class AppointmentsRepository implements IAppointmentsRepository {
 				psychologist: { connect: { id: psychologistId } },
 				customer: { connect: { id: customerId } },
 			},
-		});
+		})
 	}
 }

@@ -1,15 +1,15 @@
-import { PrismaClient } from "@prisma/client";
-import { ICreatePsychologist } from "../../../domain/models/ICreatePsychologist";
-import { IPsychologistsRepository } from "../../../domain/repositories/IPsychologistsRepository";
-import { PsychologistEntity } from "../entities/Psychologist";
-import { CredentialEntity } from "@shared/entities/Credential";
-import { IUpdatePsychologist } from "@modules/psico/domain/models/IUpdatePsychologist";
-import { IPagination } from "@shared/infra/http/middlewares/pagination";
-import { IPsychologistShortUpdate } from "@modules/psico/domain/models/IPsychologist";
+import { PrismaClient } from '@prisma/client'
+import { ICreatePsychologist } from '../../../domain/models/ICreatePsychologist'
+import { IPsychologistsRepository } from '../../../domain/repositories/IPsychologistsRepository'
+import { PsychologistEntity } from '../entities/Psychologist'
+import { CredentialEntity } from '@shared/entities/Credential'
+import { IUpdatePsychologist } from '@modules/psico/domain/models/IUpdatePsychologist'
+import { IPagination } from '@shared/infra/http/middlewares/pagination'
+import { IPsychologistShortUpdate } from '@modules/psico/domain/models/IPsychologist'
 export default class PsychologistsRepository implements IPsychologistsRepository {
-	#prisma;
+	#prisma
 	constructor() {
-		this.#prisma = new PrismaClient();
+		this.#prisma = new PrismaClient()
 	}
 
 	public async create({
@@ -21,7 +21,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		return this.#prisma.psychologist.create({
 			data: {
 				resume,
-				status: "UNDER_REVIEW",
+				status: 'UNDER_REVIEW',
 				credential: {
 					create: {
 						...credential,
@@ -41,7 +41,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 					},
 				},
 			},
-		});
+		})
 	}
 
 	public async findById(id: string): Promise<any> {
@@ -53,10 +53,10 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				approaches: true,
 				reviews: true,
 			},
-		});
+		})
 	}
 	public async findByEmail(email: string): Promise<CredentialEntity | null> {
-		return await this.#prisma.credential.findUnique({ where: { email } });
+		return await this.#prisma.credential.findUnique({ where: { email } })
 	}
 	public update(
 		id: string,
@@ -80,7 +80,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 					},
 				},
 			},
-		});
+		})
 	}
 	public findAll({ skip, take, sort, order, filter }: IPagination): Promise<number & any> {
 		return Promise.all([
@@ -92,12 +92,19 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 					reviews: true,
 					office: { include: { address: true } },
 				},
-				where: { ...filter },
+				where: {
+					AND: [
+						{
+							office: { address: { city: { contains: 'Passo Fundo' } } },
+							approaches: { every: { name: { contains: 'Nome abordagem' } } },
+						},
+					],
+				},
 				orderBy: { [sort]: order },
 				skip,
 				take,
 			}),
-		]);
+		])
 	}
 	public findAllApproaches({
 		skip,
@@ -115,23 +122,23 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				take,
 				select: { id: true, name: true, description: true },
 			}),
-		]);
+		])
 	}
 	public findOneApproach(
 		id: string,
 	): Promise<{ id: string; name: string; description: string | null } | null> {
-		return this.#prisma.therapeuticApproache.findUnique({ where: { id } });
+		return this.#prisma.therapeuticApproache.findUnique({ where: { id } })
 	}
 	public addApproach(id: string, psicoId: string): Promise<IPsychologistShortUpdate> {
 		return this.#prisma.psychologist.update({
 			where: { id: psicoId },
 			data: { approaches: { connect: { id } } },
-		});
+		})
 	}
 	public removeApproach(id: string, psicoId: string): Promise<IPsychologistShortUpdate> {
 		return this.#prisma.psychologist.update({
 			where: { id: psicoId },
 			data: { approaches: { disconnect: { id } } },
-		});
+		})
 	}
 }

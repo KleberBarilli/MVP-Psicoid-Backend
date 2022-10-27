@@ -1,18 +1,18 @@
-import AWS from "aws-sdk";
-import { awsConfig } from "@config/aws";
+import AWS from 'aws-sdk'
+import { awsConfig } from '@config/aws'
 
-const AWS_SES = new AWS.SES(awsConfig);
+const AWS_SES = new AWS.SES(awsConfig)
 
 interface ISendMail {
-	recipients: string[];
-	from?: string;
-	html: string;
-	subject: string;
+	recipients: string[]
+	from?: string
+	html: string
+	subject: string
 }
 
 export const sendEmail = ({ from, recipients, subject, html }: ISendMail) => {
 	let params = {
-		Source: from || "psicoid-contato@psicoid.com.br",
+		Source: from || 'psicoid-contato@psicoid.com.br',
 		Destination: {
 			BccAddresses: recipients,
 		},
@@ -20,15 +20,15 @@ export const sendEmail = ({ from, recipients, subject, html }: ISendMail) => {
 		Message: {
 			Body: {
 				Html: {
-					Charset: "UTF-8",
+					Charset: 'UTF-8',
 					Data: html,
 				},
 			},
 			Subject: {
-				Charset: "UTF-8",
+				Charset: 'UTF-8',
 				Data: subject,
 			},
 		},
-	};
-	return AWS_SES.sendEmail(params).promise();
-};
+	}
+	return AWS_SES.sendEmail(params).promise()
+}

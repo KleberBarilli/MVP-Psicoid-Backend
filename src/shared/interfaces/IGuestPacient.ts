@@ -1,3 +1,3 @@
 export interface IGuest {
-	name: string;
+	name: string
 }

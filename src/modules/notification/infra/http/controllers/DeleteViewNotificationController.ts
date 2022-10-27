@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import { container } from "tsyringe";
-import DeleteNotificationService from "../../../services/DeleteViewNotificationService";
+import { NextFunction, Request, Response } from 'express'
+import { container } from 'tsyringe'
+import DeleteNotificationService from '../../../services/DeleteViewNotificationService'
 
 export default class DeleteNotificationController {
 	public async handle(
@@ -9,13 +9,13 @@ export default class DeleteNotificationController {
 		next: NextFunction,
 	): Promise<Response | undefined> {
 		try {
-			const { id } = req.params;
-			const service = container.resolve(DeleteNotificationService);
-			await service.execute(id);
-			res.status(200).json({ message: "Notificação deletada com sucesso" });
-			next();
+			const { id } = req.params
+			const service = container.resolve(DeleteNotificationService)
+			await service.execute(id)
+			res.status(200).json({ message: 'Notificação deletada com sucesso' })
+			next()
 		} catch (error) {
-			return res.status(400).json({ error: "Houve um erro ao buscar a notificação" });
+			return res.status(400).json({ error: 'Houve um erro ao buscar a notificação' })
 		}
 	}
 }

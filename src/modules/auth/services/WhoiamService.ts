@@ -1,33 +1,33 @@
-import { ICredential } from "@shared/interfaces/ICredential";
-import { inject, injectable } from "tsyringe";
-import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
+import { ICredential } from '@shared/interfaces/ICredential'
+import { inject, injectable } from 'tsyringe'
+import { ICredentialsRepository } from '../domain/repositories/ICredentialsRepository'
 
 @injectable()
 export default class WhoiamService {
 	constructor(
-		@inject("CredentialsRepository")
+		@inject('CredentialsRepository')
 		public credentialsRepository: ICredentialsRepository,
 	) {}
 
 	public async execute(id: string, role: string): Promise<ICredential | null> {
-		let user: any;
-		console.log(role);
+		let user: any
+		console.log(role)
 		switch (role) {
-			case "CUSTOMER":
-				user = await this.credentialsRepository.iAmCustomer(id);
+			case 'CUSTOMER':
+				user = await this.credentialsRepository.iAmCustomer(id)
 
 				user.customer.psychologists.map((el: { id: string; selected: boolean }) => {
 					if (el.id === user.customer.selectedPsychologistId) {
-						el.selected = true;
+						el.selected = true
 					}
-					return el;
-				});
+					return el
+				})
 
-				return user;
-			case "PSYCHOLOGIST":
-				return await this.credentialsRepository.iAmPsico(id);
+				return user
+			case 'PSYCHOLOGIST':
+				return await this.credentialsRepository.iAmPsico(id)
 			default:
-				return null;
+				return null
 		}
 	}
 }

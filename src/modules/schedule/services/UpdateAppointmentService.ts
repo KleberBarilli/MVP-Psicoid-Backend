@@ -1,12 +1,12 @@
-import { injectable, inject } from "tsyringe";
-import { IAppointment } from "../domain/models/IAppointment";
-import { IUpdateAppointment } from "../domain/models/IUpdateAppointment";
-import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
+import { injectable, inject } from 'tsyringe'
+import { IAppointment } from '../domain/models/IAppointment'
+import { IUpdateAppointment } from '../domain/models/IUpdateAppointment'
+import { IAppointmentsRepository } from '../domain/repositories/IAppointmentsRepository'
 
 @injectable()
 export default class UpdateAppointmentService {
 	constructor(
-		@inject("AppointmentsRepository")
+		@inject('AppointmentsRepository')
 		public appointmentsRepository: IAppointmentsRepository,
 	) {}
 	public async execute(
@@ -29,6 +29,6 @@ export default class UpdateAppointmentService {
 			cancellationReason,
 			startsAt,
 			endsAt,
-		});
+		})
 	}
 }

@@ -1,9 +1,9 @@
-import * as yup from "yup";
+import * as yup from 'yup'
 
 interface IContactForm {
-	telephone?: string;
-	cellPhone?: string;
-	email?: string;
+	telephone?: string
+	cellPhone?: string
+	email?: string
 }
 
 export const validateContact = (contact: IContactForm) =>
@@ -12,6 +12,6 @@ export const validateContact = (contact: IContactForm) =>
 		.shape({
 			telephone: yup.string(),
 			cellPhone: yup.string(),
-			email: yup.string().typeError("EMail inválido").email("Email inválido"),
+			email: yup.string().typeError('EMail inválido').email('Email inválido'),
 		})
-		.validate(contact, { abortEarly: false, stripUnknown: true });
+		.validate(contact, { abortEarly: false, stripUnknown: true })
