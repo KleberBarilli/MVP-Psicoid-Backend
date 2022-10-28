@@ -6,6 +6,7 @@ export class ReviewEntity implements Review {
 	psychologistId: string
 	rating: number
 	comment: string | null
+	deletedAt: Date | null
 	createdAt: Date
 	updatedAt: Date
 }

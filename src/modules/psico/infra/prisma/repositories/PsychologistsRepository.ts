@@ -6,10 +6,34 @@ import { CredentialEntity } from '@shared/entities/Credential'
 import { IUpdatePsychologist } from '@modules/psico/domain/models/IUpdatePsychologist'
 import { IPagination } from '@shared/infra/http/middlewares/pagination'
 import { IPsychologistShortUpdate } from '@modules/psico/domain/models/IPsychologist'
+
 export default class PsychologistsRepository implements IPsychologistsRepository {
 	#prisma
 	constructor() {
 		this.#prisma = new PrismaClient()
+	}
+
+	private async makePrismaWhere(filter: string, search: string[]) {
+		switch (filter) {
+			case 'city':
+				return { office: { city: { contains: search[0] } } }
+			case 'name':
+				return { profile: { firstName: { contains: search[0] } } }
+			case 'city+name':
+				return {
+					AND: [
+						{
+							office: { address: { city: { contains: search[0] } } },
+							profile: { firstName: { contains: search[1] } },
+						},
+					],
+				}
+			case 'approach':
+				return { approaches: { every: { name: { contains: search[0] } } } }
+
+			default:
+				break
+		}
 	}
 
 	public async create({
