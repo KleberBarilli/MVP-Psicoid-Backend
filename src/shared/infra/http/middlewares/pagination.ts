@@ -1,3 +1,4 @@
+import { ISearch } from '@shared/interfaces/IPagination'
 import { NextFunction, Response } from 'express'
 
 export interface IPagination {
@@ -6,7 +7,7 @@ export interface IPagination {
 	sort: string
 	order: string
 	filter: any
-	search: any
+	search: ISearch
 	latitude: number
 	longitude: number
 }
@@ -27,7 +28,7 @@ export const pagination = (req: any, res: Response, next: NextFunction) => {
 		take: parseInt(take),
 		sort,
 		order: order.toLowerCase(),
-		filter: JSON.parse(filter),
+		filter, //: JSON.parse(filter),
 		search,
 		latitude,
 		longitude,
