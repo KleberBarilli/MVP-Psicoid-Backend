@@ -6,6 +6,7 @@ import { CredentialEntity } from '@shared/entities/Credential'
 import { IUpdatePsychologist } from '@modules/psico/domain/models/IUpdatePsychologist'
 import { IPagination } from '@shared/infra/http/middlewares/pagination'
 import { IPsychologistShortUpdate } from '@modules/psico/domain/models/IPsychologist'
+import { ISearch } from '@shared/interfaces/IPagination'
 
 export default class PsychologistsRepository implements IPsychologistsRepository {
 	#prisma
@@ -13,39 +14,29 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		this.#prisma = new PrismaClient()
 	}
 
-	private async makePrismaWhere(filter: string, search: string[]) {
-		console.log('na0', search)
-		console.log(filter)
-		switch (filter) {
-			case 'city':
-				return {
-					office: { address: { city: { contains: search[0], mode: 'insensitive' } } },
-				}
-			case 'name':
-				return { profile: { firstName: { contains: search[0], mode: 'insensitive' } } }
-			case 'city+name':
-				return {
-					AND: [
-						{
-							office: {
-								address: { city: { contains: search[0], mode: 'insensitive' } },
-							},
-							profile: { firstName: { contains: search[1], mode: 'insensitive' } },
-						},
-					],
-				}
-			case 'approach':
-				return {
-					approaches: { every: { name: { contains: search[0], mode: 'insensitive' } } },
-				}
+	private async makePrismaWhere(search: ISearch): Promise<any> {
+		const filtros = {
+			psicoName: search.psicoName
+				? { firstName: { contains: search.psicoName, mode: 'insensitive' } }
+				: undefined,
+			cityName: search.cityName
+				? {
+						address: { city: { contains: search.cityName, mode: 'insensitive' } },
+				  }
+				: undefined,
+			approachName: search.approachName
+				? {
+						every: { name: { contains: search.approachName, mode: 'insensitive' } },
+				  }
+				: undefined,
+		}
 
-			default:
-				return {}
+		return {
+			office: filtros.cityName,
+			profile: filtros.psicoName,
+			approaches: filtros.approachName,
 		}
 	}
-	// private async bestMakePrismaWherte(filter: string): {
-	// 	//
-	// }
 
 	public async create({
 		credential,
@@ -117,19 +108,12 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 			},
 		})
 	}
-	public async findAll({
-		skip,
-		take,
-		sort,
-		order,
-		filter,
-		search,
-	}: IPagination): Promise<number & any> {
-		const makeWhere = await this.makePrismaWhere(filter, search)
-
-		console.log(makeWhere)
+	public async findAll({ skip, take, sort, order, search }: IPagination): Promise<number & any> {
+		const makeWhere = await this.makePrismaWhere(search)
 		return Promise.all([
-			this.#prisma.psychologist.count({ where: makeWhere }),
+			this.#prisma.psychologist.count({
+				where: makeWhere,
+			}),
 			this.#prisma.psychologist.findMany({
 				include: {
 					profile: { include: { contact: true } },
