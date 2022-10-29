@@ -3,3 +3,5 @@ export const generateRandomNumber = (digit: number): string => {
 }
 
 export const arrAvg = (arr: number[] = []) => arr.reduce((a, b) => a + b, 0) / arr.length
+
+export const splitFilters = (filter: string) => filter.split('+')

@@ -27,7 +27,7 @@ export const pagination = (req: any, res: Response, next: NextFunction) => {
 		take: parseInt(take),
 		sort,
 		order: order.toLowerCase(),
-		filter: JSON.parse(filter),
+		filter, //: JSON.parse(filter),
 		search,
 		latitude,
 		longitude,
