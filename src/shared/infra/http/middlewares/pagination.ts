@@ -29,7 +29,7 @@ export const pagination = (req: any, res: Response, next: NextFunction) => {
 		sort,
 		order: order.toLowerCase(),
 		filter: JSON.parse(filter),
-		search,
+		search: JSON.parse(search),
 		latitude,
 		longitude,
 	}
