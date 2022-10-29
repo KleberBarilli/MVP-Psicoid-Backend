@@ -13,13 +13,14 @@ export interface IPagination {
 }
 
 export const pagination = (req: any, res: Response, next: NextFunction) => {
+	console.log(req)
 	const {
 		page = 1,
 		limit: take = 5,
 		sort = 'createdAt',
 		order = 'desc',
 		filter = 'null',
-		search = {},
+		search = 'null',
 		latitude = 0,
 		longitude = 0,
 	} = req.query
