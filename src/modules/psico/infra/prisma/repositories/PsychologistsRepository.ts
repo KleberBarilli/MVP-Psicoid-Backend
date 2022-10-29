@@ -26,7 +26,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				: undefined,
 			approachName: search.approachName
 				? {
-						every: { name: { contains: search.approachName, mode: 'insensitive' } },
+						some: { name: { contains: search.approachName, mode: 'insensitive' } },
 				  }
 				: undefined,
 		}
