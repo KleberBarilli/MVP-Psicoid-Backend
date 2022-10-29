@@ -9,12 +9,14 @@ export default class ListPsychologistsController {
 	): Promise<Response | undefined> {
 		try {
 			const { pagination } = req
+
 			const service = container.resolve(ListPsychologistsService)
 			const [count, psychologists] = await service.execute(pagination)
 
 			res.status(200).json({ count, data: psychologists })
 			next()
 		} catch (error) {
+			console.log(error)
 			return res.status(500).json({ error: 'Houve um erro ao listar' })
 		}
 	}

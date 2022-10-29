@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma, PrismaClient } from '@prisma/client'
 import { ICreatePsychologist } from '../../../domain/models/ICreatePsychologist'
 import { IPsychologistsRepository } from '../../../domain/repositories/IPsychologistsRepository'
 import { PsychologistEntity } from '../entities/Psychologist'
@@ -6,10 +6,36 @@ import { CredentialEntity } from '@shared/entities/Credential'
 import { IUpdatePsychologist } from '@modules/psico/domain/models/IUpdatePsychologist'
 import { IPagination } from '@shared/infra/http/middlewares/pagination'
 import { IPsychologistShortUpdate } from '@modules/psico/domain/models/IPsychologist'
+import { ISearch } from '@shared/interfaces/IPagination'
+
 export default class PsychologistsRepository implements IPsychologistsRepository {
 	#prisma
 	constructor() {
 		this.#prisma = new PrismaClient()
+	}
+
+	private async makePrismaWhere(search: ISearch): Promise<any> {
+		const filtros = {
+			psicoName: search.psicoName
+				? { firstName: { contains: search.psicoName, mode: 'insensitive' } }
+				: undefined,
+			cityName: search.cityName
+				? {
+						address: { city: { contains: search.cityName, mode: 'insensitive' } },
+				  }
+				: undefined,
+			approachName: search.approachName
+				? {
+						some: { name: { contains: search.approachName, mode: 'insensitive' } },
+				  }
+				: undefined,
+		}
+
+		return {
+			office: filtros.cityName,
+			profile: filtros.psicoName,
+			approaches: filtros.approachName,
+		}
 	}
 
 	public async create({
@@ -82,9 +108,12 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 			},
 		})
 	}
-	public findAll({ skip, take, sort, order, filter }: IPagination): Promise<number & any> {
+	public async findAll({ skip, take, sort, order, search }: IPagination): Promise<number & any> {
+		const makeWhere = await this.makePrismaWhere(search)
 		return Promise.all([
-			this.#prisma.psychologist.count({ where: { ...filter } }),
+			this.#prisma.psychologist.count({
+				where: makeWhere,
+			}),
 			this.#prisma.psychologist.findMany({
 				include: {
 					profile: { include: { contact: true } },
@@ -92,14 +121,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 					reviews: true,
 					office: { include: { address: true } },
 				},
-				where: {
-					AND: [
-						{
-							office: { address: { city: { contains: 'Passo Fundo' } } },
-							approaches: { every: { name: { contains: 'Nome abordagem' } } },
-						},
-					],
-				},
+				where: makeWhere,
 				orderBy: { [sort]: order },
 				skip,
 				take,
