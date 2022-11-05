@@ -5,6 +5,7 @@ import AppError from '@shared/errors/AppError'
 import { ICreateSession } from '../domain/models/ICreateSession'
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider'
 import { ICredentialsRepository } from '../domain/repositories/ICredentialsRepository'
+import { ISession } from '../domain/models/ISession'
 
 @injectable()
 class CreateSessionService {
@@ -15,7 +16,7 @@ class CreateSessionService {
 		public hashProvider: IHashProvider,
 	) {}
 
-	public async execute({ email, password }: ICreateSession): Promise<any> {
+	public async execute({ email, password }: ICreateSession): Promise<ISession> {
 		const user = await this.credentialsRepository.findByEmail(email)
 
 		if (!user) {

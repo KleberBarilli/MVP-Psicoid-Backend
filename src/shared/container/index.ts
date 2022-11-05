@@ -12,6 +12,8 @@ import AppointmentsRepository from '@modules/schedule/infra/prisma/repositories/
 import { IAppointmentsRepository } from '@modules/schedule/domain/repositories/IAppointmentsRepository'
 import { INotificationsRepository } from '@modules/notification/domain/repositories/INotificationsRepository'
 import NotificationsRepository from '@modules/notification/infra/prisma/repositories/NotificationsRepository'
+import { IAdminsRepository } from '@modules/admin/domain/repositories/IAdminsRepository'
+import AdminsRepository from '@modules/admin/infra/prisma/repositories/AdminsRepository'
 
 container.registerSingleton<ICredentialsRepository>('CredentialsRepository', CredentialsRepository)
 container.registerSingleton<ICustomersRepository>('CustomersRepository', CustomersRepository)
@@ -28,3 +30,4 @@ container.registerSingleton<INotificationsRepository>(
 	'NotificationsRepository',
 	NotificationsRepository,
 )
+container.registerSingleton<IAdminsRepository>('AdminsRepository', AdminsRepository)

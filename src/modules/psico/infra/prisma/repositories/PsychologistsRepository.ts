@@ -76,9 +76,6 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 			},
 		})
 	}
-	public async findByEmail(email: string): Promise<CredentialEntity | null> {
-		return await prisma.credential.findUnique({ where: { email } })
-	}
 	public update(
 		id: string,
 		{ profile, office, resume }: IUpdatePsychologist,

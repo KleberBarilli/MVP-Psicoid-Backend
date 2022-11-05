@@ -2,7 +2,6 @@ import prisma from '@shared/prisma'
 import { ICreateCustomer } from '../../../domain/models/ICreateCustomer'
 import { ICustomersRepository } from '../../../domain/repositories/ICustomersRepository'
 import { CustomerEntity } from '../entities/Customer'
-import { CredentialEntity } from '@shared/entities/Credential'
 import { IUpdateCustomer } from '@modules/customer/domain/models/IUpdateCustomer'
 import { ICustomer } from '@modules/customer/domain/models/ICustomer'
 import { IPagination } from '@shared/infra/http/middlewares/pagination'
@@ -41,9 +40,6 @@ export default class CustomersRepository implements ICustomersRepository {
 				guest: true,
 			},
 		})
-	}
-	public findByEmail(email: string): Promise<CredentialEntity | null> {
-		return prisma.credential.findUnique({ where: { email } })
 	}
 	public update(
 		id: string,
