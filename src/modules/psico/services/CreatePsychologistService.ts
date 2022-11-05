@@ -5,6 +5,8 @@ import { IPsychologistCreated } from '../domain/models/IPsychologystCreated'
 import { IPsychologistsRepository } from '../domain/repositories/IPsychologistsRepository'
 import { IHashProvider } from '@modules/auth/providers/HashProvider/models/IHashProvider'
 import { getGeocode } from '@shared/lib/geocoder'
+import { ICredentialsRepository } from '@modules/auth/domain/repositories/ICredentialsRepository'
+import { ICredentialResponse } from '@shared/interfaces/ICredential'
 
 @injectable()
 export default class CreatePsychologistService {
@@ -13,16 +15,20 @@ export default class CreatePsychologistService {
 		public psychologistsRepository: IPsychologistsRepository,
 		@inject('HashProvider')
 		public hashProvider: IHashProvider,
+		@inject('CredentialsRepository')
+		public credentialsRepository: ICredentialsRepository,
 	) {}
-
+	private userExists(email: string): Promise<ICredentialResponse | null> {
+		return this.credentialsRepository.findByEmail(email)
+	}
 	public async execute({
 		credential,
 		profile,
 		office,
 		resume,
 	}: ICreatePsychologist): Promise<IPsychologistCreated> {
-		const userExists = await this.psychologistsRepository.findByEmail(credential.email)
-		if (userExists) {
+		const user = await this.userExists(credential.email)
+		if (user) {
 			throw new AppError('User already exists')
 		}
 		credential.password = await this.hashProvider.generateHash(credential.password || '')

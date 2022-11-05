@@ -1,15 +1,10 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@shared/prisma'
 import { IAppointmentsRepository } from '@modules/schedule/domain/repositories/IAppointmentsRepository'
 import { ICreateAppointment } from '@modules/schedule/domain/models/ICreateAppointment'
 import { IAppointment } from '@modules/schedule/domain/models/IAppointment'
 import { IUpdateAppointment } from '@modules/schedule/domain/models/IUpdateAppointment'
 
 export default class AppointmentsRepository implements IAppointmentsRepository {
-	#prisma
-	constructor() {
-		this.#prisma = new PrismaClient()
-	}
-
 	public create({
 		psychologistId,
 		customerId,
@@ -18,7 +13,7 @@ export default class AppointmentsRepository implements IAppointmentsRepository {
 		startsAt,
 		endsAt,
 	}: ICreateAppointment): Promise<IAppointment> {
-		return this.#prisma.appointment.create({
+		return prisma.appointment.create({
 			data: {
 				createdBy,
 				price,
@@ -42,7 +37,7 @@ export default class AppointmentsRepository implements IAppointmentsRepository {
 			startsAt,
 		}: IUpdateAppointment,
 	): Promise<IAppointment> {
-		return this.#prisma.appointment.update({
+		return prisma.appointment.update({
 			where: { id },
 			data: {
 				price,

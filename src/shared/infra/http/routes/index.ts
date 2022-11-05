@@ -8,9 +8,11 @@ import reviewRouter from '@modules/review/infra/http/routes/review.routes'
 import approachRouter from '@modules/psico/infra/http/routes/approach.routes'
 import appointmentRouter from '@modules/schedule/infra/http/routes/appointment.routes'
 import notificationRouter from '@modules/notification/infra/http/routes/notification.routes'
+import adminRouter from '@modules/admin/infra/http/routes/admin.routes'
 
 const routes = Router()
 
+routes.use('/admin', adminRouter)
 routes.use('/customer', customerRouter)
 routes.use('/session', sessionRouter)
 routes.use('/psico', psicoRouter)

@@ -11,7 +11,6 @@ export default class WhoiamService {
 
 	public async execute(id: string, role: string): Promise<ICredential | null> {
 		let user: any
-		console.log(role)
 		switch (role) {
 			case 'CUSTOMER':
 				user = await this.credentialsRepository.iAmCustomer(id)
@@ -26,6 +25,8 @@ export default class WhoiamService {
 				return user
 			case 'PSYCHOLOGIST':
 				return await this.credentialsRepository.iAmPsico(id)
+			case 'ADMIN':
+				return await this.credentialsRepository.iAmAdmin(id)
 			default:
 				return null
 		}

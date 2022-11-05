@@ -10,5 +10,6 @@ export interface ICredentialsRepository {
 	updateToken(id: string, token: string): Promise<ICredential>
 	iAmPsico(id: string): Promise<ICredential | null>
 	iAmCustomer(id: string): Promise<ICredential | null>
+	iAmAdmin(id: string): Promise<ICredential | null>
 	deactivateAccount(id: string): Promise<ICredential>
 }

@@ -10,7 +10,7 @@ interface IReqUser {
 export const handleRole =
 	(...roles: string[]) =>
 	({ user }: IReqUser, res: Response, next: NextFunction) => {
-		if (roles.includes(user.profile.toUpperCase())) {
+		if (roles.includes(user.profile.toUpperCase()) || user.profile === 'ADMIN') {
 			next()
 		} else {
 			return res

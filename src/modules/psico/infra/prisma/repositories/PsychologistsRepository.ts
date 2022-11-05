@@ -1,4 +1,4 @@
-import { prisma, PrismaClient } from '@prisma/client'
+import prisma from '@shared/prisma'
 import { ICreatePsychologist } from '../../../domain/models/ICreatePsychologist'
 import { IPsychologistsRepository } from '../../../domain/repositories/IPsychologistsRepository'
 import { PsychologistEntity } from '../entities/Psychologist'
@@ -9,13 +9,8 @@ import { IPsychologistShortUpdate } from '@modules/psico/domain/models/IPsycholo
 import { ISearch } from '@shared/interfaces/IPagination'
 
 export default class PsychologistsRepository implements IPsychologistsRepository {
-	#prisma
-	constructor() {
-		this.#prisma = new PrismaClient()
-	}
-
 	private async makePrismaWhere(search: ISearch): Promise<any> {
-		const filtros = {
+		const filters = {
 			psicoName: search.psicoName
 				? { firstName: { contains: search.psicoName, mode: 'insensitive' } }
 				: undefined,
@@ -32,9 +27,9 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		}
 
 		return {
-			office: filtros.cityName,
-			profile: filtros.psicoName,
-			approaches: filtros.approachName,
+			office: filters.cityName,
+			profile: filters.psicoName,
+			approaches: filters.approachName,
 		}
 	}
 
@@ -44,7 +39,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		office,
 		resume,
 	}: ICreatePsychologist): Promise<PsychologistEntity> {
-		return this.#prisma.psychologist.create({
+		return prisma.psychologist.create({
 			data: {
 				resume,
 				status: 'UNDER_REVIEW',
@@ -71,7 +66,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 	}
 
 	public async findById(id: string): Promise<any> {
-		return await this.#prisma.psychologist.findUnique({
+		return await prisma.psychologist.findUnique({
 			where: { id },
 			include: {
 				office: { include: { address: true, contact: true } },
@@ -81,14 +76,11 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 			},
 		})
 	}
-	public async findByEmail(email: string): Promise<CredentialEntity | null> {
-		return await this.#prisma.credential.findUnique({ where: { email } })
-	}
 	public update(
 		id: string,
 		{ profile, office, resume }: IUpdatePsychologist,
 	): Promise<PsychologistEntity> {
-		return this.#prisma.psychologist.update({
+		return prisma.psychologist.update({
 			where: { id },
 			data: {
 				resume,
@@ -111,10 +103,10 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 	public async findAll({ skip, take, sort, order, search }: IPagination): Promise<number & any> {
 		const makeWhere = await this.makePrismaWhere(search)
 		return Promise.all([
-			this.#prisma.psychologist.count({
+			prisma.psychologist.count({
 				where: makeWhere,
 			}),
-			this.#prisma.psychologist.findMany({
+			prisma.psychologist.findMany({
 				include: {
 					profile: { include: { contact: true } },
 					approaches: true,
@@ -136,8 +128,8 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		filter,
 	}: IPagination): Promise<number & any> {
 		return Promise.all([
-			this.#prisma.therapeuticApproache.count({ where: { ...filter } }),
-			this.#prisma.therapeuticApproache.findMany({
+			prisma.therapeuticApproache.count({ where: { ...filter } }),
+			prisma.therapeuticApproache.findMany({
 				where: { ...filter },
 				orderBy: { [sort]: order },
 				skip,
@@ -149,16 +141,16 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 	public findOneApproach(
 		id: string,
 	): Promise<{ id: string; name: string; description: string | null } | null> {
-		return this.#prisma.therapeuticApproache.findUnique({ where: { id } })
+		return prisma.therapeuticApproache.findUnique({ where: { id } })
 	}
 	public addApproach(id: string, psicoId: string): Promise<IPsychologistShortUpdate> {
-		return this.#prisma.psychologist.update({
+		return prisma.psychologist.update({
 			where: { id: psicoId },
 			data: { approaches: { connect: { id } } },
 		})
 	}
 	public removeApproach(id: string, psicoId: string): Promise<IPsychologistShortUpdate> {
-		return this.#prisma.psychologist.update({
+		return prisma.psychologist.update({
 			where: { id: psicoId },
 			data: { approaches: { disconnect: { id } } },
 		})
