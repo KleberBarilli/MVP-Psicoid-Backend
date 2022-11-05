@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import isAuthenticated from '@shared/infra/http/middlewares/isAuthenticated'
 import CreateAdminController from '../controllers/CreateAdminController'
 import CreateLogController from '@modules/log/infra/http/controllers/CreateLogController'
 

@@ -69,6 +69,12 @@ export default class CredentialsRepository implements ICredentialsRepository {
 			},
 		})
 	}
+	public async iAmAdmin(id: string): Promise<ICredential | null> {
+		return prisma.credential.findUnique({
+			where: { id },
+			include: { admin: { include: { profile: true } } },
+		})
+	}
 	public deactivateAccount(id: string): Promise<ICredential> {
 		return prisma.credential.update({
 			where: { id },
