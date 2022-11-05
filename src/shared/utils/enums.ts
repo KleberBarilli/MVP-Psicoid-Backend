@@ -29,6 +29,8 @@ export enum BRAZIL_STATES {
 }
 
 export enum ROLE_TYPE {
+	admin = 'ADMIN',
+	back_office = 'BACK_OFFICE',
 	customer = 'CUSTOMER',
 	psychologist = 'PSYCHOLOGIST',
 }
