@@ -10,8 +10,11 @@ export default class DeleteNotificationController {
 	): Promise<Response | undefined> {
 		try {
 			const { id } = req.params
+			const { profile, profileId } = req.user
+
 			const service = container.resolve(DeleteNotificationService)
-			await service.execute(id)
+			await service.execute({ notificationId: id, profile, profileId })
+
 			res.status(200).json({ message: 'Notificação deletada com sucesso' })
 			next()
 		} catch (error) {
