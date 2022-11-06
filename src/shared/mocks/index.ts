@@ -21,7 +21,6 @@ export const customer = {
 		state: 'RS',
 	},
 }
-
 export const psico = {
 	credentials: {
 		email: 'psico@example.com',
@@ -32,17 +31,23 @@ export const psico = {
 		firstName: 'Anna',
 		lastName: 'Uzumaki',
 		cpf: '98001451097',
+		contact: {
+			cellPhone: '54-99532383',
+		},
 	},
-	contact: {
-		cellPhone: '54-99532383',
+	office: {
+		address: {
+			zipCode: '99990-000',
+			street: 'main avenue',
+			neighborhood: 'center',
+			number: '54',
+			city: 'Passo Fundo',
+			state: 'RS',
+		},
+		contact: {
+			cellPhone: '54-99532383',
+		},
 	},
-	address: {
-		zipCode: '99990-000',
-		street: 'main avenue',
-		neighborhood: 'center',
-		number: '54',
-		city: 'Passo Fundo',
-		state: 'RS',
-	},
+
 	resume: 'Description..',
 }

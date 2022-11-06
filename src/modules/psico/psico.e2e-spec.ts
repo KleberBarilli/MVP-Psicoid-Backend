@@ -8,11 +8,10 @@ describe('Psychologist Module E2E', () => {
 		const response = await request(app).post('/psico').send({
 			psico,
 		})
-		console.log(response.error)
-		psicoId = response.body.data.id
+		psicoId = response.body.data.user.id
 		expect(response.status).toBe(201)
 		expect(response.body.error).toBeFalsy()
-		expect(response.body).toHaveProperty('data.id')
+		expect(response.body).toHaveProperty('data.user.id')
 	})
 
 	test('[e2e] Should not be able to create a existing psychologist', async () => {
@@ -32,4 +31,30 @@ describe('Psychologist Module E2E', () => {
 		expect(response.status).toBe(400)
 		expect(response.body.error).toBeTruthy()
 	})
+	// it('[e2e] Should be able to find a existing customer', async () => {
+	// 	const login = await request(app).post('/session').send({
+	// 		email: customer.credentials.email,
+	// 		password: customer.credentials.password,
+	// 	})
+
+	// 	//console.log('ccc user,', login.body)
+	// 	customerId = login.body.data.user.customer.id
+	// 	jwtToken = login.body.data.token
+
+	// 	const response = await request(app)
+	// 		.get(`/customer/${customerId}`)
+	// 		.auth(jwtToken, { type: 'bearer' })
+	// 	//.auth(auth.token, { type: 'bearer' })
+	// 	console.log('req', response)
+	// 	expect(response.status).toBe(200)
+	// 	expect(response.body.data).toBeTruthy()
+	// 	expect(response.body.error).toBeFalsy()
+	// })
+	// it('[e2e] Should not be able to find a inexisting customer', async () => {
+	// 	const response = await request(app)
+	// 		.get(`/customer/invalidId}`)
+	// 		.auth(jwtToken, { type: 'bearer' })
+	// 	expect(response.status).toBe(400)
+	// 	expect(response.body.error).toBeTruthy()
+	// })
 })
