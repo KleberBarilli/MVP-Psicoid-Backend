@@ -1,12 +1,12 @@
-import { injectable, inject } from 'tsyringe'
-import { ICreateGuest } from '../domain/models/ICreateGuest'
-import { ICustomerCreated } from '../domain/models/ICustomerCreated'
-import { ICustomersRepository } from '../domain/repositories/ICustomersRepository'
+import { injectable, inject } from "tsyringe";
+import { ICreateGuest } from "../domain/models/ICreateGuest";
+import { ICustomerCreated } from "../domain/models/ICustomerCreated";
+import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
 
 @injectable()
 export default class CreateCustomerService {
 	constructor(
-		@inject('CustomersRepository')
+		@inject("CustomersRepository")
 		public customersRepository: ICustomersRepository,
 	) {}
 	public async execute(
@@ -16,6 +16,6 @@ export default class CreateCustomerService {
 		return await this.customersRepository.createGuest(psicoId, {
 			name,
 			contact,
-		})
+		});
 	}
 }

@@ -1,13 +1,13 @@
-import { injectable, inject } from 'tsyringe'
-import { IPsychologistsRepository } from '../domain/repositories/IPsychologistsRepository'
+import { injectable, inject } from "tsyringe";
+import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
 
 @injectable()
 export default class ShowPsychologistService {
 	constructor(
-		@inject('PsychologistsRepository')
+		@inject("PsychologistsRepository")
 		public psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(id: string): Promise<any> {
-		return await this.psychologistsRepository.findOneApproach(id)
+		return await this.psychologistsRepository.findOneApproach(id);
 	}
 }

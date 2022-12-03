@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express'
-import { container } from 'tsyringe'
-import UpdateAppointmentService from '@modules/schedule/services//UpdateAppointmentService'
-import Queue from '@shared/lib/bull/Queue'
-import { TypeNotification } from '@prisma/client'
+import { NextFunction, Request, Response } from "express";
+import { container } from "tsyringe";
+import UpdateAppointmentService from "@modules/schedule/services//UpdateAppointmentService";
+import Queue from "@shared/lib/bull/Queue";
+import { TypeNotification } from "@prisma/client";
 
 export default class UpdateAppointmentController {
 	public async handle(
@@ -21,14 +21,14 @@ export default class UpdateAppointmentController {
 					starts,
 					ends,
 				},
-			} = req.body
-			const { id } = req.params
-			const { profile } = req.user
+			} = req.body;
+			const { id } = req.params;
+			const { profile } = req.user;
 
-			const service = container.resolve(UpdateAppointmentService)
+			const service = container.resolve(UpdateAppointmentService);
 
-			const startsAt = starts ? new Date(starts) : starts
-			const endsAt = ends ? new Date(ends) : ends
+			const startsAt = starts ? new Date(starts) : starts;
+			const endsAt = ends ? new Date(ends) : ends;
 
 			const appointment = await service.execute(id, {
 				psychologistId,
@@ -38,9 +38,9 @@ export default class UpdateAppointmentController {
 				cancellationReason,
 				startsAt,
 				endsAt,
-			})
+			});
 
-			await Queue.add('CreateNotification', {
+			await Queue.add("CreateNotification", {
 				type: TypeNotification.UPDATE_APPOINTMENT,
 				data: {
 					appointmentId: id,
@@ -52,15 +52,18 @@ export default class UpdateAppointmentController {
 					startsAt,
 					endsAt,
 				},
-				views: profile === 'CUSTOMER' ? { customerId } : { psychologistId },
-			})
+				views:
+					profile === "CUSTOMER"
+						? { customerId }
+						: { psychologistId },
+			});
 			res.status(201).json({
-				message: 'Appointment atualizado com sucesso',
+				message: "Appointment atualizado com sucesso",
 				data: appointment,
-			})
-			next()
+			});
+			next();
 		} catch (error) {
-			return res.status(500).json({ error: 'Internal Error' })
+			return res.status(500).json({ error: "Internal Error" });
 		}
 	}
 }

@@ -1,36 +1,53 @@
-import prisma from '@shared/prisma'
-import { ICreatePsychologist } from '../../../domain/models/ICreatePsychologist'
-import { IPsychologistsRepository } from '../../../domain/repositories/IPsychologistsRepository'
-import { PsychologistEntity } from '../entities/Psychologist'
-import { CredentialEntity } from '@shared/entities/Credential'
-import { IUpdatePsychologist } from '@modules/psico/domain/models/IUpdatePsychologist'
-import { IPagination } from '@shared/infra/http/middlewares/pagination'
-import { IPsychologistShortUpdate } from '@modules/psico/domain/models/IPsychologist'
-import { ISearch } from '@shared/interfaces/IPagination'
+import prisma from "@shared/prisma";
+import { ICreatePsychologist } from "../../../domain/models/ICreatePsychologist";
+import { IPsychologistsRepository } from "../../../domain/repositories/IPsychologistsRepository";
+import { PsychologistEntity } from "../entities/Psychologist";
+import { CredentialEntity } from "@shared/entities/Credential";
+import { IUpdatePsychologist } from "@modules/psico/domain/models/IUpdatePsychologist";
+import { IPagination } from "@shared/infra/http/middlewares/pagination";
+import { IPsychologistShortUpdate } from "@modules/psico/domain/models/IPsychologist";
+import { ISearch } from "@shared/interfaces/IPagination";
 
-export default class PsychologistsRepository implements IPsychologistsRepository {
+export default class PsychologistsRepository
+	implements IPsychologistsRepository
+{
 	private async makePrismaWhere(search: ISearch): Promise<any> {
 		const filters = {
 			psicoName: search.psicoName
-				? { firstName: { contains: search.psicoName, mode: 'insensitive' } }
+				? {
+						firstName: {
+							contains: search.psicoName,
+							mode: "insensitive",
+						},
+				  }
 				: undefined,
 			cityName: search.cityName
 				? {
-						address: { city: { contains: search.cityName, mode: 'insensitive' } },
+						address: {
+							city: {
+								contains: search.cityName,
+								mode: "insensitive",
+							},
+						},
 				  }
 				: undefined,
 			approachName: search.approachName
 				? {
-						some: { name: { contains: search.approachName, mode: 'insensitive' } },
+						some: {
+							name: {
+								contains: search.approachName,
+								mode: "insensitive",
+							},
+						},
 				  }
 				: undefined,
-		}
+		};
 
 		return {
 			office: filters.cityName,
 			profile: filters.psicoName,
 			approaches: filters.approachName,
-		}
+		};
 	}
 
 	public async create({
@@ -42,7 +59,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 		return prisma.psychologist.create({
 			data: {
 				resume,
-				status: 'UNDER_REVIEW',
+				status: "UNDER_REVIEW",
 				credential: {
 					create: {
 						...credential,
@@ -62,7 +79,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 					},
 				},
 			},
-		})
+		});
 	}
 
 	public async findById(id: string): Promise<any> {
@@ -74,7 +91,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				approaches: true,
 				reviews: true,
 			},
-		})
+		});
 	}
 	public update(
 		id: string,
@@ -98,10 +115,16 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 					},
 				},
 			},
-		})
+		});
 	}
-	public async findAll({ skip, take, sort, order, search }: IPagination): Promise<number & any> {
-		const makeWhere = await this.makePrismaWhere(search)
+	public async findAll({
+		skip,
+		take,
+		sort,
+		order,
+		search,
+	}: IPagination): Promise<number & any> {
+		const makeWhere = await this.makePrismaWhere(search);
 		return Promise.all([
 			prisma.psychologist.count({
 				where: makeWhere,
@@ -118,7 +141,7 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				skip,
 				take,
 			}),
-		])
+		]);
 	}
 	public findAllApproaches({
 		skip,
@@ -136,23 +159,31 @@ export default class PsychologistsRepository implements IPsychologistsRepository
 				take,
 				select: { id: true, name: true, description: true },
 			}),
-		])
+		]);
 	}
-	public findOneApproach(
+	public findOneApproach(id: string): Promise<{
+		id: string;
+		name: string;
+		description: string | null;
+	} | null> {
+		return prisma.therapeuticApproache.findUnique({ where: { id } });
+	}
+	public addApproach(
 		id: string,
-	): Promise<{ id: string; name: string; description: string | null } | null> {
-		return prisma.therapeuticApproache.findUnique({ where: { id } })
-	}
-	public addApproach(id: string, psicoId: string): Promise<IPsychologistShortUpdate> {
+		psicoId: string,
+	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({
 			where: { id: psicoId },
 			data: { approaches: { connect: { id } } },
-		})
+		});
 	}
-	public removeApproach(id: string, psicoId: string): Promise<IPsychologistShortUpdate> {
+	public removeApproach(
+		id: string,
+		psicoId: string,
+	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({
 			where: { id: psicoId },
 			data: { approaches: { disconnect: { id } } },
-		})
+		});
 	}
 }

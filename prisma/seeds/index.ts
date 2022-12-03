@@ -1,7 +1,7 @@
-import { approachesSeeder } from './therapeutic_approaches'
+import { approachesSeeder } from "./therapeutic_approaches";
 
 async function seeds() {
-	await approachesSeeder()
+	await approachesSeeder();
 }
 
-seeds()
+seeds();

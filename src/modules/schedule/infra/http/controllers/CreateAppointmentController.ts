@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express'
-import { container } from 'tsyringe'
-import CreateAppointmentService from '@modules/schedule/services/CreateAppointmentService'
-import Queue from '@shared/lib/bull/Queue'
-import { TypeNotification } from '@prisma/client'
+import { NextFunction, Request, Response } from "express";
+import { container } from "tsyringe";
+import CreateAppointmentService from "@modules/schedule/services/CreateAppointmentService";
+import Queue from "@shared/lib/bull/Queue";
+import { TypeNotification } from "@prisma/client";
 
 export default class CreateAppointmentController {
 	public async handle(
@@ -12,12 +12,19 @@ export default class CreateAppointmentController {
 	): Promise<Response | undefined> {
 		try {
 			const {
-				appointment: { psychologistId, customerId, createdBy, price, starts, ends },
-			} = req.body
-			const { profile } = req.user
-			const service = container.resolve(CreateAppointmentService)
-			const startsAt = new Date(starts)
-			const endsAt = new Date(ends)
+				appointment: {
+					psychologistId,
+					customerId,
+					createdBy,
+					price,
+					starts,
+					ends,
+				},
+			} = req.body;
+			const { profile } = req.user;
+			const service = container.resolve(CreateAppointmentService);
+			const startsAt = new Date(starts);
+			const endsAt = new Date(ends);
 
 			const appointment = await service.execute({
 				psychologistId,
@@ -26,19 +33,29 @@ export default class CreateAppointmentController {
 				price,
 				startsAt,
 				endsAt,
-			})
-			await Queue.add('CreateNotification', {
+			});
+			await Queue.add("CreateNotification", {
 				type: TypeNotification.CREATE_APPOINTMENT,
-				data: { psychologistId, customerId, createdBy, price, startsAt, endsAt },
-				views: profile === 'CUSTOMER' ? { customerId } : { psychologistId },
-			})
+				data: {
+					psychologistId,
+					customerId,
+					createdBy,
+					price,
+					startsAt,
+					endsAt,
+				},
+				views:
+					profile === "CUSTOMER"
+						? { customerId }
+						: { psychologistId },
+			});
 			res.status(201).json({
-				message: 'Appointment adicionado com sucesso',
+				message: "Appointment adicionado com sucesso",
 				data: appointment,
-			})
-			next()
+			});
+			next();
 		} catch (error) {
-			return res.status(500).json({ error: 'Internal Error' })
+			return res.status(500).json({ error: "Internal Error" });
 		}
 	}
 }

@@ -1,9 +1,13 @@
-import { Router } from 'express'
-import CreateAdminController from '../controllers/CreateAdminController'
-import CreateLogController from '@modules/log/infra/http/controllers/CreateLogController'
+import { Router } from "express";
+import CreateAdminController from "../controllers/CreateAdminController";
+import CreateLogController from "@modules/log/infra/http/controllers/CreateLogController";
 
-const adminRouter = Router()
+const adminRouter = Router();
 
-adminRouter.post('/', new CreateAdminController().handle, CreateLogController.handle())
+adminRouter.post(
+	"/",
+	new CreateAdminController().handle,
+	CreateLogController.handle(),
+);
 
-export default adminRouter
+export default adminRouter;

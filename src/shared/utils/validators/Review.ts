@@ -1,8 +1,8 @@
-import * as yup from 'yup'
+import * as yup from "yup";
 
 interface IReviewForm {
-	rating: number
-	comment: string | null
+	rating: number;
+	comment: string | null;
 }
 
 export const validateReview = (review: IReviewForm) =>
@@ -11,9 +11,9 @@ export const validateReview = (review: IReviewForm) =>
 		.shape({
 			rating: yup
 				.number()
-				.min(1, 'Nota mínima é 1')
-				.max(5, 'Nota máxima é 5')
-				.required('A nota é obrigatória'),
+				.min(1, "Nota mínima é 1")
+				.max(5, "Nota máxima é 5")
+				.required("A nota é obrigatória"),
 			comment: yup.string().notRequired(),
 		})
-		.validate(review, { abortEarly: false, stripUnknown: true })
+		.validate(review, { abortEarly: false, stripUnknown: true });

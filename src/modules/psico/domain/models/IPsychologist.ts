@@ -1,33 +1,33 @@
-import { IApproache } from '@shared/interfaces/IApproache'
-import { IOffice } from '@shared/interfaces/IOffice'
-import { IReview } from '@shared/interfaces/IReview'
+import { IApproache } from "@shared/interfaces/IApproache";
+import { IOffice } from "@shared/interfaces/IOffice";
+import { IReview } from "@shared/interfaces/IReview";
 
 export interface IPsychologist {
-	[x: string]: any
-	id: string
-	credentialId: string
-	profileId: string
-	officeId: string
-	resume: string | null
-	createdAt: Date
-	updatedAt: Date
-	distance: number
-	avgRating: number
-	reviews: IReview[]
-	office: IOffice
-	approaches: IApproache[]
+	[x: string]: any;
+	id: string;
+	credentialId: string;
+	profileId: string;
+	officeId: string;
+	resume: string | null;
+	createdAt: Date;
+	updatedAt: Date;
+	distance: number;
+	avgRating: number;
+	reviews: IReview[];
+	office: IOffice;
+	approaches: IApproache[];
 }
 export interface IPsychologistShortUpdate {
-	id: string
-	credentialId: string
-	profileId: string
-	officeId: string
-	resume: string | null
-	createdAt: Date
-	updatedAt: Date
+	id: string;
+	credentialId: string;
+	profileId: string;
+	officeId: string;
+	resume: string | null;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 export interface IListPsychologist {
-	count: number
-	IPsychologist: []
+	count: number;
+	IPsychologist: [];
 }
