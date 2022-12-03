@@ -103,7 +103,7 @@ dist
 # TernJS port file
 .tern-port
 
-uploads/*
-!uploads/.gitkeep
+
 .docker/dbdata
 build
+/src/modules/storage/tmp
