@@ -37,6 +37,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.3",
+    "@types/multer": "^1.4.7",
     "@types/node": "^18.0.3",
     "@types/node-geocoder": "^3.24.5",
     "@types/pg": "^8.6.5",
