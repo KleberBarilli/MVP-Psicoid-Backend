@@ -9,6 +9,7 @@ import approachRouter from "@modules/psico/infra/http/routes/approach.routes";
 import appointmentRouter from "@modules/schedule/infra/http/routes/appointment.routes";
 import notificationRouter from "@modules/notification/infra/http/routes/notification.routes";
 import adminRouter from "@modules/admin/infra/http/routes/admin.routes";
+import storageRouter from "@modules/storage/infra/http/routes/storage.routes";
 
 const routes = Router();
 
@@ -22,5 +23,6 @@ routes.use("/account", accountRouter);
 routes.use("/review", reviewRouter);
 routes.use("/appointment", appointmentRouter);
 routes.use("/notification", notificationRouter);
+routes.use("/storage", storageRouter);
 
 export default routes;

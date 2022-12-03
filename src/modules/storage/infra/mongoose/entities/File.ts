@@ -1,6 +1,6 @@
 import mongoose, { Schema, Model } from "mongoose";
 
-enum Profile {
+export enum Profile {
 	"CUSTOMER",
 	"PSYCHOLOGIST",
 }

@@ -14,6 +14,8 @@ import { INotificationsRepository } from "@modules/notification/domain/repositor
 import NotificationsRepository from "@modules/notification/infra/prisma/repositories/NotificationsRepository";
 import { IAdminsRepository } from "@modules/admin/domain/repositories/IAdminsRepository";
 import AdminsRepository from "@modules/admin/infra/prisma/repositories/AdminsRepository";
+import { IStorageRepository } from "@modules/storage/domain/repositories/IStorageRepository";
+import StorageRepository from "@modules/storage/infra/mongoose/repositories/FilesRepository";
 
 container.registerSingleton<ICredentialsRepository>(
 	"CredentialsRepository",
@@ -42,4 +44,8 @@ container.registerSingleton<INotificationsRepository>(
 container.registerSingleton<IAdminsRepository>(
 	"AdminsRepository",
 	AdminsRepository,
+);
+container.registerSingleton<IStorageRepository>(
+	"StorageRepository",
+	StorageRepository,
 );

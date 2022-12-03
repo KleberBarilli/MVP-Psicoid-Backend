@@ -3,7 +3,6 @@ import path from "path";
 import aws, { S3 } from "aws-sdk";
 import mime from "mime-types";
 import uploadConfig from "../config/upload";
-
 export interface IPutObject {
 	Bucket: string;
 	Key: string;
