@@ -1,5 +1,5 @@
 export interface ISearch {
-	psicoName: string
-	cityName: string
-	approachName: string
+	psicoName: string;
+	cityName: string;
+	approachName: string;
 }

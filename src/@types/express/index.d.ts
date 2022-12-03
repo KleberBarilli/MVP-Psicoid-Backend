@@ -1,19 +1,19 @@
 declare namespace Express {
 	export interface Request {
 		user: {
-			id: string
-			profile: string
-			profileId: string
-		}
+			id: string;
+			profile: string;
+			profileId: string;
+		};
 		pagination: {
-			skip: number
-			take: number
-			sort: string
-			order: string
-			filter: any
-			search: any
-			latitude: number
-			longitude: number
-		}
+			skip: number;
+			take: number;
+			sort: string;
+			order: string;
+			filter: any;
+			search: any;
+			latitude: number;
+			longitude: number;
+		};
 	}
 }

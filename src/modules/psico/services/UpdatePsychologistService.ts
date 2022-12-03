@@ -1,12 +1,12 @@
-import { injectable, inject } from 'tsyringe'
-import { IPsychologistsRepository } from '../domain/repositories/IPsychologistsRepository'
-import { IUpdatePsychologist } from '../domain/models/IUpdatePsychologist'
-import { PsychologistEntity } from '../infra/prisma/entities/Psychologist'
+import { injectable, inject } from "tsyringe";
+import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
+import { IUpdatePsychologist } from "../domain/models/IUpdatePsychologist";
+import { PsychologistEntity } from "../infra/prisma/entities/Psychologist";
 
 @injectable()
 export default class UpdatePsychologistService {
 	constructor(
-		@inject('PsychologistsRepository')
+		@inject("PsychologistsRepository")
 		public psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(
@@ -17,6 +17,6 @@ export default class UpdatePsychologistService {
 			profile,
 			office,
 			resume,
-		})
+		});
 	}
 }

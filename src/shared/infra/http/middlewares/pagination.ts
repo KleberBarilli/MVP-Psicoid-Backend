@@ -1,29 +1,29 @@
-import { ISearch } from '@shared/interfaces/IPagination'
-import { NextFunction, Response } from 'express'
+import { ISearch } from "@shared/interfaces/IPagination";
+import { NextFunction, Response } from "express";
 
 export interface IPagination {
-	skip: number
-	take: number
-	sort: string
-	order: string
-	filter: any
-	search: ISearch
-	latitude: number
-	longitude: number
+	skip: number;
+	take: number;
+	sort: string;
+	order: string;
+	filter: any;
+	search: ISearch;
+	latitude: number;
+	longitude: number;
 }
 
 export const pagination = (req: any, res: Response, next: NextFunction) => {
-	console.log(req)
+	console.log(req);
 	const {
 		page = 1,
 		limit: take = 5,
-		sort = 'createdAt',
-		order = 'desc',
-		filter = 'null',
-		search = 'null',
+		sort = "createdAt",
+		order = "desc",
+		filter = "null",
+		search = "null",
 		latitude = 0,
 		longitude = 0,
-	} = req.query
+	} = req.query;
 	req.pagination = {
 		skip: (page - 1) * take,
 		take: parseInt(take),
@@ -33,6 +33,6 @@ export const pagination = (req: any, res: Response, next: NextFunction) => {
 		search: JSON.parse(search),
 		latitude,
 		longitude,
-	}
-	return next()
-}
+	};
+	return next();
+};

@@ -1,12 +1,12 @@
-import { NextFunction, Request, Response } from 'express'
-import { container } from 'tsyringe'
-import { ValidationError } from 'yup'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
-import { validateUpdateAddress } from '@shared/utils/validators/Address'
-import { validateContact } from '@shared/utils/validators/Contact'
-import { validateUpdateProfile } from '@shared/utils/validators/Profile'
-import { sendBadRequest } from '@shared/errors/BadRequest'
-import UpdatePsychologistService from '@modules/psico/services/UpdatePsychologistService'
+import { NextFunction, Request, Response } from "express";
+import { container } from "tsyringe";
+import { ValidationError } from "yup";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
+import { validateUpdateAddress } from "@shared/utils/validators/Address";
+import { validateContact } from "@shared/utils/validators/Contact";
+import { validateUpdateProfile } from "@shared/utils/validators/Profile";
+import { sendBadRequest } from "@shared/errors/BadRequest";
+import UpdatePsychologistService from "@modules/psico/services/UpdatePsychologistService";
 
 export default class UpdatePsychologistController {
 	public async handle(
@@ -17,39 +17,39 @@ export default class UpdatePsychologistController {
 		try {
 			const {
 				psico: { profile, office, resume },
-			} = req.body
-			const { profileId } = req.user
+			} = req.body;
+			const { profileId } = req.user;
 			await Promise.all([
 				validateUpdateProfile(profile),
 				validateContact(profile?.contact),
 				validateContact(office?.contact),
 				validateUpdateAddress(office?.address),
-			])
+			]);
 
-			const service = container.resolve(UpdatePsychologistService)
+			const service = container.resolve(UpdatePsychologistService);
 			const user = await service.execute(profileId, {
 				profile,
 				office,
 				resume,
-			})
+			});
 
 			res.status(204).json({
-				message: 'Psychologist updated with success',
+				message: "Psychologist updated with success",
 				data: user,
-			})
-			next()
+			});
+			next();
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {
-				if (error.code === 'P2002') {
+				if (error.code === "P2002") {
 					return res.status(400).json({
-						error: 'Já existe um CPF igual cadastrado no sistema.',
-					})
+						error: "Já existe um CPF igual cadastrado no sistema.",
+					});
 				}
 			}
 			if (error instanceof ValidationError) {
-				return sendBadRequest(req, res, error.message, 400)
+				return sendBadRequest(req, res, error.message, 400);
 			}
-			return res.status(500).json({ error: 'Internal Error' })
+			return res.status(500).json({ error: "Internal Error" });
 		}
 	}
 }

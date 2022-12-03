@@ -1,36 +1,40 @@
-import { NextFunction, Request, Response } from 'express'
-import { verify, Secret } from 'jsonwebtoken'
+import { NextFunction, Request, Response } from "express";
+import { verify, Secret } from "jsonwebtoken";
 
-import AppError from '@shared/errors/AppError'
-import authConfig from '@config/auth'
+import AppError from "@shared/errors/AppError";
+import authConfig from "@config/auth";
 
 interface ITokenPayload {
-	iat: number
-	exp: number
-	sub: string
-	profile: string
-	profileId: string
+	iat: number;
+	exp: number;
+	sub: string;
+	profile: string;
+	profileId: string;
 }
 
-export default function isAuthenticated(req: Request, res: Response, next: NextFunction): void {
-	const authHeader = req.headers.authorization
+export default function isAuthenticated(
+	req: Request,
+	res: Response,
+	next: NextFunction,
+): void {
+	const authHeader = req.headers.authorization;
 	if (!authHeader) {
-		throw new AppError('JWT Token is missing.')
+		throw new AppError("JWT Token is missing.");
 	}
-	const [, token] = authHeader.split(' ')
+	const [, token] = authHeader.split(" ");
 
 	try {
-		const decodedToken = verify(token, authConfig.jwt.secret as Secret)
+		const decodedToken = verify(token, authConfig.jwt.secret as Secret);
 
-		const { sub, profile, profileId } = decodedToken as ITokenPayload
+		const { sub, profile, profileId } = decodedToken as ITokenPayload;
 
 		req.user = {
 			id: sub,
 			profile,
 			profileId,
-		}
-		return next()
+		};
+		return next();
 	} catch {
-		throw new AppError('Invalid JWT Token.', 401)
+		throw new AppError("Invalid JWT Token.", 401);
 	}
 }

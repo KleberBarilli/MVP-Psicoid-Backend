@@ -1,6 +1,6 @@
-import { IAdminCreated } from '../models/IAdminCreated'
-import { ICreateAdmin } from '../models/ICreateAdmin'
+import { IAdminCreated } from "../models/IAdminCreated";
+import { ICreateAdmin } from "../models/ICreateAdmin";
 
 export interface IAdminsRepository {
-	create(data: ICreateAdmin): Promise<IAdminCreated>
+	create(data: ICreateAdmin): Promise<IAdminCreated>;
 }

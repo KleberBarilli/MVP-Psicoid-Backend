@@ -1,6 +1,6 @@
-import ListPsychologistsService from '@modules/psico/services/ListPsychologistsService'
-import { NextFunction, Request, Response } from 'express'
-import { container } from 'tsyringe'
+import ListPsychologistsService from "@modules/psico/services/ListPsychologistsService";
+import { NextFunction, Request, Response } from "express";
+import { container } from "tsyringe";
 export default class ListPsychologistsController {
 	public async handle(
 		req: Request,
@@ -8,16 +8,16 @@ export default class ListPsychologistsController {
 		next: NextFunction,
 	): Promise<Response | undefined> {
 		try {
-			const { pagination } = req
+			const { pagination } = req;
 
-			const service = container.resolve(ListPsychologistsService)
-			const [count, psychologists] = await service.execute(pagination)
+			const service = container.resolve(ListPsychologistsService);
+			const [count, psychologists] = await service.execute(pagination);
 
-			res.status(200).json({ count, data: psychologists })
-			next()
+			res.status(200).json({ count, data: psychologists });
+			next();
 		} catch (error) {
-			console.log(error)
-			return res.status(500).json({ error: 'Houve um erro ao listar' })
+			console.log(error);
+			return res.status(500).json({ error: "Houve um erro ao listar" });
 		}
 	}
 }

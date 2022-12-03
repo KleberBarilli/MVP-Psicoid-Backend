@@ -1,11 +1,11 @@
-import LogsRepository from '@modules/log/infra/orm/repositories/LogsRepository'
-import { Job } from 'bull'
+import LogsRepository from "@modules/log/infra/orm/repositories/LogsRepository";
+import { Job } from "bull";
 
 export default {
-	key: 'SaveLogsOnMongo',
+	key: "SaveLogsOnMongo",
 	options: {},
 	async handle(job: Job) {
-		const logsRepo = new LogsRepository()
-		return await logsRepo.createOnMongo(job.data)
+		const logsRepo = new LogsRepository();
+		return await logsRepo.createOnMongo(job.data);
 	},
-}
+};

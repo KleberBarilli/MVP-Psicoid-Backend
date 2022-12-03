@@ -1,17 +1,21 @@
-import prisma from '@shared/prisma'
-import { ICreateCustomer } from '../../../domain/models/ICreateCustomer'
-import { ICustomersRepository } from '../../../domain/repositories/ICustomersRepository'
-import { CustomerEntity } from '../entities/Customer'
-import { IUpdateCustomer } from '@modules/customer/domain/models/IUpdateCustomer'
-import { ICustomer } from '@modules/customer/domain/models/ICustomer'
-import { IPagination } from '@shared/infra/http/middlewares/pagination'
-import { ICreateGuest } from '@modules/customer/domain/models/ICreateGuest'
+import prisma from "@shared/prisma";
+import { ICreateCustomer } from "../../../domain/models/ICreateCustomer";
+import { ICustomersRepository } from "../../../domain/repositories/ICustomersRepository";
+import { CustomerEntity } from "../entities/Customer";
+import { IUpdateCustomer } from "@modules/customer/domain/models/IUpdateCustomer";
+import { ICustomer } from "@modules/customer/domain/models/ICustomer";
+import { IPagination } from "@shared/infra/http/middlewares/pagination";
+import { ICreateGuest } from "@modules/customer/domain/models/ICreateGuest";
 
 export default class CustomersRepository implements ICustomersRepository {
-	public create({ credential, profile, contact }: ICreateCustomer): Promise<CustomerEntity> {
+	public create({
+		credential,
+		profile,
+		contact,
+	}: ICreateCustomer): Promise<CustomerEntity> {
 		return prisma.customer.create({
 			data: {
-				credential: { create: { ...credential, role: 'CUSTOMER' } },
+				credential: { create: { ...credential, role: "CUSTOMER" } },
 				profile: {
 					create: {
 						...profile,
@@ -19,15 +23,18 @@ export default class CustomersRepository implements ICustomersRepository {
 					},
 				},
 			},
-		})
+		});
 	}
-	public createGuest(psicoId: string, { name, contact }: ICreateGuest): Promise<CustomerEntity> {
+	public createGuest(
+		psicoId: string,
+		{ name, contact }: ICreateGuest,
+	): Promise<CustomerEntity> {
 		return prisma.customer.create({
 			data: {
 				guest: { create: { name, contact: { create: contact } } },
 				psychologists: { connect: { id: psicoId } },
 			},
-		})
+		});
 	}
 
 	public findById(id: string): Promise<CustomerEntity | null> {
@@ -39,7 +46,7 @@ export default class CustomersRepository implements ICustomersRepository {
 				psychologists: true,
 				guest: true,
 			},
-		})
+		});
 	}
 	public update(
 		id: string,
@@ -56,7 +63,7 @@ export default class CustomersRepository implements ICustomersRepository {
 					},
 				},
 			},
-		})
+		});
 	}
 	public addPsychologist(
 		customerId: string,
@@ -65,8 +72,11 @@ export default class CustomersRepository implements ICustomersRepository {
 	): Promise<ICustomer> {
 		return prisma.customer.update({
 			where: { id: customerId },
-			data: { psychologists: { connect: { id: psicoId } }, selectedPsychologistId },
-		})
+			data: {
+				psychologists: { connect: { id: psicoId } },
+				selectedPsychologistId,
+			},
+		});
 	}
 
 	public findAllByPsico(
@@ -82,8 +92,12 @@ export default class CustomersRepository implements ICustomersRepository {
 				orderBy: { [sort]: order },
 				skip,
 				take,
-				select: { id: true, profile: { include: { contact: true } }, guest: true },
+				select: {
+					id: true,
+					profile: { include: { contact: true } },
+					guest: true,
+				},
 			}),
-		])
+		]);
 	}
 }

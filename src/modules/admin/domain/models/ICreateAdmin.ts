@@ -1,7 +1,7 @@
-import { ICredential } from '@shared/interfaces/ICredential'
-import { IProfile } from '@shared/interfaces/IProfile'
+import { ICredential } from "@shared/interfaces/ICredential";
+import { IProfile } from "@shared/interfaces/IProfile";
 
 export interface ICreateAdmin {
-	credential: ICredential
-	profile: IProfile
+	credential: ICredential;
+	profile: IProfile;
 }
