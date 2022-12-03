@@ -10,7 +10,7 @@ const UnsubSchema = new Schema(
 	{
 		userId: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Users",
+			ref: "Contacts",
 		},
 		reason: String,
 	},

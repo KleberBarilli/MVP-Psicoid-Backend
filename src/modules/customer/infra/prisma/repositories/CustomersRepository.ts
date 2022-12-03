@@ -12,7 +12,7 @@ export default class CustomersRepository implements ICustomersRepository {
 		credential,
 		profile,
 		contact,
-	}: ICreateCustomer): Promise<CustomerEntity> {
+	}: ICreateCustomer): Promise<any> {
 		return prisma.customer.create({
 			data: {
 				credential: { create: { ...credential, role: "CUSTOMER" } },

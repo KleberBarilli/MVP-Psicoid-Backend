@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IStorageRequest } from "../domain/model/IStorageRequest";
+import { IStorageRequest } from "../domain/models/IStorageRequest";
 import { IStorageRepository } from "../domain/repositories/IStorageRepository";
 import S3StorageProvider, { IPutObject } from "../providers/S3StorageProvider";
 

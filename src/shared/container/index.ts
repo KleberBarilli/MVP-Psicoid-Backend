@@ -16,6 +16,8 @@ import { IAdminsRepository } from "@modules/admin/domain/repositories/IAdminsRep
 import AdminsRepository from "@modules/admin/infra/prisma/repositories/AdminsRepository";
 import { IStorageRepository } from "@modules/storage/domain/repositories/IStorageRepository";
 import StorageRepository from "@modules/storage/infra/mongoose/repositories/FilesRepository";
+import { INewslettersRepository } from "@modules/newsletter/domain/repositories/INewslettersRepository";
+import { NewslettersRepository } from "@modules/newsletter/infra/mongoose/repositories/NewslettersRepository";
 
 container.registerSingleton<ICredentialsRepository>(
 	"CredentialsRepository",
@@ -48,4 +50,8 @@ container.registerSingleton<IAdminsRepository>(
 container.registerSingleton<IStorageRepository>(
 	"StorageRepository",
 	StorageRepository,
+);
+container.registerSingleton<INewslettersRepository>(
+	"NewslettersRepository",
+	NewslettersRepository,
 );

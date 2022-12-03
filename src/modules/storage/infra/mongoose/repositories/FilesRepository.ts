@@ -1,4 +1,4 @@
-import { IStorageRequest } from "@modules/storage/domain/model/IStorageRequest";
+import { IStorageRequest } from "@modules/storage/domain/models/IStorageRequest";
 import { IStorageRepository } from "@modules/storage/domain/repositories/IStorageRepository";
 import FileModel, { FileDocument } from "../entities/File";
 

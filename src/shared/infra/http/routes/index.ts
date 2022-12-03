@@ -10,6 +10,7 @@ import appointmentRouter from "@modules/schedule/infra/http/routes/appointment.r
 import notificationRouter from "@modules/notification/infra/http/routes/notification.routes";
 import adminRouter from "@modules/admin/infra/http/routes/admin.routes";
 import storageRouter from "@modules/storage/infra/http/routes/storage.routes";
+import newsletterRouter from "@modules/newsletter/infra/http/routes/newsletter.routes";
 
 const routes = Router();
 
@@ -24,5 +25,6 @@ routes.use("/review", reviewRouter);
 routes.use("/appointment", appointmentRouter);
 routes.use("/notification", notificationRouter);
 routes.use("/storage", storageRouter);
+routes.use("/newsletter", newsletterRouter);
 
 export default routes;
