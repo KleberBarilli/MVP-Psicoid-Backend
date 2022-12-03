@@ -20,7 +20,7 @@ export default class CreateReviewService {
 			psychologistId,
 			customerId,
 		);
-
+		//Um paciente não pode fazer uma review de um psicologo que ele nunca teve uma consulta
 		if (review) {
 			throw new AppError("Você já realizou uma avaliação");
 		}

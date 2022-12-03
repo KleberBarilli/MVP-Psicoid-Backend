@@ -56,7 +56,6 @@ export default class NotificationsRepository
 		return prisma.view.update({ where: { id }, data: { isRead } });
 	}
 	public readAll(profile: string, profileId: string): Promise<any> {
-		console.log("ANALISE", profile, profileId);
 		return prisma.view.updateMany({
 			where:
 				profile === "CUSTOMER"
