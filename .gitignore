@@ -106,4 +106,7 @@ dist
 
 .docker/dbdata
 build
-/src/modules/storage/tmp
+/src/modules/storage/tmp/*
+!/src/modules/storage/tmp/.gitkeep
+/src/modules/storage/tmp/uploads/*
+!/src/modules/storage/tmp/uploads/.gitkeep
