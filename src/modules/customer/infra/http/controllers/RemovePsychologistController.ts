@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import AddPsychologistService from "@modules/customer/services/AddPsychologistService";
+import RemovePsychologistService from "@modules/customer/services/RemovePsychologistService";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class AddPsychologistController {
+export default class RemovePsychologistController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -11,21 +11,22 @@ export default class AddPsychologistController {
 	): Promise<Response | undefined> {
 		try {
 			const { profileId } = req.user;
-			const { psychologistId, selected } = req.body;
+			const { psychologistId } = req.body;
 
-			const service = container.resolve(AddPsychologistService);
+			const service = container.resolve(RemovePsychologistService);
 			await service.execute({
 				customerId: profileId,
 				psychologistId,
-				selected,
 			});
 
 			res.status(HTTP_STATUS_CODE.NO_CONTENT).json({
-				message: "Adicionado com sucesso",
+				message: "Removido com sucesso",
 			});
 			next();
 		} catch (error) {
-			return res.status(500).json({ error: "Internal Error" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Internal Error" });
 		}
 	}
 }

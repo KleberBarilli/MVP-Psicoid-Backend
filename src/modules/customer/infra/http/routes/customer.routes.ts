@@ -9,6 +9,9 @@ import CreateCustomerController from "../controllers/CreateCustomerController";
 import ListCustomersByPsicoController from "../controllers/ListCustomersByPsicoController";
 import ShowCustomerController from "../controllers/ShowCustomerController";
 import UpdateCustomerController from "../controllers/UpdateCustomerController";
+import RemovePsychologistController from "../controllers/RemovePsychologistController";
+import SelectPsychologistController from "../controllers/SelectPsychologistController";
+import UnselectPsychologistController from "../controllers/UnselectPsychologistService";
 
 const customerRouter = Router();
 
@@ -20,14 +23,39 @@ customerRouter.post(
 	new CreateGuestCustomerController().handle,
 	CreateLogController.handle(),
 ),
-	customerRouter.post(
-		"/add-psychologist",
+	customerRouter.put(
+		"/",
 		isAuthenticated,
-		handleRole("CUSTOMER"),
-		new AddPsychologistController().handle,
-		CreateLogController.handle(),
+		new UpdateCustomerController().handle,
 	);
-customerRouter.put("/", isAuthenticated, new UpdateCustomerController().handle);
+customerRouter.patch(
+	"/add-psychologist",
+	isAuthenticated,
+	handleRole("CUSTOMER"),
+	new AddPsychologistController().handle,
+	CreateLogController.handle(),
+);
+customerRouter.patch(
+	"/remove-psychologist",
+	isAuthenticated,
+	handleRole("CUSTOMER"),
+	new RemovePsychologistController().handle,
+	CreateLogController.handle(),
+);
+customerRouter.patch(
+	"/select-psychologist",
+	isAuthenticated,
+	handleRole("CUSTOMER"),
+	new SelectPsychologistController().handle,
+	CreateLogController.handle(),
+);
+customerRouter.patch(
+	"/unselect-psychologist",
+	isAuthenticated,
+	handleRole("CUSTOMER"),
+	new UnselectPsychologistController().handle,
+	CreateLogController.handle(),
+);
 customerRouter.get(
 	"/:id",
 	isAuthenticated,
