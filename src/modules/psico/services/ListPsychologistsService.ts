@@ -10,7 +10,7 @@ import { arrAvg } from "@shared/utils/etc";
 export default class ListPsychologistsService {
 	constructor(
 		@inject("PsychologistsRepository")
-		public psychologistsRepository: IPsychologistsRepository,
+		private psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(pagination: IPagination): Promise<IPsychologist[]> {
 		const { latitude, longitude } = pagination;

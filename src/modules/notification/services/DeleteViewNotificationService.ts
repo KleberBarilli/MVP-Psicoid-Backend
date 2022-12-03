@@ -12,7 +12,7 @@ interface IRequest {
 export default class DeleteNotificationService {
 	constructor(
 		@inject("NotificationsRepository")
-		public notificationsRepository: INotificationsRepository,
+		private notificationsRepository: INotificationsRepository,
 	) {}
 	public async execute({
 		notificationId,

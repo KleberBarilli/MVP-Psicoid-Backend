@@ -7,7 +7,7 @@ import { IPagination } from "@shared/infra/http/middlewares/pagination";
 export default class ShowCustomerService {
 	constructor(
 		@inject("CustomersRepository")
-		public customersRepository: ICustomersRepository,
+		private customersRepository: ICustomersRepository,
 	) {}
 	public async execute(
 		psicoid: string,

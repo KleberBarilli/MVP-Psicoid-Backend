@@ -10,11 +10,11 @@ import { IAdminsRepository } from "../domain/repositories/IAdminsRepository";
 export default class CreateAdminService {
 	constructor(
 		@inject("AdminsRepository")
-		public adminsRepository: IAdminsRepository,
+		private adminsRepository: IAdminsRepository,
 		@inject("CredentialsRepository")
-		public credentialsRepository: ICredentialsRepository,
+		private credentialsRepository: ICredentialsRepository,
 		@inject("HashProvider")
-		public hashProvider: IHashProvider,
+		private hashProvider: IHashProvider,
 	) {}
 	private userExists(email: string): Promise<ICredentialResponse | null> {
 		return this.credentialsRepository.findByEmail(email);

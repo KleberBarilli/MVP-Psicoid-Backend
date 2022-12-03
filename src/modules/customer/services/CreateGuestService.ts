@@ -7,7 +7,7 @@ import { ICustomersRepository } from "../domain/repositories/ICustomersRepositor
 export default class CreateCustomerService {
 	constructor(
 		@inject("CustomersRepository")
-		public customersRepository: ICustomersRepository,
+		private customersRepository: ICustomersRepository,
 	) {}
 	public async execute(
 		psicoId: string,

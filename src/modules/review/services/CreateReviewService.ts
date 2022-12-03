@@ -8,7 +8,7 @@ import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
 export default class CreateReviewService {
 	constructor(
 		@inject("ReviewsRepository")
-		public reviewsRepository: IReviewsRepository,
+		private reviewsRepository: IReviewsRepository,
 	) {}
 	public async execute({
 		customerId,

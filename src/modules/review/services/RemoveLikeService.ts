@@ -6,7 +6,7 @@ import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
 export default class RemoveLikeService {
 	constructor(
 		@inject("ReviewsRepository")
-		public reviewsRepository: IReviewsRepository,
+		private reviewsRepository: IReviewsRepository,
 	) {}
 	public async execute(reviewId: string, customerId: string): Promise<ILike> {
 		return this.reviewsRepository.removeLike(reviewId, customerId);

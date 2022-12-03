@@ -11,11 +11,11 @@ import { ICredentialResponse } from "@shared/interfaces/ICredential";
 export default class CreateCustomerService {
 	constructor(
 		@inject("CustomersRepository")
-		public customersRepository: ICustomersRepository,
+		private customersRepository: ICustomersRepository,
 		@inject("HashProvider")
-		public hashProvider: IHashProvider,
+		private hashProvider: IHashProvider,
 		@inject("CredentialsRepository")
-		public credentialsRepository: ICredentialsRepository,
+		private credentialsRepository: ICredentialsRepository,
 	) {}
 	private userExists(email: string): Promise<ICredentialResponse | null> {
 		return this.credentialsRepository.findByEmail(email);

@@ -6,7 +6,7 @@ import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepos
 export default class WhoiamService {
 	constructor(
 		@inject("CredentialsRepository")
-		public credentialsRepository: ICredentialsRepository,
+		private credentialsRepository: ICredentialsRepository,
 	) {}
 
 	public async execute(

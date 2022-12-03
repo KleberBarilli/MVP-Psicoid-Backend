@@ -20,7 +20,6 @@ export default class StorageService {
 		await this.#storage.unlinkFile(originalPath);
 	}
 	public async createDocument(data: IStorageRequest) {
-		console.log("DFBB", data);
 		return this.repo.create(data);
 	}
 }

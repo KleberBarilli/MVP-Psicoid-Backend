@@ -7,7 +7,7 @@ import { IReview } from "@shared/interfaces/IReview";
 export default class UpdateReviewService {
 	constructor(
 		@inject("ReviewsRepository")
-		public reviewsRepository: IReviewsRepository,
+		private reviewsRepository: IReviewsRepository,
 	) {}
 	public execute({ id, rating, comment }: IUpdateReview): Promise<IReview> {
 		return this.reviewsRepository.update({ id, rating, comment });

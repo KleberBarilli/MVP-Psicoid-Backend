@@ -7,7 +7,7 @@ import { ICustomer } from "../domain/models/ICustomer";
 export default class ShowCustomerService {
 	constructor(
 		@inject("CustomersRepository")
-		public customersRepository: ICustomersRepository,
+		private customersRepository: ICustomersRepository,
 	) {}
 	public async execute(id: string): Promise<ICustomer | null> {
 		return await this.customersRepository.findById(id);

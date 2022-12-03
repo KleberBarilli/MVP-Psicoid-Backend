@@ -7,7 +7,7 @@ import { IPagination } from "@shared/infra/http/middlewares/pagination";
 export default class ListReviewsByPsicoService {
 	constructor(
 		@inject("ReviewsRepository")
-		public reviewsRepository: IReviewsRepository,
+		private reviewsRepository: IReviewsRepository,
 	) {}
 	public async execute(
 		id: string,

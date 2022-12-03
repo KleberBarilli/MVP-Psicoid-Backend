@@ -13,7 +13,7 @@ interface IRequest {
 export default class UpdateNotificationService {
 	constructor(
 		@inject("NotificationsRepository")
-		public notificationsRepository: INotificationsRepository,
+		private notificationsRepository: INotificationsRepository,
 	) {}
 
 	public async execute({

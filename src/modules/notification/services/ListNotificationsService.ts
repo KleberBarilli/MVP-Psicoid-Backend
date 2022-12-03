@@ -7,7 +7,7 @@ import { INotificationsRepository } from "../domain/repositories/INotificationsR
 export default class ListNotificationService {
 	constructor(
 		@inject("NotificationsRepository")
-		public notificationsRepository: INotificationsRepository,
+		private notificationsRepository: INotificationsRepository,
 	) {}
 	public async execute(
 		profile: string,

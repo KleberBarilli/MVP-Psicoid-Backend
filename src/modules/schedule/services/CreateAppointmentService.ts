@@ -7,7 +7,7 @@ import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRep
 export default class CreateAppointmentService {
 	constructor(
 		@inject("AppointmentsRepository")
-		public appointmentsRepository: IAppointmentsRepository,
+		private appointmentsRepository: IAppointmentsRepository,
 	) {}
 	public async execute({
 		psychologistId,

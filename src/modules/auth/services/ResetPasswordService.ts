@@ -8,9 +8,9 @@ import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 export default class SendForgotPasswordEmailService {
 	constructor(
 		@inject("CredentialsRepository")
-		public credentialsRepository: ICredentialsRepository,
+		private credentialsRepository: ICredentialsRepository,
 		@inject("HashProvider")
-		public hashProvider: IHashProvider,
+		private hashProvider: IHashProvider,
 	) {}
 
 	public async execute({ token, password }: IResetPassword): Promise<void> {

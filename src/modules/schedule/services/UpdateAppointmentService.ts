@@ -7,7 +7,7 @@ import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRep
 export default class UpdateAppointmentService {
 	constructor(
 		@inject("AppointmentsRepository")
-		public appointmentsRepository: IAppointmentsRepository,
+		private appointmentsRepository: IAppointmentsRepository,
 	) {}
 	public async execute(
 		id: string,

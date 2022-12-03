@@ -8,7 +8,7 @@ import { ITherapeuticApproache } from "@shared/interfaces/IApproache";
 export default class ListTherapeuticApproachesService {
 	constructor(
 		@inject("PsychologistsRepository")
-		public psychologistsRepository: IPsychologistsRepository,
+		private psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(
 		pagination: IPagination,

@@ -65,19 +65,6 @@ export default class CustomersRepository implements ICustomersRepository {
 			},
 		});
 	}
-	public addPsychologist(
-		customerId: string,
-		psicoId: string,
-		selectedPsychologistId: string,
-	): Promise<ICustomer> {
-		return prisma.customer.update({
-			where: { id: customerId },
-			data: {
-				psychologists: { connect: { id: psicoId } },
-				selectedPsychologistId,
-			},
-		});
-	}
 
 	public findAllByPsico(
 		psicoId: string,
@@ -99,5 +86,48 @@ export default class CustomersRepository implements ICustomersRepository {
 				},
 			}),
 		]);
+	}
+	public addPsychologist(
+		customerId: string,
+		psicoId: string,
+		selectedPsychologistId: string,
+	): Promise<ICustomer> {
+		return prisma.customer.update({
+			where: { id: customerId },
+			data: {
+				psychologists: { connect: { id: psicoId } },
+				selectedPsychologistId,
+			},
+		});
+	}
+	public removePsychologist(
+		customerId: string,
+		psicoId: string,
+	): Promise<ICustomer> {
+		return prisma.customer.update({
+			where: { id: customerId },
+			data: {
+				psychologists: { disconnect: { id: psicoId } },
+			},
+		});
+	}
+	public selectPsychologist(
+		customerId: string,
+		psicoId: string,
+	): Promise<ICustomer> {
+		return prisma.customer.update({
+			where: { id: customerId },
+			data: {
+				selectedPsychologistId: psicoId,
+			},
+		});
+	}
+	public unselectPsychologist(customerId: string): Promise<ICustomer> {
+		return prisma.customer.update({
+			where: { id: customerId },
+			data: {
+				selectedPsychologistId: null,
+			},
+		});
 	}
 }

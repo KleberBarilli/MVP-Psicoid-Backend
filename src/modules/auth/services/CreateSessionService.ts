@@ -11,9 +11,9 @@ import { ISession } from "../domain/models/ISession";
 class CreateSessionService {
 	constructor(
 		@inject("CredentialsRepository")
-		public credentialsRepository: ICredentialsRepository,
+		private credentialsRepository: ICredentialsRepository,
 		@inject("HashProvider")
-		public hashProvider: IHashProvider,
+		private hashProvider: IHashProvider,
 	) {}
 
 	public async execute({

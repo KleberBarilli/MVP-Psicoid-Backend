@@ -6,7 +6,7 @@ import { IPsychologistShortUpdate } from "../domain/models/IPsychologist";
 export default class CreatePsychologistService {
 	constructor(
 		@inject("PsychologistsRepository")
-		public psychologistsRepository: IPsychologistsRepository,
+		private psychologistsRepository: IPsychologistsRepository,
 	) {}
 
 	public async execute(

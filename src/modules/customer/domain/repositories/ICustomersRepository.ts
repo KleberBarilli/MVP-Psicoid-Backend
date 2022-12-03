@@ -14,6 +14,9 @@ export interface ICustomersRepository {
 		psicoId: string,
 		selectedPsychologistId: string,
 	): Promise<ICustomer>;
+	removePsychologist(customerId: string, psicoId: string): Promise<ICustomer>;
+	selectPsychologist(customerId: string, psicoId: string): Promise<ICustomer>;
+	unselectPsychologist(customerId: string): Promise<ICustomer>;
 	findAllByPsico(
 		psicoId: string,
 		{ skip, take, sort, order, filter }: IPagination,

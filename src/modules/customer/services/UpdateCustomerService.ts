@@ -7,7 +7,7 @@ import { CustomerEntity } from "../infra/prisma/entities/Customer";
 export default class UpdateCustomerService {
 	constructor(
 		@inject("CustomersRepository")
-		public customersRepository: ICustomersRepository,
+		private customersRepository: ICustomersRepository,
 	) {}
 	public async execute(
 		id: string,

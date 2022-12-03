@@ -7,7 +7,7 @@ import AppError from "@shared/errors/AppError";
 export default class DeleteReviewService {
 	constructor(
 		@inject("ReviewsRepository")
-		public reviewsRepository: IReviewsRepository,
+		private reviewsRepository: IReviewsRepository,
 	) {}
 	public async execute(
 		id: string,

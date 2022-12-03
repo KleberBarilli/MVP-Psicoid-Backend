@@ -9,7 +9,7 @@ import Queue from "@shared/lib/bull/Queue";
 export default class SendForgotPasswordEmailService {
 	constructor(
 		@inject("CredentialsRepository")
-		public credentialsRepository: ICredentialsRepository,
+		private credentialsRepository: ICredentialsRepository,
 	) {}
 
 	public async execute({ email }: ISendForgotPasswordEmail): Promise<void> {

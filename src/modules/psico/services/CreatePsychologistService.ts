@@ -12,11 +12,11 @@ import { ICredentialResponse } from "@shared/interfaces/ICredential";
 export default class CreatePsychologistService {
 	constructor(
 		@inject("PsychologistsRepository")
-		public psychologistsRepository: IPsychologistsRepository,
+		private psychologistsRepository: IPsychologistsRepository,
 		@inject("HashProvider")
-		public hashProvider: IHashProvider,
+		private hashProvider: IHashProvider,
 		@inject("CredentialsRepository")
-		public credentialsRepository: ICredentialsRepository,
+		private credentialsRepository: ICredentialsRepository,
 	) {}
 	private userExists(email: string): Promise<ICredentialResponse | null> {
 		return this.credentialsRepository.findByEmail(email);

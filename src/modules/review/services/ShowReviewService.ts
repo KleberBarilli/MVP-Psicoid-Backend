@@ -6,7 +6,7 @@ import { IReview } from "@shared/interfaces/IReview";
 export default class ShowReviewService {
 	constructor(
 		@inject("ReviewsRepository")
-		public reviewsRepository: IReviewsRepository,
+		private reviewsRepository: IReviewsRepository,
 	) {}
 	public execute(id: string): Promise<IReview | null> {
 		return this.reviewsRepository.findById(id);

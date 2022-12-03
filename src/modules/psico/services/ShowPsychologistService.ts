@@ -7,7 +7,7 @@ import { arrAvg } from "@shared/utils/etc";
 export default class ShowPsychologistService {
 	constructor(
 		@inject("PsychologistsRepository")
-		public psychologistsRepository: IPsychologistsRepository,
+		private psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(
 		id: string,
