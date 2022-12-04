@@ -8,6 +8,7 @@ import { IUpdatePsychologist } from "../models/IUpdatePsychologist";
 import { ITherapeuticApproache } from "@shared/interfaces/IApproache";
 import { ICreateInvite } from "../models/ICreateInvite";
 import { Invite } from "@prisma/client";
+import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
 
 export interface IPsychologistsRepository {
 	create(data: ICreatePsychologist): Promise<PsychologistEntity>;
@@ -21,5 +22,10 @@ export interface IPsychologistsRepository {
 		id: string,
 		psicoId: string,
 	): Promise<IPsychologistShortUpdate>;
-	inviteCustomer({ name, email }: ICreateInvite): Promise<Invite>;
+	inviteCustomer({
+		name,
+		email,
+		psychologistId,
+		token,
+	}: ICreateInvite): Promise<CreateInviteResponse>;
 }

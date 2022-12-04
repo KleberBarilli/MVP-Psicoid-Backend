@@ -8,6 +8,7 @@ import { IPsychologistShortUpdate } from "@modules/psico/domain/models/IPsycholo
 import { ISearch } from "@shared/interfaces/IPagination";
 import { ICreateInvite } from "@modules/psico/domain/models/ICreateInvite";
 import { Invite } from "@prisma/client";
+import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
 
 export default class PsychologistsRepository
 	implements IPsychologistsRepository
@@ -192,9 +193,21 @@ export default class PsychologistsRepository
 		email,
 		psychologistId,
 		token,
-	}: ICreateInvite): Promise<Invite> {
+	}: ICreateInvite): Promise<CreateInviteResponse> {
 		return prisma.invite.create({
 			data: { email, name, psychologistId, token },
+			select: {
+				name: true,
+				email: true,
+				token: true,
+				psychologist: {
+					select: {
+						profile: {
+							select: { firstName: true, lastName: true },
+						},
+					},
+				},
+			},
 		});
 	}
 }
