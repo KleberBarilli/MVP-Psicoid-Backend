@@ -1,4 +1,4 @@
-import { sendEmail } from "@shared/lib/ses";
+import { sendEmail } from "@shared/lib/aws/ses";
 import { Job } from "bull";
 
 export default {

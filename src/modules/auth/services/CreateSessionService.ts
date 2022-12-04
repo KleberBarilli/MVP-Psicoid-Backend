@@ -6,7 +6,6 @@ import { ICreateSession } from "../domain/models/ICreateSession";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 import { ISession } from "../domain/models/ISession";
-
 @injectable()
 class CreateSessionService {
 	constructor(

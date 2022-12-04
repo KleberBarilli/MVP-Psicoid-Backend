@@ -82,6 +82,12 @@ enum TypeNotification {
     CREATE_REVIEW
 }
 
+enum AppointmentCompletedBy {
+    CUSTOMER
+    PSYCHOLOGIST
+    TIME_EXPIRED
+}
+
 model Credential {
     id String @id @default(uuid()) @db.Uuid
 
@@ -116,11 +122,12 @@ model Customer {
     profile    Profile?    @relation(fields: [profileId], references: [id])
     guest      Guest?      @relation(fields: [guestId], references: [id])
 
-    psychologists Psychologist[]
-    reviews       Review[]
-    likes         Like[]
-    appointments  Appointment[]
-    views         View[]
+    psychologists      Psychologist[]
+    reviews            Review[]
+    likes              Like[]
+    appointments       Appointment[]
+    views              View[]
+    closedAppointments ClosedAppointment[]
 
     @@map("customers")
 }
@@ -154,12 +161,13 @@ model Psychologist {
     profile    Profile    @relation(fields: [profileId], references: [id])
     office     Office     @relation(fields: [officeId], references: [id])
 
-    customers    Customer[]
-    approaches   TherapeuticApproache[]
-    reviews      Review[]
-    appointments Appointment[]
-    schedule     Schedule[]
-    views        View[]
+    customers          Customer[]
+    approaches         TherapeuticApproache[]
+    reviews            Review[]
+    appointments       Appointment[]
+    schedule           Schedule[]
+    views              View[]
+    closedAppointments ClosedAppointment[]
 
     @@map("psychologists")
 }
@@ -313,10 +321,29 @@ model Appointment {
     createdAt          DateTime          @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt          DateTime          @updatedAt @map("updated_at") @db.Timestamptz()
 
-    psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
-    customer     Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+    closedAppointment ClosedAppointment?
+    psychologist      Psychologist       @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
+    customer          Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
     @@map("appointments")
+}
+
+model ClosedAppointment {
+    id String @id @default(uuid()) @db.Uuid
+
+    appointmentId  String  @unique @map("appointment_id") @db.Uuid
+    psychologistId String  @map("psychologist_id") @db.Uuid
+    customerId     String? @map("customer_id") @db.Uuid
+
+    closedBy    AppointmentCompletedBy @map("closed_by")
+    completedAt DateTime               @map("completed_at") @db.Timestamptz()
+    createdAt   DateTime               @default(now()) @map("created_at") @db.Timestamptz()
+
+    appointment  Appointment  @relation(fields: [appointmentId], references: [id])
+    psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
+    customer     Customer?    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+    @@map("closed_appointments")
 }
 
 model Schedule {
