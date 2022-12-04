@@ -168,6 +168,7 @@ model Psychologist {
     schedule           Schedule[]
     views              View[]
     closedAppointments ClosedAppointment[]
+    invites            Invite[]
 
     @@map("psychologists")
 }
@@ -329,7 +330,7 @@ model Appointment {
 }
 
 model ClosedAppointment {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement())
 
     appointmentId  String  @unique @map("appointment_id") @db.Uuid
     psychologistId String  @map("psychologist_id") @db.Uuid
@@ -390,4 +391,20 @@ model View {
     psychologist Psychologist? @relation(fields: [psychologistId], references: [id])
 
     @@map("views")
+}
+
+model Invite {
+    id Int @id @default(autoincrement())
+
+    psychologistId String @map("psychologist_id") @db.Uuid
+
+    token      String?
+    email      String    @db.Uuid
+    accepted   Boolean   @default(false)
+    acceptedAt DateTime? @map("accepted_at") @db.Timestamptz()
+    createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+    psychologist Psychologist @relation(fields: [psychologistId], references: [id])
+
+    @@map("invites")
 }
