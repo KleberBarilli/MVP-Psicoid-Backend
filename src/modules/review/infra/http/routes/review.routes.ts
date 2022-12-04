@@ -10,6 +10,7 @@ import { handleRole } from "@shared/infra/http/middlewares/handleRole";
 import AddLikeController from "../controllers/AddLikeController";
 import RemoveLikeController from "../controllers/RemoveLikeController";
 import CreateLogController from "@modules/log/infra/http/controllers/CreateLogController";
+import { defaultApiLimiter } from "@shared/infra/http/middlewares/rateLimiter";
 
 const reviewRouter = Router();
 
@@ -43,6 +44,7 @@ reviewRouter.delete(
 reviewRouter.patch(
 	"/:reviewId/like",
 	isAuthenticated,
+	defaultApiLimiter,
 	handleRole("CUSTOMER"),
 	new AddLikeController().handle,
 	CreateLogController.handle(),
@@ -50,6 +52,7 @@ reviewRouter.patch(
 reviewRouter.delete(
 	"/:reviewId/like",
 	isAuthenticated,
+	defaultApiLimiter,
 	handleRole("CUSTOMER"),
 	new RemoveLikeController().handle,
 	CreateLogController.handle(),
