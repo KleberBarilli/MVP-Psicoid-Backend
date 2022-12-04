@@ -2,11 +2,13 @@ import prisma from "@shared/prisma";
 import { ICreatePsychologist } from "../../../domain/models/ICreatePsychologist";
 import { IPsychologistsRepository } from "../../../domain/repositories/IPsychologistsRepository";
 import { PsychologistEntity } from "../entities/Psychologist";
-import { CredentialEntity } from "@shared/entities/Credential";
 import { IUpdatePsychologist } from "@modules/psico/domain/models/IUpdatePsychologist";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { IPsychologistShortUpdate } from "@modules/psico/domain/models/IPsychologist";
 import { ISearch } from "@shared/interfaces/IPagination";
+import { ICreateInvite } from "@modules/psico/domain/models/ICreateInvite";
+import { Invite } from "@prisma/client";
+import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
 
 export default class PsychologistsRepository
 	implements IPsychologistsRepository
@@ -184,6 +186,28 @@ export default class PsychologistsRepository
 		return prisma.psychologist.update({
 			where: { id: psicoId },
 			data: { approaches: { disconnect: { id } } },
+		});
+	}
+	public inviteCustomer({
+		name,
+		email,
+		psychologistId,
+		token,
+	}: ICreateInvite): Promise<CreateInviteResponse> {
+		return prisma.invite.create({
+			data: { email, name, psychologistId, token },
+			select: {
+				name: true,
+				email: true,
+				token: true,
+				psychologist: {
+					select: {
+						profile: {
+							select: { firstName: true, lastName: true },
+						},
+					},
+				},
+			},
 		});
 	}
 }
