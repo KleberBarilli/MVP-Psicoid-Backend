@@ -25,14 +25,6 @@ export default class CreateLogController {
 							: acm,
 					{},
 				);
-
-				Queue.add("SaveLogsOnPg", {
-					profile,
-					profileId,
-					method,
-					path,
-					data,
-				});
 				Queue.add("SaveLogsOnMongo", {
 					profile,
 					profileId,

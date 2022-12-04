@@ -120,7 +120,6 @@ model Customer {
     reviews       Review[]
     likes         Like[]
     appointments  Appointment[]
-    logs          Log[]
     views         View[]
 
     @@map("customers")
@@ -160,7 +159,6 @@ model Psychologist {
     reviews      Review[]
     appointments Appointment[]
     schedule     Schedule[]
-    logs         Log[]
     views        View[]
 
     @@map("psychologists")
@@ -308,7 +306,7 @@ model Appointment {
 
     createdBy          Role              @map("created_by")
     status             AppointmentStatus @default(ONGOING)
-    cancellationReason String?           @map("cancellation-reason")
+    cancellationReason String?           @map("cancellation_reason")
     price              Float?
     startsAt           DateTime          @map("starts_at") @db.Timestamptz()
     endsAt             DateTime          @map("ends_at") @db.Timestamptz()
@@ -334,21 +332,6 @@ model Schedule {
     psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
 
     @@map("schedules")
-}
-
-model Log {
-    id             String   @id @default(uuid()) @db.Uuid
-    method         String
-    route          String
-    psychologistId String?  @map("psychologist_id") @db.Uuid
-    customerId     String?  @map("customer_id") @db.Uuid
-    data           Json     @db.Json
-    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
-
-    psychologist Psychologist? @relation(fields: [psychologistId], references: [id])
-    customer     Customer?     @relation(fields: [customerId], references: [id])
-
-    @@map("logs")
 }
 
 model Notification {
