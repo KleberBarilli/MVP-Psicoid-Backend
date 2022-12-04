@@ -6,10 +6,20 @@ import ShowPsychologistController from "../controllers/ShowPsychologistControlle
 import UpdatePsychologistController from "../controllers/UpdatePsychologistController";
 import { pagination } from "@shared/infra/http/middlewares/pagination";
 import CreateLogController from "@modules/log/infra/http/controllers/CreateLogController";
+import { InviteCustomerController } from "../controllers/InviteCustomerController";
+import { handleRole } from "@shared/infra/http/middlewares/handleRole";
+import { defaultApiLimiter } from "@shared/infra/http/middlewares/rateLimiter";
 
 const psicoRouter = Router();
 
 psicoRouter.post("/", new CreatePsychologistController().handle);
+psicoRouter.post(
+	"/invite",
+	defaultApiLimiter,
+	isAuthenticated,
+	handleRole("PSYCHOLOGIST"),
+	new InviteCustomerController().handle,
+);
 psicoRouter.put(
 	"/",
 	isAuthenticated,

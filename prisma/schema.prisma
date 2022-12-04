@@ -7,11 +7,11 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-generator erd {
-    provider = "prisma-erd-generator"
-    output   = "../docs/ER-DIAGRAM.pdf"
-    theme    = "forest"
-}
+// generator erd {
+//     provider = "prisma-erd-generator"
+//     output   = "../docs/ER-DIAGRAM.pdf"
+//     theme    = "forest"
+// }
 
 enum Provider {
     APPLE
@@ -394,12 +394,13 @@ model View {
 }
 
 model Invite {
-    id Int @id @default(autoincrement())
+    id Int @id @default(autoincrement()) @db.Integer
 
     psychologistId String @map("psychologist_id") @db.Uuid
 
     token      String?
-    email      String    @db.Uuid
+    name       String
+    email      String
     accepted   Boolean   @default(false)
     acceptedAt DateTime? @map("accepted_at") @db.Timestamptz()
     createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz()
