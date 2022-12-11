@@ -7,6 +7,7 @@ import { getKmDistance } from "@shared/lib/distance";
 import { IReview } from "@shared/interfaces/IReview";
 import { arrAvg } from "@shared/utils/etc";
 import { RedisCache } from "@shared/cache/RedisCache";
+import { RedisKeys } from "@shared/utils/enums";
 @injectable()
 export default class ListPsychologistsService {
 	constructor(
@@ -22,7 +23,7 @@ export default class ListPsychologistsService {
 		const redisCache = new RedisCache();
 
 		let psychologists = await redisCache.recover<any>(
-			`LIST-PSICO:${profileId}`,
+			`${RedisKeys.LIST_PSICO}:${profileId}`,
 		);
 		let count;
 
@@ -31,7 +32,10 @@ export default class ListPsychologistsService {
 				pagination,
 			);
 
-			await redisCache.save(`LIST-PSICO:${profileId}`, psychologists);
+			await redisCache.save(
+				`${RedisKeys.LIST_PSICO}:${profileId}`,
+				psychologists,
+			);
 		}
 
 		let ratings: number[] = [];

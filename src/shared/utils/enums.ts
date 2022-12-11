@@ -118,3 +118,7 @@ export enum HTTP_STATUS_CODE {
 	NOT_EXTENDED = 510,
 	NETWORK_AUTHENTICATION_REQUIRED = 511,
 }
+
+export enum RedisKeys {
+	LIST_PSICO = "LIST-PSICO",
+}

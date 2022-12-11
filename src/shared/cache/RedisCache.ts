@@ -23,4 +23,18 @@ export class RedisCache {
 	public async invalidate(key: string): Promise<void> {
 		await this.client.del(key);
 	}
+
+	public async deleteKeysByPattern(keyPattern: string) {
+		const stream = this.client.scanStream();
+		stream.on("data", resultKeys => {
+			resultKeys.map(async (key: string) => {
+				if (key.includes(keyPattern)) {
+					await this.client.del(key);
+				}
+			});
+		});
+		stream.on("end", () => {
+			console.log("all keys have been visited and deleted");
+		});
+	}
 }
