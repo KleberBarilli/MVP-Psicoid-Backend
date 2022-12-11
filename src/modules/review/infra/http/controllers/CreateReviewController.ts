@@ -7,6 +7,7 @@ import { ValidationError } from "yup";
 import AppError from "@shared/errors/AppError";
 import Queue from "@shared/lib/bull/Queue";
 import { TypeNotification } from "@prisma/client";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
 export default class CreateReviewController {
 	public async handle(
@@ -41,7 +42,7 @@ export default class CreateReviewController {
 				views: { psychologistId },
 			});
 
-			res.status(201).json({
+			res.status(HTTP_STATUS_CODE.CREATED).json({
 				message: "Review adicionada com sucesso",
 				data: review,
 			});

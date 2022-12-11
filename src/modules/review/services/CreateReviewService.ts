@@ -1,4 +1,6 @@
+import { IRedisCache } from "@shared/cache/IRedisCache";
 import AppError from "@shared/errors/AppError";
+import { RedisKeys } from "@shared/utils/enums";
 import { injectable, inject } from "tsyringe";
 import { ICreateReview } from "../domain/models/ICreateReview";
 import { IReviewCreated } from "../domain/models/IReviewCreated";
@@ -9,6 +11,7 @@ export default class CreateReviewService {
 	constructor(
 		@inject("ReviewsRepository")
 		private reviewsRepository: IReviewsRepository,
+		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 	public async execute({
 		customerId,
@@ -24,11 +27,17 @@ export default class CreateReviewService {
 		if (review) {
 			throw new AppError("Você já realizou uma avaliação");
 		}
-		return this.reviewsRepository.create({
+		const createReview = await this.reviewsRepository.create({
 			customerId,
 			psychologistId,
 			rating,
 			comment,
 		});
+		await this.redisCache.invalidate(
+			`${RedisKeys.LIST_REVIEWS}:${psychologistId}`,
+		);
+		await this.redisCache.invalidate(`${RedisKeys.ME}:${customerId}`);
+
+		return createReview;
 	}
 }
