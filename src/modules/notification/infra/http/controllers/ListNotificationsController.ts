@@ -14,11 +14,11 @@ export default class ListNotificationsController {
 
 			const service = container.resolve(ListNotificationService);
 
-			const [count, notifications] = await service.execute(
+			const [count, notifications] = await service.execute({
 				profile,
 				profileId,
 				pagination,
-			);
+			});
 
 			res.status(200).json({ data: count, notifications });
 			next();
