@@ -1,22 +1,41 @@
+import { IRedisCache } from "@shared/cache/IRedisCache";
 import { ICredential } from "@shared/interfaces/ICredential";
+import { RedisKeys } from "@shared/utils/enums";
 import { inject, injectable } from "tsyringe";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 
+interface IRequest {
+	credentialId: string;
+	profile: string;
+	profileId: string;
+}
 @injectable()
 export default class WhoiamService {
 	constructor(
 		@inject("CredentialsRepository")
 		private credentialsRepository: ICredentialsRepository,
+		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
-	public async execute(
-		id: string,
-		role: string,
-	): Promise<ICredential | null> {
-		let user: any;
-		switch (role) {
+	public async execute({
+		credentialId,
+		profile,
+		profileId,
+	}: IRequest): Promise<ICredential | null> {
+		let user = await this.redisCache.recover<any>(
+			`${RedisKeys.ME}:${profileId}`,
+		);
+		switch (profile) {
 			case "CUSTOMER":
-				user = await this.credentialsRepository.iAmCustomer(id);
+				if (!user) {
+					user = await this.credentialsRepository.iAmCustomer(
+						credentialId,
+					);
+					await this.redisCache.save(
+						`${RedisKeys.ME}:${profileId}`,
+						user,
+					);
+				}
 
 				user.customer.psychologists.map(
 					(el: { id: string; selected: boolean }) => {
@@ -29,11 +48,32 @@ export default class WhoiamService {
 
 				return user;
 			case "PSYCHOLOGIST":
-				return await this.credentialsRepository.iAmPsico(id);
+				if (!user) {
+					user = await this.credentialsRepository.iAmPsico(
+						credentialId,
+					);
+					await this.redisCache.save(
+						`${RedisKeys.ME}:${profileId}`,
+						user,
+					);
+					return user;
+				}
+				break;
 			case "ADMIN":
-				return await this.credentialsRepository.iAmAdmin(id);
+				if (!user) {
+					user = await this.credentialsRepository.iAmAdmin(
+						credentialId,
+					);
+					await this.redisCache.save(
+						`${RedisKeys.ME}:${profileId}`,
+						user,
+					);
+					return user;
+				}
+				break;
 			default:
 				return null;
 		}
+		return user;
 	}
 }

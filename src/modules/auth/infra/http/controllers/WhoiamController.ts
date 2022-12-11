@@ -9,8 +9,13 @@ export default class WhoiamController {
 		next: NextFunction,
 	): Promise<Response | undefined> {
 		try {
+			const { id, profile, profileId } = req.user;
 			const whoiam = container.resolve(WhoiamService);
-			const user = await whoiam.execute(req.user.id, req.user.profile);
+			const user = await whoiam.execute({
+				credentialId: id,
+				profile,
+				profileId,
+			});
 			res.status(200).json({
 				message: "User Found",
 				data: { ...user, password: null },
