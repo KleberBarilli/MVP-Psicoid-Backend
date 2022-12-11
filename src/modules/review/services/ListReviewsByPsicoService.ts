@@ -3,9 +3,10 @@ import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
 import { IReview } from "../domain/models/IReview";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { IRedisCache } from "@shared/cache/IRedisCache";
+import { RedisKeys } from "@shared/utils/enums";
 
 interface IRequest {
-	id: string;
+	psicoId: string;
 	customerId: string;
 	pagination: IPagination;
 }
@@ -16,17 +17,12 @@ export default class ListReviewsByPsicoService {
 		private reviewsRepository: IReviewsRepository,
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
-	public async execute({
-		id,
-		customerId,
-		pagination,
-	}: IRequest): Promise<IReview[]> {
-		// let reviews = await this.redisCache.recover<IReview[]>()
 
-		// [, reviews] = await this.reviewsRepository.findAllByPsico(
-		// 	id,
-		// 	pagination,
-		// );
+	private async findReviews({ psicoId, customerId, pagination }: IRequest) {
+		const [, reviews] = await this.reviewsRepository.findAllByPsico(
+			psicoId,
+			pagination,
+		);
 
 		reviews.map((review: { likes: any[]; isLiked: boolean }) => {
 			const isLiked = review.likes.some(
@@ -35,7 +31,24 @@ export default class ListReviewsByPsicoService {
 			);
 			isLiked ? (review.isLiked = true) : (review.isLiked = false);
 		});
+		await this.redisCache.save(
+			`${RedisKeys.LIST_REVIEWS}:${customerId}`,
+			reviews,
+		);
 
 		return reviews;
+	}
+	public async execute({
+		psicoId,
+		customerId,
+		pagination,
+	}: IRequest): Promise<IReview[]> {
+		let reviewsInCache = await this.redisCache.recover<IReview[]>(
+			`${RedisKeys.LIST_REVIEWS}:${customerId}`,
+		);
+		if (reviewsInCache) {
+			return reviewsInCache;
+		}
+		return this.findReviews({ psicoId, customerId, pagination });
 	}
 }

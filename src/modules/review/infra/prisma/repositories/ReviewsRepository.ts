@@ -21,13 +21,15 @@ export default class ReviewsRepository implements IReviewsRepository {
 		});
 	}
 	public async findAllByPsico(
-		id: string,
+		psicoId: string,
 		{ skip, take, sort, order, filter }: IPagination,
 	): Promise<number & any> {
 		return Promise.all([
-			prisma.review.count({ where: { psychologistId: id, ...filter } }),
+			prisma.review.count({
+				where: { psychologistId: psicoId, ...filter },
+			}),
 			prisma.review.findMany({
-				where: { psychologistId: id, ...filter },
+				where: { psychologistId: psicoId, ...filter },
 				orderBy: { [sort]: order },
 				skip,
 				take,

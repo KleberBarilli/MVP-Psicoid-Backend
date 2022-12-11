@@ -49,11 +49,11 @@ export default class WhoiamService {
 		profile,
 		profileId,
 	}: IRequest): Promise<ICredential | null> {
-		let user = await this.redisCache.recover<any>(
+		let userInCache = await this.redisCache.recover<any>(
 			`${RedisKeys.ME}:${profileId}`,
 		);
-		if (user) {
-			return user;
+		if (userInCache) {
+			return userInCache;
 		}
 
 		switch (profile) {
