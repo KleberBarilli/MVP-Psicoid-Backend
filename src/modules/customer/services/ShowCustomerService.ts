@@ -4,7 +4,7 @@ import { ICustomersRepository } from "../domain/repositories/ICustomersRepositor
 import { ICustomer } from "../domain/models/ICustomer";
 
 @injectable()
-export default class ShowCustomerService {
+export class ShowCustomerService {
 	constructor(
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,

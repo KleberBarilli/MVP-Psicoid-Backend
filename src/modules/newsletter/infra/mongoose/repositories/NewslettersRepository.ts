@@ -1,15 +1,15 @@
 import { ICreateContact } from "@modules/newsletter/domain/models/ICreateContact";
 import { ICreateUnsub } from "@modules/newsletter/domain/models/ICreateUnsub";
 import { INewslettersRepository } from "@modules/newsletter/domain/repositories/INewslettersRepository";
-import Contact, { ContactDocument } from "../entities/Contact";
-import Unsub, { UnsubDocument } from "../entities/Unsub";
+import { contactModel, ContactDocument } from "../entities/Contact";
+import { modelUnsub, UnsubDocument } from "../entities/Unsub";
 
 export class NewslettersRepository implements INewslettersRepository {
 	contact;
 	unsub;
 	constructor() {
-		this.contact = Contact;
-		this.unsub = Unsub;
+		this.contact = contactModel;
+		this.unsub = modelUnsub;
 	}
 	async subscribe(email: string): Promise<any> {
 		return await this.contact.updateOne({ email }, { subscribed: true });

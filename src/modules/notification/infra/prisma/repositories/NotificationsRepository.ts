@@ -1,10 +1,8 @@
-import prisma from "@shared/prisma";
+import { prisma } from "@shared/prisma";
 import { INotificationsRepository } from "@modules/notification/domain/repositories/INotificationsRepository";
 import { Notification, View } from "@prisma/client";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
-export default class NotificationsRepository
-	implements INotificationsRepository
-{
+export class NotificationsRepository implements INotificationsRepository {
 	public findById(id: string): Promise<Notification | null> {
 		return prisma.notification.findUnique({
 			where: { id },

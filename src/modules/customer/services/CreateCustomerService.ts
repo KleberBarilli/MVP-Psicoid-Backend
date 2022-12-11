@@ -3,12 +3,12 @@ import { ICreateCustomer } from "../domain/models/ICreateCustomer";
 import { ICustomerCreated } from "../domain/models/ICustomerCreated";
 import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
 import { IHashProvider } from "@modules/auth/providers/HashProvider/models/IHashProvider";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { ICredentialsRepository } from "@modules/auth/domain/repositories/ICredentialsRepository";
 import { ICredentialResponse } from "@shared/interfaces/ICredential";
 
 @injectable()
-export default class CreateCustomerService {
+export class CreateCustomerService {
 	constructor(
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,

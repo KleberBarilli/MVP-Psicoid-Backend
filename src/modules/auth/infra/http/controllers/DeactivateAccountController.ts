@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import DeactivateAccountService from "@modules/auth/services/DeactivateAccountService";
+import { DeactivateAccountService } from "@modules/auth/services/DeactivateAccountService";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class DeactivateAccountController {
+export class DeactivateAccountController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -12,12 +13,12 @@ export default class DeactivateAccountController {
 		try {
 			const deactivate = container.resolve(DeactivateAccountService);
 			await deactivate.execute(id);
-			res.status(204).json({
-				message: "A conta foi desativada com sucesso",
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
-			return res.status(400).json({ error: "Erro ao desativar a conta" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Erro ao desativar a conta" });
 		}
 	}
 }

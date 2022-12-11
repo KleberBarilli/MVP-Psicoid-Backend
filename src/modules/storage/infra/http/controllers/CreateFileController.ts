@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import CreateFileService from "@modules/storage/services/CreateFileService";
+import { CreateFileService } from "@modules/storage/services/CreateFileService";
 import { container } from "tsyringe";
 
-export default class CreateFileController {
+export class CreateFileController {
 	public async create(req: Request, res: Response): Promise<Response> {
 		const { userId, userProfile } = req.body;
 		const path = req.file?.path;

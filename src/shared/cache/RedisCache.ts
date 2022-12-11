@@ -1,7 +1,8 @@
 import Redis, { Redis as RedisClient } from "ioredis";
 import config from "@config/redis";
+import { IRedisCache } from "./IRedisCache";
 
-export class RedisCache {
+export class RedisCache implements IRedisCache {
 	private client: RedisClient;
 
 	constructor() {
@@ -24,7 +25,7 @@ export class RedisCache {
 		await this.client.del(key);
 	}
 
-	public async deleteKeysByPattern(keyPattern: string) {
+	public async invalidateKeysByPattern(keyPattern: string): Promise<void> {
 		const stream = this.client.scanStream();
 		stream.on("data", resultKeys => {
 			resultKeys.map(async (key: string) => {

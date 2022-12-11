@@ -1,5 +1,5 @@
 import { injectable, inject } from "tsyringe";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { ICreatePsychologist } from "../domain/models/ICreatePsychologist";
 import { IPsychologistCreated } from "../domain/models/IPsychologystCreated";
 import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
@@ -11,7 +11,7 @@ import { RedisCache } from "@shared/cache/RedisCache";
 import { RedisKeys } from "@shared/utils/enums";
 
 @injectable()
-export default class CreatePsychologistService {
+export class CreatePsychologistService {
 	constructor(
 		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,
@@ -46,7 +46,7 @@ export default class CreatePsychologistService {
 		office.address.latitude = location[0].latitude || 0;
 		office.address.longitude = location[0].longitude || 0;
 
-		await redisCache.deleteKeysByPattern(RedisKeys.LIST_PSICO);
+		await redisCache.invalidateKeysByPattern(RedisKeys.LIST_PSICO);
 
 		return this.psychologistsRepository.create({
 			credential,

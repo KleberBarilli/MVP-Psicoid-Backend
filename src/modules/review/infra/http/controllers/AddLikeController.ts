@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import AddLikeService from "@modules/review/services/AddLikeService";
-import AppError from "@shared/errors/AppError";
+import { AddLikeService } from "@modules/review/services/AddLikeService";
+import { AppError } from "@shared/errors/AppError";
 import { sendBadRequest } from "@shared/errors/BadRequest";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class AddLikeController {
+export class AddLikeController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -17,13 +18,12 @@ export default class AddLikeController {
 			const service = container.resolve(AddLikeService);
 			const review = await service.execute(reviewId, profileId);
 
-			res.status(201).json({
+			res.status(HTTP_STATUS_CODE.CREATED).json({
 				message: "Like adicionado com sucesso",
 				data: review,
 			});
 			next();
 		} catch (error) {
-			console.log(error);
 			if (error instanceof AppError) {
 				return sendBadRequest(
 					req,
@@ -32,7 +32,9 @@ export default class AddLikeController {
 					error.statusCode,
 				);
 			}
-			return res.status(500).json({ error: "Internal Error" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Internal Error" });
 		}
 	}
 }

@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import UnselectPsychologistService from "@modules/customer/services/UnselectPsychologistService";
+import { UnselectPsychologistService } from "@modules/customer/services/UnselectPsychologistService";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class UnselectPsychologistController {
+export class UnselectPsychologistController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -15,9 +15,7 @@ export default class UnselectPsychologistController {
 			const service = container.resolve(UnselectPsychologistService);
 			await service.execute(profileId);
 
-			res.status(HTTP_STATUS_CODE.NO_CONTENT).json({
-				message: "OK",
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
 			return res

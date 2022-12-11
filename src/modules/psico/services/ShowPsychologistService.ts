@@ -4,7 +4,7 @@ import { getKmDistance } from "@shared/lib/distance";
 import { IReview } from "@shared/interfaces/IReview";
 import { arrAvg } from "@shared/utils/etc";
 @injectable()
-export default class ShowPsychologistService {
+export class ShowPsychologistService {
 	constructor(
 		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,

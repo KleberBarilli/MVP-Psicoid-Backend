@@ -1,12 +1,12 @@
 import { IStorageRequest } from "@modules/storage/domain/models/IStorageRequest";
 import { IStorageRepository } from "@modules/storage/domain/repositories/IStorageRepository";
-import FileModel, { FileDocument } from "../entities/File";
+import { fileModel, FileDocument } from "../entities/File";
 
-export default class StorageRepository implements IStorageRepository {
-	public file: typeof FileModel;
+export class StorageRepository implements IStorageRepository {
+	public file: typeof fileModel;
 
 	constructor() {
-		this.file = FileModel;
+		this.file = fileModel;
 	}
 	create(data: IStorageRequest): Promise<FileDocument> {
 		return this.file.create(data);

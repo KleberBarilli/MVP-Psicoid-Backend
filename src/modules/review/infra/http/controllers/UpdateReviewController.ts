@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import UpdateReviewService from "@modules/review/services/UpdateReviewService";
+import { UpdateReviewService } from "@modules/review/services/UpdateReviewService";
 import { validateReview } from "@shared/utils/validators/Review";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import { ValidationError } from "yup";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class UpdateReviewController {
+export class UpdateReviewController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -20,21 +21,26 @@ export default class UpdateReviewController {
 			await validateReview({ rating, comment });
 
 			const service = container.resolve(UpdateReviewService);
-			const review = await service.execute({
+			await service.execute({
 				id,
 				rating,
 				comment,
 			});
-			res.status(204).json({
-				message: "Review atualizada com sucesso",
-				data: review,
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
+
 			next();
 		} catch (error) {
 			if (error instanceof ValidationError) {
-				return sendBadRequest(req, res, error.message, 400);
+				return sendBadRequest(
+					req,
+					res,
+					error.message,
+					HTTP_STATUS_CODE.BAD_REQUEST,
+				);
 			}
-			return res.status(500).json({ error: "Internal Error" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Internal Error" });
 		}
 	}
 }

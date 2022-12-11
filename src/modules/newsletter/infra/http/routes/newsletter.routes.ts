@@ -1,4 +1,4 @@
-import CreateLogController from "@modules/log/infra/http/controllers/CreateLogController";
+import { CreateLogController } from "@modules/log/infra/http/controllers/CreateLogController";
 import {
 	defaultApiLimiter,
 	sendMailLimiter,
@@ -7,7 +7,7 @@ import { Router } from "express";
 import { SubscribeContactController } from "../controllers/SubscribeContactController";
 import { UnsubscribeContactController } from "../controllers/UnsubscribeContactController";
 
-const newsletterRouter = Router();
+export const newsletterRouter = Router();
 
 newsletterRouter.post(
 	"/",
@@ -21,5 +21,3 @@ newsletterRouter.patch(
 	new UnsubscribeContactController().handle,
 	CreateLogController.handle(),
 );
-
-export default newsletterRouter;

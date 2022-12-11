@@ -1,10 +1,11 @@
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { sendBadRequest } from "@shared/errors/BadRequest";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import HandleAllNotificationService from "../../../services/HandleAllViewsNotificationService";
+import { HandleAllNotificationsService } from "../../../services/HandleAllViewsNotificationService";
 
-export default class HandleAllNotificationController {
+export class HandleAllNotificationController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -14,16 +15,14 @@ export default class HandleAllNotificationController {
 			const { profile, profileId } = req.user;
 			const { action } = req.params;
 
-			const service = container.resolve(HandleAllNotificationService);
+			const service = container.resolve(HandleAllNotificationsService);
 
 			await service.execute(
 				profile,
 				profileId,
 				action.toUpperCase() === "DELETE" ? true : false,
 			);
-			res.status(200).json({
-				message: "Notificações atualizadas com sucesso",
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
 			if (error instanceof AppError) {
@@ -34,7 +33,9 @@ export default class HandleAllNotificationController {
 					error.statusCode,
 				);
 			}
-			return res.status(500).json({ error: "Houve um erro interno" });
+			return res
+				.status(HTTP_STATUS_CODE.NO_CONTENT)
+				.json({ error: "Houve um erro interno" });
 		}
 	}
 }

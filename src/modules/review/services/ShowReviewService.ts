@@ -3,7 +3,7 @@ import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
 import { IReview } from "@shared/interfaces/IReview";
 
 @injectable()
-export default class ShowReviewService {
+export class ShowReviewService {
 	constructor(
 		@inject("ReviewsRepository")
 		private reviewsRepository: IReviewsRepository,

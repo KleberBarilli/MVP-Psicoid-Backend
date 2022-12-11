@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { validateLogin } from "@validators/Credentials";
-import CreateSessionService from "../../../services/CreateSessionService";
-import AppError from "@shared/errors/AppError";
-export default class CreateSessionController {
+import { CreateSessionService } from "../../../services/CreateSessionService";
+import { AppError } from "@shared/errors/AppError";
+export class CreateSessionController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		const { email, password } = req.body;
 

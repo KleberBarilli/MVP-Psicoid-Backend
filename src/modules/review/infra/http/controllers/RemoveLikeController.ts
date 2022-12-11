@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import RemoveLikeService from "@modules/review/services/RemoveLikeService";
+import { RemoveLikeService } from "@modules/review/services/RemoveLikeService";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class RemoveLikeController {
+export class RemoveLikeController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -13,15 +14,14 @@ export default class RemoveLikeController {
 			const { profileId } = req.user;
 
 			const service = container.resolve(RemoveLikeService);
-			const review = await service.execute(reviewId, profileId);
+			await service.execute(reviewId, profileId);
 
-			res.status(204).json({
-				message: "Like removido com sucesso",
-				data: review,
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
-			return res.status(500).json({ error: "Internal Error" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Internal Error" });
 		}
 	}
 }

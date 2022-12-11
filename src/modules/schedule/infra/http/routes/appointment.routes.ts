@@ -1,10 +1,10 @@
 import { Router } from "express";
-import isAuthenticated from "@shared/infra/http/middlewares/isAuthenticated";
-import CreateAppointmentController from "../controllers/CreateAppointmentController";
-import UpdateAppointmentController from "../controllers/UpdateAppointmentController";
-import CreateLogController from "@modules/log/infra/http/controllers/CreateLogController";
+import { isAuthenticated } from "@shared/infra/http/middlewares/isAuthenticated";
+import { CreateAppointmentController } from "../controllers/CreateAppointmentController";
+import { UpdateAppointmentController } from "../controllers/UpdateAppointmentController";
+import { CreateLogController } from "@modules/log/infra/http/controllers/CreateLogController";
 
-const appointmentRouter = Router();
+export const appointmentRouter = Router();
 
 appointmentRouter.post(
 	"/",
@@ -18,5 +18,3 @@ appointmentRouter.put(
 	new UpdateAppointmentController().handle,
 	CreateLogController.handle(),
 );
-
-export default appointmentRouter;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Queue from "@shared/lib/bull/Queue";
 
-export default class CreateLogController {
+export class CreateLogController {
 	public static handle() {
 		return (req: Request, res: Response) => {
 			try {

@@ -6,13 +6,14 @@ import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { getKmDistance } from "@shared/lib/distance";
 import { IReview } from "@shared/interfaces/IReview";
 import { arrAvg } from "@shared/utils/etc";
-import { RedisCache } from "@shared/cache/RedisCache";
 import { RedisKeys } from "@shared/utils/enums";
+import { IRedisCache } from "@shared/cache/IRedisCache";
 @injectable()
-export default class ListPsychologistsService {
+export class ListPsychologistsService {
 	constructor(
 		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,
+		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 	public async execute(
 		profileId: string,
@@ -20,9 +21,7 @@ export default class ListPsychologistsService {
 	): Promise<IPsychologist[]> {
 		const { latitude, longitude } = pagination;
 
-		const redisCache = new RedisCache();
-
-		let psychologists = await redisCache.recover<any>(
+		let psychologists = await this.redisCache.recover<any>(
 			`${RedisKeys.LIST_PSICO}:${profileId}`,
 		);
 		let count;
@@ -32,7 +31,7 @@ export default class ListPsychologistsService {
 				pagination,
 			);
 
-			await redisCache.save(
+			await this.redisCache.save(
 				`${RedisKeys.LIST_PSICO}:${profileId}`,
 				psychologists,
 			);

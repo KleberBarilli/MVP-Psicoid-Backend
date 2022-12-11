@@ -7,7 +7,7 @@ import { NOTIFICATION_MESSAGE } from "@shared/utils/enums";
 import { ICustomer } from "../domain/models/ICustomer";
 
 @injectable()
-export default class AddPsychologistService {
+export class AddPsychologistService {
 	constructor(
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,

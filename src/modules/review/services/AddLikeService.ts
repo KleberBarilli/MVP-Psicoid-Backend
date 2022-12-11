@@ -1,18 +1,17 @@
-import AppError from "@shared/errors/AppError";
+import { IRedisCache } from "@shared/cache/IRedisCache";
+import { AppError } from "@shared/errors/AppError";
+import { RedisKeys } from "@shared/utils/enums";
 import { injectable, inject } from "tsyringe";
-import { ILikeCreated } from "../domain/models/ILikeCreated";
 import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
 
 @injectable()
-export default class AddLikeService {
+export class AddLikeService {
 	constructor(
 		@inject("ReviewsRepository")
 		private reviewsRepository: IReviewsRepository,
+		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
-	public async execute(
-		reviewId: string,
-		customerId: string,
-	): Promise<ILikeCreated> {
+	public async execute(reviewId: string, customerId: string): Promise<void> {
 		const like = await this.reviewsRepository.findLike(
 			reviewId,
 			customerId,
@@ -22,6 +21,14 @@ export default class AddLikeService {
 			throw new AppError("Você já deu like nesse comentário", 409);
 		}
 
-		return this.reviewsRepository.addLike(reviewId, customerId);
+		const liked = await this.reviewsRepository.addLike(
+			reviewId,
+			customerId,
+		);
+
+		await this.redisCache.invalidate(
+			`${RedisKeys.LIST_REVIEWS}:${liked.review.psychologistId}`,
+		);
+		await this.redisCache.invalidate(`${RedisKeys.ME}:${customerId}`);
 	}
 }

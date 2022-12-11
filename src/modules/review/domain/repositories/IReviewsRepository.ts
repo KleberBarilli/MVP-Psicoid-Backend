@@ -2,7 +2,11 @@ import { ICreateReview } from "../models/ICreateReview";
 import { IUpdateReview } from "../models/IUpdateReview";
 import { IReview } from "@shared/interfaces/IReview";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
-import { ILike } from "../models/ILike";
+import {
+	ICreateLikeResponse,
+	ILike,
+	IRemoveLikeResponse,
+} from "../models/ILike";
 
 export interface IReviewsRepository {
 	create(data: ICreateReview): Promise<IReview>;
@@ -17,7 +21,10 @@ export interface IReviewsRepository {
 		psychologistId: string,
 		customerId: string,
 	): Promise<IReview | null>;
-	addLike(reviewId: string, customerId: string): Promise<ILike>;
-	removeLike(reviewId: string, customerId: string): Promise<ILike>;
+	addLike(reviewId: string, customerId: string): Promise<ICreateLikeResponse>;
+	removeLike(
+		reviewId: string,
+		customerId: string,
+	): Promise<IRemoveLikeResponse>;
 	findLike(reviewId: string, customerId: string): Promise<ILike | null>;
 }

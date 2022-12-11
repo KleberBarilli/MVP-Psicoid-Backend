@@ -35,6 +35,4 @@ const LogSchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-const LogModel = mongoose.model("Logs", LogSchema);
-
-export default LogModel;
+export const logModel = mongoose.model("Logs", LogSchema);

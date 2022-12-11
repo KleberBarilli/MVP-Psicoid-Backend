@@ -1,11 +1,11 @@
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { IResetPassword } from "../domain/models/IResetPassword";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 
 @injectable()
-export default class SendForgotPasswordEmailService {
+export class ResetPasswordService {
 	constructor(
 		@inject("CredentialsRepository")
 		private credentialsRepository: ICredentialsRepository,

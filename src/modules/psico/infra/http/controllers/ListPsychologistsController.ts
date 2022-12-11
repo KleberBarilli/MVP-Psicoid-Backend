@@ -1,7 +1,8 @@
-import ListPsychologistsService from "@modules/psico/services/ListPsychologistsService";
+import { ListPsychologistsService } from "@modules/psico/services/ListPsychologistsService";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-export default class ListPsychologistsController {
+export class ListPsychologistsController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -16,11 +17,16 @@ export default class ListPsychologistsController {
 				pagination,
 			);
 
-			res.status(200).json({ count, data: psychologists });
+			res.status(HTTP_STATUS_CODE.OK).json({
+				count,
+				data: psychologists,
+			});
 			next();
 		} catch (error) {
 			console.log(error);
-			return res.status(500).json({ error: "Houve um erro ao listar" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Houve um erro ao listar" });
 		}
 	}
 }

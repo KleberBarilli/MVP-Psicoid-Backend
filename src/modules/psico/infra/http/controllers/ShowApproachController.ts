@@ -1,18 +1,19 @@
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import ShowApproachService from "../../../services/ShowApproachService";
+import { ShowApproachService } from "../../../services/ShowApproachService";
 
-export default class ShowApproachController {
+export class ShowApproachController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const { id } = req.params;
 
 			const service = container.resolve(ShowApproachService);
 			const approach = await service.execute(id);
-			return res.status(200).json({ data: approach });
+			return res.status(HTTP_STATUS_CODE.OK).json({ data: approach });
 		} catch (error) {
 			return res
-				.status(400)
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
 				.json({ error: "Houve um erro ao buscar a abordagem" });
 		}
 	}

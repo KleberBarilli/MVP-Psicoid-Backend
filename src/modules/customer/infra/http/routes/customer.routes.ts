@@ -1,19 +1,19 @@
-import CreateLogController from "@modules/log/infra/http/controllers/CreateLogController";
+import { CreateLogController } from "@modules/log/infra/http/controllers/CreateLogController";
 import { handleRole } from "@shared/infra/http/middlewares/handleRole";
-import isAuthenticated from "@shared/infra/http/middlewares/isAuthenticated";
+import { isAuthenticated } from "@shared/infra/http/middlewares/isAuthenticated";
 import { pagination } from "@shared/infra/http/middlewares/pagination";
 import { Router } from "express";
-import AddPsychologistController from "../controllers/AddPsychologistController";
-import CreateGuestCustomerController from "../controllers/CreateGuestController";
-import CreateCustomerController from "../controllers/CreateCustomerController";
-import ListCustomersByPsicoController from "../controllers/ListCustomersByPsicoController";
-import ShowCustomerController from "../controllers/ShowCustomerController";
-import UpdateCustomerController from "../controllers/UpdateCustomerController";
-import RemovePsychologistController from "../controllers/RemovePsychologistController";
-import SelectPsychologistController from "../controllers/SelectPsychologistController";
-import UnselectPsychologistController from "../controllers/UnselectPsychologistService";
+import { AddPsychologistController } from "../controllers/AddPsychologistController";
+import { CreateGuestCustomerController } from "../controllers/CreateGuestController";
+import { CreateCustomerController } from "../controllers/CreateCustomerController";
+import { ListCustomersByPsicoController } from "../controllers/ListCustomersByPsicoController";
+import { ShowCustomerController } from "../controllers/ShowCustomerController";
+import { UpdateCustomerController } from "../controllers/UpdateCustomerController";
+import { RemovePsychologistController } from "../controllers/RemovePsychologistController";
+import { SelectPsychologistController } from "../controllers/SelectPsychologistController";
+import { UnselectPsychologistController } from "../controllers/UnselectPsychologistService";
 
-const customerRouter = Router();
+export const customerRouter = Router();
 
 customerRouter.post("/", new CreateCustomerController().handle);
 customerRouter.post(
@@ -69,5 +69,3 @@ customerRouter.get(
 	pagination,
 	new ListCustomersByPsicoController().handle,
 );
-
-export default customerRouter;

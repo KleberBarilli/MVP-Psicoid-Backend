@@ -10,7 +10,7 @@ export interface IPutObject {
 	Body?: Buffer | null;
 	ContentType: string;
 }
-export default class S3StorageProvider {
+export class S3StorageProvider {
 	#client: S3;
 
 	constructor() {

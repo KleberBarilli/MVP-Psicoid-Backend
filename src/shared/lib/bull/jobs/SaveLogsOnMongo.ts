@@ -1,4 +1,4 @@
-import LogsRepository from "@modules/log/infra/orm/repositories/LogsRepository";
+import { LogsRepository } from "@modules/log/infra/orm/repositories/LogsRepository";
 import { Job } from "bull";
 
 export default {

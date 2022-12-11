@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import SelectPsychologistService from "@modules/customer/services/SelectPsychologistService";
+import { SelectPsychologistService } from "@modules/customer/services/SelectPsychologistService";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 
-export default class SelectPsychologistController {
+export class SelectPsychologistController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -20,9 +20,7 @@ export default class SelectPsychologistController {
 				psychologistId,
 			});
 
-			res.status(HTTP_STATUS_CODE.NO_CONTENT).json({
-				message: "Selecionado com sucesso",
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
 			if (error instanceof AppError) {

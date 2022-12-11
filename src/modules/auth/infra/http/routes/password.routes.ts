@@ -1,9 +1,9 @@
 import { sendMailLimiter } from "@shared/infra/http/middlewares/rateLimiter";
 import { Router } from "express";
-import ForgotPasswordController from "../controllers/ForgotPasswordController";
-import ResetPasswordController from "../controllers/ResetPasswordController";
+import { ForgotPasswordController } from "../controllers/ForgotPasswordController";
+import { ResetPasswordController } from "../controllers/ResetPasswordController";
 
-const passwordRouter = Router();
+export const passwordRouter = Router();
 
 passwordRouter.post(
 	"/forgot",
@@ -11,5 +11,3 @@ passwordRouter.post(
 	new ForgotPasswordController().handle,
 );
 passwordRouter.post("/reset", new ResetPasswordController().handle);
-
-export default passwordRouter;

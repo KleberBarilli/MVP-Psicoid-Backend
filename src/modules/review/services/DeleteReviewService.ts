@@ -1,25 +1,29 @@
 import { injectable, inject } from "tsyringe";
 import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
-import { IReview } from "@shared/interfaces/IReview";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
+import { HTTP_STATUS_CODE, RedisKeys } from "@shared/utils/enums";
+import { IRedisCache } from "@shared/cache/IRedisCache";
 
 @injectable()
-export default class DeleteReviewService {
+export class DeleteReviewService {
 	constructor(
 		@inject("ReviewsRepository")
 		private reviewsRepository: IReviewsRepository,
+		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
-	public async execute(
-		id: string,
-		customerId: string,
-	): Promise<IReview | null> {
+	public async execute(id: string, customerId: string): Promise<void> {
 		const review = await this.reviewsRepository.findById(id);
 		if (review?.customerId !== customerId) {
 			throw new AppError(
 				"Você não pode apagar um comentário de outra pessoa",
-				409,
+				HTTP_STATUS_CODE.CONFLICT,
 			);
 		}
-		return this.reviewsRepository.remove(id);
+		await this.reviewsRepository.remove(id);
+
+		await this.redisCache.invalidate(
+			`${RedisKeys.LIST_REVIEWS}:${review.psychologistId}`,
+		);
+		await this.redisCache.invalidate(`${RedisKeys.ME}:${customerId}`);
 	}
 }

@@ -30,7 +30,7 @@ const RecipientSchema = new Schema(
 	},
 );
 
-export default mongoose.model<RecipientDocument, RecipientModel>(
+export const modelRecipient = mongoose.model<RecipientDocument, RecipientModel>(
 	"Recipients",
 	RecipientSchema,
 );

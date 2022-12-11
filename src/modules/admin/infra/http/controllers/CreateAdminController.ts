@@ -5,10 +5,10 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { validateCredentials } from "@shared/utils/validators/Credentials";
 import { validateProfile } from "@shared/utils/validators/Profile";
 import { sendBadRequest } from "@shared/errors/BadRequest";
-import CreateAdminService from "../../../services/CreateAdminService";
-import CreateSessionService from "@modules/auth/services/CreateSessionService";
+import { CreateAdminService } from "../../../services/CreateAdminService";
+import { CreateSessionService } from "@modules/auth/services/CreateSessionService";
 
-export default class CreateAdminController {
+export class CreateAdminController {
 	public async handle(
 		req: Request,
 		res: Response,

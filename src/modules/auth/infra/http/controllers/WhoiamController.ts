@@ -1,25 +1,25 @@
-import { NextFunction, Request, Response } from "express";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
+import { Request, Response } from "express";
 import { container } from "tsyringe";
-import WhoiamService from "../../../services/WhoiamService";
+import { WhoiamService } from "../../../services/WhoiamService";
 
-export default class WhoiamController {
-	public async handle(
-		req: Request,
-		res: Response,
-		next: NextFunction,
-	): Promise<Response | undefined> {
+export class WhoiamController {
+	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
+			const { id, profile, profileId } = req.user;
 			const whoiam = container.resolve(WhoiamService);
-			const user = await whoiam.execute(req.user.id, req.user.profile);
-			res.status(200).json({
+			const user = await whoiam.execute({
+				credentialId: id,
+				profile,
+				profileId,
+			});
+			return res.status(HTTP_STATUS_CODE.OK).json({
 				message: "User Found",
 				data: { ...user, password: null },
 			});
-
-			next();
 		} catch (err) {
 			return res
-				.status(500)
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
 				.json({ message: "Erro interno do servidor" });
 		}
 	}

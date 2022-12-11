@@ -1,4 +1,4 @@
-import prisma from "@shared/prisma";
+import { prisma } from "@shared/prisma";
 import { ICredentialsRepository } from "@modules/auth/domain/repositories/ICredentialsRepository";
 import {
 	ICredential,
@@ -6,7 +6,7 @@ import {
 } from "@shared/interfaces/ICredential";
 import { IUpdateCredential } from "@modules/auth/domain/models/IUpdateCredentials";
 
-export default class CredentialsRepository implements ICredentialsRepository {
+export class CredentialsRepository implements ICredentialsRepository {
 	public async findById(id: string): Promise<ICredential | null> {
 		return await prisma.credential.findUnique({ where: { id } });
 	}

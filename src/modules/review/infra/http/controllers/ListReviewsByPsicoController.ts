@@ -1,9 +1,9 @@
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import ListReviewsByPsicoService from "../../../services/ListReviewsByPsicoService";
+import { ListReviewsByPsicoService } from "../../../services/ListReviewsByPsicoService";
 
-export default class ListReviewsByPsicoController {
+export class ListReviewByPsicoController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -15,7 +15,7 @@ export default class ListReviewsByPsicoController {
 
 			const service = container.resolve(ListReviewsByPsicoService);
 			const reviews = await service.execute({
-				id,
+				psicoId: id,
 				customerId: user.profileId,
 				pagination,
 			});
