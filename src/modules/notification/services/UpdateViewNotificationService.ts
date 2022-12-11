@@ -1,5 +1,7 @@
 import { View } from "@prisma/client";
+import { IRedisCache } from "@shared/cache/IRedisCache";
 import AppError from "@shared/errors/AppError";
+import { RedisKeys } from "@shared/utils/enums";
 import { injectable, inject } from "tsyringe";
 import { INotificationsRepository } from "../domain/repositories/INotificationsRepository";
 
@@ -14,6 +16,7 @@ export default class UpdateNotificationService {
 	constructor(
 		@inject("NotificationsRepository")
 		private notificationsRepository: INotificationsRepository,
+		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
 	public async execute({
@@ -21,7 +24,7 @@ export default class UpdateNotificationService {
 		profile,
 		profileId,
 		isRead,
-	}: IRequest): Promise<View> {
+	}: IRequest): Promise<void> {
 		const view = await this.notificationsRepository.findView({
 			notificationId,
 			profile,
@@ -30,6 +33,10 @@ export default class UpdateNotificationService {
 		if (!view) {
 			throw new AppError("Notification not found");
 		}
-		return await this.notificationsRepository.updateView(view.id, isRead);
+		await this.notificationsRepository.updateView(view.id, isRead);
+
+		await this.redisCache.invalidate(
+			`${RedisKeys.LIST_NOTIFICATIONS}:${profileId}`,
+		);
 	}
 }
