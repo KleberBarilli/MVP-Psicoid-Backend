@@ -8,10 +8,13 @@ export default class ListPsychologistsController {
 		next: NextFunction,
 	): Promise<Response | undefined> {
 		try {
-			const { pagination } = req;
+			const { pagination, user } = req;
 
 			const service = container.resolve(ListPsychologistsService);
-			const [count, psychologists] = await service.execute(pagination);
+			const [count, psychologists] = await service.execute(
+				user.profileId,
+				pagination,
+			);
 
 			res.status(200).json({ count, data: psychologists });
 			next();

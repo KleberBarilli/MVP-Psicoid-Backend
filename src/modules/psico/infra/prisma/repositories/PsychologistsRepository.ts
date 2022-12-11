@@ -15,7 +15,7 @@ export default class PsychologistsRepository
 {
 	private async makePrismaWhere(search: ISearch): Promise<any> {
 		const filters = {
-			psicoName: search.psicoName
+			psicoName: search?.psicoName
 				? {
 						firstName: {
 							contains: search.psicoName,
@@ -23,7 +23,7 @@ export default class PsychologistsRepository
 						},
 				  }
 				: undefined,
-			cityName: search.cityName
+			cityName: search?.cityName
 				? {
 						address: {
 							city: {
@@ -33,7 +33,7 @@ export default class PsychologistsRepository
 						},
 				  }
 				: undefined,
-			approachName: search.approachName
+			approachName: search?.approachName
 				? {
 						some: {
 							name: {
@@ -46,9 +46,9 @@ export default class PsychologistsRepository
 		};
 
 		return {
-			office: filters.cityName,
-			profile: filters.psicoName,
-			approaches: filters.approachName,
+			office: filters?.cityName,
+			profile: filters?.psicoName,
+			approaches: filters?.approachName,
 		};
 	}
 

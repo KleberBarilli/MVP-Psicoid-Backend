@@ -6,17 +6,38 @@ import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { getKmDistance } from "@shared/lib/distance";
 import { IReview } from "@shared/interfaces/IReview";
 import { arrAvg } from "@shared/utils/etc";
+import { RedisCache } from "@shared/cache/RedisCache";
+import { RedisKeys } from "@shared/utils/enums";
 @injectable()
 export default class ListPsychologistsService {
 	constructor(
 		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,
 	) {}
-	public async execute(pagination: IPagination): Promise<IPsychologist[]> {
+	public async execute(
+		profileId: string,
+		pagination: IPagination,
+	): Promise<IPsychologist[]> {
 		const { latitude, longitude } = pagination;
 
-		const [count, psychologists] =
-			await this.psychologistsRepository.findAll(pagination);
+		const redisCache = new RedisCache();
+
+		let psychologists = await redisCache.recover<any>(
+			`${RedisKeys.LIST_PSICO}:${profileId}`,
+		);
+		let count;
+
+		if (!psychologists) {
+			[count, psychologists] = await this.psychologistsRepository.findAll(
+				pagination,
+			);
+
+			await redisCache.save(
+				`${RedisKeys.LIST_PSICO}:${profileId}`,
+				psychologists,
+			);
+		}
+
 		let ratings: number[] = [];
 		psychologists.map((psico: IPsychologist) => {
 			psico.distance = getKmDistance(
