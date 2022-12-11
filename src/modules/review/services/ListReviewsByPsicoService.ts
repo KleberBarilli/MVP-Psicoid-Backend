@@ -32,7 +32,7 @@ export default class ListReviewsByPsicoService {
 			isLiked ? (review.isLiked = true) : (review.isLiked = false);
 		});
 		await this.redisCache.save(
-			`${RedisKeys.LIST_REVIEWS}:${customerId}`,
+			`${RedisKeys.LIST_REVIEWS}:${psicoId}`,
 			reviews,
 		);
 
@@ -44,7 +44,7 @@ export default class ListReviewsByPsicoService {
 		pagination,
 	}: IRequest): Promise<IReview[]> {
 		let reviewsInCache = await this.redisCache.recover<IReview[]>(
-			`${RedisKeys.LIST_REVIEWS}:${customerId}`,
+			`${RedisKeys.LIST_REVIEWS}:${psicoId}`,
 		);
 		if (reviewsInCache) {
 			return reviewsInCache;
