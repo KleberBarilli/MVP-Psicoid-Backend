@@ -1,17 +1,22 @@
 import { injectable, inject } from "tsyringe";
-import { ICustomerCreated } from "../domain/models/ICustomerCreated";
 import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
 import Queue from "@shared/lib/bull/Queue";
 import { TypeNotification } from "@prisma/client";
-import { HTTP_STATUS_CODE, NOTIFICATION_MESSAGE } from "@shared/utils/enums";
+import {
+	HTTP_STATUS_CODE,
+	NOTIFICATION_MESSAGE,
+	RedisKeys,
+} from "@shared/utils/enums";
 import { ISelectPsychologist } from "../domain/models/ISelectPsychologist";
 import AppError from "@shared/errors/AppError";
+import { IRedisCache } from "@shared/cache/IRedisCache";
 
 @injectable()
 export default class SelectPsychologistService {
 	constructor(
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,
+		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
 	private notify(customerId: string, psychologistId: string) {
@@ -28,11 +33,11 @@ export default class SelectPsychologistService {
 	public async execute({
 		customerId,
 		psychologistId,
-	}: ISelectPsychologist): Promise<ICustomerCreated> {
+	}: ISelectPsychologist): Promise<void> {
 		const customer = await this.customersRepository.findById(customerId);
 
 		const isPsicoFav = customer?.psychologists.some(
-			psico => psico.id === psychologistId,
+			(psico: { id: string }) => psico.id === psychologistId,
 		);
 
 		if (!isPsicoFav) {
@@ -42,13 +47,13 @@ export default class SelectPsychologistService {
 			);
 		}
 
-		const selectCustomer =
-			await this.customersRepository.selectPsychologist(
-				customerId,
-				psychologistId,
-			);
+		await this.customersRepository.selectPsychologist(
+			customerId,
+			psychologistId,
+		);
 		await this.notify(customerId, psychologistId);
 
-		return selectCustomer;
+		await this.redisCache.invalidate(`${RedisKeys.ME}:${customerId}`);
+		await this.redisCache.invalidate(`${RedisKeys.ME}:${psychologistId}`);
 	}
 }

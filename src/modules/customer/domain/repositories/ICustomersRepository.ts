@@ -8,7 +8,7 @@ export interface ICustomersRepository {
 	create(data: ICreateCustomer): Promise<CustomerEntity>;
 	createGuest(psicoId: string, data: ICreateGuest): Promise<CustomerEntity>;
 	findById(id: string): Promise<CustomerEntity | null>;
-	update(id: string, data: IUpdateCustomer): Promise<CustomerEntity>;
+	update(data: IUpdateCustomer): Promise<CustomerEntity>;
 	addPsychologist(
 		customerId: string,
 		psicoId: string,

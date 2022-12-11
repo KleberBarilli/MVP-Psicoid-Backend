@@ -48,10 +48,12 @@ export default class CustomersRepository implements ICustomersRepository {
 			},
 		});
 	}
-	public update(
-		id: string,
-		{ profile, contact, selectedPsychologistId }: IUpdateCustomer,
-	): Promise<CustomerEntity> {
+	public update({
+		id,
+		profile,
+		contact,
+		selectedPsychologistId,
+	}: IUpdateCustomer): Promise<CustomerEntity> {
 		return prisma.customer.update({
 			where: { id },
 			data: {

@@ -20,9 +20,7 @@ export default class SelectPsychologistController {
 				psychologistId,
 			});
 
-			res.status(HTTP_STATUS_CODE.NO_CONTENT).json({
-				message: "Selecionado com sucesso",
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
 			if (error instanceof AppError) {

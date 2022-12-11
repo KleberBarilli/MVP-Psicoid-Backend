@@ -15,9 +15,7 @@ export default class UnselectPsychologistController {
 			const service = container.resolve(UnselectPsychologistService);
 			await service.execute(profileId);
 
-			res.status(HTTP_STATUS_CODE.NO_CONTENT).json({
-				message: "OK",
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
 			return res
