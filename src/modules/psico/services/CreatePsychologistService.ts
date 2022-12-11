@@ -46,7 +46,7 @@ export default class CreatePsychologistService {
 		office.address.latitude = location[0].latitude || 0;
 		office.address.longitude = location[0].longitude || 0;
 
-		await redisCache.deleteKeysByPattern(RedisKeys.LIST_PSICO);
+		await redisCache.invalidateKeysByPattern(RedisKeys.LIST_PSICO);
 
 		return this.psychologistsRepository.create({
 			credential,

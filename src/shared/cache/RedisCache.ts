@@ -25,7 +25,7 @@ export class RedisCache implements IRedisCache {
 		await this.client.del(key);
 	}
 
-	public async deleteKeysByPattern(keyPattern: string): Promise<void> {
+	public async invalidateKeysByPattern(keyPattern: string): Promise<void> {
 		const stream = this.client.scanStream();
 		stream.on("data", resultKeys => {
 			resultKeys.map(async (key: string) => {

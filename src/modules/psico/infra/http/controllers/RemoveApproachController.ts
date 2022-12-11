@@ -1,3 +1,4 @@
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import RemoveApproachService from "../../../services/RemoveApproachService";
@@ -13,15 +14,9 @@ export default class RemoveApproachController {
 			const { profileId } = req.user;
 
 			const service = container.resolve(RemoveApproachService);
-			const user = await service.execute(
-				approachId?.toString() || "",
-				profileId,
-			);
+			await service.execute(approachId?.toString() || "", profileId);
 
-			res.status(204).json({
-				message: "Abordagem Removida com sucesso",
-				data: user,
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
 			return res.status(500).json({ error: "Internal Error" });

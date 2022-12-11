@@ -94,10 +94,12 @@ export default class PsychologistsRepository
 			},
 		});
 	}
-	public update(
-		id: string,
-		{ profile, office, resume }: IUpdatePsychologist,
-	): Promise<PsychologistEntity> {
+	public update({
+		id,
+		profile,
+		office,
+		resume,
+	}: IUpdatePsychologist): Promise<PsychologistEntity> {
 		return prisma.psychologist.update({
 			where: { id },
 			data: {
