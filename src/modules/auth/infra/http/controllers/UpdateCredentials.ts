@@ -7,13 +7,15 @@ import { container } from "tsyringe";
 export default class UpdateCredentialsController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		const { email, password } = req.body;
-		const { id } = req.user;
+		const { id, profileId } = req.user;
 		try {
 			const updateCredentials = container.resolve(
 				UpdateCredentialsService,
 			);
 
-			await updateCredentials.execute(id, {
+			await updateCredentials.execute({
+				credentialId: id,
+				profileId,
 				email,
 				password,
 			});

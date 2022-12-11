@@ -1,9 +1,16 @@
+import { IRedisCache } from "@shared/cache/IRedisCache";
 import AppError from "@shared/errors/AppError";
+import { RedisKeys } from "@shared/utils/enums";
 import { inject, injectable } from "tsyringe";
-import { IUpdateCredential } from "../domain/models/IUpdateCredentials";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 
+interface IRequest {
+	credentialId: string;
+	profileId: string;
+	email: string;
+	password: string;
+}
 @injectable()
 export default class UpdateCredentialsService {
 	constructor(
@@ -11,13 +18,16 @@ export default class UpdateCredentialsService {
 		private credentialsRepository: ICredentialsRepository,
 		@inject("HashProvider")
 		private hashProvider: IHashProvider,
+		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
-	public async execute(
-		id: string,
-		{ email, password }: IUpdateCredential,
-	): Promise<void> {
-		const user = await this.credentialsRepository.findById(id);
+	public async execute({
+		credentialId,
+		profileId,
+		email,
+		password,
+	}: IRequest): Promise<void> {
+		const user = await this.credentialsRepository.findById(credentialId);
 
 		if (!user) {
 			throw new AppError("Usuário não encontrado");
@@ -25,9 +35,10 @@ export default class UpdateCredentialsService {
 		const hashedPassword = await this.hashProvider.generateHash(
 			password || "",
 		);
-		await this.credentialsRepository.updateCredential(id, {
+		await this.credentialsRepository.updateCredential(credentialId, {
 			email,
 			password: hashedPassword,
 		});
+		await this.redisCache.invalidate(`${RedisKeys.ME}:${profileId}`);
 	}
 }
