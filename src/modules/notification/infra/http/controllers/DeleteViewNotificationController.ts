@@ -1,9 +1,9 @@
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import DeleteNotificationService from "../../../services/DeleteViewNotificationService";
+import { DeleteNotificationService } from "../../../services/DeleteViewNotificationService";
 
-export default class DeleteNotificationController {
+export class DeleteNotificationController {
 	public async handle(
 		req: Request,
 		res: Response,

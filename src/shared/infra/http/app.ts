@@ -5,9 +5,9 @@ import cors from "cors";
 import "express-async-errors";
 import morgan from "morgan";
 import Queue from "../../lib/bull/Queue";
-import routes from "./routes";
+import { routes } from "./routes";
 import "@shared/container";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 
 export const app = express();
 

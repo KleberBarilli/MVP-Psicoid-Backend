@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { verify, Secret } from "jsonwebtoken";
 
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import authConfig from "@config/auth";
 
 interface ITokenPayload {
@@ -12,7 +12,7 @@ interface ITokenPayload {
 	profileId: string;
 }
 
-export default function isAuthenticated(
+export function isAuthenticated(
 	req: Request,
 	res: Response,
 	next: NextFunction,

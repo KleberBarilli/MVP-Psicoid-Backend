@@ -8,11 +8,11 @@ import {
 	RedisKeys,
 } from "@shared/utils/enums";
 import { ISelectPsychologist } from "../domain/models/ISelectPsychologist";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 
 @injectable()
-export default class SelectPsychologistService {
+export class SelectPsychologistService {
 	constructor(
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import { SubscribeContactService } from "../../../services/SubscribeContactService";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { validateContactMongo } from "@shared/utils/validators/Contact";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
@@ -31,7 +31,7 @@ export class SubscribeContactController {
 					.json({ message: err.message });
 			}
 			return res
-				.status(500)
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
 				.json({ error: "Erro se cadastrar na newsletter" });
 		}
 	}

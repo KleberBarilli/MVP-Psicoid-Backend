@@ -5,7 +5,7 @@ import { RedisKeys } from "@shared/utils/enums";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 
 @injectable()
-export default class UpdateCustomerService {
+export class UpdateCustomerService {
 	constructor(
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,

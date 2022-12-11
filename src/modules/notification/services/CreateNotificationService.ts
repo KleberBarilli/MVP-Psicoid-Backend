@@ -1,5 +1,5 @@
 import { Notification } from "@prisma/client";
-import prisma from "@shared/prisma";
+import { prisma } from "@shared/prisma";
 import { emitEvent } from "@shared/lib/socket.io";
 import { RedisCache } from "@shared/cache/RedisCache";
 import { RedisKeys } from "@shared/utils/enums";

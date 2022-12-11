@@ -1,11 +1,11 @@
 import { injectable, inject } from "tsyringe";
 import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { HTTP_STATUS_CODE, RedisKeys } from "@shared/utils/enums";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 
 @injectable()
-export default class DeleteReviewService {
+export class DeleteReviewService {
 	constructor(
 		@inject("ReviewsRepository")
 		private reviewsRepository: IReviewsRepository,

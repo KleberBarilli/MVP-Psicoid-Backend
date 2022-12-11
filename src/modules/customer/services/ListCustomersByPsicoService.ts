@@ -4,7 +4,7 @@ import { ICustomer } from "../domain/models/ICustomer";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 
 @injectable()
-export default class ShowCustomerService {
+export class ListCustomersByPsicoService {
 	constructor(
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,

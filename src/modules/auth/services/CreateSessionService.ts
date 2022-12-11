@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
 import { sign, Secret } from "jsonwebtoken";
 import authConfig from "@config/auth";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { ICreateSession } from "../domain/models/ICreateSession";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 import { ISession } from "../domain/models/ISession";
 @injectable()
-class CreateSessionService {
+export class CreateSessionService {
 	constructor(
 		@inject("CredentialsRepository")
 		private credentialsRepository: ICredentialsRepository,
@@ -53,5 +53,3 @@ class CreateSessionService {
 		};
 	}
 }
-
-export default CreateSessionService;

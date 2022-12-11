@@ -4,7 +4,7 @@ import { IRedisCache } from "@shared/cache/IRedisCache";
 import { RedisKeys } from "@shared/utils/enums";
 
 @injectable()
-export default class AddApproachService {
+export class AddApproachService {
 	constructor(
 		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,

@@ -1,7 +1,6 @@
 import { injectable, inject } from "tsyringe";
 import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
 import authConfig from "@config/auth";
-import { Invite } from "@prisma/client";
 import { sign, Secret } from "jsonwebtoken";
 import Queue from "@shared/lib/bull/Queue";
 import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";

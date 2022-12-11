@@ -1,10 +1,10 @@
-import UpdateCredentialsService from "@modules/auth/services/UpdateCredentials";
-import AppError from "@shared/errors/AppError";
+import { UpdateCredentialsService } from "@modules/auth/services/UpdateCredentials";
+import { AppError } from "@shared/errors/AppError";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-export default class UpdateCredentialsController {
+export class UpdateCredentialsController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		const { email, password } = req.body;
 		const { id, profileId } = req.user;

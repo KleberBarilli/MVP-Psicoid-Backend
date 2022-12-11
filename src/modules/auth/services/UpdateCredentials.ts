@@ -1,5 +1,5 @@
 import { IRedisCache } from "@shared/cache/IRedisCache";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { RedisKeys } from "@shared/utils/enums";
 import { inject, injectable } from "tsyringe";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
@@ -12,7 +12,7 @@ interface IRequest {
 	password: string;
 }
 @injectable()
-export default class UpdateCredentialsService {
+export class UpdateCredentialsService {
 	constructor(
 		@inject("CredentialsRepository")
 		private credentialsRepository: ICredentialsRepository,

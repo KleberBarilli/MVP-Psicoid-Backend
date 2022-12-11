@@ -11,7 +11,7 @@ interface IRequest {
 	pagination: IPagination;
 }
 @injectable()
-export default class ListReviewsByPsicoService {
+export class ListReviewsByPsicoService {
 	constructor(
 		@inject("ReviewsRepository")
 		private reviewsRepository: IReviewsRepository,

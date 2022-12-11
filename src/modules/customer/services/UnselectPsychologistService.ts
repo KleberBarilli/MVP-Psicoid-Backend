@@ -4,7 +4,7 @@ import { injectable, inject } from "tsyringe";
 import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
 
 @injectable()
-export default class UnselectPsychologistService {
+export class UnselectPsychologistService {
 	constructor(
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,

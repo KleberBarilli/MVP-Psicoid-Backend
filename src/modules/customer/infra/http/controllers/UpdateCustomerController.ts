@@ -5,9 +5,10 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { validateContact } from "@shared/utils/validators/Contact";
 import { validateUpdateProfile } from "@shared/utils/validators/Profile";
 import { sendBadRequest } from "@shared/errors/BadRequest";
-import UpdateCustomerService from "@modules/customer/services/UpdateCustomerService";
+import { UpdateCustomerService } from "@modules/customer/services/UpdateCustomerService";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class UpdateCustomerController {
+export class UpdateCustomerController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
@@ -20,28 +21,33 @@ export default class UpdateCustomerController {
 			]);
 
 			const service = container.resolve(UpdateCustomerService);
-			const user = await service.execute(profileId, {
+			await service.execute({
+				id: profileId,
 				profile,
 				contact,
 				selectedPsychologistId,
 			});
 
-			return res.status(204).json({
-				message: "Customer updated with success",
-				data: user,
-			});
+			return res.status(HTTP_STATUS_CODE.NO_CONTENT);
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === "P2002") {
-					return res.status(400).json({
+					return res.status(HTTP_STATUS_CODE.CONFLICT).json({
 						error: "Já existe um CPF igual cadastrado no sistema.",
 					});
 				}
 			}
 			if (error instanceof ValidationError) {
-				return sendBadRequest(req, res, error.message, 400);
+				return sendBadRequest(
+					req,
+					res,
+					error.message,
+					HTTP_STATUS_CODE.BAD_REQUEST,
+				);
 			}
-			return res.status(500).json({ error: "Internal Error" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Internal Error" });
 		}
 	}
 }

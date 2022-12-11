@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import CreateAppointmentService from "@modules/schedule/services/CreateAppointmentService";
+import { CreateAppointmentService } from "@modules/schedule/services/CreateAppointmentService";
 import Queue from "@shared/lib/bull/Queue";
 import { TypeNotification } from "@prisma/client";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class CreateAppointmentController {
+export class CreateAppointmentController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -49,13 +50,15 @@ export default class CreateAppointmentController {
 						? { customerId }
 						: { psychologistId },
 			});
-			res.status(201).json({
+			res.status(HTTP_STATUS_CODE.CREATED).json({
 				message: "Appointment adicionado com sucesso",
 				data: appointment,
 			});
 			next();
 		} catch (error) {
-			return res.status(500).json({ error: "Internal Error" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Internal Error" });
 		}
 	}
 }

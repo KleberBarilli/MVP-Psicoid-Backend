@@ -5,7 +5,7 @@ import { injectable, inject } from "tsyringe";
 import { INotificationsRepository } from "../domain/repositories/INotificationsRepository";
 
 @injectable()
-export default class HandleAllNotificationsService {
+export class HandleAllNotificationsService {
 	constructor(
 		@inject("NotificationsRepository")
 		private notificationsRepository: INotificationsRepository,

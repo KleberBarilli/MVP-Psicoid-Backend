@@ -12,7 +12,7 @@ const execSync = util.promisify(exec);
 
 const prismaBinary = "./node_modules/.bin/prisma";
 
-export default class PrismaTestEnvironment extends NodeEnvironment {
+export class PrismaTestEnvironment extends NodeEnvironment {
 	public schema: string;
 	public connectionString: string;
 

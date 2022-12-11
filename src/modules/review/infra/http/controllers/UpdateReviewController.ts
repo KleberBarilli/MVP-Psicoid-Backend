@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import UpdateReviewService from "@modules/review/services/UpdateReviewService";
+import { UpdateReviewService } from "@modules/review/services/UpdateReviewService";
 import { validateReview } from "@shared/utils/validators/Review";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import { ValidationError } from "yup";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class UpdateReviewController {
+export class UpdateReviewController {
 	public async handle(
 		req: Request,
 		res: Response,

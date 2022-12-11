@@ -1,4 +1,4 @@
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { inject, injectable } from "tsyringe";
 import { ICreateUnsub } from "../domain/models/ICreateUnsub";

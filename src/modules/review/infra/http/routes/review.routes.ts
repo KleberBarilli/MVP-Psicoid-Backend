@@ -1,18 +1,18 @@
 import { Router } from "express";
-import isAuthenticated from "@shared/infra/http/middlewares/isAuthenticated";
-import CreateReviewController from "../controllers/CreateReviewController";
-import UpdateReviewController from "../controllers/UpdateReviewController";
-import ShowReviewController from "../controllers/ShowReviewController";
-import ListReviewByPsicoController from "../controllers/ListReviewsByPsicoController";
-import DeleteReviewController from "../controllers/DeleteReviewController";
+import { isAuthenticated } from "@shared/infra/http/middlewares/isAuthenticated";
+import { CreateReviewController } from "../controllers/CreateReviewController";
+import { UpdateReviewController } from "../controllers/UpdateReviewController";
+import { ShowReviewController } from "../controllers/ShowReviewController";
+import { ListReviewByPsicoController } from "../controllers/ListReviewsByPsicoController";
+import { DeleteReviewController } from "../controllers/DeleteReviewController";
 import { pagination } from "@shared/infra/http/middlewares/pagination";
 import { handleRole } from "@shared/infra/http/middlewares/handleRole";
-import AddLikeController from "../controllers/AddLikeController";
-import RemoveLikeController from "../controllers/RemoveLikeController";
-import CreateLogController from "@modules/log/infra/http/controllers/CreateLogController";
+import { AddLikeController } from "../controllers/AddLikeController";
+import { RemoveLikeController } from "../controllers/RemoveLikeController";
+import { CreateLogController } from "@modules/log/infra/http/controllers/CreateLogController";
 import { defaultApiLimiter } from "@shared/infra/http/middlewares/rateLimiter";
 
-const reviewRouter = Router();
+export const reviewRouter = Router();
 
 reviewRouter.post(
 	"/",
@@ -57,5 +57,3 @@ reviewRouter.delete(
 	new RemoveLikeController().handle,
 	CreateLogController.handle(),
 );
-
-export default reviewRouter;

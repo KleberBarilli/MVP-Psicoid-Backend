@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import { UnsubscribeContactService } from "../../../services/UnsubscribeContactService";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 
 export class UnsubscribeContactController {
 	public async handle(

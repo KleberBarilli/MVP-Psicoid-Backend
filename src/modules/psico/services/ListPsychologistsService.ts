@@ -9,7 +9,7 @@ import { arrAvg } from "@shared/utils/etc";
 import { RedisKeys } from "@shared/utils/enums";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 @injectable()
-export default class ListPsychologistsService {
+export class ListPsychologistsService {
 	constructor(
 		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,

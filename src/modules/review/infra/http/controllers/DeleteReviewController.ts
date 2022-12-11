@@ -1,10 +1,11 @@
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { sendBadRequest } from "@shared/errors/BadRequest";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import DeleteReviewService from "../../../services/DeleteReviewService";
+import { DeleteReviewService } from "../../../services/DeleteReviewService";
 
-export default class DeleteReviewController {
+export class DeleteReviewController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -17,7 +18,9 @@ export default class DeleteReviewController {
 			const service = container.resolve(DeleteReviewService);
 			await service.execute(id, profileId);
 
-			res.status(200).json({ message: "Review removida com sucesso" });
+			res.status(HTTP_STATUS_CODE.OK).json({
+				message: "Review removida com sucesso",
+			});
 			next();
 		} catch (error) {
 			if (error instanceof AppError) {
@@ -29,7 +32,7 @@ export default class DeleteReviewController {
 				);
 			}
 			return res
-				.status(500)
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
 				.json({ error: "Houve um erro ao remover a review" });
 		}
 	}

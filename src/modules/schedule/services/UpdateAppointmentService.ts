@@ -4,7 +4,7 @@ import { IUpdateAppointment } from "../domain/models/IUpdateAppointment";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
 
 @injectable()
-export default class UpdateAppointmentService {
+export class UpdateAppointmentService {
 	constructor(
 		@inject("AppointmentsRepository")
 		private appointmentsRepository: IAppointmentsRepository,

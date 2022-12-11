@@ -1,9 +1,9 @@
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import AddApproachService from "../../../services/AddApproachService";
+import { AddApproachService } from "../../../services/AddApproachService";
 
-export default class AddApproachController {
+export class AddApproachController {
 	public async handle(
 		req: Request,
 		res: Response,

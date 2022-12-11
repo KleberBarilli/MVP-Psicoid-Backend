@@ -1,9 +1,9 @@
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import RemoveApproachService from "../../../services/RemoveApproachService";
+import { RemoveApproachService } from "../../../services/RemoveApproachService";
 
-export default class RemoveApproachController {
+export class RemoveApproachController {
 	public async handle(
 		req: Request,
 		res: Response,

@@ -12,7 +12,7 @@ interface IRequest {
 	resume: string | null;
 }
 @injectable()
-export default class UpdatePsychologistService {
+export class UpdatePsychologistService {
 	constructor(
 		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,

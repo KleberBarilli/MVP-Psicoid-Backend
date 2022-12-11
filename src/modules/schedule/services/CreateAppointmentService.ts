@@ -4,7 +4,7 @@ import { ICreateAppointment } from "../domain/models/ICreateAppointment";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
 
 @injectable()
-export default class CreateAppointmentService {
+export class CreateAppointmentService {
 	constructor(
 		@inject("AppointmentsRepository")
 		private appointmentsRepository: IAppointmentsRepository,

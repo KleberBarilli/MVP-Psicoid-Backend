@@ -1,4 +1,4 @@
-import prisma from "@shared/prisma";
+import { prisma } from "@shared/prisma";
 import { IReviewsRepository } from "../../../domain/repositories/IReviewsRepository";
 import { ICreateReview } from "@modules/review/domain/models/ICreateReview";
 import { IReview } from "@shared/interfaces/IReview";
@@ -10,7 +10,7 @@ import {
 	IRemoveLikeResponse,
 } from "@modules/review/domain/models/ILike";
 
-export default class ReviewsRepository implements IReviewsRepository {
+export class ReviewsRepository implements IReviewsRepository {
 	public create(data: ICreateReview): Promise<IReview> {
 		return prisma.review.create({ data });
 	}

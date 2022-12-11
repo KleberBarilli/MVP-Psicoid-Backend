@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 
 @injectable()
-export default class DeactivateAccountService {
+export class DeactivateAccountService {
 	constructor(
 		@inject("CredentialsRepository")
 		private credentialsRepository: ICredentialsRepository,

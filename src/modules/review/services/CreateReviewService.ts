@@ -1,5 +1,5 @@
 import { IRedisCache } from "@shared/cache/IRedisCache";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { RedisKeys } from "@shared/utils/enums";
 import { injectable, inject } from "tsyringe";
 import { ICreateReview } from "../domain/models/ICreateReview";
@@ -7,7 +7,7 @@ import { IReviewCreated } from "../domain/models/IReviewCreated";
 import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
 
 @injectable()
-export default class CreateReviewService {
+export class CreateReviewService {
 	constructor(
 		@inject("ReviewsRepository")
 		private reviewsRepository: IReviewsRepository,

@@ -1,10 +1,10 @@
-import prisma from "@shared/prisma";
+import { prisma } from "@shared/prisma";
 import { IAppointmentsRepository } from "@modules/schedule/domain/repositories/IAppointmentsRepository";
 import { ICreateAppointment } from "@modules/schedule/domain/models/ICreateAppointment";
 import { IAppointment } from "@modules/schedule/domain/models/IAppointment";
 import { IUpdateAppointment } from "@modules/schedule/domain/models/IUpdateAppointment";
 
-export default class AppointmentsRepository implements IAppointmentsRepository {
+export class AppointmentsRepository implements IAppointmentsRepository {
 	public create({
 		psychologistId,
 		customerId,

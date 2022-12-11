@@ -10,7 +10,7 @@ interface IRequest {
 	profileId: string;
 }
 @injectable()
-export default class WhoiamService {
+export class WhoiamService {
 	constructor(
 		@inject("CredentialsRepository")
 		private credentialsRepository: ICredentialsRepository,

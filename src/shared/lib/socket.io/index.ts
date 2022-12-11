@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import config from "@config/socket";
+import { config } from "@config/socket";
 
 export const emitEvent = (event: any, payload: any) => {
 	const socket = io(config.SOCKET_URI);

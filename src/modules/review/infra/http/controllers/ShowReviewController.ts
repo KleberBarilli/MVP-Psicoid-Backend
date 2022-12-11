@@ -1,8 +1,9 @@
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import ShowReviewService from "../../../services/ShowReviewService";
+import { ShowReviewService } from "../../../services/ShowReviewService";
 
-export default class ShowReviewController {
+export class ShowReviewController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -12,11 +13,11 @@ export default class ShowReviewController {
 			const { id } = req.params;
 			const service = container.resolve(ShowReviewService);
 			const review = await service.execute(id);
-			res.status(200).json({ data: review });
+			res.status(HTTP_STATUS_CODE.OK).json({ data: review });
 			next();
 		} catch (error) {
 			return res
-				.status(400)
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
 				.json({ error: "Houve um erro ao buscar a review" });
 		}
 	}

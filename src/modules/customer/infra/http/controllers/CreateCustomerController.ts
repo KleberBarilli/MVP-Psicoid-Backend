@@ -6,11 +6,12 @@ import { validateCredentials } from "@shared/utils/validators/Credentials";
 import { validateContact } from "@shared/utils/validators/Contact";
 import { validateProfile } from "@shared/utils/validators/Profile";
 import { sendBadRequest } from "@shared/errors/BadRequest";
-import CreateCustomerService from "../../../services/CreateCustomerService";
-import CreateSessionService from "@modules/auth/services/CreateSessionService";
-import AppError from "@shared/errors/AppError";
+import { CreateCustomerService } from "../../../services/CreateCustomerService";
+import { CreateSessionService } from "@modules/auth/services/CreateSessionService";
+import { AppError } from "@shared/errors/AppError";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class CreateCustomerController {
+export class CreateCustomerController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
@@ -38,14 +39,14 @@ export default class CreateCustomerController {
 				email: credentials.email.toLowerCase(),
 				password: credentials.password,
 			});
-			return res.status(201).json({
+			return res.status(HTTP_STATUS_CODE.CREATED).json({
 				message: "Customer created with success",
 				data: { user, session },
 			});
 		} catch (error) {
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === "P2002") {
-					return res.status(400).json({
+					return res.status(HTTP_STATUS_CODE.CONFLICT).json({
 						error: "Já existe um CPF igual cadastrado no sistema.",
 					});
 				}
@@ -61,8 +62,9 @@ export default class CreateCustomerController {
 					error.statusCode,
 				);
 			}
-			console.log(error);
-			return res.status(500).json({ error: "Internal Error" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Internal Error" });
 		}
 	}
 }

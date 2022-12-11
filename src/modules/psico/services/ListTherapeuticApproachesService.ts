@@ -5,7 +5,7 @@ import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { ITherapeuticApproache } from "@shared/interfaces/IApproache";
 
 @injectable()
-export default class ListTherapeuticApproachesService {
+export class ListTherapeuticApproachesService {
 	constructor(
 		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,

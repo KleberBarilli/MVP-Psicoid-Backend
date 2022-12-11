@@ -1,11 +1,11 @@
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import UpdateNotificationService from "../../../services/UpdateViewNotificationService";
+import { UpdateNotificationService } from "../../../services/UpdateViewNotificationService";
 
-export default class UpdateNotificationController {
+export class UpdateViewNotificationController {
 	public async handle(
 		req: Request,
 		res: Response,

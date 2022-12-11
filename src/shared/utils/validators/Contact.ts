@@ -1,4 +1,3 @@
-import { IContact } from "@modules/newsletter/domain/models/IContact";
 import * as yup from "yup";
 
 interface IContactForm {

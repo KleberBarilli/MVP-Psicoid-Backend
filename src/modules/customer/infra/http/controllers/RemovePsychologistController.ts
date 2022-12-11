@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import RemovePsychologistService from "@modules/customer/services/RemovePsychologistService";
+import { RemovePsychologistService } from "@modules/customer/services/RemovePsychologistService";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class RemovePsychologistController {
+export class RemovePsychologistController {
 	public async handle(
 		req: Request,
 		res: Response,

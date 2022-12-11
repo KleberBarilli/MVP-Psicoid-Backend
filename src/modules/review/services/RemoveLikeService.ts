@@ -4,7 +4,7 @@ import { injectable, inject } from "tsyringe";
 import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
 
 @injectable()
-export default class RemoveLikeService {
+export class RemoveLikeService {
 	constructor(
 		@inject("ReviewsRepository")
 		private reviewsRepository: IReviewsRepository,

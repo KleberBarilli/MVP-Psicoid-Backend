@@ -11,7 +11,7 @@ interface IRequest {
 	pagination: IPagination;
 }
 @injectable()
-export default class ListNotificationService {
+export class ListNotificationService {
 	constructor(
 		@inject("NotificationsRepository")
 		private notificationsRepository: INotificationsRepository,

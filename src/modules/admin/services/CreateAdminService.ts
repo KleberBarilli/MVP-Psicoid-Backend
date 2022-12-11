@@ -1,13 +1,13 @@
 import { ICredentialsRepository } from "@modules/auth/domain/repositories/ICredentialsRepository";
 import { IHashProvider } from "@modules/auth/providers/HashProvider/models/IHashProvider";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { ICredentialResponse } from "@shared/interfaces/ICredential";
 import { inject, injectable } from "tsyringe";
 import { ICreateAdmin } from "../domain/models/ICreateAdmin";
 import { IAdminsRepository } from "../domain/repositories/IAdminsRepository";
 
 @injectable()
-export default class CreateAdminService {
+export class CreateAdminService {
 	constructor(
 		@inject("AdminsRepository")
 		private adminsRepository: IAdminsRepository,

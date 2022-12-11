@@ -7,11 +7,12 @@ import { validateAddress } from "@shared/utils/validators/Address";
 import { validateContact } from "@shared/utils/validators/Contact";
 import { validateProfile } from "@shared/utils/validators/Profile";
 import { sendBadRequest } from "@shared/errors/BadRequest";
-import CreatePsychologistService from "../../../services/CreatePsychologistService";
-import CreateSessionService from "@modules/auth/services/CreateSessionService";
-import AppError from "@shared/errors/AppError";
+import { CreatePsychologistService } from "../../../services/CreatePsychologistService";
+import { CreateSessionService } from "@modules/auth/services/CreateSessionService";
+import { AppError } from "@shared/errors/AppError";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class CreatePsychologistController {
+export class CreatePsychologistController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const {
@@ -38,7 +39,7 @@ export default class CreatePsychologistController {
 				email: credentials.email.toLowerCase(),
 				password,
 			});
-			return res.status(201).json({
+			return res.status(HTTP_STATUS_CODE.CREATED).json({
 				message: "Psychologist created with success",
 				data: { user, session },
 			});
@@ -46,13 +47,18 @@ export default class CreatePsychologistController {
 			console.log(error);
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === "P2002") {
-					return res.status(400).json({
+					return res.status(HTTP_STATUS_CODE.CONFLICT).json({
 						error: "Já existe um CPF ou CNPJ igual cadastrado no sistema.",
 					});
 				}
 			}
 			if (error instanceof ValidationError) {
-				return sendBadRequest(req, res, error.message, 400);
+				return sendBadRequest(
+					req,
+					res,
+					error.message,
+					HTTP_STATUS_CODE.BAD_REQUEST,
+				);
 			}
 			if (error instanceof AppError) {
 				return sendBadRequest(
@@ -62,7 +68,9 @@ export default class CreatePsychologistController {
 					error.statusCode,
 				);
 			}
-			return res.status(500).json({ error });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error });
 		}
 	}
 }

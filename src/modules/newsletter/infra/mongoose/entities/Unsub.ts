@@ -19,4 +19,7 @@ const UnsubSchema = new Schema(
 	},
 );
 
-export default mongoose.model<UnsubDocument, UnsubModel>("Unsubs", UnsubSchema);
+export const modelUnsub = mongoose.model<UnsubDocument, UnsubModel>(
+	"Unsubs",
+	UnsubSchema,
+);

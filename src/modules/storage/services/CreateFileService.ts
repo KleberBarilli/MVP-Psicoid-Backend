@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import { IStorageRequest } from "../domain/models/IStorageRequest";
 import { IStorageRepository } from "../domain/repositories/IStorageRepository";
-import S3StorageProvider, { IPutObject } from "../providers/S3StorageProvider";
+import { S3StorageProvider, IPutObject } from "../providers/S3StorageProvider";
 
 @injectable()
-export default class StorageService {
+export class CreateFileService {
 	#storage;
 
 	constructor(

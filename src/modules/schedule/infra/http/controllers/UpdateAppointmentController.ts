@@ -4,7 +4,7 @@ import UpdateAppointmentService from "@modules/schedule/services//UpdateAppointm
 import Queue from "@shared/lib/bull/Queue";
 import { TypeNotification } from "@prisma/client";
 
-export default class UpdateAppointmentController {
+export class UpdateAppointmentController {
 	public async handle(
 		req: Request,
 		res: Response,

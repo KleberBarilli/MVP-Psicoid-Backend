@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import RemoveLikeService from "@modules/review/services/RemoveLikeService";
+import { RemoveLikeService } from "@modules/review/services/RemoveLikeService";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class RemoveLikeController {
+export class RemoveLikeController {
 	public async handle(
 		req: Request,
 		res: Response,

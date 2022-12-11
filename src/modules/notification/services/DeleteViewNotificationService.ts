@@ -1,6 +1,6 @@
 import { View } from "@prisma/client";
 import { IRedisCache } from "@shared/cache/IRedisCache";
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 import { RedisKeys } from "@shared/utils/enums";
 import { injectable, inject } from "tsyringe";
 import { INotificationsRepository } from "../domain/repositories/INotificationsRepository";
@@ -11,7 +11,7 @@ interface IRequest {
 	profileId: string;
 }
 @injectable()
-export default class DeleteNotificationService {
+export class DeleteNotificationService {
 	constructor(
 		@inject("NotificationsRepository")
 		private notificationsRepository: INotificationsRepository,

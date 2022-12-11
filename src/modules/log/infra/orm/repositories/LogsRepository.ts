@@ -1,8 +1,8 @@
 import { ICreateLog } from "@modules/log/domain/models/ICreateLog";
 import { ILogsRepository } from "@modules/log/domain/repositories/ILogsRepository";
-import logModel from "../entities/LogMongo";
+import { logModel } from "../entities/LogMongo";
 
-export default class LogsRepository implements ILogsRepository {
+export class LogsRepository implements ILogsRepository {
 	public createOnMongo({
 		profile,
 		profileId,

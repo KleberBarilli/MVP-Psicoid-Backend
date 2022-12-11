@@ -1,4 +1,4 @@
-import prisma from "@shared/prisma";
+import { prisma } from "@shared/prisma";
 import { ICreateCustomer } from "../../../domain/models/ICreateCustomer";
 import { ICustomersRepository } from "../../../domain/repositories/ICustomersRepository";
 import { CustomerEntity } from "../entities/Customer";
@@ -7,7 +7,7 @@ import { ICustomer } from "@modules/customer/domain/models/ICustomer";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { ICreateGuest } from "@modules/customer/domain/models/ICreateGuest";
 
-export default class CustomersRepository implements ICustomersRepository {
+export class CustomersRepository implements ICustomersRepository {
 	public create({
 		credential,
 		profile,

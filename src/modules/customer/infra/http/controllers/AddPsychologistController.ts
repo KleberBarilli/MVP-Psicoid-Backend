@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import AddPsychologistService from "@modules/customer/services/AddPsychologistService";
+import { AddPsychologistService } from "@modules/customer/services/AddPsychologistService";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
-export default class AddPsychologistController {
+export class AddPsychologistController {
 	public async handle(
 		req: Request,
 		res: Response,
@@ -20,12 +20,12 @@ export default class AddPsychologistController {
 				selected,
 			});
 
-			res.status(HTTP_STATUS_CODE.NO_CONTENT).json({
-				message: "Adicionado com sucesso",
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
-			return res.status(500).json({ error: "Internal Error" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Internal Error" });
 		}
 	}
 }

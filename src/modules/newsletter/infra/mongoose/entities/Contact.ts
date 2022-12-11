@@ -49,7 +49,7 @@ ContactSchema.statics.findByTags = function findByTags(
 	});
 };
 
-export default mongoose.model<ContactDocument, ContactModel>(
+export const contactModel = mongoose.model<ContactDocument, ContactModel>(
 	"Contacts",
 	ContactSchema,
 );

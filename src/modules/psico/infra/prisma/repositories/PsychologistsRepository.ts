@@ -1,4 +1,4 @@
-import prisma from "@shared/prisma";
+import { prisma } from "@shared/prisma";
 import { ICreatePsychologist } from "../../../domain/models/ICreatePsychologist";
 import { IPsychologistsRepository } from "../../../domain/repositories/IPsychologistsRepository";
 import { PsychologistEntity } from "../entities/Psychologist";
@@ -9,9 +9,7 @@ import { ISearch } from "@shared/interfaces/IPagination";
 import { ICreateInvite } from "@modules/psico/domain/models/ICreateInvite";
 import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
 
-export default class PsychologistsRepository
-	implements IPsychologistsRepository
-{
+export class PsychologistsRepository implements IPsychologistsRepository {
 	private async makePrismaWhere(search: ISearch): Promise<any> {
 		const filters = {
 			psicoName: search?.psicoName
