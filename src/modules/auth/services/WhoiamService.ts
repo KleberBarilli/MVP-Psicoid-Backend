@@ -1,6 +1,6 @@
 import { IRedisCache } from "@shared/cache/IRedisCache";
 import { ICredential } from "@shared/interfaces/ICredential";
-import { RedisKeys } from "@shared/utils/enums";
+import { RedisKeys, ROLE_TYPE } from "@shared/utils/enums";
 import { inject, injectable } from "tsyringe";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 
@@ -17,6 +17,33 @@ export default class WhoiamService {
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
+	private async iamCustomer(id: string, profileId: string) {
+		let user: any;
+		user = await this.credentialsRepository.iAmCustomer(id);
+		user.customer.psychologists.map(
+			(el: { id: string; selected: boolean }) => {
+				if (el.id === user.customer.selectedPsychologistId) {
+					el.selected = true;
+				}
+				return el;
+			},
+		);
+		await this.redisCache.save(`${RedisKeys.ME}:${profileId}`, user);
+		return user;
+	}
+
+	private async iamPsico(id: string, profileId: string) {
+		const psico = await this.credentialsRepository.iAmPsico(id);
+		await this.redisCache.save(`${RedisKeys.ME}:${profileId}`, psico);
+		return psico;
+	}
+
+	private async iamAdmin(id: string, profileId: string) {
+		const admin = await this.credentialsRepository.iAmAdmin(id);
+		await this.redisCache.save(`${RedisKeys.ME}:${profileId}`, admin);
+		return admin;
+	}
+
 	public async execute({
 		credentialId,
 		profile,
@@ -25,55 +52,19 @@ export default class WhoiamService {
 		let user = await this.redisCache.recover<any>(
 			`${RedisKeys.ME}:${profileId}`,
 		);
+		if (user) {
+			return user;
+		}
+
 		switch (profile) {
-			case "CUSTOMER":
-				if (!user) {
-					user = await this.credentialsRepository.iAmCustomer(
-						credentialId,
-					);
-					await this.redisCache.save(
-						`${RedisKeys.ME}:${profileId}`,
-						user,
-					);
-				}
-
-				user.customer.psychologists.map(
-					(el: { id: string; selected: boolean }) => {
-						if (el.id === user.customer.selectedPsychologistId) {
-							el.selected = true;
-						}
-						return el;
-					},
-				);
-
-				return user;
-			case "PSYCHOLOGIST":
-				if (!user) {
-					user = await this.credentialsRepository.iAmPsico(
-						credentialId,
-					);
-					await this.redisCache.save(
-						`${RedisKeys.ME}:${profileId}`,
-						user,
-					);
-					return user;
-				}
-				break;
-			case "ADMIN":
-				if (!user) {
-					user = await this.credentialsRepository.iAmAdmin(
-						credentialId,
-					);
-					await this.redisCache.save(
-						`${RedisKeys.ME}:${profileId}`,
-						user,
-					);
-					return user;
-				}
-				break;
+			case ROLE_TYPE.customer:
+				return this.iamCustomer(credentialId, profileId);
+			case ROLE_TYPE.psychologist:
+				return this.iamPsico(credentialId, profileId);
+			case ROLE_TYPE.admin:
+				return this.iamAdmin(credentialId, profileId);
 			default:
 				return null;
 		}
-		return user;
 	}
 }
