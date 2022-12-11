@@ -7,7 +7,6 @@ import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { IPsychologistShortUpdate } from "@modules/psico/domain/models/IPsychologist";
 import { ISearch } from "@shared/interfaces/IPagination";
 import { ICreateInvite } from "@modules/psico/domain/models/ICreateInvite";
-import { Invite } from "@prisma/client";
 import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
 
 export default class PsychologistsRepository

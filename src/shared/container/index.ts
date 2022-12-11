@@ -18,6 +18,8 @@ import { IStorageRepository } from "@modules/storage/domain/repositories/IStorag
 import StorageRepository from "@modules/storage/infra/mongoose/repositories/FilesRepository";
 import { INewslettersRepository } from "@modules/newsletter/domain/repositories/INewslettersRepository";
 import { NewslettersRepository } from "@modules/newsletter/infra/mongoose/repositories/NewslettersRepository";
+import { RedisCache } from "@shared/cache/RedisCache";
+import { IRedisCache } from "@shared/cache/IRedisCache";
 
 container.registerSingleton<ICredentialsRepository>(
 	"CredentialsRepository",
@@ -55,3 +57,4 @@ container.registerSingleton<INewslettersRepository>(
 	"NewslettersRepository",
 	NewslettersRepository,
 );
+container.registerSingleton<IRedisCache>("RedisCache", RedisCache);
