@@ -10,6 +10,8 @@
 
 -   Express - v4.18.1
 
+-   Redis
+
 -   PostgreSQL
 
 -   PrismaDB -v4.1.0
