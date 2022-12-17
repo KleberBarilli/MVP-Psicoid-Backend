@@ -17,7 +17,6 @@ export class UpdateAppointmentService {
 			customerId,
 			price,
 			status,
-			cancellationReason,
 			startsAt,
 			endsAt,
 		}: IUpdateAppointment,
@@ -27,7 +26,6 @@ export class UpdateAppointmentService {
 			customerId,
 			price,
 			status,
-			cancellationReason,
 			startsAt: add(startsAt, { hours: 3 }),
 			endsAt: add(endsAt, { hours: 3 }),
 		});

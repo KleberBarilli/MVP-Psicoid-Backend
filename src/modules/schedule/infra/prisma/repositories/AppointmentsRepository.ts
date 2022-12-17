@@ -1,10 +1,17 @@
-import { prisma } from "@shared/prisma";
+import { prisma as prismaService } from "@shared/prisma";
 import { IAppointmentsRepository } from "@modules/schedule/domain/repositories/IAppointmentsRepository";
 import { ICreateAppointment } from "@modules/schedule/domain/models/ICreateAppointment";
-import { IAppointment } from "@modules/schedule/domain/models/IAppointment";
+import {
+	IAppointment,
+	ICancel,
+	IFindManyByCustomer,
+	IFindManyByPsico,
+} from "@modules/schedule/domain/models/IAppointment";
 import { IUpdateAppointment } from "@modules/schedule/domain/models/IUpdateAppointment";
 
 export class AppointmentsRepository implements IAppointmentsRepository {
+	constructor(private prisma: typeof prismaService) {}
+
 	public create({
 		psychologistId,
 		customerId,
@@ -13,7 +20,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 		startsAt,
 		endsAt,
 	}: ICreateAppointment): Promise<IAppointment> {
-		return prisma.appointment.create({
+		return this.prisma.appointment.create({
 			data: {
 				createdBy,
 				price,
@@ -32,21 +39,56 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 			customerId,
 			price,
 			status,
-			cancellationReason,
 			endsAt,
 			startsAt,
 		}: IUpdateAppointment,
 	): Promise<IAppointment> {
-		return prisma.appointment.update({
+		return this.prisma.appointment.update({
 			where: { id },
 			data: {
 				price,
 				status,
-				cancellationReason,
 				endsAt,
 				startsAt,
 				psychologist: { connect: { id: psychologistId } },
 				customer: { connect: { id: customerId } },
+			},
+		});
+	}
+	findOne(id: string): Promise<IAppointment | null> {
+		return this.prisma.appointment.findUnique({ where: { id } });
+	}
+	async findManyByPsico({
+		psychologistId,
+		pagination,
+	}: IFindManyByPsico): Promise<IAppointment[]> {
+		const { filter, sort, skip, order, take } = pagination;
+		return this.prisma.appointment.findMany({
+			where: { psychologistId, ...filter },
+			orderBy: { [sort]: order },
+			skip,
+			take,
+		});
+	}
+	async findManyByCustomer({
+		customerId,
+		pagination,
+	}: IFindManyByCustomer): Promise<IAppointment[]> {
+		const { filter, sort, skip, order, take } = pagination;
+		return this.prisma.appointment.findMany({
+			where: { customerId, ...filter },
+			orderBy: { [sort]: order },
+			skip,
+			take,
+		});
+	}
+	async cancel({ appointmentId, closedBy, reason }: ICancel): Promise<void> {
+		await this.prisma.closedAppointment.create({
+			data: {
+				appointmentId,
+				closedBy: closedBy ? closedBy : "TIME_EXPIRED",
+				cancellationReason: reason,
+				cancelAt: new Date(),
 			},
 		});
 	}

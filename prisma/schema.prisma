@@ -122,12 +122,11 @@ model Customer {
     profile    Profile?    @relation(fields: [profileId], references: [id])
     guest      Guest?      @relation(fields: [guestId], references: [id])
 
-    psychologists      Psychologist[]
-    reviews            Review[]
-    likes              Like[]
-    appointments       Appointment[]
-    views              View[]
-    closedAppointments ClosedAppointment[]
+    psychologists Psychologist[]
+    reviews       Review[]
+    likes         Like[]
+    appointments  Appointment[]
+    views         View[]
 
     @@map("customers")
 }
@@ -161,14 +160,12 @@ model Psychologist {
     profile    Profile    @relation(fields: [profileId], references: [id])
     office     Office     @relation(fields: [officeId], references: [id])
 
-    customers          Customer[]
-    approaches         TherapeuticApproache[]
-    reviews            Review[]
-    appointments       Appointment[]
-    schedule           Schedule[]
-    views              View[]
-    closedAppointments ClosedAppointment[]
-    invites            Invite[]
+    customers    Customer[]
+    approaches   TherapeuticApproache[]
+    reviews      Review[]
+    appointments Appointment[]
+    views        View[]
+    invites      Invite[]
 
     @@map("psychologists")
 }
@@ -313,14 +310,15 @@ model Appointment {
     psychologistId String @map("psychologist_id") @db.Uuid
     customerId     String @map("customer_id") @db.Uuid
 
-    createdBy          Role              @map("created_by")
-    status             AppointmentStatus @default(ONGOING)
-    cancellationReason String?           @map("cancellation_reason")
-    price              Float?
-    startsAt           DateTime          @map("starts_at") @db.Timestamptz()
-    endsAt             DateTime          @map("ends_at") @db.Timestamptz()
-    createdAt          DateTime          @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt          DateTime          @updatedAt @map("updated_at") @db.Timestamptz()
+    createdBy Role              @map("created_by")
+    status    AppointmentStatus @default(ONGOING)
+
+    price Float?
+
+    startsAt  DateTime @map("starts_at") @db.Timestamptz()
+    endsAt    DateTime @map("ends_at") @db.Timestamptz()
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     closedAppointment ClosedAppointment?
     psychologist      Psychologist       @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
@@ -332,34 +330,16 @@ model Appointment {
 model ClosedAppointment {
     id Int @id @default(autoincrement())
 
-    appointmentId  String  @unique @map("appointment_id") @db.Uuid
-    psychologistId String  @map("psychologist_id") @db.Uuid
-    customerId     String? @map("customer_id") @db.Uuid
+    appointmentId String @unique @map("appointment_id") @db.Uuid
 
-    closedBy    AppointmentCompletedBy @map("closed_by")
-    completedAt DateTime               @map("completed_at") @db.Timestamptz()
-    createdAt   DateTime               @default(now()) @map("created_at") @db.Timestamptz()
+    closedBy           AppointmentCompletedBy @map("closed_by")
+    cancellationReason String?                @map("cancellation_reason")
+    cancelAt           DateTime?              @map("cancel_at") @db.Timestamptz()
+    closedAt           DateTime               @default(now()) @map("closed_at") @db.Timestamptz()
 
-    appointment  Appointment  @relation(fields: [appointmentId], references: [id])
-    psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
-    customer     Customer?    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+    appointment Appointment @relation(fields: [appointmentId], references: [id])
 
     @@map("closed_appointments")
-}
-
-model Schedule {
-    id String @id @default(uuid()) @db.Uuid
-
-    psychologistId String @map("psychologist_id") @db.Uuid
-
-    from      DateTime @db.Timestamptz()
-    to        DateTime @db.Timestamptz()
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
-
-    psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
-
-    @@map("schedules")
 }
 
 model Notification {

@@ -1,4 +1,9 @@
-import { AppointmentStatus, Role } from "@prisma/client";
+import {
+	AppointmentCompletedBy,
+	AppointmentStatus,
+	Role,
+} from "@prisma/client";
+import { IPagination } from "@shared/infra/http/middlewares/pagination";
 
 export interface IAppointment {
 	id: string;
@@ -6,7 +11,6 @@ export interface IAppointment {
 	customerId: string;
 	createdBy: Role;
 	status: AppointmentStatus;
-	cancellationReason: string | null;
 	price: number | null;
 	startsAt: Date;
 	endsAt: Date;
@@ -17,4 +21,19 @@ export interface IAppointment {
 export interface IListAppointment {
 	count: number;
 	IAppointment: [];
+}
+export interface IFindManyByPsico {
+	psychologistId: string;
+	pagination: IPagination;
+}
+
+export interface IFindManyByCustomer {
+	customerId: string;
+	pagination: IPagination;
+}
+
+export interface ICancel {
+	appointmentId: string;
+	closedBy: AppointmentCompletedBy;
+	reason: string | null;
 }
