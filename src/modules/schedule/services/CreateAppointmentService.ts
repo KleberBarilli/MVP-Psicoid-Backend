@@ -18,6 +18,13 @@ export class CreateAppointmentService {
 
 	private async dateIntervals({ starts, ends, psychologistId }: IRequest) {
 		//shedules repo get
+		//find one
+		/// find many by psico
+		// delete one (deletedAt )
+		// find many by customer
+		//
+		//
+		//
 	}
 
 	public async execute({
