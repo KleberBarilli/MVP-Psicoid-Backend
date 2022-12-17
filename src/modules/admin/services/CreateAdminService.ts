@@ -22,7 +22,7 @@ export class CreateAdminService {
 	public async execute({ credential, profile }: ICreateAdmin) {
 		const user = await this.userExists(credential.email);
 		if (user) {
-			throw new AppError("User already exists");
+			throw new AppError({ message: "User already exists" });
 		}
 		credential.password = await this.hashProvider.generateHash(
 			credential.password,

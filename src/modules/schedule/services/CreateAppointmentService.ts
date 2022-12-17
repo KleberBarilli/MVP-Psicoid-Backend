@@ -3,29 +3,14 @@ import { injectable, inject } from "tsyringe";
 import { IAppointment } from "../domain/models/IAppointment";
 import { ICreateAppointment } from "../domain/models/ICreateAppointment";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
+import { checkAvailability } from "../shared/check-schedule-availability";
 
-interface IRequest {
-	starts: Date;
-	ends: Date;
-	psychologistId: string;
-}
 @injectable()
 export class CreateAppointmentService {
 	constructor(
 		@inject("AppointmentsRepository")
 		private appointmentsRepository: IAppointmentsRepository,
 	) {}
-
-	private async dateIntervals({ starts, ends, psychologistId }: IRequest) {
-		//shedules repo get
-		//find one
-		/// find many by psico
-		// delete one (deletedAt )
-		// find many by customer
-		//
-		//
-		//
-	}
 
 	public async execute({
 		psychologistId,
@@ -35,6 +20,12 @@ export class CreateAppointmentService {
 		startsAt,
 		endsAt,
 	}: ICreateAppointment): Promise<IAppointment> {
+		await checkAvailability({
+			psychologistId,
+			customerId,
+			startsAt: add(startsAt, { hours: Number(process.env.TZ_BRAZIL) }),
+			endsAt: add(endsAt, { hours: Number(process.env.TZ_BRAZIL) }),
+		});
 		return this.appointmentsRepository.create({
 			psychologistId,
 			customerId,

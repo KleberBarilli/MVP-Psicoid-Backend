@@ -33,7 +33,7 @@ export class CreatePsychologistService {
 
 		const user = await this.userExists(credential.email);
 		if (user) {
-			throw new AppError("User already exists");
+			throw new AppError({ message: "User already exists" });
 		}
 		credential.password = await this.hashProvider.generateHash(
 			credential.password || "",

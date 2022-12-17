@@ -3,6 +3,7 @@ import {
 	IAppointment,
 	ICancel,
 	ICancelResponse,
+	IFindManyAppointmentWithoutPagination,
 	IFindManyByCustomer,
 	IFindManyByPsico,
 	IUpdateStatus,
@@ -28,4 +29,10 @@ export interface IAppointmentsRepository {
 		reason,
 	}: ICancel): Promise<ICancelResponse>;
 	updateStatus({ id, status }: IUpdateStatus): Promise<void>;
+	findManyByPsicoWithoutPagination(
+		psicoId: string,
+	): Promise<IFindManyAppointmentWithoutPagination[]>;
+	findManyByCustomerWithoutPagination(
+		customerId: string,
+	): Promise<IFindManyAppointmentWithoutPagination[]>;
 }

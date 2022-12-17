@@ -17,7 +17,7 @@ export class ResetPasswordService {
 		const user = await this.credentialsRepository.findByToken(token);
 
 		if (!user) {
-			throw new AppError("Código inválido");
+			throw new AppError({ message: "Código inválido" });
 		}
 		const hashedPassword = await this.hashProvider.generateHash(
 			password || "",

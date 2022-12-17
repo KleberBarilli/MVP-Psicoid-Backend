@@ -5,6 +5,7 @@ import {
 	IAppointment,
 	ICancel,
 	ICancelResponse,
+	IFindManyAppointmentWithoutPagination,
 	IFindManyByCustomer,
 	IFindManyByPsico,
 	IUpdateStatus,
@@ -127,6 +128,23 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 					},
 				},
 			},
+		});
+	}
+	public async findManyByPsicoWithoutPagination(
+		psicoId: string,
+	): Promise<IFindManyAppointmentWithoutPagination[]> {
+		return prisma.appointment.findMany({
+			where: { psychologistId: psicoId },
+			select: { startsAt: true, endsAt: true },
+		});
+	}
+
+	public async findManyByCustomerWithoutPagination(
+		customerId: string,
+	): Promise<IFindManyAppointmentWithoutPagination[]> {
+		return prisma.appointment.findMany({
+			where: { customerId },
+			select: { startsAt: true, endsAt: true },
 		});
 	}
 }

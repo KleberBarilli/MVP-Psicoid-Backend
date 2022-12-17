@@ -16,7 +16,7 @@ export class SendForgotPasswordEmailService {
 		const user = await this.credentialsRepository.findByEmail(email);
 
 		if (!user) {
-			throw new AppError("User does not exists.");
+			throw new AppError({ message: "User does not exists." });
 		}
 
 		const tokenRecovery = generateRandomNumber(6);

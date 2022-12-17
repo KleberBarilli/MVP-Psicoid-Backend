@@ -30,7 +30,7 @@ export class UpdateCredentialsService {
 		const user = await this.credentialsRepository.findById(credentialId);
 
 		if (!user) {
-			throw new AppError("Usuário não encontrado");
+			throw new AppError({ message: "Usuário não encontrado" });
 		}
 		const hashedPassword = await this.hashProvider.generateHash(
 			password || "",

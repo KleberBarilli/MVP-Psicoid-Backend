@@ -41,10 +41,11 @@ export class SelectPsychologistService {
 		);
 
 		if (!isPsicoFav) {
-			throw new AppError(
-				"Não pode selecionar um psicologo que voce não favoritou",
-				HTTP_STATUS_CODE.CONFLICT,
-			);
+			throw new AppError({
+				message:
+					"Não pode selecionar um psicologo que voce não favoritou",
+				statusCode: HTTP_STATUS_CODE.CONFLICT,
+			});
 		}
 
 		await this.customersRepository.selectPsychologist(

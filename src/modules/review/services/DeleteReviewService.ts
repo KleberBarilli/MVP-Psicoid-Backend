@@ -14,10 +14,10 @@ export class DeleteReviewService {
 	public async execute(id: string, customerId: string): Promise<void> {
 		const review = await this.reviewsRepository.findById(id);
 		if (review?.customerId !== customerId) {
-			throw new AppError(
-				"Você não pode apagar um comentário de outra pessoa",
-				HTTP_STATUS_CODE.CONFLICT,
-			);
+			throw new AppError({
+				message: "Você não pode apagar um comentário de outra pessoa",
+				statusCode: HTTP_STATUS_CODE.CONFLICT,
+			});
 		}
 		await this.reviewsRepository.remove(id);
 

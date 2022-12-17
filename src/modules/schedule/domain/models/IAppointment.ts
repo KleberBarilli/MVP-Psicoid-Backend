@@ -51,3 +51,8 @@ export interface IUpdateStatus {
 	id: string;
 	status: APPOINTMENT_STATUS;
 }
+
+export interface IFindManyAppointmentWithoutPagination {
+	startsAt: Date;
+	endsAt: Date;
+}

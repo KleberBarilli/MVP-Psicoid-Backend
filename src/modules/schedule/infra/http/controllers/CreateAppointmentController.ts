@@ -4,6 +4,7 @@ import { CreateAppointmentService } from "@modules/schedule/services/CreateAppoi
 import Queue from "@shared/lib/bull/Queue";
 import { TypeNotification } from "@prisma/client";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
+import { AppError } from "@shared/errors/AppError";
 
 export class CreateAppointmentController {
 	public async handle(
@@ -56,6 +57,11 @@ export class CreateAppointmentController {
 			});
 			next();
 		} catch (error) {
+			if (error instanceof AppError) {
+				return res
+					.status(error.statusCode)
+					.json({ error: error.message });
+			}
 			return res
 				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
 				.json({ error: "Internal Error" });

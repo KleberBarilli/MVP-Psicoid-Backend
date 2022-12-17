@@ -30,7 +30,7 @@ export class UpdateNotificationService {
 			profileId,
 		});
 		if (!view) {
-			throw new AppError("Notification not found");
+			throw new AppError({ message: "Notification not found" });
 		}
 		await this.notificationsRepository.updateView(view.id, isRead);
 

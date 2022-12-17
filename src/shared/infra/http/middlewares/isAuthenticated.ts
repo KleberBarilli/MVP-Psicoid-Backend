@@ -19,7 +19,7 @@ export function isAuthenticated(
 ): void {
 	const authHeader = req.headers.authorization;
 	if (!authHeader) {
-		throw new AppError("JWT Token is missing.");
+		throw new AppError({ message: "JWT Token is missing." });
 	}
 	const [, token] = authHeader.split(" ");
 
@@ -35,6 +35,6 @@ export function isAuthenticated(
 		};
 		return next();
 	} catch {
-		throw new AppError("Invalid JWT Token.", 401);
+		throw new AppError({ message: "Invalid JWT Token.", statusCode: 401 });
 	}
 }

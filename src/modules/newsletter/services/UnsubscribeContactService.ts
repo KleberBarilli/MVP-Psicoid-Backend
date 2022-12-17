@@ -27,10 +27,10 @@ export class UnsubscribeContactService {
 		const contact = await this.repo.findContactByEmail(email);
 
 		if (!contact) {
-			throw new AppError(
-				"Usuário não encontrado",
-				HTTP_STATUS_CODE.CONFLICT,
-			);
+			throw new AppError({
+				message: "Usuário não encontrado",
+				statusCode: HTTP_STATUS_CODE.CONFLICT,
+			});
 		}
 		await this.unsub({ userId: contact._id, email, reason });
 

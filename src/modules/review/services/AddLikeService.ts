@@ -18,7 +18,10 @@ export class AddLikeService {
 		);
 
 		if (like) {
-			throw new AppError("Você já deu like nesse comentário", 409);
+			throw new AppError({
+				message: "Você já deu like nesse comentário",
+				statusCode: 409,
+			});
 		}
 
 		const liked = await this.reviewsRepository.addLike(

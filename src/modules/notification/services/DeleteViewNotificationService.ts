@@ -28,7 +28,7 @@ export class DeleteNotificationService {
 			profileId,
 		});
 		if (!view) {
-			throw new AppError("Notification not found");
+			throw new AppError({ message: "Notification not found" });
 		}
 		await this.notificationsRepository.removeView(view.id);
 		await this.redisCache.invalidate(
