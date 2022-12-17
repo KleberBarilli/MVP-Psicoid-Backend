@@ -1,3 +1,4 @@
+import { add } from "date-fns";
 import { injectable, inject } from "tsyringe";
 import { IAppointment } from "../domain/models/IAppointment";
 import { IUpdateAppointment } from "../domain/models/IUpdateAppointment";
@@ -27,8 +28,8 @@ export class UpdateAppointmentService {
 			price,
 			status,
 			cancellationReason,
-			startsAt,
-			endsAt,
+			startsAt: add(startsAt, { hours: 3 }),
+			endsAt: add(endsAt, { hours: 3 }),
 		});
 	}
 }

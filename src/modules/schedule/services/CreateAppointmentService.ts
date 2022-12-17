@@ -1,3 +1,4 @@
+import { add } from "date-fns";
 import { injectable, inject } from "tsyringe";
 import { IAppointment } from "../domain/models/IAppointment";
 import { ICreateAppointment } from "../domain/models/ICreateAppointment";
@@ -22,8 +23,8 @@ export class CreateAppointmentService {
 			customerId,
 			createdBy,
 			price,
-			startsAt,
-			endsAt,
+			startsAt: add(startsAt, { hours: 3 }),
+			endsAt: add(endsAt, { hours: 3 }),
 		});
 	}
 }
