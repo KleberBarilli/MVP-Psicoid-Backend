@@ -7,6 +7,7 @@ import { CancelAppointmentController } from "../controllers/CancelAppointmentCon
 import { ShowAppointmentController } from "../controllers/ShowAppointmentController";
 import { ListAppointmentsByPsicoController } from "../controllers/ListAppointmentByPsicoController";
 import { ListAppointmentsByCustomerController } from "../controllers/ListAppointmentByCustomerController";
+import { pagination } from "@shared/infra/http/middlewares/pagination";
 
 export const appointmentRouter = Router();
 
@@ -37,11 +38,13 @@ appointmentRouter.get(
 appointmentRouter.get(
 	"/psico/:id",
 	isAuthenticated,
+	pagination,
 	new ListAppointmentsByPsicoController().handle,
 	CreateLogController.handle(),
 );
 appointmentRouter.get(
 	"/customer/:id",
+	pagination,
 	isAuthenticated,
 	new ListAppointmentsByCustomerController().handle,
 	CreateLogController.handle(),

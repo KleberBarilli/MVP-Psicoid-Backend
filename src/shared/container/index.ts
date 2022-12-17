@@ -8,8 +8,6 @@ import { CustomersRepository } from "@modules/customer/infra/prisma/repositories
 import { PsychologistsRepository } from "@modules/psico/infra/prisma/repositories/PsychologistsRepository";
 import { CredentialsRepository } from "@modules/auth/infra/prisma/repositories/CredentialsRepository";
 import { ReviewsRepository } from "@modules/review/infra/prisma/repositories/ReviewsRepository";
-import { AppointmentsRepository } from "@modules/schedule/infra/prisma/repositories/AppointmentsRepository";
-import { IAppointmentsRepository } from "@modules/schedule/domain/repositories/IAppointmentsRepository";
 import { INotificationsRepository } from "@modules/notification/domain/repositories/INotificationsRepository";
 import { NotificationsRepository } from "@modules/notification/infra/prisma/repositories/NotificationsRepository";
 import { IAdminsRepository } from "@modules/admin/domain/repositories/IAdminsRepository";
@@ -20,6 +18,8 @@ import { INewslettersRepository } from "@modules/newsletter/domain/repositories/
 import { NewslettersRepository } from "@modules/newsletter/infra/mongoose/repositories/NewslettersRepository";
 import { RedisCache } from "@shared/cache/RedisCache";
 import { IRedisCache } from "@shared/cache/IRedisCache";
+import { IAppointmentsRepository } from "@modules/schedule/domain/repositories/IAppointmentsRepository";
+import { AppointmentsRepository } from "@modules/schedule/infra/prisma/repositories/AppointmentsRepository";
 
 container.registerSingleton<ICredentialsRepository>(
 	"CredentialsRepository",
@@ -37,10 +37,10 @@ container.registerSingleton<IReviewsRepository>(
 	"ReviewsRepository",
 	ReviewsRepository,
 );
-container.registerSingleton<IAppointmentsRepository>(
-	"AppointmentsRepository",
-	AppointmentsRepository,
-);
+// container.registerSingleton<IAppointmentsRepository>(
+// 	"AppointmentsRepository",
+// 	AppointmentsRepository,
+// );
 container.registerSingleton<INotificationsRepository>(
 	"NotificationsRepository",
 	NotificationsRepository,
@@ -56,5 +56,9 @@ container.registerSingleton<IStorageRepository>(
 container.registerSingleton<INewslettersRepository>(
 	"NewslettersRepository",
 	NewslettersRepository,
+);
+container.registerSingleton<IAppointmentsRepository>(
+	"AppointmentsRepository",
+	AppointmentsRepository,
 );
 container.registerSingleton<IRedisCache>("RedisCache", RedisCache);

@@ -4,6 +4,7 @@ import {
 	Role,
 } from "@prisma/client";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
+import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 
 export interface IAppointment {
 	id: string;
@@ -44,4 +45,9 @@ export interface ICancelResponse {
 		customerId: string;
 		closedAppointment: { cancellationReason: string | null } | null;
 	};
+}
+
+export interface IUpdateStatus {
+	id: string;
+	status: APPOINTMENT_STATUS;
 }

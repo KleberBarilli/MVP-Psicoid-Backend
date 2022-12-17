@@ -6,7 +6,7 @@ export interface IPagination {
 	take: number;
 	sort: string;
 	order: string;
-	filter: any;
+	filter?: any;
 	search: ISearch;
 	latitude: number;
 	longitude: number;

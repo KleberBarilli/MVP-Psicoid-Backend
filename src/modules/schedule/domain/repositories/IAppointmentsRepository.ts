@@ -5,8 +5,10 @@ import {
 	ICancelResponse,
 	IFindManyByCustomer,
 	IFindManyByPsico,
+	IUpdateStatus,
 } from "../models/IAppointment";
 import { IUpdateAppointment } from "../models/IUpdateAppointment";
+import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 
 export interface IAppointmentsRepository {
 	create(data: ICreateAppointment): Promise<IAppointment>;
@@ -25,4 +27,5 @@ export interface IAppointmentsRepository {
 		closedBy,
 		reason,
 	}: ICancel): Promise<ICancelResponse>;
+	updateStatus({ id, status }: IUpdateStatus): Promise<void>;
 }

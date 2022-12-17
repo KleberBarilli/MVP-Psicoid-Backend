@@ -1,3 +1,4 @@
+import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 import { injectable, inject } from "tsyringe";
 import { ICancelResponse } from "../domain/models/IAppointment";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
@@ -18,7 +19,12 @@ export class CancelAppointmentService {
 		closedBy,
 		reason,
 	}: IRequest): Promise<ICancelResponse> {
-		return await this.appointmentsRepository.cancel({
+		await this.appointmentsRepository.updateStatus({
+			id: appointmentId,
+			status: APPOINTMENT_STATUS.canceled,
+		});
+
+		return this.appointmentsRepository.cancel({
 			appointmentId,
 			closedBy,
 			reason,
