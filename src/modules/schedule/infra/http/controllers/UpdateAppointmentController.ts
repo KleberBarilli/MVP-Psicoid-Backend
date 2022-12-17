@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
-import UpdateAppointmentService from "@modules/schedule/services//UpdateAppointmentService";
+import { UpdateAppointmentService } from "@modules/schedule/services//UpdateAppointmentService";
 import Queue from "@shared/lib/bull/Queue";
 import { TypeNotification } from "@prisma/client";
+import { HTTP_STATUS_CODE } from "@shared/utils/enums";
 
 export class UpdateAppointmentController {
 	public async handle(
@@ -30,12 +31,11 @@ export class UpdateAppointmentController {
 			const startsAt = starts ? new Date(starts) : starts;
 			const endsAt = ends ? new Date(ends) : ends;
 
-			const appointment = await service.execute(id, {
+			await service.execute(id, {
 				psychologistId,
 				customerId,
 				price,
 				status,
-				cancellationReason,
 				startsAt,
 				endsAt,
 			});
@@ -57,13 +57,12 @@ export class UpdateAppointmentController {
 						? { customerId }
 						: { psychologistId },
 			});
-			res.status(201).json({
-				message: "Appointment atualizado com sucesso",
-				data: appointment,
-			});
+			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
-			return res.status(500).json({ error: "Internal Error" });
+			return res
+				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+				.json({ error: "Internal Error" });
 		}
 	}
 }

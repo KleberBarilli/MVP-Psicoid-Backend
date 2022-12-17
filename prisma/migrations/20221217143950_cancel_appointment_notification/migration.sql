@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "TypeNotification" ADD VALUE 'CANCEL_APPOINTMENT';

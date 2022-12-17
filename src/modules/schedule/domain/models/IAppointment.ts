@@ -37,3 +37,11 @@ export interface ICancel {
 	closedBy: AppointmentCompletedBy;
 	reason: string | null;
 }
+
+export interface ICancelResponse {
+	appointment: {
+		psychologistId: string;
+		customerId: string;
+		closedAppointment: { cancellationReason: string | null } | null;
+	};
+}

@@ -4,6 +4,7 @@ import { ICreateAppointment } from "@modules/schedule/domain/models/ICreateAppoi
 import {
 	IAppointment,
 	ICancel,
+	ICancelResponse,
 	IFindManyByCustomer,
 	IFindManyByPsico,
 } from "@modules/schedule/domain/models/IAppointment";
@@ -82,13 +83,28 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 			take,
 		});
 	}
-	async cancel({ appointmentId, closedBy, reason }: ICancel): Promise<void> {
-		await this.prisma.closedAppointment.create({
+	async cancel({
+		appointmentId,
+		closedBy,
+		reason,
+	}: ICancel): Promise<ICancelResponse> {
+		return this.prisma.closedAppointment.create({
 			data: {
 				appointmentId,
 				closedBy: closedBy ? closedBy : "TIME_EXPIRED",
 				cancellationReason: reason,
 				cancelAt: new Date(),
+			},
+			select: {
+				appointment: {
+					select: {
+						psychologistId: true,
+						customerId: true,
+						closedAppointment: {
+							select: { cancellationReason: true },
+						},
+					},
+				},
 			},
 		});
 	}

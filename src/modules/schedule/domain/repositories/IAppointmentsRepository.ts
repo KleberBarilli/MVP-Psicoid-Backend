@@ -2,6 +2,7 @@ import { ICreateAppointment } from "../models/ICreateAppointment";
 import {
 	IAppointment,
 	ICancel,
+	ICancelResponse,
 	IFindManyByCustomer,
 	IFindManyByPsico,
 } from "../models/IAppointment";
@@ -19,5 +20,9 @@ export interface IAppointmentsRepository {
 		customerId,
 		pagination,
 	}: IFindManyByCustomer): Promise<IAppointment[]>;
-	cancel({ appointmentId, profile, reason }: ICancel): Promise<void>;
+	cancel({
+		appointmentId,
+		closedBy,
+		reason,
+	}: ICancel): Promise<ICancelResponse>;
 }
