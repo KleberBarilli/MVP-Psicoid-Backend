@@ -60,6 +60,7 @@ export class UpdateAppointmentController {
 			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
+			console.log(error);
 			return res
 				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
 				.json({ error: "Internal Error" });
