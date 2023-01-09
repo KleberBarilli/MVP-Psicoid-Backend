@@ -31,8 +31,8 @@ export class CreateAppointmentService {
 			customerId,
 			createdBy,
 			price,
-			startsAt: add(startsAt, { hours: 3 }),
-			endsAt: add(endsAt, { hours: 3 }),
+			startsAt: add(startsAt, { hours: Number(process.env.TZ_BRAZIL) }),
+			endsAt: add(endsAt, { hours: Number(process.env.TZ_BRAZIL) }),
 		});
 	}
 }
