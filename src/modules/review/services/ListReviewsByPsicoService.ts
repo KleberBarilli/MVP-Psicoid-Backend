@@ -10,6 +10,16 @@ interface IRequest {
 	customerId: string;
 	pagination: IPagination;
 }
+
+interface ISaveRedisCache {
+	psicoId: string;
+	reviews: any;
+}
+
+interface IHandleLiked {
+	customerId: string;
+	reviews: any;
+}
 @injectable()
 export class ListReviewsByPsicoService {
 	constructor(
@@ -18,23 +28,43 @@ export class ListReviewsByPsicoService {
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
+	private async getReviewFromCache({ psicoId }: { psicoId: string }) {
+		return this.redisCache.recover<IReview[]>(
+			`${RedisKeys.LIST_REVIEWS}:${psicoId}`,
+		);
+	}
+	private async saveRedisCache({ psicoId, reviews }: ISaveRedisCache) {
+		return this.redisCache.save(
+			`${RedisKeys.LIST_REVIEWS}:${psicoId}`,
+			reviews,
+		);
+	}
+
+	private async handleLiked({ customerId, reviews }: IHandleLiked) {
+		const mappedReviews = reviews.map(
+			(review: { likes: { customerId: string }[]; isLiked: boolean }) => {
+				const isLiked = review.likes.some(
+					(like: { customerId: string }) =>
+						like.customerId === customerId,
+				);
+				isLiked ? (review.isLiked = true) : (review.isLiked = false);
+
+				return review;
+			},
+		);
+
+		return mappedReviews;
+	}
+
 	private async findReviews({ psicoId, customerId, pagination }: IRequest) {
 		const [, reviews] = await this.reviewsRepository.findAllByPsico(
 			psicoId,
 			pagination,
 		);
 
-		reviews.map((review: { likes: any[]; isLiked: boolean }) => {
-			const isLiked = review.likes.some(
-				(like: { customerId: string }) =>
-					like.customerId === customerId,
-			);
-			isLiked ? (review.isLiked = true) : (review.isLiked = false);
-		});
-		await this.redisCache.save(
-			`${RedisKeys.LIST_REVIEWS}:${psicoId}`,
-			reviews,
-		);
+		const reviewsMapped = await this.handleLiked({ customerId, reviews });
+
+		await this.saveRedisCache({ psicoId, reviews: reviewsMapped });
 
 		return reviews;
 	}
@@ -43,9 +73,8 @@ export class ListReviewsByPsicoService {
 		customerId,
 		pagination,
 	}: IRequest): Promise<IReview[]> {
-		let reviewsInCache = await this.redisCache.recover<IReview[]>(
-			`${RedisKeys.LIST_REVIEWS}:${psicoId}`,
-		);
+		const reviewsInCache = await this.getReviewFromCache({ psicoId });
+
 		if (reviewsInCache) {
 			return reviewsInCache;
 		}
