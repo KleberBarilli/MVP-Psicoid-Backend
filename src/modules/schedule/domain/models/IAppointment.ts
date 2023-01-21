@@ -1,9 +1,4 @@
-import {
-	Appointment,
-	AppointmentCompletedBy,
-	AppointmentStatus,
-	Role,
-} from "@prisma/client";
+import { Appointment, AppointmentCompletedBy } from "@prisma/client";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 

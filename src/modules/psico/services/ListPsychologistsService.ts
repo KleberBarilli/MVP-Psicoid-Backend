@@ -52,7 +52,7 @@ export class ListPsychologistsService {
 		count,
 		psychologists,
 	}: ISaveToCache) {
-		this.redisCache.save(
+		return this.redisCache.save(
 			`${RedisKeys.LIST_PSICO}:${JSON.stringify(search)}:${profileId}`,
 			[count, psychologists],
 		);

@@ -1,6 +1,5 @@
 import { IAppointment } from "@modules/schedule/domain/models/IAppointment";
 import { AppointmentStatus } from "@prisma/client";
-import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 
 export interface ICustomAppointment {
 	id: string;
