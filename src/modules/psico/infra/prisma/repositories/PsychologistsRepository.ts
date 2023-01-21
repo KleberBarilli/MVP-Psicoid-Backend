@@ -163,7 +163,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		]);
 	}
 	public findOneApproach(id: string): Promise<{
-		id: string;
+		id: bigint;
 		name: string;
 		description: string | null;
 	} | null> {

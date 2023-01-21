@@ -7,7 +7,7 @@ import { IGetCustomersByPsico } from "../domain/models/ICustomerCreated";
 import { ICustomer } from "../domain/models/ICustomer";
 
 interface ISaveRedisCache {
-	psicoId: string;
+	psicoId bigint;
 	count: number;
 	customers: ICustomer[];
 }

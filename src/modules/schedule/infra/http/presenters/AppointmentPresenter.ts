@@ -2,9 +2,9 @@ import { IAppointment } from "@modules/schedule/domain/models/IAppointment";
 import { AppointmentStatus } from "@prisma/client";
 
 export interface ICustomAppointment {
-	id: string;
-	psychologistId: string;
-	customerId: string;
+	id: bigint;
+	psychologistId bigint;
+	customerId: bigint;
 	status: AppointmentStatus;
 	starts: Date;
 	ends: Date;

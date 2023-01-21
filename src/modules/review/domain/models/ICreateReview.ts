@@ -1,6 +1,6 @@
 export interface ICreateReview {
-	customerId: string;
-	psychologistId: string;
+	customerId: bigint;
+	psychologistId bigint;
 	rating: number;
 	comment: string | null;
 }

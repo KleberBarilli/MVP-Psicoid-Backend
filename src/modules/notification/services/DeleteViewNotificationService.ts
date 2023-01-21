@@ -6,9 +6,9 @@ import { injectable, inject } from "tsyringe";
 import { INotificationsRepository } from "../domain/repositories/INotificationsRepository";
 
 interface IRequest {
-	notificationId: string;
+	notificationId bigint;
 	profile: string;
-	profileId: string;
+	profileId: bigint;
 }
 @injectable()
 export class DeleteNotificationService {

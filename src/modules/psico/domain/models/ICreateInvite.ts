@@ -1,6 +1,6 @@
 export interface ICreateInvite {
 	name: string;
 	email: string;
-	psychologistId: string;
+	psychologistId bigint;
 	token: string;
 }

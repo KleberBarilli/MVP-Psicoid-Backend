@@ -6,7 +6,7 @@ import { IProfile } from "@shared/interfaces/IProfile";
 import { IOffice } from "@shared/interfaces/IOffice";
 
 interface IRequest {
-	psicoId: string;
+	psicoId bigint;
 	profile: IProfile | null;
 	office: IOffice | null;
 	resume: string | null;

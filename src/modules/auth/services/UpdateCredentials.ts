@@ -6,8 +6,8 @@ import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepos
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 
 interface IRequest {
-	credentialId: string;
-	profileId: string;
+	credentialId: bigint;
+	profileId: bigint;
 	email: string;
 	password: string;
 }

@@ -1,7 +1,7 @@
 import { Psychologist } from "@prisma/client";
 
 export interface ICustomer {
-	id: string;
+	id: bigint;
 	credentialId: string | null;
 	profileId: string | null;
 	guestId: string | null;
@@ -11,7 +11,7 @@ export interface ICustomer {
 }
 
 export interface ICustomerEntity {
-	id: string;
+	id: bigint;
 	credentialId: string | null;
 	profileId: string | null;
 	guestId: string | null;

@@ -12,19 +12,19 @@ import {
 } from "../infra/http/presenters/AppointmentPresenter";
 
 interface ISaveToRedisCache {
-	psicoId: string;
+	psicoId bigint;
 	search: Record<string, any>;
 	count: number;
 	appointments: ICustomAppointment[];
 }
 
 interface IRecoverFromCache {
-	psicoId: string;
+	psicoId bigint;
 	search: Record<string, any>;
 }
 
 interface IFindManyAppointments {
-	psychologistId: string;
+	psychologistId bigint;
 	pagination: IPagination;
 }
 @injectable()

@@ -6,18 +6,18 @@ import { IRedisCache } from "@shared/cache/IRedisCache";
 import { RedisKeys } from "@shared/utils/enums";
 
 interface IRequest {
-	psicoId: string;
-	customerId: string;
+	psicoId bigint;
+	customerId: bigint;
 	pagination: IPagination;
 }
 
 interface ISaveRedisCache {
-	psicoId: string;
+	psicoId bigint;
 	reviews: any;
 }
 
 interface IHandleLiked {
-	customerId: string;
+	customerId: bigint;
 	reviews: any;
 }
 @injectable()

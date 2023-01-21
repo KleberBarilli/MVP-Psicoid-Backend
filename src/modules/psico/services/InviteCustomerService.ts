@@ -8,7 +8,7 @@ import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
 interface IRequest {
 	name: string;
 	email: string;
-	psychologistId: string;
+	psychologistId bigint;
 }
 
 interface ISendEmailRequest {

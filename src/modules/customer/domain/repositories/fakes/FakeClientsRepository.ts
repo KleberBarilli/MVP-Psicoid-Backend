@@ -2,9 +2,9 @@
 // import { ICredential } from "src/shared/interfaces/ICredential";
 
 // export class PacientEntityFake {
-// 	id: string;
-// 	credentialId: string;
-// 	profileId: string;
+// 	id: bigint;
+// 	credentialId: bigint;
+// 	profileId: bigint;
 // 	createdAt: Date;
 // 	updatedAt: Date;
 // }

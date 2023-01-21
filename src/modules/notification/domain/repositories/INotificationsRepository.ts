@@ -1,9 +1,9 @@
 import { Notification, View } from "@prisma/client";
 
 interface IViewRequest {
-	notificationId: string;
+	notificationId bigint;
 	profile: string;
-	profileId: string;
+	profileId: bigint;
 }
 export interface INotificationsRepository {
 	findById(id: string): Promise<Notification | null>;

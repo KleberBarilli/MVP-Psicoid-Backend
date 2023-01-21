@@ -5,9 +5,9 @@ import { inject, injectable } from "tsyringe";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 
 interface IRequest {
-	credentialId: string;
+	credentialId: bigint;
 	profile: string;
-	profileId: string;
+	profileId: bigint;
 }
 @injectable()
 export class WhoiamService {
@@ -21,7 +21,7 @@ export class WhoiamService {
 		let user: any;
 		user = await this.credentialsRepository.iAmCustomer(id);
 		user.customer.psychologists.map(
-			(el: { id: string; selected: boolean }) => {
+			(el: { id: bigint; selected: boolean }) => {
 				if (el.id === user.customer.selectedPsychologistId) {
 					el.selected = true;
 				}

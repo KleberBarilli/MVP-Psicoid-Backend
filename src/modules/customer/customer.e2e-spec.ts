@@ -4,7 +4,7 @@ import { customer, guestCustomer } from "@shared/mocks";
 import { psico2 } from "@shared/mocks";
 
 describe("Customer Module E2E", () => {
-	let customerId: string;
+	let customerId: bigint;
 	let jwtCustomer: string;
 	let jwtPsico: string;
 

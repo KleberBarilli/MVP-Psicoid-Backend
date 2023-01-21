@@ -3,7 +3,7 @@ export interface ITherapeuticApproache {
 	description: string | null;
 }
 export interface IShowTherapeuticApproache {
-	id: string;
+	id: bigint;
 	name: string;
 	description: string;
 }

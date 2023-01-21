@@ -9,7 +9,7 @@ interface ITokenPayload {
 	exp: number;
 	sub: string;
 	profile: string;
-	profileId: string;
+	profileId: bigint;
 }
 
 export function isAuthenticated(

@@ -1,7 +1,7 @@
 import { Credential, Provider, Role } from "@prisma/client";
 
 export class CredentialEntity implements Credential {
-	id: string;
+	id: bigint;
 	provider: Provider;
 	email: string;
 	password: string;
