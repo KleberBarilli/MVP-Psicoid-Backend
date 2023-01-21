@@ -1,4 +1,5 @@
 import {
+	Appointment,
 	AppointmentCompletedBy,
 	AppointmentStatus,
 	Role,
@@ -6,18 +7,7 @@ import {
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 
-export interface IAppointment {
-	id: string;
-	psychologistId: string;
-	customerId: string;
-	createdBy: Role;
-	status: AppointmentStatus;
-	price: number | null;
-	startsAt: Date;
-	endsAt: Date;
-	createdAt: Date;
-	updatedAt: Date;
-}
+export type IAppointment = Appointment;
 
 export interface IListAppointment {
 	count: number;
@@ -55,4 +45,9 @@ export interface IUpdateStatus {
 export interface IFindManyAppointmentWithoutPagination {
 	startsAt: Date;
 	endsAt: Date;
+}
+
+export interface IFindManyAppointments {
+	count: number;
+	appointments: IAppointment[];
 }

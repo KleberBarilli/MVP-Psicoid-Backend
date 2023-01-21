@@ -10,15 +10,14 @@ export class ListAppointmentsByCustomerController {
 		next: NextFunction,
 	): Promise<Response | undefined> {
 		try {
-			const { id } = req.params;
-			const { pagination } = req;
+			const { pagination, user } = req;
 
 			const service = container.resolve(
 				ListAppointmentsByCustomerService,
 			);
 
 			const appointments = await service.execute({
-				customerId: id,
+				customerId: user.profileId,
 				pagination,
 			});
 

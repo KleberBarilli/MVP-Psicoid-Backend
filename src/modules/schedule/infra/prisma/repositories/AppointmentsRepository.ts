@@ -5,6 +5,7 @@ import {
 	IAppointment,
 	ICancel,
 	ICancelResponse,
+	IFindManyAppointments,
 	IFindManyAppointmentWithoutPagination,
 	IFindManyByCustomer,
 	IFindManyByPsico,
@@ -74,19 +75,25 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 	public async findManyByPsico({
 		psychologistId,
 		pagination,
-	}: IFindManyByPsico): Promise<IAppointment[]> {
+	}: IFindManyByPsico): Promise<IFindManyAppointments> {
 		const { filter, sort, skip, order, take } = pagination;
-		return prisma.appointment.findMany({
-			where: { psychologistId, ...filter },
-			orderBy: { [sort]: order },
-			skip,
-			take,
-			include: {
-				closedAppointment: true,
-				customer: { include: { profile: true } },
-				psychologist: { include: { profile: true } },
-			},
-		});
+
+		const [count, appointments] = await Promise.all([
+			prisma.appointment.count({
+				where: { psychologistId, ...filter },
+				orderBy: { [sort]: order },
+				skip,
+				take,
+			}),
+			prisma.appointment.findMany({
+				where: { psychologistId, ...filter },
+				orderBy: { [sort]: order },
+				skip,
+				take,
+			}),
+		]);
+
+		return { count, appointments };
 	}
 	public async findManyByCustomer({
 		customerId,

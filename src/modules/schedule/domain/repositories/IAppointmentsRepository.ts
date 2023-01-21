@@ -3,13 +3,13 @@ import {
 	IAppointment,
 	ICancel,
 	ICancelResponse,
+	IFindManyAppointments,
 	IFindManyAppointmentWithoutPagination,
 	IFindManyByCustomer,
 	IFindManyByPsico,
 	IUpdateStatus,
 } from "../models/IAppointment";
 import { IUpdateAppointment } from "../models/IUpdateAppointment";
-import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 
 export interface IAppointmentsRepository {
 	create(data: ICreateAppointment): Promise<IAppointment>;
@@ -18,7 +18,7 @@ export interface IAppointmentsRepository {
 	findManyByPsico({
 		psychologistId,
 		pagination,
-	}: IFindManyByPsico): Promise<IAppointment[]>;
+	}: IFindManyByPsico): Promise<IFindManyAppointments>;
 	findManyByCustomer({
 		customerId,
 		pagination,
