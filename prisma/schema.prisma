@@ -320,7 +320,9 @@ model Like {
 }
 
 model Appointment {
-    id String @id @default(uuid()) @db.Uuid
+    id BigInt @id @default(autoincrement()) @db.BigInt
+
+    integrationId String @default(uuid()) @map("integration_id") @db.Uuid
 
     psychologistId BigInt @map("psychologist_id") @db.BigInt
     customerId     BigInt @map("customer_id") @db.BigInt
@@ -345,7 +347,7 @@ model Appointment {
 model ClosedAppointment {
     id Int @id @default(autoincrement())
 
-    appointmentId String @unique @map("appointment_id") @db.Uuid
+    appointmentId BigInt @unique @map("appointment_id") @db.BigInt
 
     closedBy           AppointmentCompletedBy @map("closed_by")
     cancellationReason String?                @map("cancellation_reason")
