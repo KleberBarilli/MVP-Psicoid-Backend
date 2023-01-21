@@ -90,16 +90,18 @@ enum AppointmentCompletedBy {
 }
 
 model Credential {
-    id String @id @default(uuid()) @db.Uuid
+    id BigInt @id @default(autoincrement()) @db.BigInt
 
-    provider      Provider @default(EMAIL)
-    email         String   @unique
-    password      String   @map("password")
-    tokenRecovery String?  @map("token_recovery")
+    provider      Provider  @default(EMAIL)
+    email         String    @unique
+    password      String
+    tokenRecovery String?   @map("token_recovery")
     role          Role
-    inactive      Boolean  @default(false)
-    createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    inactivedAt   DateTime? @map("inactived_at") @db.Timestamptz()
+    createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+    lastLoginAt   DateTime? @map("last_login_at") @db.Timestamptz()
+    lastLoginIp   String?   @map("last_login_ip")
 
     customer     Customer?
     psychologist Psychologist?
@@ -111,7 +113,7 @@ model Credential {
 model Customer {
     id String @id @default(uuid()) @db.Uuid
 
-    credentialId String? @unique @map("credential_id") @db.Uuid
+    credentialId BigInt? @unique @map("credential_id") @db.BigInt
     profileId    String? @unique @map("profile_id") @db.Uuid
     guestId      String? @unique @map("guest_id") @db.Uuid
 
@@ -148,7 +150,7 @@ model Guest {
 model Psychologist {
     id String @id @default(uuid()) @db.Uuid
 
-    credentialId String @unique @map("credential_id") @db.Uuid
+    credentialId BigInt @unique @map("credential_id") @db.BigInt
     profileId    String @unique @map("profile_id") @db.Uuid
     officeId     String @unique @map("office_id") @db.Uuid
 
@@ -174,7 +176,7 @@ model Psychologist {
 model Admin {
     id String @id @default(uuid()) @db.Uuid
 
-    credentialId String @unique @map("credential_id") @db.Uuid
+    credentialId BigInt @unique @map("credential_id") @db.BigInt
     profileId    String @unique @map("profile_id") @db.Uuid
 
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
