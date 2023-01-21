@@ -28,7 +28,6 @@ export class ListPsychologistsService {
 			)}:${profileId}`,
 		);
 
-		console.log(typeof psicoCache);
 
 		let count = psicoCache ? psicoCache[0] : undefined;
 		let psychologists = psicoCache ? psicoCache[1] : undefined;
