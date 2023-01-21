@@ -1,9 +1,9 @@
 import { injectable, inject } from "tsyringe";
 import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
-import { ICustomer } from "../domain/models/ICustomer";
-import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 import { RedisKeys } from "@shared/utils/enums";
+import { Customer } from "@prisma/client";
+import { IGetCustomersByPsico } from "../domain/models/ICustomerCreated";
 
 @injectable()
 export class ListCustomersByPsicoService {
@@ -12,32 +12,41 @@ export class ListCustomersByPsicoService {
 		private customersRepository: ICustomersRepository,
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
-	public async execute(
-		psicoid: string,
-		pagination: IPagination,
-	): Promise<ICustomer[]> {
-		const cachedCustomers = await this.redisCache.recover<any>(
-			`${RedisKeys.PSICO_LIST_CUSTOMERS}:${JSON.stringify(
-				pagination.search,
-			)}:${psicoid}`,
+
+	private async findCustomers({ psicoId, pagination }: IGetCustomersByPsico) {
+		const [count, customers] =
+			await this.customersRepository.findAllByPsico({
+				psicoId,
+				pagination,
+			});
+
+		await this.redisCache.save(
+			`${RedisKeys.PSICO_LIST_CUSTOMERS}:${psicoId}`,
+			[count, customers],
 		);
 
-		let count = cachedCustomers ? cachedCustomers[0] : undefined;
-		let customers = cachedCustomers ? cachedCustomers[1] : undefined;
+		return [count, customers];
+	}
 
-		if (!cachedCustomers) {
-			[count, customers] = await this.customersRepository.findAllByPsico(
-				psicoid,
-				pagination,
-			);
-			await this.redisCache.save(
-				`${RedisKeys.PSICO_LIST_CUSTOMERS}:${JSON.stringify(
-					pagination.search,
-				)}:${psicoid}`,
-				[count, customers],
-			);
+	public async execute({
+		psicoId,
+		pagination,
+	}: IGetCustomersByPsico): Promise<(number | Customer[])[]> {
+		const cachedCustomers = await this.redisCache.recover<
+			(number | Customer[])[]
+		>(
+			`${RedisKeys.PSICO_LIST_CUSTOMERS}:${JSON.stringify(
+				pagination.search,
+			)}:${psicoId}`,
+		);
+
+		if (cachedCustomers) {
+			const count = cachedCustomers[0];
+			const customers = cachedCustomers[1];
+
+			return [count, customers];
 		}
 
-		return [count, customers];
+		return this.findCustomers({ psicoId, pagination });
 	}
 }

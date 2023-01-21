@@ -6,6 +6,7 @@ import { IUpdateCustomer } from "@modules/customer/domain/models/IUpdateCustomer
 import { ICustomer } from "@modules/customer/domain/models/ICustomer";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { ICreateGuest } from "@modules/customer/domain/models/ICreateGuest";
+import { IGetCustomersByPsico } from "@modules/customer/domain/models/ICustomerCreated";
 
 export class CustomersRepository implements ICustomersRepository {
 	public create({
@@ -68,10 +69,12 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 
-	public findAllByPsico(
-		psicoId: string,
-		{ skip, take, sort, order, filter }: IPagination,
-	): Promise<number & any> {
+	public findAllByPsico({
+		psicoId,
+		pagination,
+	}: IGetCustomersByPsico): Promise<number & any> {
+		const { filter, sort, order, skip, take } = pagination;
+
 		return Promise.all([
 			prisma.customer.count({
 				where: { psychologists: { some: { id: psicoId } }, ...filter },

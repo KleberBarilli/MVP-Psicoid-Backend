@@ -9,10 +9,11 @@ export class ListCustomersByPsicoController {
 			const { profileId } = req.user;
 			const { pagination } = req;
 			const service = container.resolve(ListCustomersByPsicoService);
-			const [count, customers] = await service.execute(
-				profileId,
+			const [count, customers] = await service.execute({
+				psicoId: profileId,
 				pagination,
-			);
+			});
+
 			return res.status(HTTP_STATUS_CODE.OK).json({
 				message: "Pacientes listados com sucesso",
 				data: count,
