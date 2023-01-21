@@ -22,7 +22,9 @@ export class ListPsychologistsService {
 		const { latitude, longitude } = pagination;
 
 		let psychologists = await this.redisCache.recover<any>(
-			`${RedisKeys.LIST_PSICO}:${profileId}`,
+			`${RedisKeys.LIST_PSICO}:${JSON.stringify(
+				pagination.search,
+			)}:${profileId}`,
 		);
 		let count;
 
@@ -32,7 +34,9 @@ export class ListPsychologistsService {
 			);
 
 			await this.redisCache.save(
-				`${RedisKeys.LIST_PSICO}:${profileId}`,
+				`${RedisKeys.LIST_PSICO}:${JSON.stringify(
+					pagination.search,
+				)}:${profileId}`,
 				psychologists,
 			);
 		}
