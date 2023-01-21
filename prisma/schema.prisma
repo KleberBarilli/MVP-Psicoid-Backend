@@ -152,7 +152,9 @@ model Guest {
 }
 
 model Psychologist {
-    id String @id @default(uuid()) @db.Uuid
+    id BigInt @id @default(autoincrement()) @db.BigInt
+
+    integrationId String @default(uuid()) @map("integration_id") @db.Uuid
 
     credentialId BigInt @unique @map("credential_id") @db.BigInt
     profileId    String @unique @map("profile_id") @db.Uuid
@@ -174,6 +176,7 @@ model Psychologist {
     views        View[]
     invites      Invite[]
 
+    @@index([integrationId, status])
     @@map("psychologists")
 }
 
@@ -284,7 +287,7 @@ model Review {
     id String @id @default(uuid()) @db.Uuid
 
     customerId     BigInt @map("customer_id") @db.BigInt
-    psychologistId String @map("psychologist_id") @db.Uuid
+    psychologistId BigInt @map("psychologist_id") @db.BigInt
 
     rating    Int
     comment   String?
@@ -314,7 +317,7 @@ model Like {
 model Appointment {
     id String @id @default(uuid()) @db.Uuid
 
-    psychologistId String @map("psychologist_id") @db.Uuid
+    psychologistId BigInt @map("psychologist_id") @db.BigInt
     customerId     BigInt @map("customer_id") @db.BigInt
 
     createdBy Role              @map("created_by")
@@ -367,9 +370,9 @@ model View {
 
     isRead Boolean @default(false)
 
-    notificationId String  @map("notification_id") @db.Uuid
-    customerId     BigInt  @map("customer_id") @db.BigInt
-    psychologistId String? @map("psychologist_id") @db.Uuid
+    notificationId String @map("notification_id") @db.Uuid
+    customerId     BigInt @map("customer_id") @db.BigInt
+    psychologistId BigInt @map("psychologist_id") @db.BigInt
 
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
@@ -381,9 +384,9 @@ model View {
 }
 
 model Invite {
-    id Int @id @default(autoincrement()) @db.Integer
+    id BigInt @id @default(autoincrement()) @db.BigInt
 
-    psychologistId String @map("psychologist_id") @db.Uuid
+    psychologistId BigInt @map("psychologist_id") @db.BigInt
 
     token      String?
     name       String
