@@ -48,8 +48,8 @@ export class CreateAppointmentController {
 				},
 				views:
 					profile === "CUSTOMER"
-						? { customerId }
-						: { psychologistId },
+						? { psychologistId }
+						: { customerId },
 			});
 			res.status(HTTP_STATUS_CODE.CREATED).json({
 				message: "Appointment adicionado com sucesso",
