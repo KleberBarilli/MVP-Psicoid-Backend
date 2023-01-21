@@ -345,7 +345,7 @@ model Appointment {
 }
 
 model ClosedAppointment {
-    id Int @id @default(autoincrement())
+    id BigInt @id @default(autoincrement()) @db.BigInt
 
     appointmentId BigInt @unique @map("appointment_id") @db.BigInt
 
@@ -360,7 +360,9 @@ model ClosedAppointment {
 }
 
 model Notification {
-    id String @id @default(uuid()) @db.Uuid
+    id BigInt @id @default(autoincrement()) @db.BigInt
+
+    integrationId String @default(uuid()) @map("integration_id") @db.Uuid
 
     type TypeNotification
     data Json             @db.Json
@@ -377,7 +379,7 @@ model View {
 
     isRead Boolean @default(false)
 
-    notificationId String @map("notification_id") @db.Uuid
+    notificationId BigInt @map("notification_id") @db.BigInt
     customerId     BigInt @map("customer_id") @db.BigInt
     psychologistId BigInt @map("psychologist_id") @db.BigInt
 
