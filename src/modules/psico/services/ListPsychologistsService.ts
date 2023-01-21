@@ -8,6 +8,7 @@ import { IReview } from "@shared/interfaces/IReview";
 import { arrAvg } from "@shared/utils/etc";
 import { RedisKeys } from "@shared/utils/enums";
 import { IRedisCache } from "@shared/cache/IRedisCache";
+
 @injectable()
 export class ListPsychologistsService {
 	constructor(
@@ -21,14 +22,18 @@ export class ListPsychologistsService {
 	): Promise<IPsychologist[]> {
 		const { latitude, longitude } = pagination;
 
-		let psychologists = await this.redisCache.recover<any>(
+		const psicoCache = await this.redisCache.recover<any>(
 			`${RedisKeys.LIST_PSICO}:${JSON.stringify(
 				pagination.search,
 			)}:${profileId}`,
 		);
-		let count;
 
-		if (!psychologists) {
+		console.log(typeof psicoCache);
+
+		let count = psicoCache ? psicoCache[0] : undefined;
+		let psychologists = psicoCache ? psicoCache[1] : undefined;
+
+		if (!psicoCache) {
 			[count, psychologists] = await this.psychologistsRepository.findAll(
 				pagination,
 			);
@@ -37,7 +42,7 @@ export class ListPsychologistsService {
 				`${RedisKeys.LIST_PSICO}:${JSON.stringify(
 					pagination.search,
 				)}:${profileId}`,
-				psychologists,
+				[count, psychologists],
 			);
 		}
 
