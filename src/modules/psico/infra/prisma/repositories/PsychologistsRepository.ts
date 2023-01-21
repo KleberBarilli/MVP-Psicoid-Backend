@@ -124,7 +124,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		sort,
 		order,
 		search,
-	}: IPagination): Promise<number & any> {
+	}: IPagination): Promise<[number, any]> {
 		const makeWhere = await this.makePrismaWhere(search);
 		return Promise.all([
 			prisma.psychologist.count({

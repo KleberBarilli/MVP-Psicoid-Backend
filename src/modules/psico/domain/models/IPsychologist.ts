@@ -1,3 +1,4 @@
+import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { IApproache } from "@shared/interfaces/IApproache";
 import { IOffice } from "@shared/interfaces/IOffice";
 import { IReview } from "@shared/interfaces/IReview";
@@ -30,4 +31,9 @@ export interface IPsychologistShortUpdate {
 export interface IListPsychologist {
 	count: number;
 	IPsychologist: [];
+}
+
+export interface IGetPsicos {
+	profileId: string;
+	pagination: IPagination;
 }

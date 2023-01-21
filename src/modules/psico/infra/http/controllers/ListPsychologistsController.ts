@@ -12,10 +12,10 @@ export class ListPsychologistsController {
 			const { pagination, user } = req;
 
 			const service = container.resolve(ListPsychologistsService);
-			const [count, psychologists] = await service.execute(
-				user.profileId,
+			const { count, psychologists } = await service.execute({
+				profileId: user.profileId,
 				pagination,
-			);
+			});
 
 			res.status(HTTP_STATUS_CODE.OK).json({
 				count,
