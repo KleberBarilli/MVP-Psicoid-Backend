@@ -10,6 +10,11 @@ interface IRequest {
 	profileId: string;
 	pagination: IPagination;
 }
+
+interface ISaveRedisCache {
+	profileId: string;
+	notifications: any;
+}
 @injectable()
 export class ListNotificationService {
 	constructor(
@@ -17,6 +22,16 @@ export class ListNotificationService {
 		private notificationsRepository: INotificationsRepository,
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
+
+	private async saveRedisCache({
+		profileId,
+		notifications,
+	}: ISaveRedisCache) {
+		return this.redisCache.save(
+			`${RedisKeys.LIST_NOTIFICATIONS}:${profileId}`,
+			notifications,
+		);
+	}
 
 	private async findNotifications({
 		profile,
@@ -28,10 +43,8 @@ export class ListNotificationService {
 			profileId,
 			pagination,
 		);
-		await this.redisCache.save(
-			`${RedisKeys.LIST_NOTIFICATIONS}:${profileId}`,
-			notifications,
-		);
+
+		await this.saveRedisCache({ profileId, notifications });
 
 		return notifications;
 	}
@@ -40,10 +53,10 @@ export class ListNotificationService {
 		profile,
 		profileId,
 		pagination,
-	}: IRequest): Promise<(number | Notification[])[]> {
-		const notificationsInCache = await this.redisCache.recover<
-			(number | Notification[])[]
-		>(`${RedisKeys.LIST_NOTIFICATIONS}:${profileId}`);
+	}: IRequest): Promise<any> {
+		const notificationsInCache = await this.redisCache.recover<any>(
+			`${RedisKeys.LIST_NOTIFICATIONS}:${profileId}`,
+		);
 
 		if (notificationsInCache) {
 			return notificationsInCache;
