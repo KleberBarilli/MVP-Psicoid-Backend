@@ -1,11 +1,13 @@
 import { Appointment } from "@prisma/client";
 import { RedisCache } from "@shared/cache/RedisCache";
+import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { RedisKeys } from "@shared/utils/enums";
 import { injectable, inject } from "tsyringe";
 import { IAppointment, IFindManyByPsico } from "../domain/models/IAppointment";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
 import {
 	AppointmentPresenter,
+	ICustomAppointment,
 	IFindManyCustomAppointments,
 } from "../infra/http/presenters/AppointmentPresenter";
 
@@ -13,7 +15,17 @@ interface ISaveToRedisCache {
 	psicoId: string;
 	search: Record<string, any>;
 	count: number;
-	appointments: IAppointment[];
+	appointments: ICustomAppointment[];
+}
+
+interface IRecoverFromCache {
+	psicoId: string;
+	search: Record<string, any>;
+}
+
+interface IFindManyAppointments {
+	psychologistId: string;
+	pagination: IPagination;
 }
 @injectable()
 export class ListAppointmentsByPsicoService {
@@ -36,6 +48,33 @@ export class ListAppointmentsByPsicoService {
 			[count, appointments],
 		);
 	}
+	private async recoverFromCache({ psicoId, search }: IRecoverFromCache) {
+		return this.redisCache.recover<any>(
+			`${RedisKeys.LIST_PSICO}:${JSON.stringify(search)}:${psicoId}`,
+		);
+	}
+
+	private async findManyAppointments({
+		psychologistId,
+		pagination,
+	}: IFindManyAppointments) {
+		const { count, appointments } =
+			await this.appointmentsRepository.findManyByPsico({
+				psychologistId,
+				pagination,
+			});
+
+		const mappedAppointments = this.mapToEntity(appointments);
+
+		await this.saveToRedisCache({
+			psicoId: psychologistId,
+			count,
+			search: pagination.search,
+			appointments: mappedAppointments,
+		});
+
+		return { count, appointments: mappedAppointments };
+	}
 
 	private mapToEntity(appointments: IAppointment[]) {
 		const appointmentsMapped = appointments.map(
@@ -50,17 +89,18 @@ export class ListAppointmentsByPsicoService {
 		psychologistId,
 		pagination,
 	}: IFindManyByPsico): Promise<IFindManyCustomAppointments> {
-		const { count, appointments } =
-			await this.appointmentsRepository.findManyByPsico({
-				psychologistId,
-				pagination,
-			});
+		const cachedAppointments = await this.recoverFromCache({
+			psicoId: psychologistId,
+			search: pagination.search,
+		});
 
-		const mappedAppointments = this.mapToEntity(appointments);
+		if (cachedAppointments) {
+			const count = cachedAppointments[0];
+			const appointments = cachedAppointments[1];
 
-		return {
-			count,
-			appointments: mappedAppointments,
-		};
+			return { count, appointments };
+		}
+
+		return this.findManyAppointments({ psychologistId, pagination });
 	}
 }
