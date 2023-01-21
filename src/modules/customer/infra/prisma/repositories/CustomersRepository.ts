@@ -38,7 +38,7 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 
-	public findById(id: string): Promise<CustomerEntity | null> {
+	public findById(id: bigint): Promise<CustomerEntity | null> {
 		return prisma.customer.findUnique({
 			where: { id },
 			include: {

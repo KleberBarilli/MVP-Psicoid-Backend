@@ -92,12 +92,14 @@ enum AppointmentCompletedBy {
 model Credential {
     id BigInt @id @default(autoincrement()) @db.BigInt
 
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
+
     provider      Provider  @default(EMAIL)
     email         String    @unique
     password      String
     tokenRecovery String?   @map("token_recovery")
     role          Role
-    inactivedAt   DateTime? @map("inactived_at") @db.Timestamptz()
+    inactivatedAt DateTime? @map(" inactivated_at") @db.Timestamptz()
     createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
     lastLoginAt   DateTime? @map("last_login_at") @db.Timestamptz()
@@ -107,6 +109,7 @@ model Credential {
     psychologist Psychologist?
     admin        Admin?
 
+    @@index([integrationId, email])
     @@map("credentials")
 }
 

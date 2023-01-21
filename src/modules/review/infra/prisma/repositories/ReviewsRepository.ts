@@ -14,7 +14,7 @@ export class ReviewsRepository implements IReviewsRepository {
 	public create(data: ICreateReview): Promise<IReview> {
 		return prisma.review.create({ data });
 	}
-	public findById(id: string): Promise<IReview | null> {
+	public findById(id: bigint): Promise<IReview | null> {
 		return prisma.review.findUnique({
 			where: { id },
 			include: {
@@ -51,7 +51,7 @@ export class ReviewsRepository implements IReviewsRepository {
 			data: { comment, rating },
 		});
 	}
-	public remove(id: string): Promise<IReview> {
+	public remove(id: bigint): Promise<IReview> {
 		return prisma.review.delete({ where: { id } });
 	}
 	public findOne(

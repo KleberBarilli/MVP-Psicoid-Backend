@@ -3,7 +3,7 @@ import { INotificationsRepository } from "@modules/notification/domain/repositor
 import { Notification, View } from "@prisma/client";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 export class NotificationsRepository implements INotificationsRepository {
-	public findById(id: string): Promise<Notification | null> {
+	public findById(id: bigint): Promise<Notification | null> {
 		return prisma.notification.findUnique({
 			where: { id },
 			include: { views: true },
@@ -50,7 +50,7 @@ export class NotificationsRepository implements INotificationsRepository {
 			},
 		});
 	}
-	public updateView(id: string, isRead: boolean): Promise<View> {
+	public updateView(id: bigint, isRead: boolean): Promise<View> {
 		return prisma.view.update({ where: { id }, data: { isRead } });
 	}
 	public readAll(profile: string, profileId: string): Promise<any> {

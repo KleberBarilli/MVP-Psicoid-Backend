@@ -8,7 +8,7 @@ import { IGetCustomersByPsico } from "../models/ICustomerCreated";
 export interface ICustomersRepository {
 	create(data: ICreateCustomer): Promise<CustomerEntity>;
 	createGuest(psicoId: string, data: ICreateGuest): Promise<CustomerEntity>;
-	findById(id: string): Promise<CustomerEntity | null>;
+	findById(id: bigint): Promise<CustomerEntity | null>;
 	update(data: IUpdateCustomer): Promise<CustomerEntity>;
 	addPsychologist(
 		customerId: string,

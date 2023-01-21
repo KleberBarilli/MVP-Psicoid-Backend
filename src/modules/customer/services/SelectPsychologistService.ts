@@ -37,7 +37,7 @@ export class SelectPsychologistService {
 		const customer = await this.customersRepository.findById(customerId);
 
 		const isPsicoFav = customer?.psychologists.some(
-			(psico: { id: string }) => psico.id === psychologistId,
+			(psico: { id: bigint }) => psico.id === psychologistId,
 		);
 
 		if (!isPsicoFav) {

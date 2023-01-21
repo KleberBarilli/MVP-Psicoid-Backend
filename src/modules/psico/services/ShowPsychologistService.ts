@@ -10,7 +10,7 @@ export class ShowPsychologistService {
 		private psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(
-		id: string,
+		id: bigint,
 		{ latitude, longitude }: any,
 	): Promise<any[]> {
 		const psico = await this.psychologistsRepository.findById(id);

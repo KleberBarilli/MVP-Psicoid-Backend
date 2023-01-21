@@ -7,7 +7,7 @@ import {
 import { IUpdateCredential } from "@modules/auth/domain/models/IUpdateCredentials";
 
 export class CredentialsRepository implements ICredentialsRepository {
-	public async findById(id: string): Promise<ICredential | null> {
+	public async findById(id: bigint): Promise<ICredential | null> {
 		return await prisma.credential.findUnique({ where: { id } });
 	}
 	public async findByEmail(
@@ -16,8 +16,8 @@ export class CredentialsRepository implements ICredentialsRepository {
 		return await prisma.credential.findUnique({
 			where: { email },
 			include: {
-				customer: { select: { id: true } },
-				psychologist: { select: { id: true } },
+				customer: { select: { integrationId: true } },
+				psychologist: { select: { integrationId: true } },
 			},
 		});
 	}
@@ -26,14 +26,14 @@ export class CredentialsRepository implements ICredentialsRepository {
 			where: { tokenRecovery: token },
 		});
 	}
-	public updatePassword(id: string, password: string): Promise<ICredential> {
+	public updatePassword(id: bigint, password: string): Promise<ICredential> {
 		return prisma.credential.update({
 			where: { id },
 			data: { password },
 		});
 	}
 	public updateToken(
-		id: string,
+		id: bigint,
 		tokenRecovery: string,
 	): Promise<ICredential> {
 		return prisma.credential.update({
@@ -41,7 +41,7 @@ export class CredentialsRepository implements ICredentialsRepository {
 			data: { tokenRecovery },
 		});
 	}
-	public async iAmPsico(id: string): Promise<ICredential | null> {
+	public async iAmPsico(id: bigint): Promise<ICredential | null> {
 		return await prisma.credential.findUnique({
 			where: { id },
 			include: {
@@ -62,7 +62,7 @@ export class CredentialsRepository implements ICredentialsRepository {
 			},
 		});
 	}
-	public async iAmCustomer(id: string): Promise<ICredential | null> {
+	public async iAmCustomer(id: bigint): Promise<ICredential | null> {
 		return await prisma.credential.findUnique({
 			where: { id },
 			include: {
@@ -83,20 +83,20 @@ export class CredentialsRepository implements ICredentialsRepository {
 			},
 		});
 	}
-	public async iAmAdmin(id: string): Promise<ICredential | null> {
+	public async iAmAdmin(id: bigint): Promise<ICredential | null> {
 		return prisma.credential.findUnique({
 			where: { id },
 			include: { admin: { include: { profile: true } } },
 		});
 	}
-	public deactivateAccount(id: string): Promise<ICredential> {
+	public deactivateAccount(id: bigint): Promise<ICredential> {
 		return prisma.credential.update({
 			where: { id },
-			data: { inactive: true },
+			data: { inactivatedAt: new Date() },
 		});
 	}
 	public updateCredential(
-		id: string,
+		id: bigint,
 		{ email, password }: IUpdateCredential,
 	): Promise<ICredential> {
 		return prisma.credential.update({

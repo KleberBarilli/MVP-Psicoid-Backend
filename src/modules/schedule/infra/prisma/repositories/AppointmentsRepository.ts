@@ -39,7 +39,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 	}
 
 	public update(
-		id: string,
+		id: bigint,
 		{
 			psychologistId,
 			customerId,
@@ -72,7 +72,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 		});
 	}
 
-	public findOne(id: string): Promise<IAppointment | null> {
+	public findOne(id: bigint): Promise<IAppointment | null> {
 		return prisma.appointment.findUnique({
 			where: { id },
 			include: {

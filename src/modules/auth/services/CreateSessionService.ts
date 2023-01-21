@@ -27,7 +27,7 @@ export class CreateSessionService {
 				statusCode: 401,
 			});
 		}
-		if (user.inactive) {
+		if (user.inactivatedAt) {
 			throw new AppError({
 				message: "A conta do usuaŕio está inativa",
 				statusCode: 403,
@@ -48,11 +48,13 @@ export class CreateSessionService {
 		const token = sign(
 			{
 				profile: user.role,
-				profileId: user?.psychologist?.id || user?.customer?.id,
+				profileId:
+					user?.psychologist?.integrationId ||
+					user?.customer?.integrationId,
 			},
 			authConfig.jwt.secret as Secret,
 			{
-				subject: user.id,
+				subject: user.integrationId,
 				expiresIn: authConfig.jwt.expiresIn,
 			},
 		);

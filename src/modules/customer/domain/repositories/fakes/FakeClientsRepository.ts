@@ -33,7 +33,7 @@
 // 	public async findByEmail(email: string): Promise<ICredential | null> {
 // 		return null;
 // 	}
-// 	public async findById(id: string): Promise<IPacient | null> {
+// 	public async findById(id: bigint): Promise<IPacient | null> {
 // 		return null;
 // 	}
 // }

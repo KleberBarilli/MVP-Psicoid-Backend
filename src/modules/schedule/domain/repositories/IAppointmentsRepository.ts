@@ -16,8 +16,8 @@ import {
 
 export interface IAppointmentsRepository {
 	create(data: ICreateAppointment): Promise<IAppointment>;
-	update(id: string, data: IUpdateAppointment): Promise<IAppointment>;
-	findOne(id: string): Promise<IAppointment | null>;
+	update(id: bigint, data: IUpdateAppointment): Promise<IAppointment>;
+	findOne(id: bigint): Promise<IAppointment | null>;
 	findManyByPsico({
 		psychologistId,
 		pagination,

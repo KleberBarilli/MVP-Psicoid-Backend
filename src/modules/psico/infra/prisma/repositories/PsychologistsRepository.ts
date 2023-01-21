@@ -81,7 +81,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		});
 	}
 
-	public async findById(id: string): Promise<any> {
+	public async findById(id: bigint): Promise<any> {
 		return await prisma.psychologist.findUnique({
 			where: { id },
 			include: {
@@ -162,7 +162,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 			}),
 		]);
 	}
-	public findOneApproach(id: string): Promise<{
+	public findOneApproach(id: bigint): Promise<{
 		id: bigint;
 		name: string;
 		description: string | null;
@@ -170,7 +170,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		return prisma.therapeuticApproache.findUnique({ where: { id } });
 	}
 	public addApproach(
-		id: string,
+		id: bigint,
 		psicoId: string,
 	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({
@@ -179,7 +179,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		});
 	}
 	public removeApproach(
-		id: string,
+		id: bigint,
 		psicoId: string,
 	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({

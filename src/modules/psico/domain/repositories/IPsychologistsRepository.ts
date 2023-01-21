@@ -12,14 +12,14 @@ import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
 
 export interface IPsychologistsRepository {
 	create(data: ICreatePsychologist): Promise<PsychologistEntity>;
-	findById(id: string): Promise<IPsychologist | null>;
+	findById(id: bigint): Promise<IPsychologist | null>;
 	findAll(pagination: any): Promise<[number, any]>;
 	update(data: IUpdatePsychologist): Promise<PsychologistEntity>;
 	findAllApproaches(pagination: any): Promise<ITherapeuticApproache[]>;
-	findOneApproach(id: string): Promise<ITherapeuticApproache | null>;
-	addApproach(id: string, psicoId: string): Promise<IPsychologistShortUpdate>;
+	findOneApproach(id: bigint): Promise<ITherapeuticApproache | null>;
+	addApproach(id: bigint, psicoId: string): Promise<IPsychologistShortUpdate>;
 	removeApproach(
-		id: string,
+		id: bigint,
 		psicoId: string,
 	): Promise<IPsychologistShortUpdate>;
 	inviteCustomer({

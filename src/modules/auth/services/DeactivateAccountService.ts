@@ -8,7 +8,7 @@ export class DeactivateAccountService {
 		private credentialsRepository: ICredentialsRepository,
 	) {}
 
-	public async execute(id: string): Promise<void> {
+	public async execute(id: bigint): Promise<void> {
 		await this.credentialsRepository.deactivateAccount(id);
 	}
 }

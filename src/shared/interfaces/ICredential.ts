@@ -7,17 +7,20 @@ export interface ICredential {
 	password: string;
 	tokenRecovery: string | null;
 	role: Role;
-	inactive: boolean;
+	inactivatedAt: Date | null;
+	lastLoginAt: Date | null;
+	lastLoginIp: string | null;
 	createdAt: Date;
 	updatedAt: Date;
 }
 
 export interface ICredentialResponse {
 	id: bigint;
+	integrationId: string;
 	email: string;
 	password: string;
 	role: Role;
-	inactive: boolean;
-	psychologist: { id: number } | null;
-	customer: { id: number } | null;
+	inactivatedAt: Date | null;
+	psychologist: { integrationId: string } | null;
+	customer: { integrationId: string } | null;
 }

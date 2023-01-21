@@ -11,12 +11,12 @@ import {
 export interface IReviewsRepository {
 	create(data: ICreateReview): Promise<IReview>;
 	update(data: IUpdateReview): Promise<IReview>;
-	findById(id: string): Promise<IReview | null>;
+	findById(id: bigint): Promise<IReview | null>;
 	findAllByPsico(
-		id: string,
+		id: bigint,
 		{ skip, take, sort, order, filter }: IPagination,
 	): Promise<number & any>;
-	remove(id: string): Promise<IReview>;
+	remove(id: bigint): Promise<IReview>;
 	findOne(
 		psychologistId: string,
 		customerId: string,

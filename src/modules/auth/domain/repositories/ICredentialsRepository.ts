@@ -5,14 +5,14 @@ import {
 import { IUpdateCredential } from "../models/IUpdateCredentials";
 
 export interface ICredentialsRepository {
-	findById(id: string): Promise<ICredential | null>;
+	findById(id: bigint): Promise<ICredential | null>;
 	findByEmail(email: string): Promise<ICredentialResponse | null>;
 	findByToken(token: string): Promise<ICredential | null>;
-	updateCredential(id: string, data: IUpdateCredential): Promise<ICredential>;
-	updatePassword(id: string, password: string): Promise<ICredential>;
-	updateToken(id: string, token: string): Promise<ICredential>;
-	iAmPsico(id: string): Promise<ICredential | null>;
-	iAmCustomer(id: string): Promise<ICredential | null>;
-	iAmAdmin(id: string): Promise<ICredential | null>;
-	deactivateAccount(id: string): Promise<ICredential>;
+	updateCredential(id: bigint, data: IUpdateCredential): Promise<ICredential>;
+	updatePassword(id: bigint, password: string): Promise<ICredential>;
+	updateToken(id: bigint, token: string): Promise<ICredential>;
+	iAmPsico(id: bigint): Promise<ICredential | null>;
+	iAmCustomer(id: bigint): Promise<ICredential | null>;
+	iAmAdmin(id: bigint): Promise<ICredential | null>;
+	deactivateAccount(id: bigint): Promise<ICredential>;
 }

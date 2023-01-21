@@ -6,7 +6,7 @@ interface IViewRequest {
 	profileId: bigint;
 }
 export interface INotificationsRepository {
-	findById(id: string): Promise<Notification | null>;
+	findById(id: bigint): Promise<Notification | null>;
 	findAll(
 		profile: string,
 		profileId: string,
@@ -17,8 +17,8 @@ export interface INotificationsRepository {
 		profile,
 		profileId,
 	}: IViewRequest): Promise<View | null>;
-	updateView(id: string, isRead: boolean): Promise<View>;
+	updateView(id: bigint, isRead: boolean): Promise<View>;
 	readAll(profile: string, profileId: string): Promise<any>;
-	removeView(id: string): Promise<View>;
+	removeView(id: bigint): Promise<View>;
 	removeAll(profile: string, profileId: string): Promise<any>;
 }

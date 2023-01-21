@@ -25,12 +25,13 @@ CREATE TYPE "AppointmentCompletedBy" AS ENUM ('CUSTOMER', 'PSYCHOLOGIST', 'TIME_
 -- CreateTable
 CREATE TABLE "credentials" (
     "id" BIGSERIAL NOT NULL,
+    "integration_id" UUID NOT NULL,
     "provider" "Provider" NOT NULL DEFAULT 'EMAIL',
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "token_recovery" TEXT,
     "role" "Role" NOT NULL,
-    "inactived_at" TIMESTAMPTZ,
+    " inactivated_at" TIMESTAMPTZ,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ NOT NULL,
     "last_login_at" TIMESTAMPTZ,
@@ -261,7 +262,13 @@ CREATE TABLE "_PsychologistToTherapeuticApproache" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "credentials_integration_id_key" ON "credentials"("integration_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "credentials_email_key" ON "credentials"("email");
+
+-- CreateIndex
+CREATE INDEX "credentials_integration_id_email_idx" ON "credentials"("integration_id", "email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "customers_integration_id_key" ON "customers"("integration_id");

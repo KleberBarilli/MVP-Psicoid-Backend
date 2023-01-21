@@ -8,7 +8,7 @@ export class ShowNotificationService {
 		@inject("NotificationsRepository")
 		private notificationsRepository: INotificationsRepository,
 	) {}
-	public async execute(id: string): Promise<Notification | null> {
+	public async execute(id: bigint): Promise<Notification | null> {
 		return await this.notificationsRepository.findById(id);
 	}
 }
