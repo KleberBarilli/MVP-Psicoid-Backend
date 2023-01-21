@@ -8,6 +8,7 @@ import { ShowAppointmentController } from "../controllers/ShowAppointmentControl
 import { ListAppointmentsByPsicoController } from "../controllers/ListAppointmentByPsicoController";
 import { ListAppointmentsByCustomerController } from "../controllers/ListAppointmentByCustomerController";
 import { pagination } from "@shared/infra/http/middlewares/pagination";
+import { handleRole } from "@shared/infra/http/middlewares/handleRole";
 
 export const appointmentRouter = Router();
 
@@ -36,16 +37,18 @@ appointmentRouter.get(
 	CreateLogController.handle(),
 );
 appointmentRouter.get(
-	"/psico/:id",
+	"/find-by/psico",
 	isAuthenticated,
+	handleRole("ADMIN", "PSYCHOLOGIST"),
 	pagination,
 	new ListAppointmentsByPsicoController().handle,
 	CreateLogController.handle(),
 );
 appointmentRouter.get(
-	"/customer/:id",
+	"/find-by/customer",
 	pagination,
 	isAuthenticated,
+	handleRole("ADMIN", "CUSTOMER"),
 	new ListAppointmentsByCustomerController().handle,
 	CreateLogController.handle(),
 );

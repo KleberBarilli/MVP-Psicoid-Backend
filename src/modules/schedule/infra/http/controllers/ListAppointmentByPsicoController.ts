@@ -10,13 +10,12 @@ export class ListAppointmentsByPsicoController {
 		next: NextFunction,
 	): Promise<Response | undefined> {
 		try {
-			const { id } = req.params;
-			const { pagination } = req;
+			const { pagination, user } = req;
 
 			const service = container.resolve(ListAppointmentsByPsicoService);
 
 			const appointments = await service.execute({
-				psychologistId: id,
+				psychologistId: user.profileId,
 				pagination,
 			});
 
