@@ -117,7 +117,7 @@ model Customer {
 
     credentialId BigInt? @unique @map("credential_id") @db.BigInt
     profileId    String? @unique @map("profile_id") @db.Uuid
-    guestId      String? @unique @map("guest_id") @db.Uuid
+    guestId      BigInt? @unique @map("guest_id") @db.BigInt
 
     selectedPsychologistId String?  @map("selected_psychologist_id") @db.Uuid
     createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -138,13 +138,14 @@ model Customer {
 }
 
 model Guest {
-    id String @id @default(uuid()) @db.Uuid
+    id BigInt @id @default(autoincrement()) @db.BigInt
 
     contactId String? @db.Uuid
 
-    name String
+    name      String
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
-    contact  Contact?  @relation(fields: [contactId], references: [id])
+    contact  Contact?  @relation(fields: [contactId], references: [id], onDelete: Cascade)
     customer Customer?
 
     @@map("guests")
