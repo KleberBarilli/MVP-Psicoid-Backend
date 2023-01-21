@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import { CancelAppointmentService } from "@modules/schedule/services/CancelAppointmentService";
-import Queue from "@shared/lib/bull/Queue";
-import { TypeNotification } from "@prisma/client";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
+import { AppointmentCompletedBy } from "@prisma/client";
 
 export class CancelAppointmentController {
 	public async handle(
@@ -18,30 +18,31 @@ export class CancelAppointmentController {
 
 			const service = container.resolve(CancelAppointmentService);
 
-			const canceled = await service.execute({
+			await service.execute({
 				appointmentId: id,
-				closedBy: profile,
+				closedBy: profile as AppointmentCompletedBy,
 				reason,
+				profileId,
 			});
 
-			await Queue.add("CreateNotification", {
-				type: TypeNotification.CANCEL_APPOINTMENT,
-				data: {
-					appointmentId: id,
-					psychologistId: canceled.appointment.psychologistId,
-					customerId: canceled.appointment.customerId,
-					cancellationReason:
-						canceled.appointment.closedAppointment
-							?.cancellationReason,
-				},
-				views:
-					profile === "CUSTOMER"
-						? { customerId: profileId }
-						: { psychologistId: profileId },
-			});
 			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();
 		} catch (error) {
+			if (error instanceof PrismaClientKnownRequestError) {
+				switch (error.code) {
+					case "P2002":
+						if (
+							(error.meta?.target as string[]).includes(
+								"appointment_id",
+							)
+						) {
+							return res.status(409).json({
+								error: "Você não pode cancelar o mesmo agendamento duas vezes.",
+							});
+						}
+						break;
+				}
+			}
 			return res
 				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
 				.json({ error: "Internal Error" });

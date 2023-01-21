@@ -9,7 +9,10 @@ import {
 	IFindManyByPsico,
 	IUpdateStatus,
 } from "../models/IAppointment";
-import { IUpdateAppointment } from "../models/IUpdateAppointment";
+import {
+	IUpdateAppointment,
+	IUpdateAppointmentResponse,
+} from "../models/IUpdateAppointment";
 
 export interface IAppointmentsRepository {
 	create(data: ICreateAppointment): Promise<IAppointment>;
@@ -28,7 +31,10 @@ export interface IAppointmentsRepository {
 		closedBy,
 		reason,
 	}: ICancel): Promise<ICancelResponse>;
-	updateStatus({ id, status }: IUpdateStatus): Promise<void>;
+	updateStatus({
+		id,
+		status,
+	}: IUpdateStatus): Promise<IUpdateAppointmentResponse>;
 	findManyByPsicoWithoutPagination(
 		psicoId: string,
 	): Promise<IFindManyAppointmentWithoutPagination[]>;

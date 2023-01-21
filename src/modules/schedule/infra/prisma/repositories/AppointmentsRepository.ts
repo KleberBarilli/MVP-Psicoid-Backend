@@ -11,7 +11,10 @@ import {
 	IFindManyByPsico,
 	IUpdateStatus,
 } from "@modules/schedule/domain/models/IAppointment";
-import { IUpdateAppointment } from "@modules/schedule/domain/models/IUpdateAppointment";
+import {
+	IUpdateAppointment,
+	IUpdateAppointmentResponse,
+} from "@modules/schedule/domain/models/IUpdateAppointment";
 import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 
 export class AppointmentsRepository implements IAppointmentsRepository {
@@ -58,8 +61,15 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 			},
 		});
 	}
-	public async updateStatus({ id, status }: IUpdateStatus): Promise<void> {
-		await prisma.appointment.update({ where: { id }, data: { status } });
+	public async updateStatus({
+		id,
+		status,
+	}: IUpdateStatus): Promise<IUpdateAppointmentResponse> {
+		return await prisma.appointment.update({
+			where: { id },
+			data: { status },
+			select: { psychologistId: true, customerId: true },
+		});
 	}
 
 	public findOne(id: string): Promise<IAppointment | null> {

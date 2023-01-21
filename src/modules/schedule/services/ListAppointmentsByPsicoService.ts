@@ -42,15 +42,15 @@ export class ListAppointmentsByPsicoService {
 		appointments,
 	}: ISaveToRedisCache) {
 		return this.redisCache.save(
-			`${RedisKeys.LIST_APPOINTMENTS_BY_PSICO}:${JSON.stringify(
-				search,
-			)}:${psicoId}`,
+			`${
+				RedisKeys.LIST_APPOINTMENTS_BY_PSICO
+			}:${psicoId}:${JSON.stringify(search)}`,
 			[count, appointments],
 		);
 	}
 	private async recoverFromCache({ psicoId, search }: IRecoverFromCache) {
 		return this.redisCache.recover<any>(
-			`${RedisKeys.LIST_PSICO}:${JSON.stringify(search)}:${psicoId}`,
+			`${RedisKeys.LIST_PSICO}:${psicoId}${JSON.stringify(search)}:`,
 		);
 	}
 

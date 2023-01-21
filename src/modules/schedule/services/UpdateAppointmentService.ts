@@ -1,6 +1,7 @@
+import { RedisCache } from "@shared/cache/RedisCache";
+import { RedisKeys } from "@shared/utils/enums";
 import { add } from "date-fns";
 import { injectable, inject } from "tsyringe";
-import { IAppointment } from "../domain/models/IAppointment";
 import { IUpdateAppointment } from "../domain/models/IUpdateAppointment";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
 
@@ -9,6 +10,7 @@ export class UpdateAppointmentService {
 	constructor(
 		@inject("AppointmentsRepository")
 		private appointmentsRepository: IAppointmentsRepository,
+		@inject("RedisCache") private redisCache: RedisCache,
 	) {}
 	public async execute(
 		id: string,
@@ -20,8 +22,8 @@ export class UpdateAppointmentService {
 			startsAt,
 			endsAt,
 		}: IUpdateAppointment,
-	): Promise<IAppointment> {
-		return this.appointmentsRepository.update(id, {
+	): Promise<void> {
+		await this.appointmentsRepository.update(id, {
 			psychologistId,
 			customerId,
 			price,
@@ -29,5 +31,9 @@ export class UpdateAppointmentService {
 			startsAt: add(startsAt, { hours: 3 }),
 			endsAt: add(endsAt, { hours: 3 }),
 		});
+
+		await this.redisCache.invalidateKeysByPattern(
+			`${RedisKeys.LIST_APPOINTMENTS_BY_PSICO}:${psychologistId}`,
+		);
 	}
 }

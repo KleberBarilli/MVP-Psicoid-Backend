@@ -8,3 +8,8 @@ export interface IUpdateAppointment {
 	startsAt: Date;
 	endsAt: Date;
 }
+
+export interface IUpdateAppointmentResponse {
+	customerId: string;
+	psychologistId: string;
+}
