@@ -235,7 +235,7 @@ model Contact {
 }
 
 model Address {
-    id String @id @default(uuid()) @db.Uuid
+    id BigInt @id @default(autoincrement()) @db.BigInt
 
     zipCode      String      @map("zip_code")
     street       String
@@ -271,7 +271,7 @@ model Office {
     id String @id @default(uuid()) @db.Uuid
 
     contactId BigInt? @unique @map("contact_id") @db.BigInt
-    addressId String  @unique @map("address_id") @db.Uuid
+    addressId BigInt  @unique @map("address_id") @db.BigInt
 
     photos    String[]
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
