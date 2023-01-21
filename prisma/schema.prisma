@@ -111,7 +111,9 @@ model Credential {
 }
 
 model Customer {
-    id String @id @default(uuid()) @db.Uuid
+    id BigInt @id @default(autoincrement()) @db.BigInt
+
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
     credentialId BigInt? @unique @map("credential_id") @db.BigInt
     profileId    String? @unique @map("profile_id") @db.Uuid
@@ -131,6 +133,7 @@ model Customer {
     appointments  Appointment[]
     views         View[]
 
+    @@index([integrationId])
     @@map("customers")
 }
 
@@ -279,7 +282,7 @@ model Office {
 model Review {
     id String @id @default(uuid()) @db.Uuid
 
-    customerId     String @map("customer_id") @db.Uuid
+    customerId     BigInt @map("customer_id") @db.BigInt
     psychologistId String @map("psychologist_id") @db.Uuid
 
     rating    Int
@@ -297,7 +300,7 @@ model Review {
 
 model Like {
     reviewId   String   @map("review_id") @db.Uuid
-    customerId String   @map("customer_id") @db.Uuid
+    customerId BigInt   @map("customer_id") @db.BigInt
     likedAt    DateTime @default(now()) @map("liked_at") @db.Timestamptz()
 
     review   Review   @relation(fields: [reviewId], references: [id])
@@ -311,7 +314,7 @@ model Appointment {
     id String @id @default(uuid()) @db.Uuid
 
     psychologistId String @map("psychologist_id") @db.Uuid
-    customerId     String @map("customer_id") @db.Uuid
+    customerId     BigInt @map("customer_id") @db.BigInt
 
     createdBy Role              @map("created_by")
     status    AppointmentStatus @default(ONGOING)
@@ -364,7 +367,7 @@ model View {
     isRead Boolean @default(false)
 
     notificationId String  @map("notification_id") @db.Uuid
-    customerId     String? @map("customer_id") @db.Uuid
+    customerId     BigInt  @map("customer_id") @db.BigInt
     psychologistId String? @map("psychologist_id") @db.Uuid
 
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
