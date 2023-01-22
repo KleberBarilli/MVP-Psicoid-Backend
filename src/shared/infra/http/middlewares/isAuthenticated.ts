@@ -7,9 +7,9 @@ import authConfig from "@config/auth";
 interface ITokenPayload {
 	iat: number;
 	exp: number;
-	sub: bigint;
+	sub: number;
 	profile: string;
-	profileId: bigint;
+	profileId: number;
 }
 
 export function isAuthenticated(

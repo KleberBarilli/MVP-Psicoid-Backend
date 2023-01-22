@@ -14,7 +14,7 @@ export class RemoveApproachController {
 			const { profileId } = req.user;
 
 			const service = container.resolve(RemoveApproachService);
-			await service.execute(BigInt(id), profileId);
+			await service.execute(Number(id), profileId);
 
 			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();

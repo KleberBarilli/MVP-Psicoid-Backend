@@ -11,7 +11,7 @@ export class AddApproachService {
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
-	public async execute(id: bigint, psicoId: bigint): Promise<void> {
+	public async execute(id: number, psicoId: number): Promise<void> {
 		await this.psychologistsRepository.addApproach(id, psicoId);
 		await this.redisCache.invalidate(`${RedisKeys.ME}:${psicoId}`);
 		await this.redisCache.invalidateKeysByPattern(RedisKeys.LIST_PSICO);

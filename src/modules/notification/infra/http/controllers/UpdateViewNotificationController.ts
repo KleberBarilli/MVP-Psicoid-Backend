@@ -16,7 +16,7 @@ export class UpdateViewNotificationController {
 			const { profile, profileId } = req.user;
 			const service = container.resolve(UpdateNotificationService);
 			await service.execute({
-				notificationId: BigInt(id),
+				notificationId: Number(id),
 				profile,
 				profileId,
 				isRead: read.toUpperCase() === "READ" ? true : false,

@@ -5,9 +5,9 @@ import { inject, injectable } from "tsyringe";
 import { ICredentialsRepository } from "../domain/repositories/ICredentialsRepository";
 
 interface IRequest {
-	credentialId: bigint;
+	credentialId: number;
 	profile: string;
-	profileId: bigint;
+	profileId: number;
 }
 @injectable()
 export class WhoiamService {
@@ -17,11 +17,11 @@ export class WhoiamService {
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
-	private async iamCustomer(id: bigint, profileId: bigint) {
+	private async iamCustomer(id: number, profileId: number) {
 		let user: any;
 		user = await this.credentialsRepository.iAmCustomer(id);
 		user.customer.psychologists.map(
-			(el: { id: bigint; selected: boolean }) => {
+			(el: { id: number; selected: boolean }) => {
 				if (el.id === user.customer.selectedPsychologistId) {
 					el.selected = true;
 				}
@@ -32,13 +32,13 @@ export class WhoiamService {
 		return user;
 	}
 
-	private async iamPsico(id: bigint, profileId: bigint) {
+	private async iamPsico(id: number, profileId: number) {
 		const psico = await this.credentialsRepository.iAmPsico(id);
 		await this.redisCache.save(`${RedisKeys.ME}:${profileId}`, psico);
 		return psico;
 	}
 
-	private async iamAdmin(id: bigint, profileId: bigint) {
+	private async iamAdmin(id: number, profileId: number) {
 		const admin = await this.credentialsRepository.iAmAdmin(id);
 		await this.redisCache.save(`${RedisKeys.ME}:${profileId}`, admin);
 		return admin;

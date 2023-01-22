@@ -1,15 +1,15 @@
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 
 export interface ICustomerCreated {
-	id: bigint;
-	credentialId: bigint | null;
-	profileId: bigint | null;
-	guestId: bigint | null;
+	id: number;
+	credentialId: number | null;
+	profileId: number | null;
+	guestId: number | null;
 	createdAt: Date;
 	updatedAt: Date;
 }
 
 export interface IGetCustomersByPsico {
-	psicoId: bigint;
+	psicoId: number;
 	pagination: IPagination;
 }

@@ -1,4 +1,4 @@
 export interface ISelectPsychologist {
-	customerId: bigint;
-	psychologistId: bigint;
+	customerId: number;
+	psychologistId: number;
 }

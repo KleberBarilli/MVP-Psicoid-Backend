@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 
 interface IReqUser {
 	user: {
-		id: bigint;
+		id: number;
 		profile: string;
 	};
 }

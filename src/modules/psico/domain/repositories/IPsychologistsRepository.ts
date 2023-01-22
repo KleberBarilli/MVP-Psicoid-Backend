@@ -15,11 +15,11 @@ export interface IPsychologistsRepository {
 	findAll(pagination: any): Promise<[number, any]>;
 	update(data: IUpdatePsychologist): Promise<PsychologistEntity>;
 	findAllApproaches(pagination: any): Promise<ITherapeuticApproache[]>;
-	findOneApproach(id: bigint): Promise<ITherapeuticApproache | null>;
-	addApproach(id: bigint, psicoId: bigint): Promise<IPsychologistShortUpdate>;
+	findOneApproach(id: number): Promise<ITherapeuticApproache | null>;
+	addApproach(id: number, psicoId: number): Promise<IPsychologistShortUpdate>;
 	removeApproach(
-		id: bigint,
-		psicoId: bigint,
+		id: number,
+		psicoId: number,
 	): Promise<IPsychologistShortUpdate>;
 	inviteCustomer({
 		name,

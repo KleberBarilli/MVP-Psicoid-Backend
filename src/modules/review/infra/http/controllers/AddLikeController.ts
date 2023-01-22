@@ -16,7 +16,7 @@ export class AddLikeController {
 			const { profileId } = req.user;
 
 			const service = container.resolve(AddLikeService);
-			const review = await service.execute(BigInt(reviewId), profileId);
+			const review = await service.execute(Number(reviewId), profileId);
 
 			res.status(HTTP_STATUS_CODE.CREATED).json({
 				message: "Like adicionado com sucesso",

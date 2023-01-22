@@ -14,7 +14,7 @@ export class HandleAllNotificationsService {
 
 	public async execute(
 		profile: string,
-		profileId: bigint,
+		profileId: number,
 		remove: boolean,
 	): Promise<View> {
 		await this.redisCache.invalidate(

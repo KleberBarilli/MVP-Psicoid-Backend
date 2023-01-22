@@ -5,10 +5,10 @@ import { injectable, inject } from "tsyringe";
 import { INotificationsRepository } from "../domain/repositories/INotificationsRepository";
 
 interface IRequest {
-	notificationId: bigint;
+	notificationId: number;
 	isRead: boolean;
 	profile: string;
-	profileId: bigint;
+	profileId: number;
 }
 @injectable()
 export class UpdateNotificationService {

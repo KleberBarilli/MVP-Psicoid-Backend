@@ -1,7 +1,7 @@
 export interface IAdminCreated {
-	id: bigint;
-	credentialId: bigint;
-	profileId: bigint;
+	id: number;
+	credentialId: number;
+	profileId: number;
 	createdAt: Date;
 	updatedAt: Date;
 }

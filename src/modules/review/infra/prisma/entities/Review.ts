@@ -1,10 +1,10 @@
 import { Review } from "@prisma/client";
 
 export class ReviewEntity implements Review {
-	id: bigint;
+	id: number;
 	integrationId: string;
-	customerId: bigint;
-	psychologistId: bigint;
+	customerId: number;
+	psychologistId: number;
 	rating: number;
 	comment: string | null;
 	deletedAt: Date | null;

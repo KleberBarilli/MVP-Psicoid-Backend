@@ -9,7 +9,7 @@ export class ShowApproachController {
 			const { id } = req.params;
 
 			const service = container.resolve(ShowApproachService);
-			const approach = await service.execute(BigInt(id));
+			const approach = await service.execute(Number(id));
 			return res.status(HTTP_STATUS_CODE.OK).json({ data: approach });
 		} catch (error) {
 			return res

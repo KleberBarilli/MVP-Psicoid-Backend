@@ -6,21 +6,21 @@ import { injectable, inject } from "tsyringe";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
 
 interface IRequest {
-	appointmentId: bigint;
+	appointmentId: number;
 	closedBy: AppointmentCompletedBy;
 	reason: string | null;
-	profileId: bigint;
+	profileId: number;
 }
 
 interface INotify {
-	appointmentId: bigint;
-	psychologistId bigint;
-	customerId: bigint;
+	appointmentId: number;
+	psychologistId: number;
+	customerId: number;
 	cancellationReason: string | null;
 }
 
 interface IUpdateStatus {
-	appointmentId: bigint;
+	appointmentId: number;
 	status: APPOINTMENT_STATUS;
 }
 @injectable()

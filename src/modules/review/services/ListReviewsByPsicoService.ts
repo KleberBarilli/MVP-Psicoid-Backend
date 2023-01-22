@@ -6,18 +6,18 @@ import { IRedisCache } from "@shared/cache/IRedisCache";
 import { RedisKeys } from "@shared/utils/enums";
 
 interface IRequest {
-	psicoId: bigint;
-	customerId: bigint;
+	psicoId: number;
+	customerId: number;
 	pagination: IPagination;
 }
 
 interface ISaveRedisCache {
-	psicoId: bigint;
+	psicoId: number;
 	reviews: any;
 }
 
 interface IHandleLiked {
-	customerId: bigint;
+	customerId: number;
 	reviews: any;
 }
 @injectable()
@@ -28,7 +28,7 @@ export class ListReviewsByPsicoService {
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
-	private async getReviewFromCache({ psicoId }: { psicoId: bigint }) {
+	private async getReviewFromCache({ psicoId }: { psicoId: number }) {
 		return this.redisCache.recover<IReview[]>(
 			`${RedisKeys.LIST_REVIEWS}:${psicoId}`,
 		);
@@ -42,9 +42,9 @@ export class ListReviewsByPsicoService {
 
 	private async handleLiked({ customerId, reviews }: IHandleLiked) {
 		const mappedReviews = reviews.map(
-			(review: { likes: { customerId: bigint }[]; isLiked: boolean }) => {
+			(review: { likes: { customerId: number }[]; isLiked: boolean }) => {
 				const isLiked = review.likes.some(
-					(like: { customerId: bigint }) =>
+					(like: { customerId: number }) =>
 						like.customerId === customerId,
 				);
 				isLiked ? (review.isLiked = true) : (review.isLiked = false);

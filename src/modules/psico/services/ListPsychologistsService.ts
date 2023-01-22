@@ -9,14 +9,14 @@ import { arrAvg } from "@shared/utils/etc";
 import { RedisKeys } from "@shared/utils/enums";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 interface ISaveToCache {
-	profileId: bigint;
+	profileId: number;
 	search: any;
 	count: number;
 	psychologists: IPsychologist[];
 }
 
 interface IRecoverFromCache {
-	profileId: bigint;
+	profileId: number;
 	search: any;
 }
 
@@ -27,7 +27,7 @@ interface IHandlePsicoMapping {
 }
 
 interface IFindPsicos {
-	profileId: bigint;
+	profileId: number;
 	pagination: IPagination;
 	latitude: number;
 	longitude: number;

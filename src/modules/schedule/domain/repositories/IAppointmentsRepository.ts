@@ -16,8 +16,8 @@ import {
 
 export interface IAppointmentsRepository {
 	create(data: ICreateAppointment): Promise<IAppointment>;
-	update(id: bigint, data: IUpdateAppointment): Promise<IAppointment>;
-	findOne(id: bigint): Promise<IAppointment | null>;
+	update(id: number, data: IUpdateAppointment): Promise<IAppointment>;
+	findOne(id: number): Promise<IAppointment | null>;
 	findManyByPsico({
 		psychologistId,
 		pagination,
@@ -36,9 +36,9 @@ export interface IAppointmentsRepository {
 		status,
 	}: IUpdateStatus): Promise<IUpdateAppointmentResponse>;
 	findManyByPsicoWithoutPagination(
-		psicoId: bigint,
+		psicoId: number,
 	): Promise<IFindManyAppointmentWithoutPagination[]>;
 	findManyByCustomerWithoutPagination(
-		customerId: bigint,
+		customerId: number,
 	): Promise<IFindManyAppointmentWithoutPagination[]>;
 }

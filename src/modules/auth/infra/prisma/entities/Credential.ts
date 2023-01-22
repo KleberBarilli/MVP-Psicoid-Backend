@@ -1,13 +1,16 @@
 import { Credential, Provider, Role } from "@prisma/client";
 
 export class CredentialEntity implements Credential {
-	id: bigint;
+	id: number;
+	integrationId: string;
 	provider: Provider;
 	email: string;
 	password: string;
 	tokenRecovery: string | null;
 	role: Role;
-	inactive: boolean;
+	inactivatedAt: Date | null;
 	createdAt: Date;
 	updatedAt: Date;
+	lastLoginAt: Date | null;
+	lastLoginIp: string | null;
 }

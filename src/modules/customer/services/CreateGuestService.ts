@@ -10,7 +10,7 @@ export class CreateGuestService {
 		private customersRepository: ICustomersRepository,
 	) {}
 	public async execute(
-		psicoId: bigint,
+		psicoId: number,
 		{ name, contact }: ICreateGuest,
 	): Promise<ICustomerCreated> {
 		return await this.customersRepository.createGuest(psicoId, {

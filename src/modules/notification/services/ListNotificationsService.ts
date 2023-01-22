@@ -6,12 +6,12 @@ import { INotificationsRepository } from "../domain/repositories/INotificationsR
 
 interface IRequest {
 	profile: string;
-	profileId: bigint;
+	profileId: number;
 	pagination: IPagination;
 }
 
 interface ISaveRedisCache {
-	profileId: bigint;
+	profileId: number;
 	notifications: any;
 }
 @injectable()

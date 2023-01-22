@@ -15,7 +15,7 @@ export class DeleteNotificationController {
 
 			const service = container.resolve(DeleteNotificationService);
 			await service.execute({
-				notificationId: BigInt(id),
+				notificationId: Number(id),
 				profile,
 				profileId,
 			});

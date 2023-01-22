@@ -1,10 +1,10 @@
 import { Appointment, AppointmentStatus, Role } from "@prisma/client";
 
 export class AppointimentEntity implements Appointment {
-	id: bigint;
+	id: number;
 	integrationId: string;
-	psychologistId: bigint;
-	customerId: bigint;
+	psychologistId: number;
+	customerId: number;
 	createdBy: Role;
 	status: AppointmentStatus;
 	cancellationReason: string | null;

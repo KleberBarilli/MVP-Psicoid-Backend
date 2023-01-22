@@ -163,16 +163,16 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 			}),
 		]);
 	}
-	public findOneApproach(id: bigint): Promise<{
-		id: bigint;
+	public findOneApproach(id: number): Promise<{
+		id: number;
 		name: string;
 		description: string | null;
 	} | null> {
 		return prisma.therapeuticApproache.findUnique({ where: { id } });
 	}
 	public addApproach(
-		id: bigint,
-		psicoId: bigint,
+		id: number,
+		psicoId: number,
 	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({
 			where: { id: psicoId },
@@ -180,8 +180,8 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		});
 	}
 	public removeApproach(
-		id: bigint,
-		psicoId: bigint,
+		id: number,
+		psicoId: number,
 	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({
 			where: { id: psicoId },

@@ -1,20 +1,20 @@
 export interface ILike {
-	customerId: bigint;
-	reviewId: bigint;
+	customerId: number;
+	reviewId: number;
 	likedAt: Date;
 }
 
 export interface ICreateLikeResponse {
 	review: {
-		psychologistId: bigint;
+		psychologistId: number;
 	};
-	customerId: bigint;
-	reviewId: bigint;
+	customerId: number;
+	reviewId: number;
 	likedAt: Date;
 }
 
 export interface IRemoveLikeResponse {
 	review: {
-		psychologistId: bigint;
+		psychologistId: number;
 	};
 }

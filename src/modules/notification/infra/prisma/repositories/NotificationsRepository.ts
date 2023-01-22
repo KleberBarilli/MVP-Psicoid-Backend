@@ -11,7 +11,7 @@ export class NotificationsRepository implements INotificationsRepository {
 	}
 	public findAll(
 		profile: string,
-		profileId: bigint,
+		profileId: number,
 		{ skip, take, sort, order, filter }: IPagination,
 	): Promise<(number | Notification[])[]> {
 		const where = {
@@ -50,10 +50,10 @@ export class NotificationsRepository implements INotificationsRepository {
 			},
 		});
 	}
-	public updateView(id: bigint, isRead: boolean): Promise<View> {
+	public updateView(id: number, isRead: boolean): Promise<View> {
 		return prisma.view.update({ where: { id }, data: { isRead } });
 	}
-	public async readAll(profile: string, profileId: bigint): Promise<void> {
+	public async readAll(profile: string, profileId: number): Promise<void> {
 		await prisma.view.updateMany({
 			where:
 				profile === "CUSTOMER"
@@ -65,7 +65,7 @@ export class NotificationsRepository implements INotificationsRepository {
 	public removeView(filter: any): Promise<View> {
 		return prisma.view.delete({ where: { ...filter } });
 	}
-	public async removeAll(profile: string, profileId: bigint): Promise<void> {
+	public async removeAll(profile: string, profileId: number): Promise<void> {
 		await prisma.view.deleteMany({
 			where:
 				profile === "CUSTOMER"

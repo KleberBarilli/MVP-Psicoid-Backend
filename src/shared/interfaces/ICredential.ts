@@ -1,7 +1,7 @@
 import { Provider, Role } from "@prisma/client";
 
 export interface ICredential {
-	id: bigint;
+	id: number;
 	provider: Provider;
 	email: string;
 	password: string;
@@ -15,12 +15,12 @@ export interface ICredential {
 }
 
 export interface ICredentialResponse {
-	id: bigint;
+	id: number;
 	integrationId: string;
 	email: string;
 	password: string;
 	role: Role;
 	inactivatedAt: Date | null;
-	psychologist: { id: bigint; integrationId: string } | null;
-	customer: { id: bigint; integrationId: string } | null;
+	psychologist: { id: number; integrationId: string } | null;
+	customer: { id: number; integrationId: string } | null;
 }

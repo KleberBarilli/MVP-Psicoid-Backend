@@ -1,5 +1,5 @@
 export interface IUpdateReview {
-	id: bigint;
+	id: number;
 	rating: number;
 	comment: string | null;
 }

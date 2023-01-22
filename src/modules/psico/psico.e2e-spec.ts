@@ -3,7 +3,7 @@ import { app } from "@shared/infra/http/app";
 import { psico } from "@shared/mocks";
 
 describe("Psychologist Module E2E", () => {
-	let psicoId bigint;
+	let psicoId number;
 	let jwtPsico: string;
 	it("[e2e]Should be able to create a new psychologist", async () => {
 		const response = await request(app).post("/psico").send({

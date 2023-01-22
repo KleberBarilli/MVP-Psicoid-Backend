@@ -8,7 +8,7 @@ export class ShowReviewService {
 		@inject("ReviewsRepository")
 		private reviewsRepository: IReviewsRepository,
 	) {}
-	public execute(id: bigint): Promise<IReview | null> {
+	public execute(id: number): Promise<IReview | null> {
 		return this.reviewsRepository.findById(id);
 	}
 }

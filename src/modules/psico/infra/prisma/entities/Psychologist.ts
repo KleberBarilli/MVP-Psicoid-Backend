@@ -1,11 +1,11 @@
 import { Psychologist, Status } from "@prisma/client";
 
 export class PsychologistEntity implements Psychologist {
-	id: bigint;
+	id: number;
 	integrationId: string;
-	credentialId: bigint;
-	profileId: bigint;
-	officeId: bigint;
+	credentialId: number;
+	profileId: number;
+	officeId: number;
 	resume: string | null;
 	status: Status;
 	createdAt: Date;

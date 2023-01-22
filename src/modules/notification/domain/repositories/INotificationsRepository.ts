@@ -2,15 +2,15 @@ import { Notification, View } from "@prisma/client";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 
 interface IViewRequest {
-	notificationId: bigint;
+	notificationId: number;
 	profile: string;
-	profileId: bigint;
+	profileId: number;
 }
 export interface INotificationsRepository {
 	findById(integrationId: string): Promise<Notification | null>;
 	findAll(
 		profile: string,
-		profileId: bigint,
+		profileId: number,
 		pagination: IPagination,
 	): Promise<(number | Notification[])[]>;
 	findView({
@@ -18,8 +18,8 @@ export interface INotificationsRepository {
 		profile,
 		profileId,
 	}: IViewRequest): Promise<View | null>;
-	updateView(id: bigint, isRead: boolean): Promise<View>;
-	readAll(profile: string, profileId: bigint): Promise<void>;
-	removeView(id: bigint): Promise<View>;
-	removeAll(profile: string, profileId: bigint): Promise<void>;
+	updateView(id: number, isRead: boolean): Promise<View>;
+	readAll(profile: string, profileId: number): Promise<void>;
+	removeView(id: number): Promise<View>;
+	removeAll(profile: string, profileId: number): Promise<void>;
 }

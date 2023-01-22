@@ -26,7 +26,7 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 	public createGuest(
-		psicoId: bigint,
+		psicoId: number,
 		{ name, contact }: ICreateGuest,
 	): Promise<CustomerEntity> {
 		return prisma.customer.create({
@@ -37,7 +37,7 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 
-	public findById(id: bigint): Promise<CustomerEntity | null> {
+	public findById(id: number): Promise<CustomerEntity | null> {
 		return prisma.customer.findUnique({
 			where: { id },
 			include: {
@@ -92,9 +92,9 @@ export class CustomersRepository implements ICustomersRepository {
 		]);
 	}
 	public addPsychologist(
-		customerId: bigint,
-		psicoId: bigint,
-		selectedPsychologistId: bigint,
+		customerId: number,
+		psicoId: number,
+		selectedPsychologistId: number,
 	): Promise<ICustomer> {
 		return prisma.customer.update({
 			where: { id: customerId },
@@ -105,8 +105,8 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 	public removePsychologist(
-		customerId: bigint,
-		psicoId: bigint,
+		customerId: number,
+		psicoId: number,
 	): Promise<ICustomer> {
 		return prisma.customer.update({
 			where: { id: customerId },
@@ -116,8 +116,8 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 	public selectPsychologist(
-		customerId: bigint,
-		psicoId: bigint,
+		customerId: number,
+		psicoId: number,
 	): Promise<ICustomer> {
 		return prisma.customer.update({
 			where: { id: customerId },
@@ -126,7 +126,7 @@ export class CustomersRepository implements ICustomersRepository {
 			},
 		});
 	}
-	public unselectPsychologist(customerId: bigint): Promise<ICustomer> {
+	public unselectPsychologist(customerId: number): Promise<ICustomer> {
 		return prisma.customer.update({
 			where: { id: customerId },
 			data: {

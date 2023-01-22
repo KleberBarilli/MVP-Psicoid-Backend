@@ -27,7 +27,7 @@ export class CreateReviewController {
 			const service = container.resolve(CreateReviewService);
 			const review = await service.execute({
 				customerId: profileId,
-				psychologistId: BigInt(psychologistId),
+				psychologistId: Number(psychologistId),
 				rating,
 				comment,
 			});

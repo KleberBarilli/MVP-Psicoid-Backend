@@ -2,12 +2,12 @@ import { IPsychologist } from "@modules/psico/domain/models/IPsychologist";
 import { Customer } from "@prisma/client";
 
 export class CustomerEntity implements Customer {
-	id: bigint;
+	id: number;
 	integrationId: string;
-	credentialId: bigint | null;
-	profileId: bigint;
-	guestId: bigint | null;
-	selectedPsychologistId: bigint | null;
+	credentialId: number | null;
+	profileId: number;
+	guestId: number | null;
+	selectedPsychologistId: number | null;
 	createdAt: Date;
 	updatedAt: Date;
 	psychologists: IPsychologist[];

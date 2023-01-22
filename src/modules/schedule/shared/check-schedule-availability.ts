@@ -1,8 +1,8 @@
 import { ScheduleStaticService } from "../services/static/ScheduleStaticService";
 
 interface ICheckAvailability {
-	psychologistId: bigint;
-	customerId: bigint;
+	psychologistId: number;
+	customerId: number;
 	startsAt: Date;
 	endsAt: Date;
 }

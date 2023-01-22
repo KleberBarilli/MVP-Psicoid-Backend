@@ -7,7 +7,7 @@ import {
 import { IUpdateCredential } from "@modules/auth/domain/models/IUpdateCredentials";
 
 export class CredentialsRepository implements ICredentialsRepository {
-	public async findById(id: bigint): Promise<ICredential | null> {
+	public async findById(id: number): Promise<ICredential | null> {
 		return await prisma.credential.findUnique({ where: { id } });
 	}
 	public async findByEmail(
@@ -26,14 +26,14 @@ export class CredentialsRepository implements ICredentialsRepository {
 			where: { tokenRecovery: token },
 		});
 	}
-	public updatePassword(id: bigint, password: string): Promise<ICredential> {
+	public updatePassword(id: number, password: string): Promise<ICredential> {
 		return prisma.credential.update({
 			where: { id },
 			data: { password },
 		});
 	}
 	public updateToken(
-		id: bigint,
+		id: number,
 		tokenRecovery: string,
 	): Promise<ICredential> {
 		return prisma.credential.update({
@@ -41,7 +41,7 @@ export class CredentialsRepository implements ICredentialsRepository {
 			data: { tokenRecovery },
 		});
 	}
-	public async iAmPsico(id: bigint): Promise<ICredential | null> {
+	public async iAmPsico(id: number): Promise<ICredential | null> {
 		return await prisma.credential.findUnique({
 			where: { id },
 			include: {
@@ -62,7 +62,7 @@ export class CredentialsRepository implements ICredentialsRepository {
 			},
 		});
 	}
-	public async iAmCustomer(id: bigint): Promise<ICredential | null> {
+	public async iAmCustomer(id: number): Promise<ICredential | null> {
 		return await prisma.credential.findUnique({
 			where: { id },
 			include: {
@@ -83,20 +83,20 @@ export class CredentialsRepository implements ICredentialsRepository {
 			},
 		});
 	}
-	public async iAmAdmin(id: bigint): Promise<ICredential | null> {
+	public async iAmAdmin(id: number): Promise<ICredential | null> {
 		return prisma.credential.findUnique({
 			where: { id },
 			include: { admin: { include: { profile: true } } },
 		});
 	}
-	public deactivateAccount(id: bigint): Promise<ICredential> {
+	public deactivateAccount(id: number): Promise<ICredential> {
 		return prisma.credential.update({
 			where: { id },
 			data: { inactivatedAt: new Date() },
 		});
 	}
 	public updateCredential(
-		id: bigint,
+		id: number,
 		{ email, password }: IUpdateCredential,
 	): Promise<ICredential> {
 		return prisma.credential.update({

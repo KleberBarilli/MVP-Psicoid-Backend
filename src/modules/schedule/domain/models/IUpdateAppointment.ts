@@ -1,8 +1,8 @@
 import { AppointmentStatus } from "@prisma/client";
 
 export interface IUpdateAppointment {
-	psychologistId: bigint;
-	customerId: bigint;
+	psychologistId: number;
+	customerId: number;
 	price: number;
 	status: AppointmentStatus;
 	startsAt: Date;
@@ -10,6 +10,6 @@ export interface IUpdateAppointment {
 }
 
 export interface IUpdateAppointmentResponse {
-	customerId: bigint;
-	psychologistId: bigint;
+	customerId: number;
+	psychologistId: number;
 }

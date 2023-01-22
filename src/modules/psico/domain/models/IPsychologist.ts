@@ -5,10 +5,10 @@ import { IReview } from "@shared/interfaces/IReview";
 
 export interface IPsychologist {
 	[x: string]: any;
-	id: bigint;
-	credentialId: bigint;
-	profileId: bigint;
-	officeId: bigint;
+	id: number;
+	credentialId: number;
+	profileId: number;
+	officeId: number;
 	resume: string | null;
 	createdAt: Date;
 	updatedAt: Date;
@@ -19,10 +19,10 @@ export interface IPsychologist {
 	approaches: IApproache[];
 }
 export interface IPsychologistShortUpdate {
-	id: bigint;
-	credentialId: bigint;
-	profileId: bigint;
-	officeId: bigint;
+	id: number;
+	credentialId: number;
+	profileId: number;
+	officeId: number;
 	resume: string | null;
 	createdAt: Date;
 	updatedAt: Date;
@@ -34,6 +34,6 @@ export interface IListPsychologist {
 }
 
 export interface IGetPsicos {
-	profileId: bigint;
+	profileId: number;
 	pagination: IPagination;
 }

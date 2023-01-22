@@ -2,9 +2,9 @@
 // import { ICredential } from "src/shared/interfaces/ICredential";
 
 // export class PacientEntityFake {
-// 	id: bigint;
-// 	credentialId: bigint;
-// 	profileId: bigint;
+// 	id: number;
+// 	credentialId: number;
+// 	profileId: number;
 // 	createdAt: Date;
 // 	updatedAt: Date;
 // }
@@ -33,7 +33,7 @@
 // 	public async findByEmail(email: string): Promise<ICredential | null> {
 // 		return null;
 // 	}
-// 	public async findById(id: bigint): Promise<IPacient | null> {
+// 	public async findById(id: number): Promise<IPacient | null> {
 // 		return null;
 // 	}
 // }

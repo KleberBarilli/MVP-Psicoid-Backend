@@ -11,20 +11,20 @@ import {
 export interface IReviewsRepository {
 	create(data: ICreateReview): Promise<IReview>;
 	update(data: IUpdateReview): Promise<IReview>;
-	findById(id: bigint): Promise<IReview | null>;
+	findById(id: number): Promise<IReview | null>;
 	findAllByPsico(
-		id: bigint,
+		id: number,
 		{ skip, take, sort, order, filter }: IPagination,
 	): Promise<number & any>;
-	remove(id: bigint): Promise<IReview>;
+	remove(id: number): Promise<IReview>;
 	findOne(
-		psychologistId: bigint,
-		customerId: bigint,
+		psychologistId: number,
+		customerId: number,
 	): Promise<IReview | null>;
-	addLike(reviewId: bigint, customerId: bigint): Promise<ICreateLikeResponse>;
+	addLike(reviewId: number, customerId: number): Promise<ICreateLikeResponse>;
 	removeLike(
-		reviewId: bigint,
-		customerId: bigint,
+		reviewId: number,
+		customerId: number,
 	): Promise<IRemoveLikeResponse>;
-	findLike(reviewId: bigint, customerId: bigint): Promise<ILike | null>;
+	findLike(reviewId: number, customerId: number): Promise<ILike | null>;
 }

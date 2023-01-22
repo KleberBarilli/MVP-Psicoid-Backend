@@ -24,7 +24,7 @@ CREATE TYPE "AppointmentCompletedBy" AS ENUM ('CUSTOMER', 'PSYCHOLOGIST', 'TIME_
 
 -- CreateTable
 CREATE TABLE "credentials" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "integration_id" UUID NOT NULL,
     "provider" "Provider" NOT NULL DEFAULT 'EMAIL',
     "email" TEXT NOT NULL,
@@ -42,12 +42,12 @@ CREATE TABLE "credentials" (
 
 -- CreateTable
 CREATE TABLE "customers" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "integration_id" UUID NOT NULL,
-    "credential_id" BIGINT,
-    "profile_id" BIGINT NOT NULL,
-    "guest_id" BIGINT,
-    "selected_psychologist_id" BIGINT,
+    "credential_id" INTEGER,
+    "profile_id" INTEGER NOT NULL,
+    "guest_id" INTEGER,
+    "selected_psychologist_id" INTEGER,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ NOT NULL,
 
@@ -56,8 +56,8 @@ CREATE TABLE "customers" (
 
 -- CreateTable
 CREATE TABLE "guests" (
-    "id" BIGSERIAL NOT NULL,
-    "contact_id" BIGINT,
+    "id" SERIAL NOT NULL,
+    "contact_id" INTEGER,
     "name" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -66,11 +66,11 @@ CREATE TABLE "guests" (
 
 -- CreateTable
 CREATE TABLE "psychologists" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "integration_id" UUID NOT NULL,
-    "credential_id" BIGINT NOT NULL,
-    "profile_id" BIGINT NOT NULL,
-    "office_id" BIGINT NOT NULL,
+    "credential_id" INTEGER NOT NULL,
+    "profile_id" INTEGER NOT NULL,
+    "office_id" INTEGER NOT NULL,
     "resume" TEXT,
     "status" "Status" NOT NULL DEFAULT 'UNDER_REVIEW',
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -81,9 +81,9 @@ CREATE TABLE "psychologists" (
 
 -- CreateTable
 CREATE TABLE "admins" (
-    "id" BIGSERIAL NOT NULL,
-    "credential_id" BIGINT NOT NULL,
-    "profile_id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
+    "credential_id" INTEGER NOT NULL,
+    "profile_id" INTEGER NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ NOT NULL,
 
@@ -92,8 +92,8 @@ CREATE TABLE "admins" (
 
 -- CreateTable
 CREATE TABLE "profiles" (
-    "id" BIGSERIAL NOT NULL,
-    "contact_id" BIGINT,
+    "id" SERIAL NOT NULL,
+    "contact_id" INTEGER,
     "first_name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
     "cpf" TEXT NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE "profiles" (
 
 -- CreateTable
 CREATE TABLE "contacts" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "telephone" TEXT,
     "cell_phone" TEXT,
     "email" TEXT,
@@ -119,7 +119,7 @@ CREATE TABLE "contacts" (
 
 -- CreateTable
 CREATE TABLE "addresses" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "zip_code" TEXT NOT NULL,
     "street" TEXT NOT NULL,
     "number" TEXT,
@@ -137,7 +137,7 @@ CREATE TABLE "addresses" (
 
 -- CreateTable
 CREATE TABLE "therapeutic_approaches" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -148,9 +148,9 @@ CREATE TABLE "therapeutic_approaches" (
 
 -- CreateTable
 CREATE TABLE "offices" (
-    "id" BIGSERIAL NOT NULL,
-    "contact_id" BIGINT,
-    "address_id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
+    "contact_id" INTEGER,
+    "address_id" INTEGER NOT NULL,
     "photos" TEXT[],
     "operating_hours" TEXT,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -161,10 +161,10 @@ CREATE TABLE "offices" (
 
 -- CreateTable
 CREATE TABLE "reviews" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "integration_id" UUID NOT NULL,
-    "customer_id" BIGINT NOT NULL,
-    "psychologist_id" BIGINT NOT NULL,
+    "customer_id" INTEGER NOT NULL,
+    "psychologist_id" INTEGER NOT NULL,
     "rating" INTEGER NOT NULL,
     "comment" TEXT,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -176,8 +176,8 @@ CREATE TABLE "reviews" (
 
 -- CreateTable
 CREATE TABLE "likes" (
-    "review_id" BIGINT NOT NULL,
-    "customer_id" BIGINT NOT NULL,
+    "review_id" INTEGER NOT NULL,
+    "customer_id" INTEGER NOT NULL,
     "liked_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "likes_pkey" PRIMARY KEY ("review_id","customer_id")
@@ -185,10 +185,10 @@ CREATE TABLE "likes" (
 
 -- CreateTable
 CREATE TABLE "appointments" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "integration_id" UUID NOT NULL,
-    "psychologist_id" BIGINT NOT NULL,
-    "customer_id" BIGINT NOT NULL,
+    "psychologist_id" INTEGER NOT NULL,
+    "customer_id" INTEGER NOT NULL,
     "created_by" "Role" NOT NULL,
     "status" "AppointmentStatus" NOT NULL DEFAULT 'ONGOING',
     "price" DOUBLE PRECISION,
@@ -202,8 +202,8 @@ CREATE TABLE "appointments" (
 
 -- CreateTable
 CREATE TABLE "closed_appointments" (
-    "id" BIGSERIAL NOT NULL,
-    "appointment_id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
+    "appointment_id" INTEGER NOT NULL,
     "closed_by" "AppointmentCompletedBy" NOT NULL,
     "cancellation_reason" TEXT,
     "cancel_at" TIMESTAMPTZ,
@@ -214,7 +214,7 @@ CREATE TABLE "closed_appointments" (
 
 -- CreateTable
 CREATE TABLE "notifications" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "integration_id" UUID NOT NULL,
     "type" "TypeNotification" NOT NULL,
     "data" JSON NOT NULL,
@@ -225,11 +225,11 @@ CREATE TABLE "notifications" (
 
 -- CreateTable
 CREATE TABLE "views" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "isRead" BOOLEAN NOT NULL DEFAULT false,
-    "notification_id" BIGINT NOT NULL,
-    "customer_id" BIGINT NOT NULL,
-    "psychologist_id" BIGINT NOT NULL,
+    "notification_id" INTEGER NOT NULL,
+    "customer_id" INTEGER NOT NULL,
+    "psychologist_id" INTEGER NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "views_pkey" PRIMARY KEY ("id")
@@ -237,8 +237,8 @@ CREATE TABLE "views" (
 
 -- CreateTable
 CREATE TABLE "invites" (
-    "id" BIGSERIAL NOT NULL,
-    "psychologist_id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
+    "psychologist_id" INTEGER NOT NULL,
     "token" TEXT,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -251,14 +251,14 @@ CREATE TABLE "invites" (
 
 -- CreateTable
 CREATE TABLE "_CustomerToPsychologist" (
-    "A" BIGINT NOT NULL,
-    "B" BIGINT NOT NULL
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_PsychologistToTherapeuticApproache" (
-    "A" BIGINT NOT NULL,
-    "B" BIGINT NOT NULL
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
 );
 
 -- CreateIndex

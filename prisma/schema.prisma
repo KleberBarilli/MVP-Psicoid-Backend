@@ -90,7 +90,7 @@ enum AppointmentCompletedBy {
 }
 
 model Credential {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
@@ -114,15 +114,15 @@ model Credential {
 }
 
 model Customer {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
-    credentialId BigInt? @unique @map("credential_id") @db.BigInt
-    profileId    BigInt  @unique @map("profile_id") @db.BigInt
-    guestId      BigInt? @unique @map("guest_id") @db.BigInt
+    credentialId Int? @unique @map("credential_id") @db.Integer
+    profileId    Int  @unique @map("profile_id") @db.Integer
+    guestId      Int? @unique @map("guest_id") @db.Integer
 
-    selectedPsychologistId BigInt?  @map("selected_psychologist_id") @db.BigInt
+    selectedPsychologistId Int?     @map("selected_psychologist_id") @db.Integer
     createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
@@ -141,9 +141,9 @@ model Customer {
 }
 
 model Guest {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
-    contactId BigInt? @unique @map("contact_id") @db.BigInt
+    contactId Int? @unique @map("contact_id") @db.Integer
 
     name      String
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
@@ -155,13 +155,13 @@ model Guest {
 }
 
 model Psychologist {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
-    credentialId BigInt @unique @map("credential_id") @db.BigInt
-    profileId    BigInt @unique @map("profile_id") @db.BigInt
-    officeId     BigInt @unique @map("office_id") @db.BigInt
+    credentialId Int @unique @map("credential_id") @db.Integer
+    profileId    Int @unique @map("profile_id") @db.Integer
+    officeId     Int @unique @map("office_id") @db.Integer
 
     resume    String?
     status    Status   @default(UNDER_REVIEW)
@@ -184,10 +184,10 @@ model Psychologist {
 }
 
 model Admin {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
-    credentialId BigInt @unique @map("credential_id") @db.BigInt
-    profileId    BigInt @unique @map("profile_id") @db.BigInt
+    credentialId Int @unique @map("credential_id") @db.Integer
+    profileId    Int @unique @map("profile_id") @db.Integer
 
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
@@ -199,9 +199,9 @@ model Admin {
 }
 
 model Profile {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
-    contactId BigInt? @unique @map("contact_id") @db.BigInt
+    contactId Int? @unique @map("contact_id") @db.Integer
 
     firstName String  @map("first_name")
     lastName  String  @map("last_name")
@@ -222,7 +222,7 @@ model Profile {
 }
 
 model Contact {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     telephone String?
     cellPhone String?  @map("cell_phone")
@@ -238,7 +238,7 @@ model Contact {
 }
 
 model Address {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     zipCode      String      @map("zip_code")
     street       String
@@ -258,7 +258,7 @@ model Address {
 }
 
 model TherapeuticApproache {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     name        String   @unique
     description String?
@@ -271,10 +271,10 @@ model TherapeuticApproache {
 }
 
 model Office {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
-    contactId BigInt? @unique @map("contact_id") @db.BigInt
-    addressId BigInt  @unique @map("address_id") @db.BigInt
+    contactId Int? @unique @map("contact_id") @db.Integer
+    addressId Int  @unique @map("address_id") @db.Integer
 
     photos         String[]
     operatingHours String?  @map("operating_hours")
@@ -289,12 +289,12 @@ model Office {
 }
 
 model Review {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
-    customerId     BigInt @map("customer_id") @db.BigInt
-    psychologistId BigInt @map("psychologist_id") @db.BigInt
+    customerId     Int @map("customer_id") @db.Integer
+    psychologistId Int @map("psychologist_id") @db.Integer
 
     rating    Int
     comment   String?
@@ -311,8 +311,8 @@ model Review {
 }
 
 model Like {
-    reviewId   BigInt   @map("review_id") @db.BigInt
-    customerId BigInt   @map("customer_id") @db.BigInt
+    reviewId   Int      @map("review_id") @db.Integer
+    customerId Int      @map("customer_id") @db.Integer
     likedAt    DateTime @default(now()) @map("liked_at") @db.Timestamptz()
 
     review   Review   @relation(fields: [reviewId], references: [id])
@@ -323,12 +323,12 @@ model Like {
 }
 
 model Appointment {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
-    psychologistId BigInt @map("psychologist_id") @db.BigInt
-    customerId     BigInt @map("customer_id") @db.BigInt
+    psychologistId Int @map("psychologist_id") @db.Integer
+    customerId     Int @map("customer_id") @db.Integer
 
     createdBy Role              @map("created_by")
     status    AppointmentStatus @default(ONGOING)
@@ -348,9 +348,9 @@ model Appointment {
 }
 
 model ClosedAppointment {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
-    appointmentId BigInt @unique @map("appointment_id") @db.BigInt
+    appointmentId Int @unique @map("appointment_id") @db.Integer
 
     closedBy           AppointmentCompletedBy @map("closed_by")
     cancellationReason String?                @map("cancellation_reason")
@@ -363,7 +363,7 @@ model ClosedAppointment {
 }
 
 model Notification {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
@@ -379,13 +379,13 @@ model Notification {
 }
 
 model View {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
     isRead Boolean @default(false)
 
-    notificationId BigInt @map("notification_id") @db.BigInt
-    customerId     BigInt @map("customer_id") @db.BigInt
-    psychologistId BigInt @map("psychologist_id") @db.BigInt
+    notificationId Int @map("notification_id") @db.Integer
+    customerId     Int @map("customer_id") @db.Integer
+    psychologistId Int @map("psychologist_id") @db.Integer
 
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
@@ -398,9 +398,9 @@ model View {
 }
 
 model Invite {
-    id BigInt @id @default(autoincrement()) @db.BigInt
+    id Int @id @default(autoincrement()) @db.Integer
 
-    psychologistId BigInt @map("psychologist_id") @db.BigInt
+    psychologistId Int @map("psychologist_id") @db.Integer
 
     token      String?
     name       String

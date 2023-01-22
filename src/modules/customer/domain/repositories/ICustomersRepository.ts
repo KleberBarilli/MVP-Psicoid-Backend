@@ -6,17 +6,17 @@ import { ICreateGuest } from "../models/ICreateGuest";
 import { IGetCustomersByPsico } from "../models/ICustomerCreated";
 export interface ICustomersRepository {
 	create(data: ICreateCustomer): Promise<CustomerEntity>;
-	createGuest(psicoId: bigint, data: ICreateGuest): Promise<CustomerEntity>;
-	findById(id: bigint): Promise<CustomerEntity | null>;
+	createGuest(psicoId: number, data: ICreateGuest): Promise<CustomerEntity>;
+	findById(id: number): Promise<CustomerEntity | null>;
 	update(data: IUpdateCustomer): Promise<CustomerEntity>;
 	addPsychologist(
-		customerId: bigint,
-		psicoId: bigint,
-		selectedPsychologistId: bigint,
+		customerId: number,
+		psicoId: number,
+		selectedPsychologistId: number,
 	): Promise<ICustomer>;
-	removePsychologist(customerId: bigint, psicoId: bigint): Promise<ICustomer>;
-	selectPsychologist(customerId: bigint, psicoId: bigint): Promise<ICustomer>;
-	unselectPsychologist(customerId: bigint): Promise<ICustomer>;
+	removePsychologist(customerId: number, psicoId: number): Promise<ICustomer>;
+	selectPsychologist(customerId: number, psicoId: number): Promise<ICustomer>;
+	unselectPsychologist(customerId: number): Promise<ICustomer>;
 	findAllByPsico({
 		psicoId,
 		pagination,

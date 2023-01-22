@@ -38,7 +38,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 	}
 
 	public update(
-		id: bigint,
+		id: number,
 		{
 			psychologistId,
 			customerId,
@@ -71,7 +71,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 		});
 	}
 
-	public findOne(id: bigint): Promise<IAppointment | null> {
+	public findOne(id: number): Promise<IAppointment | null> {
 		return prisma.appointment.findUnique({
 			where: { id },
 			include: {
@@ -147,7 +147,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 		});
 	}
 	public async findManyByPsicoWithoutPagination(
-		psicoId: bigint,
+		psicoId: number,
 	): Promise<IFindManyAppointmentWithoutPagination[]> {
 		return prisma.appointment.findMany({
 			where: { psychologistId: psicoId },
@@ -156,7 +156,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 	}
 
 	public async findManyByCustomerWithoutPagination(
-		customerId: bigint,
+		customerId: number,
 	): Promise<IFindManyAppointmentWithoutPagination[]> {
 		return prisma.appointment.findMany({
 			where: { customerId },

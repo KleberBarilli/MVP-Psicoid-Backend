@@ -10,7 +10,7 @@ export class RemoveLikeService {
 		private reviewsRepository: IReviewsRepository,
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
-	public async execute(reviewId: bigint, customerId: bigint): Promise<void> {
+	public async execute(reviewId: number, customerId: number): Promise<void> {
 		const deslike = await this.reviewsRepository.removeLike(
 			reviewId,
 			customerId,
