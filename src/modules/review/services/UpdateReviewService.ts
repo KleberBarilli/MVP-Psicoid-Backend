@@ -1,7 +1,6 @@
 import { injectable, inject } from "tsyringe";
 import { IUpdateReview } from "../domain/models/IUpdateReview";
 import { IReviewsRepository } from "../domain/repositories/IReviewsRepository";
-import { IReview } from "@shared/interfaces/IReview";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 import { RedisKeys } from "@shared/utils/enums";
 

@@ -22,7 +22,7 @@ export class UpdateReviewController {
 
 			const service = container.resolve(UpdateReviewService);
 			await service.execute({
-				id,
+				id: BigInt(id),
 				rating,
 				comment,
 			});

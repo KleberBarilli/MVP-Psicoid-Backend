@@ -15,7 +15,7 @@ export class ListReviewByPsicoController {
 
 			const service = container.resolve(ListReviewsByPsicoService);
 			const reviews = await service.execute({
-				psicoId: id,
+				psicoId: BigInt(id),
 				customerId: user.profileId,
 				pagination,
 			});

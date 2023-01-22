@@ -18,13 +18,13 @@ export interface IReviewsRepository {
 	): Promise<number & any>;
 	remove(id: bigint): Promise<IReview>;
 	findOne(
-		psychologistId: string,
+		psychologistId: bigint,
 		customerId: bigint,
 	): Promise<IReview | null>;
-	addLike(reviewId: string, customerId: bigint): Promise<ICreateLikeResponse>;
+	addLike(reviewId: bigint, customerId: bigint): Promise<ICreateLikeResponse>;
 	removeLike(
-		reviewId: string,
+		reviewId: bigint,
 		customerId: bigint,
 	): Promise<IRemoveLikeResponse>;
-	findLike(reviewId: string, customerId: bigint): Promise<ILike | null>;
+	findLike(reviewId: bigint, customerId: bigint): Promise<ILike | null>;
 }

@@ -14,7 +14,7 @@ export class RemoveLikeController {
 			const { profileId } = req.user;
 
 			const service = container.resolve(RemoveLikeService);
-			await service.execute(reviewId, profileId);
+			await service.execute(BigInt(reviewId), profileId);
 
 			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();

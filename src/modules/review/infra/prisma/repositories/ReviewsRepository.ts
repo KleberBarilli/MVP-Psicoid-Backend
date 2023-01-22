@@ -55,7 +55,7 @@ export class ReviewsRepository implements IReviewsRepository {
 		return prisma.review.delete({ where: { id } });
 	}
 	public findOne(
-		psychologistId: string,
+		psychologistId: bigint,
 		customerId: bigint,
 	): Promise<IReview | null> {
 		return prisma.review.findFirst({
@@ -63,7 +63,7 @@ export class ReviewsRepository implements IReviewsRepository {
 		});
 	}
 	public addLike(
-		reviewId: string,
+		reviewId: bigint,
 		customerId: bigint,
 	): Promise<ICreateLikeResponse> {
 		return prisma.like.create({
@@ -80,7 +80,7 @@ export class ReviewsRepository implements IReviewsRepository {
 		});
 	}
 	public removeLike(
-		reviewId: string,
+		reviewId: bigint,
 		customerId: bigint,
 	): Promise<IRemoveLikeResponse> {
 		return prisma.like.delete({
@@ -89,7 +89,7 @@ export class ReviewsRepository implements IReviewsRepository {
 		});
 	}
 	public findLike(
-		reviewId: string,
+		reviewId: bigint,
 		customerId: bigint,
 	): Promise<ILike | null> {
 		return prisma.like.findFirst({

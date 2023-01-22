@@ -6,13 +6,13 @@ import { IRedisCache } from "@shared/cache/IRedisCache";
 import { RedisKeys } from "@shared/utils/enums";
 
 interface IRequest {
-	psicoId bigint;
+	psicoId: bigint;
 	customerId: bigint;
 	pagination: IPagination;
 }
 
 interface ISaveRedisCache {
-	psicoId bigint;
+	psicoId: bigint;
 	reviews: any;
 }
 

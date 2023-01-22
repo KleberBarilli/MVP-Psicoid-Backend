@@ -12,7 +12,7 @@ export class ShowReviewController {
 		try {
 			const { id } = req.params;
 			const service = container.resolve(ShowReviewService);
-			const review = await service.execute(id);
+			const review = await service.execute(BigInt(id));
 			res.status(HTTP_STATUS_CODE.OK).json({ data: review });
 			next();
 		} catch (error) {
