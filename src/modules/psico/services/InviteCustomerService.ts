@@ -8,7 +8,7 @@ import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
 interface IRequest {
 	name: string;
 	email: string;
-	psychologistId: string;
+	psychologistId: number;
 }
 
 interface ISendEmailRequest {
@@ -25,7 +25,7 @@ export class InviteCustomerService {
 		private psychologistsRepository: IPsychologistsRepository,
 	) {}
 
-	private signInviteToken(psychologistId: string): string {
+	private signInviteToken(psychologistId: number): string {
 		const token = sign(
 			{
 				invitedBy: psychologistId,

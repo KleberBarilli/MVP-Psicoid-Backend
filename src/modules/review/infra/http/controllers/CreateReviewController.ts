@@ -17,9 +17,9 @@ export class CreateReviewController {
 	): Promise<Response | undefined> {
 		try {
 			const {
-				review: { rating, comment },
+				review: { rating, comment, psychologistId },
 			} = req.body;
-			const { psychologistId } = req.query;
+
 			const { profileId } = req.user;
 
 			await validateReview({ rating, comment });
@@ -27,7 +27,7 @@ export class CreateReviewController {
 			const service = container.resolve(CreateReviewService);
 			const review = await service.execute({
 				customerId: profileId,
-				psychologistId: psychologistId?.toString() || "",
+				psychologistId: Number(psychologistId),
 				rating,
 				comment,
 			});

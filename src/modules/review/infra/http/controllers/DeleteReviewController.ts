@@ -16,7 +16,7 @@ export class DeleteReviewController {
 			const { profileId } = req.user;
 
 			const service = container.resolve(DeleteReviewService);
-			await service.execute(id, profileId);
+			await service.execute(Number(id), profileId);
 
 			res.status(HTTP_STATUS_CODE.OK).json({
 				message: "Review removida com sucesso",

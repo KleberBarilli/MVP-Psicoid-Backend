@@ -1,8 +1,8 @@
 import { ROLE_TYPE } from "@shared/utils/enums";
 
 export interface ICreateAppointment {
-	psychologistId: string;
-	customerId: string;
+	psychologistId: number;
+	customerId: number;
 	createdBy: ROLE_TYPE;
 	price: number;
 	startsAt: Date;

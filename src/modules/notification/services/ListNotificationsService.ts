@@ -1,4 +1,3 @@
-import { Notification } from "@prisma/client";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { RedisKeys } from "@shared/utils/enums";
@@ -7,12 +6,12 @@ import { INotificationsRepository } from "../domain/repositories/INotificationsR
 
 interface IRequest {
 	profile: string;
-	profileId: string;
+	profileId: number;
 	pagination: IPagination;
 }
 
 interface ISaveRedisCache {
-	profileId: string;
+	profileId: number;
 	notifications: any;
 }
 @injectable()

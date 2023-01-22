@@ -8,6 +8,7 @@ import { IPsychologistShortUpdate } from "@modules/psico/domain/models/IPsycholo
 import { ISearch } from "@shared/interfaces/IPagination";
 import { ICreateInvite } from "@modules/psico/domain/models/ICreateInvite";
 import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
+import { Psychologist } from "@prisma/client";
 
 export class PsychologistsRepository implements IPsychologistsRepository {
 	private async makePrismaWhere(search: ISearch): Promise<any> {
@@ -81,9 +82,9 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		});
 	}
 
-	public async findById(id: string): Promise<any> {
+	public async findById(integrationId: string): Promise<any> {
 		return await prisma.psychologist.findUnique({
-			where: { id },
+			where: { integrationId },
 			include: {
 				office: { include: { address: true, contact: true } },
 				profile: { include: { contact: true } },
@@ -162,16 +163,16 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 			}),
 		]);
 	}
-	public findOneApproach(id: string): Promise<{
-		id: string;
+	public findOneApproach(id: number): Promise<{
+		id: number;
 		name: string;
 		description: string | null;
 	} | null> {
 		return prisma.therapeuticApproache.findUnique({ where: { id } });
 	}
 	public addApproach(
-		id: string,
-		psicoId: string,
+		id: number,
+		psicoId: number,
 	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({
 			where: { id: psicoId },
@@ -179,8 +180,8 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		});
 	}
 	public removeApproach(
-		id: string,
-		psicoId: string,
+		id: number,
+		psicoId: number,
 	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({
 			where: { id: psicoId },

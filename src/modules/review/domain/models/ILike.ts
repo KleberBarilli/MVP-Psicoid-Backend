@@ -1,20 +1,20 @@
 export interface ILike {
-	customerId: string;
-	reviewId: string;
+	customerId: number;
+	reviewId: number;
 	likedAt: Date;
 }
 
 export interface ICreateLikeResponse {
 	review: {
-		psychologistId: string;
+		psychologistId: number;
 	};
-	customerId: string;
-	reviewId: string;
+	customerId: number;
+	reviewId: number;
 	likedAt: Date;
 }
 
 export interface IRemoveLikeResponse {
 	review: {
-		psychologistId: string;
+		psychologistId: number;
 	};
 }

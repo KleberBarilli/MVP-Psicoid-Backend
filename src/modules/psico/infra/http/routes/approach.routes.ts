@@ -24,14 +24,14 @@ approachRouter.get(
 );
 
 approachRouter.patch(
-	"/add",
+	"/add/:id",
 	isAuthenticated,
 	handleRole("PSYCHOLOGIST"),
 	new AddApproachController().handle,
 	CreateLogController.handle(),
 );
 approachRouter.patch(
-	"/remove",
+	"/remove/:id",
 	isAuthenticated,
 	handleRole("PSYCHOLOGIST"),
 	new RemoveApproachController().handle,

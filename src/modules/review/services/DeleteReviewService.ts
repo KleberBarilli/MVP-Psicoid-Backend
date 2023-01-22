@@ -11,7 +11,7 @@ export class DeleteReviewService {
 		private reviewsRepository: IReviewsRepository,
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
-	public async execute(id: string, customerId: string): Promise<void> {
+	public async execute(id: number, customerId: number): Promise<void> {
 		const review = await this.reviewsRepository.findById(id);
 		if (review?.customerId !== customerId) {
 			throw new AppError({

@@ -1,24 +1,25 @@
 import { Notification, View } from "@prisma/client";
+import { IPagination } from "@shared/infra/http/middlewares/pagination";
 
 interface IViewRequest {
-	notificationId: string;
+	notificationId: number;
 	profile: string;
-	profileId: string;
+	profileId: number;
 }
 export interface INotificationsRepository {
-	findById(id: string): Promise<Notification | null>;
+	findById(integrationId: string): Promise<Notification | null>;
 	findAll(
 		profile: string,
-		profileId: string,
-		pagination: any,
+		profileId: number,
+		pagination: IPagination,
 	): Promise<(number | Notification[])[]>;
 	findView({
 		notificationId,
 		profile,
 		profileId,
 	}: IViewRequest): Promise<View | null>;
-	updateView(id: string, isRead: boolean): Promise<View>;
-	readAll(profile: string, profileId: string): Promise<any>;
-	removeView(id: string): Promise<View>;
-	removeAll(profile: string, profileId: string): Promise<any>;
+	updateView(id: number, isRead: boolean): Promise<View>;
+	readAll(profile: string, profileId: number): Promise<void>;
+	removeView(id: number): Promise<View>;
+	removeAll(profile: string, profileId: number): Promise<void>;
 }

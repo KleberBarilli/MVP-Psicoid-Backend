@@ -9,7 +9,7 @@ export class ShowCustomerService {
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,
 	) {}
-	public async execute(id: string): Promise<ICustomer | null> {
+	public async execute(id: number): Promise<ICustomer | null> {
 		return await this.customersRepository.findById(id);
 	}
 }

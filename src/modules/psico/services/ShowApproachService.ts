@@ -7,7 +7,7 @@ export class ShowApproachService {
 		@inject("PsychologistsRepository")
 		private psychologistsRepository: IPsychologistsRepository,
 	) {}
-	public async execute(id: string): Promise<any> {
+	public async execute(id: number): Promise<any> {
 		return await this.psychologistsRepository.findOneApproach(id);
 	}
 }

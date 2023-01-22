@@ -2,12 +2,11 @@ import { injectable, inject } from "tsyringe";
 import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 import { RedisKeys } from "@shared/utils/enums";
-import { Customer } from "@prisma/client";
 import { IGetCustomersByPsico } from "../domain/models/ICustomerCreated";
 import { ICustomer } from "../domain/models/ICustomer";
 
 interface ISaveRedisCache {
-	psicoId: string;
+	psicoId: number;
 	count: number;
 	customers: ICustomer[];
 }

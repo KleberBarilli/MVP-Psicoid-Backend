@@ -90,32 +90,39 @@ enum AppointmentCompletedBy {
 }
 
 model Credential {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
-    provider      Provider @default(EMAIL)
-    email         String   @unique
-    password      String   @map("password")
-    tokenRecovery String?  @map("token_recovery")
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
+
+    provider      Provider  @default(EMAIL)
+    email         String    @unique
+    password      String
+    tokenRecovery String?   @map("token_recovery")
     role          Role
-    inactive      Boolean  @default(false)
-    createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    inactivatedAt DateTime? @map(" inactivated_at") @db.Timestamptz()
+    createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+    lastLoginAt   DateTime? @map("last_login_at") @db.Timestamptz()
+    lastLoginIp   String?   @map("last_login_ip")
 
     customer     Customer?
     psychologist Psychologist?
     admin        Admin?
 
+    @@index([integrationId, email])
     @@map("credentials")
 }
 
 model Customer {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
-    credentialId String? @unique @map("credential_id") @db.Uuid
-    profileId    String? @unique @map("profile_id") @db.Uuid
-    guestId      String? @unique @map("guest_id") @db.Uuid
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
-    selectedPsychologistId String?  @map("selected_psychologist_id") @db.Uuid
+    credentialId Int? @unique @map("credential_id") @db.Integer
+    profileId    Int  @unique @map("profile_id") @db.Integer
+    guestId      Int? @unique @map("guest_id") @db.Integer
+
+    selectedPsychologistId Int?     @map("selected_psychologist_id") @db.Integer
     createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
@@ -129,28 +136,32 @@ model Customer {
     appointments  Appointment[]
     views         View[]
 
+    @@index([integrationId])
     @@map("customers")
 }
 
 model Guest {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
-    contactId String? @db.Uuid
+    contactId Int? @unique @map("contact_id") @db.Integer
 
-    name String
+    name      String
+    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
-    contact  Contact?  @relation(fields: [contactId], references: [id])
+    contact  Contact?  @relation(fields: [contactId], references: [id], onDelete: Cascade)
     customer Customer?
 
     @@map("guests")
 }
 
 model Psychologist {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
-    credentialId String @unique @map("credential_id") @db.Uuid
-    profileId    String @unique @map("profile_id") @db.Uuid
-    officeId     String @unique @map("office_id") @db.Uuid
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
+
+    credentialId Int @unique @map("credential_id") @db.Integer
+    profileId    Int @unique @map("profile_id") @db.Integer
+    officeId     Int @unique @map("office_id") @db.Integer
 
     resume    String?
     status    Status   @default(UNDER_REVIEW)
@@ -168,14 +179,15 @@ model Psychologist {
     views        View[]
     invites      Invite[]
 
+    @@index([integrationId, status])
     @@map("psychologists")
 }
 
 model Admin {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
-    credentialId String @unique @map("credential_id") @db.Uuid
-    profileId    String @unique @map("profile_id") @db.Uuid
+    credentialId Int @unique @map("credential_id") @db.Integer
+    profileId    Int @unique @map("profile_id") @db.Integer
 
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
@@ -187,14 +199,15 @@ model Admin {
 }
 
 model Profile {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
+
+    contactId Int? @unique @map("contact_id") @db.Integer
 
     firstName String  @map("first_name")
     lastName  String  @map("last_name")
     cpf       String  @unique
     avatarUrl String? @map("avatar_url")
     gender    String?
-    contactId String? @unique @map("contact_id") @db.Uuid
 
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
@@ -209,7 +222,7 @@ model Profile {
 }
 
 model Contact {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
     telephone String?
     cellPhone String?  @map("cell_phone")
@@ -225,7 +238,7 @@ model Contact {
 }
 
 model Address {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
     zipCode      String      @map("zip_code")
     street       String
@@ -245,7 +258,7 @@ model Address {
 }
 
 model TherapeuticApproache {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
     name        String   @unique
     description String?
@@ -258,14 +271,15 @@ model TherapeuticApproache {
 }
 
 model Office {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
-    contactId String? @unique @map("contact_id") @db.Uuid
-    addressId String  @unique @map("address_id") @db.Uuid
+    contactId Int? @unique @map("contact_id") @db.Integer
+    addressId Int  @unique @map("address_id") @db.Integer
 
-    photos    String[]
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    photos         String[]
+    operatingHours String?  @map("operating_hours")
+    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     contact      Contact?      @relation(fields: [contactId], references: [id])
     address      Address       @relation(fields: [addressId], references: [id])
@@ -275,10 +289,12 @@ model Office {
 }
 
 model Review {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
-    customerId     String @map("customer_id") @db.Uuid
-    psychologistId String @map("psychologist_id") @db.Uuid
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
+
+    customerId     Int @map("customer_id") @db.Integer
+    psychologistId Int @map("psychologist_id") @db.Integer
 
     rating    Int
     comment   String?
@@ -290,12 +306,13 @@ model Review {
     customer     Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
     likes        Like[]
 
+    @@index([integrationId, psychologistId, rating])
     @@map("reviews")
 }
 
 model Like {
-    reviewId   String   @map("review_id") @db.Uuid
-    customerId String   @map("customer_id") @db.Uuid
+    reviewId   Int      @map("review_id") @db.Integer
+    customerId Int      @map("customer_id") @db.Integer
     likedAt    DateTime @default(now()) @map("liked_at") @db.Timestamptz()
 
     review   Review   @relation(fields: [reviewId], references: [id])
@@ -306,10 +323,12 @@ model Like {
 }
 
 model Appointment {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
-    psychologistId String @map("psychologist_id") @db.Uuid
-    customerId     String @map("customer_id") @db.Uuid
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
+
+    psychologistId Int @map("psychologist_id") @db.Integer
+    customerId     Int @map("customer_id") @db.Integer
 
     createdBy Role              @map("created_by")
     status    AppointmentStatus @default(ONGOING)
@@ -329,9 +348,9 @@ model Appointment {
 }
 
 model ClosedAppointment {
-    id Int @id @default(autoincrement())
+    id Int @id @default(autoincrement()) @db.Integer
 
-    appointmentId String @unique @map("appointment_id") @db.Uuid
+    appointmentId Int @unique @map("appointment_id") @db.Integer
 
     closedBy           AppointmentCompletedBy @map("closed_by")
     cancellationReason String?                @map("cancellation_reason")
@@ -344,7 +363,9 @@ model ClosedAppointment {
 }
 
 model Notification {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
+
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
     type TypeNotification
     data Json             @db.Json
@@ -353,17 +374,18 @@ model Notification {
 
     views View[]
 
+    @@index([integrationId])
     @@map("notifications")
 }
 
 model View {
-    id String @id @default(uuid()) @db.Uuid
+    id Int @id @default(autoincrement()) @db.Integer
 
     isRead Boolean @default(false)
 
-    notificationId String  @map("notification_id") @db.Uuid
-    customerId     String? @map("customer_id") @db.Uuid
-    psychologistId String? @map("psychologist_id") @db.Uuid
+    notificationId Int @map("notification_id") @db.Integer
+    customerId     Int @map("customer_id") @db.Integer
+    psychologistId Int @map("psychologist_id") @db.Integer
 
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
@@ -371,13 +393,14 @@ model View {
     customer     Customer?     @relation(fields: [customerId], references: [id])
     psychologist Psychologist? @relation(fields: [psychologistId], references: [id])
 
+    @@index([notificationId])
     @@map("views")
 }
 
 model Invite {
     id Int @id @default(autoincrement()) @db.Integer
 
-    psychologistId String @map("psychologist_id") @db.Uuid
+    psychologistId Int @map("psychologist_id") @db.Integer
 
     token      String?
     name       String

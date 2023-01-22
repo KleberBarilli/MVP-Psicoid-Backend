@@ -1,21 +1,21 @@
 import { Psychologist } from "@prisma/client";
 
 export interface ICustomer {
-	id: string;
-	credentialId: string | null;
-	profileId: string | null;
-	guestId: string | null;
-	selectedPsychologistId: string | null;
+	id: number;
+	credentialId: number | null;
+	profileId: number | null;
+	guestId: number | null;
+	selectedPsychologistId: number | null;
 	createdAt: Date;
 	updatedAt: Date;
 }
 
 export interface ICustomerEntity {
-	id: string;
-	credentialId: string | null;
-	profileId: string | null;
-	guestId: string | null;
-	selectedPsychologistId: string | null;
+	id: number;
+	credentialId: number | null;
+	profileId: number | null;
+	guestId: number | null;
+	selectedPsychologistId: number | null;
 	createdAt: Date;
 	updatedAt: Date;
 	psychologists: Psychologist[];

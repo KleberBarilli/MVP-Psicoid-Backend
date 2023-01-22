@@ -9,31 +9,31 @@ export interface IListAppointment {
 	IAppointment: [];
 }
 export interface IFindManyByPsico {
-	psychologistId: string;
+	psychologistId: number;
 	pagination: IPagination;
 }
 
 export interface IFindManyByCustomer {
-	customerId: string;
+	customerId: number;
 	pagination: IPagination;
 }
 
 export interface ICancel {
-	appointmentId: string;
+	appointmentId: number;
 	closedBy: AppointmentCompletedBy;
 	reason: string | null;
 }
 
 export interface ICancelResponse {
 	appointment: {
-		psychologistId: string;
-		customerId: string;
+		psychologistId: number;
+		customerId: number;
 		closedAppointment: { cancellationReason: string | null } | null;
 	};
 }
 
 export interface IUpdateStatus {
-	id: string;
+	id: number;
 	status: APPOINTMENT_STATUS;
 }
 

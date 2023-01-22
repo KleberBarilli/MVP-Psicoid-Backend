@@ -1,8 +1,8 @@
 export interface IPsychologistCreated {
-	id: string;
-	credentialId: string;
-	profileId: string;
-	officeId: string;
+	id: number;
+	credentialId: number;
+	profileId: number;
+	officeId: number;
 	resume: string | null;
 	createdAt: Date;
 	updatedAt: Date;

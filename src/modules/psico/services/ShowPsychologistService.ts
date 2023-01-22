@@ -10,10 +10,12 @@ export class ShowPsychologistService {
 		private psychologistsRepository: IPsychologistsRepository,
 	) {}
 	public async execute(
-		id: string,
+		integrationId: string,
 		{ latitude, longitude }: any,
 	): Promise<any[]> {
-		const psico = await this.psychologistsRepository.findById(id);
+		const psico = await this.psychologistsRepository.findById(
+			integrationId,
+		);
 
 		const distance = getKmDistance(
 			{ latitude, longitude },

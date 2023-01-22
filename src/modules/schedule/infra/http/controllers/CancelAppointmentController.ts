@@ -19,7 +19,7 @@ export class CancelAppointmentController {
 			const service = container.resolve(CancelAppointmentService);
 
 			await service.execute({
-				appointmentId: id,
+				appointmentId: Number(id),
 				closedBy: profile as AppointmentCompletedBy,
 				reason,
 				profileId,

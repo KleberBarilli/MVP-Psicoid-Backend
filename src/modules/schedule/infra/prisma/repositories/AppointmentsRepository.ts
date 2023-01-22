@@ -15,7 +15,6 @@ import {
 	IUpdateAppointment,
 	IUpdateAppointmentResponse,
 } from "@modules/schedule/domain/models/IUpdateAppointment";
-import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 
 export class AppointmentsRepository implements IAppointmentsRepository {
 	public create({
@@ -39,7 +38,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 	}
 
 	public update(
-		id: string,
+		id: number,
 		{
 			psychologistId,
 			customerId,
@@ -72,7 +71,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 		});
 	}
 
-	public findOne(id: string): Promise<IAppointment | null> {
+	public findOne(id: number): Promise<IAppointment | null> {
 		return prisma.appointment.findUnique({
 			where: { id },
 			include: {
@@ -148,7 +147,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 		});
 	}
 	public async findManyByPsicoWithoutPagination(
-		psicoId: string,
+		psicoId: number,
 	): Promise<IFindManyAppointmentWithoutPagination[]> {
 		return prisma.appointment.findMany({
 			where: { psychologistId: psicoId },
@@ -157,7 +156,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 	}
 
 	public async findManyByCustomerWithoutPagination(
-		customerId: string,
+		customerId: number,
 	): Promise<IFindManyAppointmentWithoutPagination[]> {
 		return prisma.appointment.findMany({
 			where: { customerId },

@@ -1,5 +1,5 @@
 export interface IContact {
-	_id: string;
+	_id: number;
 	name: string | null;
 	email: string;
 	subscribed: boolean;

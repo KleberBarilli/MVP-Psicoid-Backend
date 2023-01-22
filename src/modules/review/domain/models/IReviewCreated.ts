@@ -1,7 +1,7 @@
 export interface IReviewCreated {
-	id: string;
-	customerId: string;
-	psychologistId: string;
+	id: number;
+	customerId: number;
+	psychologistId number;
 	rating: number;
 	comment: string | null;
 	createdAt: Date;

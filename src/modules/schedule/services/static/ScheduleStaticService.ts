@@ -5,13 +5,13 @@ import { isDateInInterval } from "@shared/utils/etc";
 interface IPsicoRequest {
 	starts: Date;
 	ends: Date;
-	psychologistId: string;
+	psychologistId: number;
 }
 
 interface ICustomerRequest {
 	starts: Date;
 	ends: Date;
-	customerId: string;
+	customerId: number;
 }
 
 export class ScheduleStaticService {

@@ -1,9 +1,9 @@
 declare namespace Express {
 	export interface Request {
 		user: {
-			id: string;
+			id: number;
 			profile: string;
-			profileId: string;
+			profileId: number;
 		};
 		pagination: {
 			skip: number;

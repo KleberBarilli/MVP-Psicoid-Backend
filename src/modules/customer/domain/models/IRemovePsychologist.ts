@@ -1,4 +1,4 @@
 export interface IRemovePsychologist {
-	customerId: string;
-	psychologistId: string;
+	customerId: number;
+	psychologistId: number;
 }

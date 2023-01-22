@@ -13,7 +13,7 @@ export class UpdateAppointmentService {
 		@inject("RedisCache") private redisCache: RedisCache,
 	) {}
 	public async execute(
-		id: string,
+		id: number,
 		{
 			psychologistId,
 			customerId,

@@ -11,7 +11,7 @@ export class AddLikeService {
 		private reviewsRepository: IReviewsRepository,
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
-	public async execute(reviewId: string, customerId: string): Promise<void> {
+	public async execute(reviewId: number, customerId: number): Promise<void> {
 		const like = await this.reviewsRepository.findLike(
 			reviewId,
 			customerId,

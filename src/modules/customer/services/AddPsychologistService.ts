@@ -12,7 +12,7 @@ export class AddPsychologistService {
 		@inject("CustomersRepository")
 		private customersRepository: ICustomersRepository,
 	) {}
-	private notify(customerId: string, psychologistId: string) {
+	private notify(customerId: number, psychologistId: number) {
 		return Queue.add("CreateNotification", {
 			type: TypeNotification.CUSTOMER_ADD_PSICO,
 			data: {
@@ -33,7 +33,7 @@ export class AddPsychologistService {
 			const customer = await this.customersRepository.findById(
 				customerId,
 			);
-			selectedPsychologistId = customer?.selectedPsychologistId || "";
+			selectedPsychologistId = customer?.selectedPsychologistId as number;
 		}
 		const customer = await this.customersRepository.addPsychologist(
 			customerId,

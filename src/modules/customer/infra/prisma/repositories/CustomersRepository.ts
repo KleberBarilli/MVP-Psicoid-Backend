@@ -4,7 +4,6 @@ import { ICustomersRepository } from "../../../domain/repositories/ICustomersRep
 import { CustomerEntity } from "../entities/Customer";
 import { IUpdateCustomer } from "@modules/customer/domain/models/IUpdateCustomer";
 import { ICustomer } from "@modules/customer/domain/models/ICustomer";
-import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { ICreateGuest } from "@modules/customer/domain/models/ICreateGuest";
 import { IGetCustomersByPsico } from "@modules/customer/domain/models/ICustomerCreated";
 
@@ -27,7 +26,7 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 	public createGuest(
-		psicoId: string,
+		psicoId: number,
 		{ name, contact }: ICreateGuest,
 	): Promise<CustomerEntity> {
 		return prisma.customer.create({
@@ -38,7 +37,7 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 
-	public findById(id: string): Promise<CustomerEntity | null> {
+	public findById(id: number): Promise<CustomerEntity | null> {
 		return prisma.customer.findUnique({
 			where: { id },
 			include: {
@@ -93,9 +92,9 @@ export class CustomersRepository implements ICustomersRepository {
 		]);
 	}
 	public addPsychologist(
-		customerId: string,
-		psicoId: string,
-		selectedPsychologistId: string,
+		customerId: number,
+		psicoId: number,
+		selectedPsychologistId: number,
 	): Promise<ICustomer> {
 		return prisma.customer.update({
 			where: { id: customerId },
@@ -106,8 +105,8 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 	public removePsychologist(
-		customerId: string,
-		psicoId: string,
+		customerId: number,
+		psicoId: number,
 	): Promise<ICustomer> {
 		return prisma.customer.update({
 			where: { id: customerId },
@@ -117,8 +116,8 @@ export class CustomersRepository implements ICustomersRepository {
 		});
 	}
 	public selectPsychologist(
-		customerId: string,
-		psicoId: string,
+		customerId: number,
+		psicoId: number,
 	): Promise<ICustomer> {
 		return prisma.customer.update({
 			where: { id: customerId },
@@ -127,7 +126,7 @@ export class CustomersRepository implements ICustomersRepository {
 			},
 		});
 	}
-	public unselectPsychologist(customerId: string): Promise<ICustomer> {
+	public unselectPsychologist(customerId: number): Promise<ICustomer> {
 		return prisma.customer.update({
 			where: { id: customerId },
 			data: {

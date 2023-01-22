@@ -1,23 +1,26 @@
 import { Provider, Role } from "@prisma/client";
 
 export interface ICredential {
-	id: string;
+	id: number;
 	provider: Provider;
 	email: string;
 	password: string;
 	tokenRecovery: string | null;
 	role: Role;
-	inactive: boolean;
+	inactivatedAt: Date | null;
+	lastLoginAt: Date | null;
+	lastLoginIp: string | null;
 	createdAt: Date;
 	updatedAt: Date;
 }
 
 export interface ICredentialResponse {
-	id: string;
+	id: number;
+	integrationId: string;
 	email: string;
 	password: string;
 	role: Role;
-	inactive: boolean;
-	psychologist: { id: string } | null;
-	customer: { id: string } | null;
+	inactivatedAt: Date | null;
+	psychologist: { id: number; integrationId: string } | null;
+	customer: { id: number; integrationId: string } | null;
 }

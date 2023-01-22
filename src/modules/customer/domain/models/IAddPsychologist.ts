@@ -1,5 +1,5 @@
 export interface IAddPsychologist {
-	customerId: string;
-	psychologistId: string;
+	customerId: number;
+	psychologistId: number;
 	selected: boolean;
 }

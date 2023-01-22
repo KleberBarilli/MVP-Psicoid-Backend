@@ -8,7 +8,7 @@ export class ShowAppointmentService {
 		@inject("AppointmentsRepository")
 		private appointmentsRepository: IAppointmentsRepository,
 	) {}
-	public async execute(appointmentId: string): Promise<IAppointment | null> {
+	public async execute(appointmentId: number): Promise<IAppointment | null> {
 		return this.appointmentsRepository.findOne(appointmentId);
 	}
 }

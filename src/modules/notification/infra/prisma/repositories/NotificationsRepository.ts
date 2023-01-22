@@ -3,15 +3,15 @@ import { INotificationsRepository } from "@modules/notification/domain/repositor
 import { Notification, View } from "@prisma/client";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 export class NotificationsRepository implements INotificationsRepository {
-	public findById(id: string): Promise<Notification | null> {
+	public findById(integrationId: string): Promise<Notification | null> {
 		return prisma.notification.findUnique({
-			where: { id },
+			where: { integrationId },
 			include: { views: true },
 		});
 	}
 	public findAll(
 		profile: string,
-		profileId: string,
+		profileId: number,
 		{ skip, take, sort, order, filter }: IPagination,
 	): Promise<(number | Notification[])[]> {
 		const where = {
@@ -50,11 +50,11 @@ export class NotificationsRepository implements INotificationsRepository {
 			},
 		});
 	}
-	public updateView(id: string, isRead: boolean): Promise<View> {
+	public updateView(id: number, isRead: boolean): Promise<View> {
 		return prisma.view.update({ where: { id }, data: { isRead } });
 	}
-	public readAll(profile: string, profileId: string): Promise<any> {
-		return prisma.view.updateMany({
+	public async readAll(profile: string, profileId: number): Promise<void> {
+		await prisma.view.updateMany({
 			where:
 				profile === "CUSTOMER"
 					? { customerId: profileId }
@@ -65,8 +65,8 @@ export class NotificationsRepository implements INotificationsRepository {
 	public removeView(filter: any): Promise<View> {
 		return prisma.view.delete({ where: { ...filter } });
 	}
-	public removeAll(profile: string, profileId: string): Promise<any> {
-		return prisma.view.deleteMany({
+	public async removeAll(profile: string, profileId: number): Promise<void> {
+		await prisma.view.deleteMany({
 			where:
 				profile === "CUSTOMER"
 					? { customerId: profileId }

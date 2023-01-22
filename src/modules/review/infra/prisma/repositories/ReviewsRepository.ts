@@ -14,7 +14,7 @@ export class ReviewsRepository implements IReviewsRepository {
 	public create(data: ICreateReview): Promise<IReview> {
 		return prisma.review.create({ data });
 	}
-	public findById(id: string): Promise<IReview | null> {
+	public findById(id: number): Promise<IReview | null> {
 		return prisma.review.findUnique({
 			where: { id },
 			include: {
@@ -25,7 +25,7 @@ export class ReviewsRepository implements IReviewsRepository {
 		});
 	}
 	public async findAllByPsico(
-		psicoId: string,
+		psicoId: number,
 		{ skip, take, sort, order, filter }: IPagination,
 	): Promise<number & any> {
 		return Promise.all([
@@ -51,20 +51,20 @@ export class ReviewsRepository implements IReviewsRepository {
 			data: { comment, rating },
 		});
 	}
-	public remove(id: string): Promise<IReview> {
+	public remove(id: number): Promise<IReview> {
 		return prisma.review.delete({ where: { id } });
 	}
 	public findOne(
-		psychologistId: string,
-		customerId: string,
+		psychologistId: number,
+		customerId: number,
 	): Promise<IReview | null> {
 		return prisma.review.findFirst({
 			where: { psychologistId, customerId },
 		});
 	}
 	public addLike(
-		reviewId: string,
-		customerId: string,
+		reviewId: number,
+		customerId: number,
 	): Promise<ICreateLikeResponse> {
 		return prisma.like.create({
 			data: {
@@ -80,8 +80,8 @@ export class ReviewsRepository implements IReviewsRepository {
 		});
 	}
 	public removeLike(
-		reviewId: string,
-		customerId: string,
+		reviewId: number,
+		customerId: number,
 	): Promise<IRemoveLikeResponse> {
 		return prisma.like.delete({
 			where: { reviewId_customerId: { reviewId, customerId } },
@@ -89,8 +89,8 @@ export class ReviewsRepository implements IReviewsRepository {
 		});
 	}
 	public findLike(
-		reviewId: string,
-		customerId: string,
+		reviewId: number,
+		customerId: number,
 	): Promise<ILike | null> {
 		return prisma.like.findFirst({
 			where: { reviewId, customerId },
