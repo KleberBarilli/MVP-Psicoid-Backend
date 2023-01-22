@@ -47,12 +47,12 @@ export class CreateSessionService {
 
 		const token = sign(
 			{
+				id: user.id,
 				profile: user.role,
 				profileId: user?.psychologist?.id || user?.customer?.id,
 			},
 			authConfig.jwt.secret as Secret,
 			{
-				subject: user.integrationId,
 				expiresIn: authConfig.jwt.expiresIn,
 			},
 		);

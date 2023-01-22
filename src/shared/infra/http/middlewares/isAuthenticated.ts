@@ -7,7 +7,7 @@ import authConfig from "@config/auth";
 interface ITokenPayload {
 	iat: number;
 	exp: number;
-	sub: number;
+	id: number;
 	profile: string;
 	profileId: number;
 }
@@ -26,11 +26,11 @@ export function isAuthenticated(
 	try {
 		const decodedToken = verify(token, authConfig.jwt.secret as Secret);
 
-		const { sub, profile, profileId } =
+		const { id, profile, profileId } =
 			decodedToken as unknown as ITokenPayload;
 
 		req.user = {
-			id: sub,
+			id,
 			profile,
 			profileId,
 		};
