@@ -21,6 +21,6 @@ export interface ICredentialResponse {
 	password: string;
 	role: Role;
 	inactivatedAt: Date | null;
-	psychologist: { integrationId: string } | null;
-	customer: { integrationId: string } | null;
+	psychologist: { id: bigint; integrationId: string } | null;
+	customer: { id: bigint; integrationId: string } | null;
 }

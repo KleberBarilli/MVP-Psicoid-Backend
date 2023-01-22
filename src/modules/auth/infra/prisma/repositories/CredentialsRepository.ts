@@ -16,8 +16,8 @@ export class CredentialsRepository implements ICredentialsRepository {
 		return await prisma.credential.findUnique({
 			where: { email },
 			include: {
-				customer: { select: { integrationId: true } },
-				psychologist: { select: { integrationId: true } },
+				customer: { select: { id: true, integrationId: true } },
+				psychologist: { select: { id: true, integrationId: true } },
 			},
 		});
 	}

@@ -48,9 +48,7 @@ export class CreateSessionService {
 		const token = sign(
 			{
 				profile: user.role,
-				profileId:
-					user?.psychologist?.integrationId ||
-					user?.customer?.integrationId,
+				profileId: user?.psychologist?.id || user?.customer?.id,
 			},
 			authConfig.jwt.secret as Secret,
 			{
