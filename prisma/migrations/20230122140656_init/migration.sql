@@ -47,7 +47,7 @@ CREATE TABLE "customers" (
     "credential_id" BIGINT,
     "profile_id" BIGINT NOT NULL,
     "guest_id" BIGINT,
-    "selected_psychologist_id" UUID,
+    "selected_psychologist_id" BIGINT,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ NOT NULL,
 
@@ -289,6 +289,9 @@ CREATE INDEX "customers_integration_id_idx" ON "customers"("integration_id");
 CREATE UNIQUE INDEX "guests_contact_id_key" ON "guests"("contact_id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "psychologists_integration_id_key" ON "psychologists"("integration_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "psychologists_credential_id_key" ON "psychologists"("credential_id");
 
 -- CreateIndex
@@ -322,10 +325,19 @@ CREATE UNIQUE INDEX "offices_contact_id_key" ON "offices"("contact_id");
 CREATE UNIQUE INDEX "offices_address_id_key" ON "offices"("address_id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "reviews_integration_id_key" ON "reviews"("integration_id");
+
+-- CreateIndex
 CREATE INDEX "reviews_integration_id_psychologist_id_rating_idx" ON "reviews"("integration_id", "psychologist_id", "rating");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "appointments_integration_id_key" ON "appointments"("integration_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "closed_appointments_appointment_id_key" ON "closed_appointments"("appointment_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "notifications_integration_id_key" ON "notifications"("integration_id");
 
 -- CreateIndex
 CREATE INDEX "notifications_integration_id_idx" ON "notifications"("integration_id");
