@@ -19,7 +19,7 @@ export class SelectPsychologistService {
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
-	private notify(customerId: string, psychologistId: string) {
+	private notify(customerId: bigint, psychologistId: bigint) {
 		return Queue.add("CreateNotification", {
 			type: TypeNotification.CUSTOMER_ADD_PSICO,
 			data: {

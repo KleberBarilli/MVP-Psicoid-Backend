@@ -172,7 +172,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 	}
 	public addApproach(
 		id: bigint,
-		psicoId: string,
+		psicoId: bigint,
 	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({
 			where: { id: psicoId },
@@ -181,7 +181,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 	}
 	public removeApproach(
 		id: bigint,
-		psicoId: string,
+		psicoId: bigint,
 	): Promise<IPsychologistShortUpdate> {
 		return prisma.psychologist.update({
 			where: { id: psicoId },

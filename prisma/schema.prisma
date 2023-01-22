@@ -122,7 +122,7 @@ model Customer {
     profileId    BigInt  @unique @map("profile_id") @db.BigInt
     guestId      BigInt? @unique @map("guest_id") @db.BigInt
 
-    selectedPsychologistId String?  @map("selected_psychologist_id") @db.Uuid
+    selectedPsychologistId BigInt?  @map("selected_psychologist_id") @db.BigInt
     createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
     updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 

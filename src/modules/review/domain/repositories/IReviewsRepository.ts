@@ -19,12 +19,12 @@ export interface IReviewsRepository {
 	remove(id: bigint): Promise<IReview>;
 	findOne(
 		psychologistId: string,
-		customerId: string,
+		customerId: bigint,
 	): Promise<IReview | null>;
-	addLike(reviewId: string, customerId: string): Promise<ICreateLikeResponse>;
+	addLike(reviewId: string, customerId: bigint): Promise<ICreateLikeResponse>;
 	removeLike(
 		reviewId: string,
-		customerId: string,
+		customerId: bigint,
 	): Promise<IRemoveLikeResponse>;
-	findLike(reviewId: string, customerId: string): Promise<ILike | null>;
+	findLike(reviewId: string, customerId: bigint): Promise<ILike | null>;
 }

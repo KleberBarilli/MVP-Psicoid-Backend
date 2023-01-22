@@ -10,7 +10,7 @@ export class UnselectPsychologistService {
 		private customersRepository: ICustomersRepository,
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
-	public async execute(customerId: string): Promise<void> {
+	public async execute(customerId: bigint): Promise<void> {
 		await this.customersRepository.unselectPsychologist(customerId);
 		await this.redisCache.invalidate(`${RedisKeys.ME}:${customerId}`);
 		await this.redisCache.invalidateKeysByPattern(

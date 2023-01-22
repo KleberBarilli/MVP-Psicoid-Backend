@@ -25,7 +25,7 @@ export class ReviewsRepository implements IReviewsRepository {
 		});
 	}
 	public async findAllByPsico(
-		psicoId: string,
+		psicoId: bigint,
 		{ skip, take, sort, order, filter }: IPagination,
 	): Promise<number & any> {
 		return Promise.all([
@@ -56,7 +56,7 @@ export class ReviewsRepository implements IReviewsRepository {
 	}
 	public findOne(
 		psychologistId: string,
-		customerId: string,
+		customerId: bigint,
 	): Promise<IReview | null> {
 		return prisma.review.findFirst({
 			where: { psychologistId, customerId },
@@ -64,7 +64,7 @@ export class ReviewsRepository implements IReviewsRepository {
 	}
 	public addLike(
 		reviewId: string,
-		customerId: string,
+		customerId: bigint,
 	): Promise<ICreateLikeResponse> {
 		return prisma.like.create({
 			data: {
@@ -81,7 +81,7 @@ export class ReviewsRepository implements IReviewsRepository {
 	}
 	public removeLike(
 		reviewId: string,
-		customerId: string,
+		customerId: bigint,
 	): Promise<IRemoveLikeResponse> {
 		return prisma.like.delete({
 			where: { reviewId_customerId: { reviewId, customerId } },
@@ -90,7 +90,7 @@ export class ReviewsRepository implements IReviewsRepository {
 	}
 	public findLike(
 		reviewId: string,
-		customerId: string,
+		customerId: bigint,
 	): Promise<ILike | null> {
 		return prisma.like.findFirst({
 			where: { reviewId, customerId },

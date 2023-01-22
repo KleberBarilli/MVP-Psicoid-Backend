@@ -148,7 +148,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 		});
 	}
 	public async findManyByPsicoWithoutPagination(
-		psicoId: string,
+		psicoId: bigint,
 	): Promise<IFindManyAppointmentWithoutPagination[]> {
 		return prisma.appointment.findMany({
 			where: { psychologistId: psicoId },
@@ -157,7 +157,7 @@ export class AppointmentsRepository implements IAppointmentsRepository {
 	}
 
 	public async findManyByCustomerWithoutPagination(
-		customerId: string,
+		customerId: bigint,
 	): Promise<IFindManyAppointmentWithoutPagination[]> {
 		return prisma.appointment.findMany({
 			where: { customerId },

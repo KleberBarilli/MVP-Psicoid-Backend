@@ -3,7 +3,7 @@ import { IProfile } from "@shared/interfaces/IProfile";
 
 export interface IUpdateCustomer {
 	id: bigint;
-	selectedPsychologistId: string | null;
+	selectedPsychologistId: bigint | null;
 	profile: IProfile;
 	contact: IContact;
 }

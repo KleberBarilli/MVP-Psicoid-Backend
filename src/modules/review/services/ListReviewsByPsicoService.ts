@@ -28,7 +28,7 @@ export class ListReviewsByPsicoService {
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
-	private async getReviewFromCache({ psicoId }: { psicoId: string }) {
+	private async getReviewFromCache({ psicoId }: { psicoId: bigint }) {
 		return this.redisCache.recover<IReview[]>(
 			`${RedisKeys.LIST_REVIEWS}:${psicoId}`,
 		);
@@ -42,9 +42,9 @@ export class ListReviewsByPsicoService {
 
 	private async handleLiked({ customerId, reviews }: IHandleLiked) {
 		const mappedReviews = reviews.map(
-			(review: { likes: { customerId: string }[]; isLiked: boolean }) => {
+			(review: { likes: { customerId: bigint }[]; isLiked: boolean }) => {
 				const isLiked = review.likes.some(
-					(like: { customerId: string }) =>
+					(like: { customerId: bigint }) =>
 						like.customerId === customerId,
 				);
 				isLiked ? (review.isLiked = true) : (review.isLiked = false);

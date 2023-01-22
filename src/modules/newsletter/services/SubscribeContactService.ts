@@ -10,7 +10,7 @@ export class SubscribeContactService {
 		@inject("NewslettersRepository")
 		private repo: INewslettersRepository,
 	) {}
-	// private notify(customerId: string, psychologistId: string) {
+	// private notify(customerId: bigint, psychologistId: string) {
 	// 	return Queue.add("Newsletter Register", {
 	// 		type: TypeNotification.NEWUSER,
 	// 		data: {

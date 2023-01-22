@@ -2,20 +2,20 @@ import { Psychologist } from "@prisma/client";
 
 export interface ICustomer {
 	id: bigint;
-	credentialId: string | null;
+	credentialId: bigint | null;
 	profileId: bigint | null;
-	guestId: string | null;
-	selectedPsychologistId: string | null;
+	guestId: bigint | null;
+	selectedPsychologistId: bigint | null;
 	createdAt: Date;
 	updatedAt: Date;
 }
 
 export interface ICustomerEntity {
 	id: bigint;
-	credentialId: string | null;
+	credentialId: bigint | null;
 	profileId: bigint | null;
-	guestId: string | null;
-	selectedPsychologistId: string | null;
+	guestId: bigint | null;
+	selectedPsychologistId: bigint | null;
 	createdAt: Date;
 	updatedAt: Date;
 	psychologists: Psychologist[];

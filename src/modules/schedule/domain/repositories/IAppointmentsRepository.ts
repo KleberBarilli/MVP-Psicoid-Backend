@@ -36,9 +36,9 @@ export interface IAppointmentsRepository {
 		status,
 	}: IUpdateStatus): Promise<IUpdateAppointmentResponse>;
 	findManyByPsicoWithoutPagination(
-		psicoId: string,
+		psicoId: bigint,
 	): Promise<IFindManyAppointmentWithoutPagination[]>;
 	findManyByCustomerWithoutPagination(
-		customerId: string,
+		customerId: bigint,
 	): Promise<IFindManyAppointmentWithoutPagination[]>;
 }
