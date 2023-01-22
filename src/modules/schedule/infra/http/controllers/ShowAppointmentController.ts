@@ -15,7 +15,7 @@ export class ShowAppointmentController {
 
 			const service = container.resolve(ShowAppointmentService);
 
-			const appointment = await service.execute(id);
+			const appointment = await service.execute(BigInt(id));
 
 			res.status(HTTP_STATUS_CODE.OK).json({ data: appointment });
 			next();

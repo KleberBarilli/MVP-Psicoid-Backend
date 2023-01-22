@@ -15,7 +15,6 @@ import {
 	IUpdateAppointment,
 	IUpdateAppointmentResponse,
 } from "@modules/schedule/domain/models/IUpdateAppointment";
-import { APPOINTMENT_STATUS } from "@shared/utils/enums";
 
 export class AppointmentsRepository implements IAppointmentsRepository {
 	public create({

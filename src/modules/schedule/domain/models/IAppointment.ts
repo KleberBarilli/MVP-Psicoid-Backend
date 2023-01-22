@@ -9,7 +9,7 @@ export interface IListAppointment {
 	IAppointment: [];
 }
 export interface IFindManyByPsico {
-	psychologistId bigint;
+	psychologistId: bigint;
 	pagination: IPagination;
 }
 
@@ -26,7 +26,7 @@ export interface ICancel {
 
 export interface ICancelResponse {
 	appointment: {
-		psychologistId bigint;
+		psychologistId: bigint;
 		customerId: bigint;
 		closedAppointment: { cancellationReason: string | null } | null;
 	};

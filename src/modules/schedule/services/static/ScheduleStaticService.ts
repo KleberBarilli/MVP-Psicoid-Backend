@@ -5,7 +5,7 @@ import { isDateInInterval } from "@shared/utils/etc";
 interface IPsicoRequest {
 	starts: Date;
 	ends: Date;
-	psychologistId bigint;
+	psychologistId: bigint;
 }
 
 interface ICustomerRequest {
