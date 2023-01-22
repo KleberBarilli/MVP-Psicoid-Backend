@@ -1,4 +1,3 @@
-import { Notification } from "@prisma/client";
 import { IRedisCache } from "@shared/cache/IRedisCache";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { RedisKeys } from "@shared/utils/enums";

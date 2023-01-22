@@ -10,11 +10,11 @@ export class AddApproachController {
 		next: NextFunction,
 	): Promise<Response | undefined> {
 		try {
-			const { approachId } = req.query;
+			const { id } = req.params;
 			const { profileId } = req.user;
 
 			const service = container.resolve(AddApproachService);
-			await service.execute(approachId?.toString() || "", profileId);
+			await service.execute(BigInt(id), profileId);
 
 			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();

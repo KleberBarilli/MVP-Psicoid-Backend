@@ -17,7 +17,7 @@ export class WhoiamService {
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
-	private async iamCustomer(id: bigint, profileId: string) {
+	private async iamCustomer(id: bigint, profileId: bigint) {
 		let user: any;
 		user = await this.credentialsRepository.iAmCustomer(id);
 		user.customer.psychologists.map(
@@ -32,13 +32,13 @@ export class WhoiamService {
 		return user;
 	}
 
-	private async iamPsico(id: bigint, profileId: string) {
+	private async iamPsico(id: bigint, profileId: bigint) {
 		const psico = await this.credentialsRepository.iAmPsico(id);
 		await this.redisCache.save(`${RedisKeys.ME}:${profileId}`, psico);
 		return psico;
 	}
 
-	private async iamAdmin(id: bigint, profileId: string) {
+	private async iamAdmin(id: bigint, profileId: bigint) {
 		const admin = await this.credentialsRepository.iAmAdmin(id);
 		await this.redisCache.save(`${RedisKeys.ME}:${profileId}`, admin);
 		return admin;

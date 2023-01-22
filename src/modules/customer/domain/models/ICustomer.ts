@@ -3,7 +3,7 @@ import { Psychologist } from "@prisma/client";
 export interface ICustomer {
 	id: bigint;
 	credentialId: string | null;
-	profileId: string | null;
+	profileId: bigint | null;
 	guestId: string | null;
 	selectedPsychologistId: string | null;
 	createdAt: Date;
@@ -13,7 +13,7 @@ export interface ICustomer {
 export interface ICustomerEntity {
 	id: bigint;
 	credentialId: string | null;
-	profileId: string | null;
+	profileId: bigint | null;
 	guestId: string | null;
 	selectedPsychologistId: string | null;
 	createdAt: Date;

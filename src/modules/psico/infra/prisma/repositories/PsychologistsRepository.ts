@@ -8,6 +8,7 @@ import { IPsychologistShortUpdate } from "@modules/psico/domain/models/IPsycholo
 import { ISearch } from "@shared/interfaces/IPagination";
 import { ICreateInvite } from "@modules/psico/domain/models/ICreateInvite";
 import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
+import { Psychologist } from "@prisma/client";
 
 export class PsychologistsRepository implements IPsychologistsRepository {
 	private async makePrismaWhere(search: ISearch): Promise<any> {
@@ -81,9 +82,9 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		});
 	}
 
-	public async findById(id: bigint): Promise<any> {
+	public async findById(integrationId: string): Promise<any> {
 		return await prisma.psychologist.findUnique({
-			where: { id },
+			where: { integrationId },
 			include: {
 				office: { include: { address: true, contact: true } },
 				profile: { include: { contact: true } },

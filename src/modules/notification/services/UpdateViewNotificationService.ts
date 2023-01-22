@@ -5,7 +5,7 @@ import { injectable, inject } from "tsyringe";
 import { INotificationsRepository } from "../domain/repositories/INotificationsRepository";
 
 interface IRequest {
-	notificationId bigint;
+	notificationId: bigint;
 	isRead: boolean;
 	profile: string;
 	profileId: bigint;

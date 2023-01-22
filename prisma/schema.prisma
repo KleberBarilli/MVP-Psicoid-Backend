@@ -157,7 +157,7 @@ model Guest {
 model Psychologist {
     id BigInt @id @default(autoincrement()) @db.BigInt
 
-    integrationId String @default(uuid()) @map("integration_id") @db.Uuid
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
     credentialId BigInt @unique @map("credential_id") @db.BigInt
     profileId    BigInt @unique @map("profile_id") @db.BigInt
@@ -291,7 +291,7 @@ model Office {
 model Review {
     id BigInt @id @default(autoincrement()) @db.BigInt
 
-    integrationId String @default(uuid()) @map("integration_id") @db.Uuid
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
     customerId     BigInt @map("customer_id") @db.BigInt
     psychologistId BigInt @map("psychologist_id") @db.BigInt
@@ -325,7 +325,7 @@ model Like {
 model Appointment {
     id BigInt @id @default(autoincrement()) @db.BigInt
 
-    integrationId String @default(uuid()) @map("integration_id") @db.Uuid
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
     psychologistId BigInt @map("psychologist_id") @db.BigInt
     customerId     BigInt @map("customer_id") @db.BigInt
@@ -365,7 +365,7 @@ model ClosedAppointment {
 model Notification {
     id BigInt @id @default(autoincrement()) @db.BigInt
 
-    integrationId String @default(uuid()) @map("integration_id") @db.Uuid
+    integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
     type TypeNotification
     data Json             @db.Json

@@ -11,7 +11,7 @@ export class RemoveApproachService {
 		@inject("RedisCache") private redisCache: IRedisCache,
 	) {}
 
-	public async execute(id: bigint, psicoId: string): Promise<void> {
+	public async execute(id: bigint, psicoId: bigint): Promise<void> {
 		await this.psychologistsRepository.removeApproach(id, psicoId);
 		await this.redisCache.invalidate(`${RedisKeys.ME}:${psicoId}`);
 		await this.redisCache.invalidateKeysByPattern(RedisKeys.LIST_PSICO);

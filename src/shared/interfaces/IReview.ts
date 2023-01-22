@@ -1,7 +1,7 @@
 export interface IReview {
 	id: bigint;
 	customerId: bigint;
-	psychologistId bigint;
+	psychologistId: bigint;
 	rating: number;
 	comment: string | null;
 	createdAt: Date;
