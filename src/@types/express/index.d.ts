@@ -4,6 +4,7 @@ declare namespace Express {
 			id: number;
 			profile: string;
 			profileId: number;
+			ip: string | string[] | undefined;
 		};
 		pagination: {
 			skip: number;
