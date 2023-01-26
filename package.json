@@ -81,7 +81,7 @@
     "global": "^4.4.0",
     "haversine-distance": "^1.2.1",
     "ioredis": "^5.2.4",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mime-types": "^2.1.35",
     "mongoose": "^6.6.5",
     "morgan": "^1.10.0",
