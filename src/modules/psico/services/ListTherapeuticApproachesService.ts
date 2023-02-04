@@ -2,7 +2,7 @@
 import { injectable, inject } from "tsyringe";
 import { IPsychologistsRepository } from "../domain/repositories/IPsychologistsRepository";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
-import { ITherapeuticApproache } from "@shared/interfaces/IApproache";
+import { ITherapeuticApproaches } from "@shared/interfaces/IApproaches";
 
 @injectable()
 export class ListTherapeuticApproachesService {
@@ -12,7 +12,7 @@ export class ListTherapeuticApproachesService {
 	) {}
 	public async execute(
 		pagination: IPagination,
-	): Promise<ITherapeuticApproache[]> {
+	): Promise<ITherapeuticApproaches[]> {
 		const [count, approaches] =
 			await this.psychologistsRepository.findAllApproaches(pagination);
 		return [count, approaches];

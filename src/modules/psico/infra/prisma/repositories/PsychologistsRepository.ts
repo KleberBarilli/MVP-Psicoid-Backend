@@ -8,7 +8,6 @@ import { IPsychologistShortUpdate } from "@modules/psico/domain/models/IPsycholo
 import { ISearch } from "@shared/interfaces/IPagination";
 import { ICreateInvite } from "@modules/psico/domain/models/ICreateInvite";
 import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
-import { Psychologist } from "@prisma/client";
 
 export class PsychologistsRepository implements IPsychologistsRepository {
 	private async makePrismaWhere(search: ISearch): Promise<any> {
@@ -153,8 +152,8 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		filter,
 	}: IPagination): Promise<number & any> {
 		return Promise.all([
-			prisma.therapeuticApproache.count({ where: { ...filter } }),
-			prisma.therapeuticApproache.findMany({
+			prisma.therapeuticApproaches.count({ where: { ...filter } }),
+			prisma.therapeuticApproaches.findMany({
 				where: { ...filter },
 				orderBy: { [sort]: order },
 				skip,
@@ -168,7 +167,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		name: string;
 		description: string | null;
 	} | null> {
-		return prisma.therapeuticApproache.findUnique({ where: { id } });
+		return prisma.therapeuticApproaches.findUnique({ where: { id } });
 	}
 	public addApproach(
 		id: number,

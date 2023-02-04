@@ -6,7 +6,7 @@ import { INotificationsRepository } from "../domain/repositories/INotificationsR
 
 interface IRequest {
 	notificationId: number;
-	isRead: boolean;
+	readAt?: Date;
 	profile: string;
 	profileId: number;
 }
@@ -22,7 +22,7 @@ export class UpdateNotificationService {
 		notificationId,
 		profile,
 		profileId,
-		isRead,
+		readAt,
 	}: IRequest): Promise<void> {
 		const view = await this.notificationsRepository.findView({
 			notificationId,
@@ -32,7 +32,7 @@ export class UpdateNotificationService {
 		if (!view) {
 			throw new AppError({ message: "Notification not found" });
 		}
-		await this.notificationsRepository.updateView(view.id, isRead);
+		await this.notificationsRepository.updateView(view.id, readAt);
 
 		await this.redisCache.invalidate(
 			`${RedisKeys.LIST_NOTIFICATIONS}:${profileId}`,

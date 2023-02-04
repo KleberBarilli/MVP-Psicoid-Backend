@@ -5,7 +5,7 @@ import {
 } from "../models/IPsychologist";
 import { PsychologistEntity } from "../../infra/prisma/entities/Psychologist";
 import { IUpdatePsychologist } from "../models/IUpdatePsychologist";
-import { ITherapeuticApproache } from "@shared/interfaces/IApproache";
+import { ITherapeuticApproaches } from "@shared/interfaces/IApproaches";
 import { ICreateInvite } from "../models/ICreateInvite";
 import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";
 
@@ -14,8 +14,8 @@ export interface IPsychologistsRepository {
 	findById(integrationId: string): Promise<IPsychologist | null>;
 	findAll(pagination: any): Promise<[number, any]>;
 	update(data: IUpdatePsychologist): Promise<PsychologistEntity>;
-	findAllApproaches(pagination: any): Promise<ITherapeuticApproache[]>;
-	findOneApproach(id: number): Promise<ITherapeuticApproache | null>;
+	findAllApproaches(pagination: any): Promise<ITherapeuticApproaches[]>;
+	findOneApproach(id: number): Promise<ITherapeuticApproaches | null>;
 	addApproach(id: number, psicoId: number): Promise<IPsychologistShortUpdate>;
 	removeApproach(
 		id: number,

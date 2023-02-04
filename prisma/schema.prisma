@@ -93,10 +93,10 @@ model Credential {
     password      String
     tokenRecovery String?   @map("token_recovery")
     role          Role
-    inactivatedAt DateTime? @map(" inactivated_at") @db.Timestamptz()
-    createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
-    lastLoginAt   DateTime? @map("last_login_at") @db.Timestamptz()
+    inactivatedAt DateTime? @map("inactivated_at")
+    createdAt     DateTime  @default(now()) @map("created_at")
+    updatedAt     DateTime  @updatedAt @map("updated_at")
+    lastLoginAt   DateTime? @map("last_login_at")
     lastLoginIp   String?   @map("last_login_ip")
 
     customer     Customer?
@@ -117,8 +117,8 @@ model Customer {
     guestId      Int? @unique @map("guest_id") @db.Integer
 
     selectedPsychologistId Int?     @map("selected_psychologist_id") @db.Integer
-    createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    createdAt              DateTime @default(now()) @map("created_at")
+    updatedAt              DateTime @updatedAt @map("updated_at")
 
     credential Credential? @relation(fields: [credentialId], references: [id], onDelete: Cascade)
     profile    Profile?    @relation(fields: [profileId], references: [id])
@@ -140,7 +140,7 @@ model Guest {
     contactId Int? @unique @map("contact_id") @db.Integer
 
     name      String
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    createdAt DateTime @default(now()) @map("created_at")
 
     contact  Contact?  @relation(fields: [contactId], references: [id], onDelete: Cascade)
     customer Customer?
@@ -159,15 +159,15 @@ model Psychologist {
 
     resume    String?
     status    Status   @default(UNDER_REVIEW)
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
 
     credential Credential @relation(fields: [credentialId], references: [id], onDelete: Cascade)
     profile    Profile    @relation(fields: [profileId], references: [id])
     office     Office     @relation(fields: [officeId], references: [id])
 
     customers    Customer[]
-    approaches   TherapeuticApproache[]
+    approaches   TherapeuticApproaches[]
     reviews      Review[]
     appointments Appointment[]
     views        View[]
@@ -183,8 +183,8 @@ model Admin {
     credentialId Int @unique @map("credential_id") @db.Integer
     profileId    Int @unique @map("profile_id") @db.Integer
 
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
 
     credential Credential @relation(fields: [credentialId], references: [id], onDelete: Cascade)
     profile    Profile    @relation(fields: [profileId], references: [id])
@@ -203,9 +203,6 @@ model Profile {
     avatarUrl String? @map("avatar_url")
     gender    String?
 
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
-
     contact Contact? @relation(fields: [contactId], references: [id])
 
     customer     Customer?
@@ -219,10 +216,8 @@ model Contact {
     id Int @id @default(autoincrement()) @db.Integer
 
     telephone String?
-    cellPhone String?  @map("cell_phone")
+    cellPhone String? @map("cell_phone")
     email     String?
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     profile Profile?
     office  Office?
@@ -243,21 +238,16 @@ model Address {
     state        BrazilState
     latitude     Float?
     longitude    Float?
-    createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt    DateTime    @updatedAt @map("updated_at") @db.Timestamptz()
-
-    office Office?
+    office       Office?
 
     @@map("addresses")
 }
 
-model TherapeuticApproache {
+model TherapeuticApproaches {
     id Int @id @default(autoincrement()) @db.Integer
 
-    name        String   @unique
+    name        String  @unique
     description String?
-    createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     psychologists Psychologist[]
 
@@ -272,8 +262,6 @@ model Office {
 
     photos         String[]
     operatingHours String?  @map("operating_hours")
-    createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz()
 
     contact      Contact?      @relation(fields: [contactId], references: [id])
     address      Address       @relation(fields: [addressId], references: [id])
@@ -292,9 +280,9 @@ model Review {
 
     rating    Int
     comment   String?
-    createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
-    deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime  @updatedAt @map("updated_at")
+    deletedAt DateTime? @map("deleted_at")
 
     psychologist Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
     customer     Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
@@ -307,7 +295,7 @@ model Review {
 model Like {
     reviewId   Int      @map("review_id") @db.Integer
     customerId Int      @map("customer_id") @db.Integer
-    likedAt    DateTime @default(now()) @map("liked_at") @db.Timestamptz()
+    likedAt    DateTime @default(now()) @map("liked_at")
 
     review   Review   @relation(fields: [reviewId], references: [id])
     customer Customer @relation(fields: [customerId], references: [id])
@@ -317,28 +305,40 @@ model Like {
 }
 
 model Appointment {
-    id Int @id @default(autoincrement()) @db.Integer
-
+    id            Int    @id @default(autoincrement()) @db.Integer
     integrationId String @unique @default(uuid()) @map("integration_id") @db.Uuid
 
-    psychologistId Int @map("psychologist_id") @db.Integer
-    customerId     Int @map("customer_id") @db.Integer
-
-    createdBy Role              @map("created_by")
-    status    AppointmentStatus @default(ONGOING)
-
-    price Float?
-
-    startsAt  DateTime @map("starts_at") @db.Timestamptz()
-    endsAt    DateTime @map("ends_at") @db.Timestamptz()
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
-    updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+    psychologistId Int               @map("psychologist_id") @db.Integer
+    patientId      Int               @map("patient_id") @db.Integer
+    createdBy      Role              @map("created_by")
+    status         AppointmentStatus @default(ONGOING)
+    price          Float?
+    createdAt      DateTime          @default(now()) @map("created_at")
+    updatedAt      DateTime          @updatedAt @map("updated_at")
 
     closedAppointment ClosedAppointment?
     psychologist      Psychologist       @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
-    customer          Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+    patient           Customer           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+    schedules         Schedule[]
 
+    @@index([psychologistId, patientId, status])
     @@map("appointments")
+}
+
+model Schedule {
+    id Int @id @default(autoincrement()) @db.Integer
+
+    appointmentId Int @map("appointment_id") @db.Integer
+
+    startsAt  DateTime @map("starts_at")
+    endsAt    DateTime @map("ends_at")
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+    @@index([appointmentId, startsAt, endsAt])
+    @@map("schedules")
 }
 
 model ClosedAppointment {
@@ -347,9 +347,10 @@ model ClosedAppointment {
     appointmentId Int @unique @map("appointment_id") @db.Integer
 
     closedBy           AppointmentCompletedBy @map("closed_by")
+    additionalComments String?                @map("additional_comments")
     cancellationReason String?                @map("cancellation_reason")
-    cancelAt           DateTime?              @map("cancel_at") @db.Timestamptz()
-    closedAt           DateTime               @default(now()) @map("closed_at") @db.Timestamptz()
+    cancelAt           DateTime?              @map("cancel_at")
+    closedAt           DateTime               @default(now()) @map("closed_at")
 
     appointment Appointment @relation(fields: [appointmentId], references: [id])
 
@@ -364,7 +365,7 @@ model Notification {
     type TypeNotification
     data Json             @db.Json
 
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    createdAt DateTime @default(now()) @map("created_at")
 
     views View[]
 
@@ -375,13 +376,12 @@ model Notification {
 model View {
     id Int @id @default(autoincrement()) @db.Integer
 
-    isRead Boolean @default(false)
-
     notificationId Int @map("notification_id") @db.Integer
     customerId     Int @map("customer_id") @db.Integer
     psychologistId Int @map("psychologist_id") @db.Integer
 
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+    createdAt DateTime  @default(now()) @map("created_at")
+    readAt    DateTime? @map("read_at")
 
     notification Notification  @relation(fields: [notificationId], references: [id])
     customer     Customer?     @relation(fields: [customerId], references: [id])
@@ -400,8 +400,8 @@ model Invite {
     name       String
     email      String
     accepted   Boolean   @default(false)
-    acceptedAt DateTime? @map("accepted_at") @db.Timestamptz()
-    createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+    acceptedAt DateTime? @map("accepted_at")
+    createdAt  DateTime  @default(now()) @map("created_at")
 
     psychologist Psychologist @relation(fields: [psychologistId], references: [id])
 

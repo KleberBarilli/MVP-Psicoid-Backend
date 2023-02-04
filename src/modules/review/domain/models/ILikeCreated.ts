@@ -1,5 +1,5 @@
 export interface ILikeCreated {
-	reviewId number;
+	reviewId: number;
 	customerId: number;
 	likedAt: Date;
 }
