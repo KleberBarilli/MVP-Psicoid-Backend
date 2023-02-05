@@ -1,0 +1,351 @@
+{
+	"table": "psychologist",
+	"data": [
+		{
+			"credential": {
+				"email": "psicologa1@email.com"
+			},
+			"profile": {
+				"firstName": "Psicóloga",
+				"lastName": "Da Silva Marques",
+				"cpf": "508.460.857-39"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Rua Cássio Parronchi Ferreira",
+					"number": "10",
+					"neighborhood": "Limeira",
+					"city": "Cidade Um",
+					"state": "SP",
+					"zipCode": "13484-492"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Centrada na Pessoa",
+					"description": "Nessa abordagem, os clientes conduzem a discussão, então, cabe ao psicólogo interpretar as experiências do indivíduo de acordo com a perspectiva do paciente, e não do profissional. Cria-se um ambiente de não julgamento e empatia durante as sessões."
+				}
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa2@email.com"
+			},
+			"profile": {
+				"firstName": "Lucca João Moreira",
+				"lastName": "Da Silva",
+				"cpf": "781.839.560-17"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Rua São Francisco",
+					"number": "SN",
+					"neighborhood": "João Eduardo I",
+					"city": "Rua São Francisco",
+					"state": "AC",
+					"zipCode": "69911-446"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Cognitiva Comportamental",
+					"description": "A terapia cognitiva comportamental procura identificar e modificar padrões de pensamentos e comportamentos disfuncionais. Sendo assim, o psicólogo compreende as emoções envolvidas em tais cenários e trabalha na alteração de significado de situações problemáticas."
+				}
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa3@email.com"
+			},
+			"profile": {
+				"firstName": "Cauê",
+				"lastName": "Osvaldo Alves",
+				"cpf": "271.835.184-50"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Rua Uruaçu",
+					"number": "719",
+					"neighborhood": "Jardim Santana",
+					"city": "Porto Velho",
+					"state": "RO",
+					"zipCode": "76828-670"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Corporal Reichiana",
+					"description": "A Terapia Corporal Reichiana apresenta como principal fundamento a própria consciência do corpo. Sendo assim, o psicólogo irá analisar o comportamento do paciente através de um trabalho verbal associado a utilização e percepção das sensações do corpo."
+				}
+
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa4@email.com"
+			},
+			"profile": {
+				"firstName": "Levi",
+				"lastName": "Benício Pereira",
+				"cpf": "505.641.951-62"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Rua Um",
+					"number": "973",
+					"neighborhood": "Rua Francisco Tissot",
+					"city": "Curitiba",
+					"state": "PR",
+					"zipCode": "81320-360"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Testando abordagem",
+					"description": "Nessa abordagem, o psicólogo valoriza a autonomia do paciente e entende que este possui um papel fundamental no próprio desenvolvimento. A psicologia humanista foca no potencial da pessoa e ressalta a importância do crescimento e auto realização."
+				}
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa5@email.com"
+			},
+			"profile": {
+				"firstName": "Melissa",
+				"lastName": "Maitê Andrea Cavalcanti",
+				"cpf": "299.776.368-18"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Rua Feyez Habeyche",
+					"number": "804",
+					"neighborhood": "Fragata",
+					"city": "Pelotas",
+					"state": "RS",
+					"zipCode": "96040-070"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Fenomenológica Existencial",
+					"description": "A Terapia Fenomenológica Existencial preocupa-se com a percepção da estrutura do ser humano. Então, é realizado um trabalho de compreensão do cliente a partir dele mesmo e também da forma como vive. Na psicoterapia, o indivíduo entende o papel que possui, valorizando a sua existência."
+				}
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa6@email.com"
+			},
+			"profile": {
+				"firstName": "Laís",
+				"lastName": "Nair Caroline Brito",
+				"cpf": "807.259.753-18"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Travessa Professora Olga Delgado Sampaio Alves",
+					"number": "112",
+					"neighborhood": "Parque Nova Esperança I",
+					"city": "Cuiabá",
+					"state": "MT",
+					"zipCode": "78098-607"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Psicanalítica",
+					"description": "A abordagem psicanalítica procura compreender os pensamentos inconscientes das pessoas através da livre associação. O profissional adota uma postura mais silenciosa e dá abertura ao paciente conduzir o ritmo da sessão. Além disso, o indivíduo realiza a projeção de situações na figura do psicólogo."
+				}
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa7@email.com"
+			},
+			"profile": {
+				"firstName": "Paulo",
+				"lastName": "Bruno Giovanni Dias",
+				"cpf": "269.197.218-64"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Praça Bandeirante",
+					"number": "516",
+					"neighborhood": "Potengi",
+					"city": "Natal",
+					"state": "RN",
+					"zipCode": "59124-710"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Gestalt",
+					"description": "A terapia Gestalt concentra os esforços em compreender o presente dos pacientes. Então, ao invés de tratar sobre situações passadas, essa abordagem procura entender o que está acontecendo no agora das pessoas."
+				},
+				{
+					"name": "Humanista",
+					"description": "Nessa abordagem, o psicólogo valoriza a autonomia do paciente e entende que este possui um papel fundamental no próprio desenvolvimento. A psicologia humanista foca no potencial da pessoa e ressalta a importância do crescimento e auto realização."
+				}
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa8@email.com"
+			},
+			"profile": {
+				"firstName": "Kamilly",
+				"lastName": "Mirella Cristiane Novaes",
+				"cpf": "057.490.031-40"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Quadra Quadra 16",
+					"number": "109",
+					"neighborhood": "Nova Vila Guaíra",
+					"city": "Valparaíso de Goiás",
+					"state": "GO",
+					"zipCode": "72871-804"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Positiva",
+					"description": "A Psicologia Positiva visa compreender o que torna a vida mais digna de ser vivida. Dessa forma, traz uma abordagem que foca nos pontos fortes das pessoas ao invés das fraquezas. Trata-se de uma visão que busca observar os potenciais e motivações das capacidades humanas."
+				}
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa9@email.com"
+			},
+			"profile": {
+				"firstName": "Lívia",
+				"lastName": "Teresinha Silveira",
+				"cpf": "728.088.514-48"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Rua Benedito Ferron",
+					"number": "350",
+					"neighborhood": "Vila São Sebastião I",
+					"city": "Rondonópolis",
+					"state": "MT",
+					"zipCode": "78730-240"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Psicodrama",
+					"description": "O Psicodrama utiliza da simulação e do jogo teatral, como forma de reviver determinadas situações, para entender as disposições mentais do paciente. Dessa forma, conta com várias técnicas para ajudar na dramatização e incorporação do paciente na cena."
+				}
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa10@email.com"
+			},
+			"profile": {
+				"firstName": "Murilo",
+				"lastName": "Alexandre Alves",
+				"cpf": "760.650.103-32"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Rua 24 E",
+					"number": "830",
+					"neighborhood": "Jardim Aureny III (Taquaralto)",
+					"city": "Palmas",
+					"state": "TO",
+					"zipCode": "77062-070"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Transpessoal",
+					"description": "Nessa abordagem, a terapia irá trabalhar também os aspectos espirituais da pessoa. Então, além de focar no aspecto mental, o psicólogo irá utilizar de técnicas para ajudar o paciente a compreender a sua dimensão pessoal e encontrar a plenitude de seu potencial."
+				}
+			]
+		},
+		{
+			"credential": {
+				"email": "psicologa11@email.com"
+			},
+			"profile": {
+				"firstName": "Emily",
+				"lastName": "Sabrina Daniela Pinto",
+				"cpf": "725.310.935-08"
+			},
+			"office": {
+				"contact": {
+					"telephone": "(91) 2573-2799",
+					"cellPhone": "(91) 99480-8413"
+				},
+				"address": {
+					"street": "Rua Rua 10 Chácara 183",
+					"number": "362",
+					"neighborhood": "Vila São José (Vicente Pires)",
+					"city": "Brasília",
+					"state": "DF",
+					"zipCode": "72003-015"
+				}
+			},
+			"resume": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+			"approaches": [
+				{
+					"name": "Sistêmica",
+					"description": "A terapia sistêmica realiza uma análise que vai além do indivíduo, pois ela examina as relações interpessoais para compreender o sujeito. Sendo assim, o profissional irá dar atenção aos padrões que aparecem na dinâmica familiar e nos diversos relacionamentos da pessoa. Ou seja, procura entender o paciente dentro de um sistema de relacionamentos."
+				}
+			]
+		}
+	]
+}

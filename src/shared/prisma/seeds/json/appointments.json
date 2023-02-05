@@ -1,0 +1,184 @@
+{
+	"table": "appointments",
+	"data": [
+		{
+			"psychologistId": 1,
+			"patientId": 2,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 100.0,
+			"schedule": {
+				"startsAt": "2022-06-02T10:00:00.000Z",
+				"endsAt": "2022-06-02T11:00:00.000Z"
+			}
+		},
+		{
+			"psychologistId": 2,
+			"patientId": 3,
+			"createdBy": "CUSTOMER",
+			"status": "ONGOING",
+			"price": 150.0,
+			"schedule": {
+				"startsAt": "2022-06-03T10:00:00.000Z",
+				"endsAt": "2022-06-03T11:00:00.000Z"
+			}
+		},
+		{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "CUSTOMER",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-05-02T12:00:00.000Z",
+				"endsAt": "2022-05-02T12:00:00.000Z"
+			}
+		},
+		{
+			"psychologistId": 4,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-12-05T10:00:00.000Z",
+				"endsAt": "2022-12-05T11:00:00.000Z"
+			}
+		},
+		{
+			"psychologistId": 5,
+			"patientId": 4,
+			"createdBy": "CUSTOMER",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-09-06T10:00:00.000Z",
+				"endsAt": "2022-09-06T11:00:00.000Z"
+			}
+		},
+		{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-06-09T10:00:00.000Z",
+				"endsAt": "2022-06-09T11:00:00.000Z"
+			}
+		},
+		{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-11-10T10:00:00.000Z",
+				"endsAt": "2022-11-10T11:00:00.000Z"
+			}
+		},
+		{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-11-01T10:00:00.000Z",
+				"endsAt": "2022-11-01T11:00:00.000Z"
+			}
+		},
+		{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-11-30T10:00:00.000Z",
+				"endsAt": "2022-11-30T11:00:00.000Z"
+			}
+		},{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-11-29T10:00:00.000Z",
+				"endsAt": "2022-11-29T11:00:00.000Z"
+			}
+		},{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-11-28T10:00:00.000Z",
+				"endsAt": "2022-11-28T11:00:00.000Z"
+			}
+		},{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-11-25T10:00:00.000Z",
+				"endsAt": "2022-11-25T11:00:00.000Z"
+			}
+		},{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-11-23T10:00:00.000Z",
+				"endsAt": "2022-11-23T11:00:00.000Z"
+			}
+		},{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-02-22T10:00:00.000Z",
+				"endsAt": "2022-02-22T11:00:00.000Z"
+			}
+		},{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-11-20T10:00:00.000Z",
+				"endsAt": "2022-11-20T11:00:00.000Z"
+			}
+		},{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-11-16T10:00:00.000Z",
+				"endsAt": "2022-11-16T11:00:00.000Z"
+			}
+		},{
+			"psychologistId": 3,
+			"patientId": 4,
+			"createdBy": "PSYCHOLOGIST",
+			"status": "ONGOING",
+			"price": 200.0,
+			"schedule": {
+				"startsAt": "2022-12-13T07:00:00.000Z",
+				"endsAt": "2022-12-13T08:00:00.000Z"
+			}
+		}
+	]
+}

@@ -19,7 +19,7 @@ export class UpdateViewNotificationController {
 				notificationId: Number(id),
 				profile,
 				profileId,
-				isRead: read.toUpperCase() === "READ" ? true : false,
+				readAt: read.toUpperCase() === "READ" ? new Date() : undefined,
 			});
 			res.status(HTTP_STATUS_CODE.NO_CONTENT);
 			next();

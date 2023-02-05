@@ -15,3 +15,7 @@ export const isDateInInterval = ({
 	date,
 }: IDateInterval): boolean =>
 	date.valueOf() >= start.valueOf() && date.valueOf() <= end.valueOf();
+
+export const numOnly = (str: string): string => {
+	return str.replace(/[^0-9]/g, "");
+};

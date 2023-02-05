@@ -18,7 +18,7 @@ export interface INotificationsRepository {
 		profile,
 		profileId,
 	}: IViewRequest): Promise<View | null>;
-	updateView(id: number, isRead: boolean): Promise<View>;
+	updateView(id: number, readAt: Date | undefined): Promise<View>;
 	readAll(profile: string, profileId: number): Promise<void>;
 	removeView(id: number): Promise<View>;
 	removeAll(profile: string, profileId: number): Promise<void>;

@@ -50,8 +50,11 @@ export class NotificationsRepository implements INotificationsRepository {
 			},
 		});
 	}
-	public updateView(id: number, isRead: boolean): Promise<View> {
-		return prisma.view.update({ where: { id }, data: { isRead } });
+	public updateView(id: number, readAt: Date): Promise<View> {
+		return prisma.view.update({
+			where: { id },
+			data: { readAt },
+		});
 	}
 	public async readAll(profile: string, profileId: number): Promise<void> {
 		await prisma.view.updateMany({
@@ -59,7 +62,7 @@ export class NotificationsRepository implements INotificationsRepository {
 				profile === "CUSTOMER"
 					? { customerId: profileId }
 					: { psychologistId: profileId },
-			data: { isRead: true },
+			data: { readAt: new Date() },
 		});
 	}
 	public removeView(filter: any): Promise<View> {
