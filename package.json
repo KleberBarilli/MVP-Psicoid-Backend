@@ -8,7 +8,7 @@
   "scripts": {
     "start": "NODE_ENV=production node build/shared/infra/http/server.js",
     "build": "babel src --extensions \".js,.ts\" --out-dir build --copy-files",
-	"reset":"yarn build && npx prisma migrate reset",
+    "reset": "yarn build && npx prisma migrate reset",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --exit-child --ignore-watch node_modules src/shared/infra/http/server.ts",
     "test": "jest",
     "test:e2e": "jest --config jest-e2e.config.ts",

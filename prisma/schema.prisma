@@ -310,6 +310,7 @@ model Appointment {
 
     psychologistId Int               @map("psychologist_id") @db.Integer
     patientId      Int               @map("patient_id") @db.Integer
+    scheduleId     Int               @unique @map("schedule_id") @db.Integer
     createdBy      Role              @map("created_by")
     status         AppointmentStatus @default(ONGOING)
     price          Float?
@@ -319,7 +320,7 @@ model Appointment {
     closedAppointment ClosedAppointment?
     psychologist      Psychologist       @relation(fields: [psychologistId], references: [id], onDelete: Cascade)
     patient           Customer           @relation(fields: [patientId], references: [id], onDelete: Cascade)
-    schedules         Schedule[]
+    schedule          Schedule           @relation(fields: [scheduleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     @@index([psychologistId, patientId, status])
     @@map("appointments")
@@ -328,16 +329,13 @@ model Appointment {
 model Schedule {
     id Int @id @default(autoincrement()) @db.Integer
 
-    appointmentId Int @map("appointment_id") @db.Integer
-
     startsAt  DateTime @map("starts_at")
     endsAt    DateTime @map("ends_at")
-    createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 
-    appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+    appointment Appointment?
 
-    @@index([appointmentId, startsAt, endsAt])
+    @@index([startsAt, endsAt])
     @@map("schedules")
 }
 

@@ -1,9 +1,17 @@
-import { BrazilState, PrismaClient } from "@prisma/client";
+import {
+	AppointmentStatus,
+	BrazilState,
+	PrismaClient,
+	Role,
+} from "@prisma/client";
+import { addHours } from "date-fns";
+import { randomUUID } from "crypto";
+import { numOnly } from "@shared/utils/etc";
 
 import rawPatients from "./json/patients.json";
 import rawPsychologists from "./json/psychologists.json";
-import { randomUUID } from "crypto";
-import { numOnly } from "@shared/utils/etc";
+import rawAppointments from "./json/appointments.json";
+import tz from "@config/tz";
 
 const prisma = new PrismaClient();
 
@@ -38,6 +46,8 @@ const insertPatients = async () => {
 	});
 
 	await Promise.all(promises);
+
+	console.log("Patients inserted successfully");
 };
 
 const insertPsychologists = async () => {
@@ -107,11 +117,44 @@ const insertPsychologists = async () => {
 	});
 
 	await Promise.all(promises);
+
+	console.log("Psychologists inserted successfully");
+};
+const insertAppointments = async () => {
+	const promises = rawAppointments.data.map(async a => {
+		await prisma.appointment.create({
+			data: {
+				patient: { connect: { id: a.patientId } },
+				psychologist: { connect: { id: a.psychologistId } },
+				integrationId: randomUUID(),
+				price: a.price,
+				createdBy: a.createdBy as Role,
+				status: a.status as AppointmentStatus,
+				schedule: {
+					create: {
+						startsAt: addHours(
+							new Date(a.schedule.startsAt),
+							tz.BRAZIL_TZ,
+						),
+						endsAt: addHours(
+							new Date(a.schedule.endsAt),
+							tz.BRAZIL_TZ,
+						),
+					},
+				},
+			},
+		});
+	});
+
+	await Promise.all(promises);
+
+	console.log("Appointments inserted successfully");
 };
 
 async function main() {
 	await insertPatients();
 	await insertPsychologists();
+	await insertAppointments();
 	prisma.$disconnect();
 }
 

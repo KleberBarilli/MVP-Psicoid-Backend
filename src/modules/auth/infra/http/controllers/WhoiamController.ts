@@ -7,7 +7,6 @@ export class WhoiamController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 		try {
 			const { id, profile, profileId } = req.user;
-			console.log("AAAAAAAAAAAAA", id, profile, profileId);
 			const whoiam = container.resolve(WhoiamService);
 			const user = await whoiam.execute({
 				credentialId: id,

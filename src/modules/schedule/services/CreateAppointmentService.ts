@@ -1,9 +1,10 @@
-import { add } from "date-fns";
+import { addHours } from "date-fns";
 import { injectable, inject } from "tsyringe";
 import { IAppointment } from "../domain/models/IAppointment";
 import { ICreateAppointment } from "../domain/models/ICreateAppointment";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
 import { checkAvailability } from "../shared/check-schedule-availability";
+import tz from "@config/tz";
 
 @injectable()
 export class CreateAppointmentService {
@@ -23,16 +24,16 @@ export class CreateAppointmentService {
 		await checkAvailability({
 			psychologistId,
 			customerId,
-			startsAt: add(startsAt, { hours: Number(process.env.TZ_BRAZIL) }),
-			endsAt: add(endsAt, { hours: Number(process.env.TZ_BRAZIL) }),
+			startsAt: addHours(startsAt, tz.BRAZIL_TZ),
+			endsAt: addHours(endsAt, tz.BRAZIL_TZ),
 		});
 		return this.appointmentsRepository.create({
 			psychologistId,
 			customerId,
 			createdBy,
 			price,
-			startsAt: add(startsAt, { hours: Number(process.env.TZ_BRAZIL) }),
-			endsAt: add(endsAt, { hours: Number(process.env.TZ_BRAZIL) }),
+			startsAt: addHours(startsAt, tz.BRAZIL_TZ),
+			endsAt: addHours(endsAt, tz.BRAZIL_TZ),
 		});
 	}
 }

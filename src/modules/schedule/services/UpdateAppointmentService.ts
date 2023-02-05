@@ -1,9 +1,10 @@
 import { RedisCache } from "@shared/cache/RedisCache";
 import { RedisKeys } from "@shared/utils/enums";
-import { add } from "date-fns";
+import { addHours } from "date-fns";
 import { injectable, inject } from "tsyringe";
 import { IUpdateAppointment } from "../domain/models/IUpdateAppointment";
 import { IAppointmentsRepository } from "../domain/repositories/IAppointmentsRepository";
+import tz from "@config/tz";
 
 @injectable()
 export class UpdateAppointmentService {
@@ -28,8 +29,8 @@ export class UpdateAppointmentService {
 			customerId,
 			price,
 			status,
-			startsAt: add(startsAt, { hours: 3 }),
-			endsAt: add(endsAt, { hours: 3 }),
+			startsAt: addHours(startsAt, tz.BRAZIL_TZ),
+			endsAt: addHours(endsAt, tz.BRAZIL_TZ),
 		});
 
 		await this.redisCache.invalidateKeysByPattern(

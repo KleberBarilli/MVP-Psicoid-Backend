@@ -11,7 +11,7 @@
 				"lastName": "Olivia Isabelly Castro",
 				"cpf": "538.863.972-03",
 				"contact": {
-					"telephone": "+55 11 99999-9999",
+					"telephone": "11 99999-9999",
 					"email": "patient1@email.com"
 				}
 			}
@@ -26,7 +26,7 @@
 				"lastName": "Ricardo Almeida",
 				"cpf": "338.691.448-90",
 				"contact": {
-					"telephone": "+55 11 99999-9999",
+					"telephone": "11 99999-9999",
 					"email": "patient2@email.com"
 				}
 			}
@@ -41,7 +41,7 @@
 				"lastName": "Tânia Fabiana Bernardes",
 				"cpf": "150.163.610-37",
 				"contact": {
-					"telephone": "+55 11 99999-9999",
+					"telephone": "11 99999-9999",
 					"email": "patient3@email.com"
 				}
 			}
@@ -56,7 +56,7 @@
 				"lastName": "Gael Alves",
 				"cpf": "175.107.976-75",
 				"contact": {
-					"telephone": "+55 11 99999-9999",
+					"telephone": "11 99999-9999",
 					"email": "patient4@email.com"
 				}
 			}
@@ -86,7 +86,7 @@
 				"lastName": "Gustavo de Paula",
 				"cpf": "909.841.258-09",
 				"contact": {
-					"telephone": "+55 11 99999-9999",
+					"telephone": "11 99999-9999",
 					"email": "patient6@email.com"
 				}
 			}
