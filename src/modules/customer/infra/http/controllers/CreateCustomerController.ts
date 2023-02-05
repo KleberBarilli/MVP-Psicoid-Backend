@@ -17,7 +17,7 @@ export class CreateCustomerController {
 			const {
 				customer: { credentials, profile, contact },
 			} = req.body;
-			credentials.email = credentials.email.toLowerCase();
+
 			await Promise.all([
 				validateCredentials(credentials),
 				validateProfile(profile),
@@ -28,7 +28,7 @@ export class CreateCustomerController {
 			const user = await service.execute({
 				credential: {
 					password: credentials.password,
-					email: credentials.email.toLowerCase(),
+					email: credentials.email,
 					role: credentials.role,
 				},
 				profile,

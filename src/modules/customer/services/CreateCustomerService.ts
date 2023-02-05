@@ -5,7 +5,21 @@ import { ICustomersRepository } from "../domain/repositories/ICustomersRepositor
 import { IHashProvider } from "@modules/auth/providers/HashProvider/models/IHashProvider";
 import { AppError } from "@shared/errors/AppError";
 import { ICredentialsRepository } from "@modules/auth/domain/repositories/ICredentialsRepository";
-import { ICredentialResponse } from "@shared/interfaces/ICredential";
+import {
+	ICredential,
+	ICredentialResponse,
+} from "@shared/interfaces/ICredential";
+import { IContact } from "@shared/interfaces/IContact";
+import { IProfile } from "@shared/interfaces/IProfile";
+import { numOnly } from "@shared/utils/etc";
+
+interface INormalizeResponse {
+	normalized: {
+		credential: ICredential;
+		contact: IContact;
+		profile: IProfile;
+	};
+}
 
 @injectable()
 export class CreateCustomerService {
@@ -20,6 +34,34 @@ export class CreateCustomerService {
 	private userExists(email: string): Promise<ICredentialResponse | null> {
 		return this.credentialsRepository.findByEmail(email);
 	}
+
+	private normalizeCustomer({
+		credential,
+		profile,
+		contact,
+	}: ICreateCustomer): INormalizeResponse {
+		return {
+			normalized: {
+				credential: {
+					...credential,
+					email: credential.email.toLowerCase(),
+				},
+				profile: {
+					...profile,
+					cpf: numOnly(profile.cpf),
+				},
+				contact: {
+					email: contact.email?.toLowerCase(),
+					telephone: contact.telephone
+						? numOnly(contact.telephone)
+						: undefined,
+					cellPhone: contact.cellPhone
+						? numOnly(contact.cellPhone)
+						: undefined,
+				},
+			},
+		};
+	}
 	public async execute({
 		credential,
 		profile,
@@ -33,10 +75,16 @@ export class CreateCustomerService {
 			credential.password || "",
 		);
 
-		return await this.customersRepository.create({
+		const { normalized } = this.normalizeCustomer({
 			credential,
-			profile,
 			contact,
+			profile,
+		});
+
+		return this.customersRepository.create({
+			credential: { ...credential, email: normalized.credential.email },
+			profile: normalized.profile,
+			contact: normalized.contact,
 		});
 	}
 }

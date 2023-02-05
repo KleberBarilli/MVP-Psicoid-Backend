@@ -70,6 +70,12 @@ const insertPsychologists = async () => {
 						lastName: p.profile.lastName,
 						avatarUrl:
 							"http://psicologianeza.com/wp-content/uploads/2017/07/diana.jpg",
+						contact: {
+							create: {
+								telephone: numOnly(p.office.contact.telephone),
+								cellPhone: numOnly(p.office.contact.cellPhone),
+							},
+						},
 					},
 				},
 				office: {
