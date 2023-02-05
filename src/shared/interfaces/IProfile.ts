@@ -9,3 +9,11 @@ export interface IProfile {
 	avatarUrl: string | null;
 	contact: Contact;
 }
+
+export interface IProfileWithoutContact {
+	firstName: string;
+	lastName: string;
+	cpf: string;
+	gender: GENDER;
+	avatarUrl: string | null;
+}

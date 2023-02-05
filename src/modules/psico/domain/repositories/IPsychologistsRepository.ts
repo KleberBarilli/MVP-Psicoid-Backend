@@ -4,7 +4,7 @@ import {
 	IPsychologistShortUpdate,
 } from "../models/IPsychologist";
 import { PsychologistEntity } from "../../infra/prisma/entities/Psychologist";
-import { IUpdatePsychologist } from "../models/IUpdatePsychologist";
+import { IUpdatePsychologist } from "../models/IUpdatedPsychologist";
 import { ITherapeuticApproaches } from "@shared/interfaces/IApproaches";
 import { ICreateInvite } from "../models/ICreateInvite";
 import { CreateInviteResponse } from "@shared/interfaces/types/psico.types";

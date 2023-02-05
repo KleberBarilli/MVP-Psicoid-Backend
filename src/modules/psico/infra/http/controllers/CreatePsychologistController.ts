@@ -18,7 +18,6 @@ export class CreatePsychologistController {
 			const {
 				psico: { credentials, profile, office, resume },
 			} = req.body;
-			credentials.email = credentials.email.toLowerCase();
 			await Promise.all([
 				validateCredentials(credentials),
 				validateProfile(profile),
@@ -44,7 +43,6 @@ export class CreatePsychologistController {
 				data: { user, session },
 			});
 		} catch (error) {
-			console.log(error);
 			if (error instanceof PrismaClientKnownRequestError) {
 				if (error.code === "P2002") {
 					return res.status(HTTP_STATUS_CODE.CONFLICT).json({

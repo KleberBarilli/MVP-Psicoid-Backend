@@ -10,3 +10,14 @@ export interface IAddress {
 	latitude: number | undefined;
 	longitude: number | undefined;
 }
+
+export interface IAddressUpdated {
+	zipCode: string | undefined;
+	street: string | undefined;
+	number: string | undefined;
+	neighborhood: string | undefined;
+	city: string | undefined;
+	state: BrazilState | undefined;
+	latitude: number | undefined;
+	longitude: number | undefined;
+}

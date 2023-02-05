@@ -2,7 +2,7 @@ import { prisma } from "@shared/prisma";
 import { ICreatePsychologist } from "../../../domain/models/ICreatePsychologist";
 import { IPsychologistsRepository } from "../../../domain/repositories/IPsychologistsRepository";
 import { PsychologistEntity } from "../entities/Psychologist";
-import { IUpdatePsychologist } from "@modules/psico/domain/models/IUpdatePsychologist";
+import { IUpdatedPsychologist } from "@modules/psico/domain/models/IUpdatedPsychologist";
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
 import { IPsychologistShortUpdate } from "@modules/psico/domain/models/IPsychologist";
 import { ISearch } from "@shared/interfaces/IPagination";
@@ -97,7 +97,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 		profile,
 		office,
 		resume,
-	}: IUpdatePsychologist): Promise<PsychologistEntity> {
+	}: IUpdatedPsychologist): Promise<PsychologistEntity> {
 		return prisma.psychologist.update({
 			where: { id },
 			data: {
@@ -105,7 +105,7 @@ export class PsychologistsRepository implements IPsychologistsRepository {
 				profile: {
 					update: {
 						...profile,
-						contact: { update: { ...profile?.contact } },
+						contact: { update: { ...office?.contact } },
 					},
 				},
 				office: {

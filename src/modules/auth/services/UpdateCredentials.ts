@@ -36,7 +36,7 @@ export class UpdateCredentialsService {
 			password || "",
 		);
 		await this.credentialsRepository.updateCredential(credentialId, {
-			email,
+			email: email.toLowerCase(),
 			password: hashedPassword,
 		});
 		await this.redisCache.invalidate(`${RedisKeys.ME}:${profileId}`);

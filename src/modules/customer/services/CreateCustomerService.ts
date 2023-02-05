@@ -5,23 +5,17 @@ import { ICustomersRepository } from "../domain/repositories/ICustomersRepositor
 import { IHashProvider } from "@modules/auth/providers/HashProvider/models/IHashProvider";
 import { AppError } from "@shared/errors/AppError";
 import { ICredentialsRepository } from "@modules/auth/domain/repositories/ICredentialsRepository";
-import { ICredentialResponse } from "@shared/interfaces/ICredential";
+import {
+	ICredential,
+	ICredentialResponse,
+} from "@shared/interfaces/ICredential";
 import { IContact } from "@shared/interfaces/IContact";
 import { IProfile } from "@shared/interfaces/IProfile";
 import { numOnly } from "@shared/utils/etc";
 
-interface INormalizeRequest {
-	credential: {
-		email: string;
-	};
-	contact: IContact;
-	profile: IProfile;
-}
 interface INormalizeResponse {
 	normalized: {
-		credential: {
-			email: string;
-		};
+		credential: ICredential;
 		contact: IContact;
 		profile: IProfile;
 	};
@@ -45,10 +39,13 @@ export class CreateCustomerService {
 		credential,
 		profile,
 		contact,
-	}: INormalizeRequest): INormalizeResponse {
+	}: ICreateCustomer): INormalizeResponse {
 		return {
 			normalized: {
-				credential: { email: credential.email.toLowerCase() },
+				credential: {
+					...credential,
+					email: credential.email.toLowerCase(),
+				},
 				profile: {
 					...profile,
 					cpf: numOnly(profile.cpf),

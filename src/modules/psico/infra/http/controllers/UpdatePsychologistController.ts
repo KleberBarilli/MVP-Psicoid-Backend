@@ -2,9 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import { ValidationError } from "yup";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { validateUpdateAddress } from "@shared/utils/validators/Address";
+import { validateAddress } from "@shared/utils/validators/Address";
 import { validateContact } from "@shared/utils/validators/Contact";
-import { validateUpdateProfile } from "@shared/utils/validators/Profile";
+import { validateProfile } from "@shared/utils/validators/Profile";
 import { sendBadRequest } from "@shared/errors/BadRequest";
 import { UpdatePsychologistService } from "@modules/psico/services/UpdatePsychologistService";
 import { HTTP_STATUS_CODE } from "@shared/utils/enums";
@@ -21,15 +21,15 @@ export class UpdatePsychologistController {
 			} = req.body;
 			const { profileId } = req.user;
 			await Promise.all([
-				validateUpdateProfile(profile),
+				validateProfile(profile),
 				validateContact(profile?.contact),
 				validateContact(office?.contact),
-				validateUpdateAddress(office?.address),
+				validateAddress(office?.address),
 			]);
 
 			const service = container.resolve(UpdatePsychologistService);
 			await service.execute({
-				psicoId: profileId,
+				id: profileId,
 				profile,
 				office,
 				resume,
@@ -53,6 +53,7 @@ export class UpdatePsychologistController {
 					HTTP_STATUS_CODE.BAD_REQUEST,
 				);
 			}
+			console.log(error);
 			return res
 				.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
 				.json({ error: "Internal Error" });
