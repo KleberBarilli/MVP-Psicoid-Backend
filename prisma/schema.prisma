@@ -205,9 +205,11 @@ model Profile {
 
     contact Contact? @relation(fields: [contactId], references: [id])
 
-    customer     Customer?
-    psychologist Psychologist?
-    admin        Admin?
+    customer         Customer?
+    psychologist     Psychologist?
+    admin            Admin?
+    sentMessages     Sender[]
+    receivedMessages Recipient[]
 
     @@map("profiles")
 }
@@ -404,4 +406,44 @@ model Invite {
     psychologist Psychologist @relation(fields: [psychologistId], references: [id])
 
     @@map("invites")
+}
+
+model Message {
+    id          Int    @id @default(autoincrement())
+    senderId    Int    @map("sender_id")
+    recipientId Int    @map("recipient_id")
+    text        String
+
+    sentAt    DateTime  @default(now()) @map("sent_at")
+    readAt    DateTime? @map("read_at")
+    deletedAt DateTime? @map("deleted_at")
+
+    sender    Sender    @relation(fields: [senderId], references: [id])
+    recipient Recipient @relation(fields: [recipientId], references: [id])
+
+    @@map("messages")
+}
+
+model Sender {
+    id        Int  @id @default(autoincrement())
+    profileId Int  @unique @map("profile_id") @db.Integer
+    type      Role
+
+    profile  Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    messages Message[]
+
+    @@index([profileId])
+    @@map("senders")
+}
+
+model Recipient {
+    id        Int  @id @default(autoincrement())
+    profileId Int  @unique @map("profile_id") @db.Integer
+    type      Role
+
+    profile  Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    messages Message[]
+
+    @@index([profileId])
+    @@map("recipients")
 }

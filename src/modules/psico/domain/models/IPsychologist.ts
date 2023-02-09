@@ -1,5 +1,5 @@
 import { IPagination } from "@shared/infra/http/middlewares/pagination";
-import { IApproache } from "@shared/interfaces/IApproache";
+import { IApproaches } from "@shared/interfaces/IApproaches";
 import { IOffice } from "@shared/interfaces/IOffice";
 import { IReview } from "@shared/interfaces/IReview";
 
@@ -16,7 +16,7 @@ export interface IPsychologist {
 	avgRating: number;
 	reviews: IReview[];
 	office: IOffice;
-	approaches: IApproache[];
+	approaches: IApproaches[];
 }
 export interface IPsychologistShortUpdate {
 	id: number;
