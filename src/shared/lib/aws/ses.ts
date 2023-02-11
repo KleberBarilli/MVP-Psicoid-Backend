@@ -1,7 +1,7 @@
-import AWS from "aws-sdk";
+import { SES } from "@aws-sdk/client-ses";
 import { awsConfig } from "@config/aws";
 
-const AWS_SES = new AWS.SES(awsConfig);
+const AWS_SES = new SES(awsConfig);
 
 interface ISendMail {
 	recipients: string[];
@@ -30,5 +30,5 @@ export const sendEmail = ({ from, recipients, subject, html }: ISendMail) => {
 			},
 		},
 	};
-	return AWS_SES.sendEmail(params).promise();
+	return AWS_SES.sendEmail(params);
 };
