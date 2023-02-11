@@ -4,9 +4,10 @@ import { CustomerEntity } from "../../infra/prisma/entities/Customer";
 import { IUpdateCustomer } from "../models/IUpdateCustomer";
 import { ICreateGuest } from "../models/ICreateGuest";
 import { IGetCustomersByPsico } from "../models/ICustomerCreated";
+import { Customer } from "@prisma/client";
 export interface ICustomersRepository {
 	create(data: ICreateCustomer): Promise<CustomerEntity>;
-	createGuest(psicoId: number, data: ICreateGuest): Promise<CustomerEntity>;
+	createGuest(psicoId: number, data: ICreateGuest): Promise<Customer>;
 	findById(id: number): Promise<CustomerEntity | null>;
 	update(data: IUpdateCustomer): Promise<CustomerEntity>;
 	addPsychologist(

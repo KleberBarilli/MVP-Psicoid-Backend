@@ -12,6 +12,7 @@ import rawPatients from "./json/patients.json";
 import rawPsychologists from "./json/psychologists.json";
 import rawAppointments from "./json/appointments.json";
 import tz from "@config/tz";
+import { ROLE_TYPE } from "@shared/utils/enums";
 
 const prisma = new PrismaClient();
 
@@ -24,7 +25,7 @@ const insertPatients = async () => {
 						password:
 							"$2a$08$vAZ/gwO/gjrbKpuSV526e.oD6Ip.MaNdMNKcbRjZedijpEpRrqTIG",
 						email: p.credential.email,
-						role: "CUSTOMER",
+						role: ROLE_TYPE.customer,
 						integrationId: randomUUID(),
 					},
 				},
@@ -39,6 +40,10 @@ const insertPatients = async () => {
 								email: numOnly(p.profile.contact.email),
 							},
 						},
+						receivedMessages: {
+							create: { type: ROLE_TYPE.customer },
+						},
+						sentMessages: { create: { type: ROLE_TYPE.customer } },
 					},
 				},
 			},
@@ -59,7 +64,7 @@ const insertPsychologists = async () => {
 						password:
 							"$2a$08$vAZ/gwO/gjrbKpuSV526e.oD6Ip.MaNdMNKcbRjZedijpEpRrqTIG",
 						email: p.credential.email,
-						role: "PSYCHOLOGIST",
+						role: ROLE_TYPE.psychologist,
 						integrationId: randomUUID(),
 					},
 				},
@@ -75,6 +80,12 @@ const insertPsychologists = async () => {
 								telephone: numOnly(p.office.contact.telephone),
 								cellPhone: numOnly(p.office.contact.cellPhone),
 							},
+						},
+						receivedMessages: {
+							create: { type: ROLE_TYPE.psychologist },
+						},
+						sentMessages: {
+							create: { type: ROLE_TYPE.psychologist },
 						},
 					},
 				},
@@ -126,6 +137,7 @@ const insertPsychologists = async () => {
 
 	console.log("Psychologists inserted successfully");
 };
+
 const insertAppointments = async () => {
 	const promises = rawAppointments.data.map(async a => {
 		await prisma.appointment.create({
@@ -161,6 +173,7 @@ async function main() {
 	await insertPatients();
 	await insertPsychologists();
 	await insertAppointments();
+
 	prisma.$disconnect();
 }
 

@@ -6,6 +6,8 @@ import { IUpdateCustomer } from "@modules/customer/domain/models/IUpdateCustomer
 import { ICustomer } from "@modules/customer/domain/models/ICustomer";
 import { ICreateGuest } from "@modules/customer/domain/models/ICreateGuest";
 import { IGetCustomersByPsico } from "@modules/customer/domain/models/ICustomerCreated";
+import { ROLE_TYPE } from "@shared/utils/enums";
+import { Customer } from "@prisma/client";
 
 export class CustomersRepository implements ICustomersRepository {
 	public create({
@@ -19,6 +21,10 @@ export class CustomersRepository implements ICustomersRepository {
 				profile: {
 					create: {
 						...profile,
+						sentMessages: { create: { type: ROLE_TYPE.customer } },
+						receivedMessages: {
+							create: { type: ROLE_TYPE.customer },
+						},
 						contact: { create: { ...contact } },
 					},
 				},
@@ -28,7 +34,7 @@ export class CustomersRepository implements ICustomersRepository {
 	public createGuest(
 		psicoId: number,
 		{ name, contact }: ICreateGuest,
-	): Promise<CustomerEntity> {
+	): Promise<Customer> {
 		return prisma.customer.create({
 			data: {
 				guest: { create: { name, contact: { create: contact } } },
@@ -64,6 +70,12 @@ export class CustomersRepository implements ICustomersRepository {
 						contact: { update: { ...contact } },
 					},
 				},
+			},
+			include: {
+				credential: { select: { email: true } },
+				profile: { include: { contact: true } },
+				psychologists: true,
+				guest: true,
 			},
 		});
 	}

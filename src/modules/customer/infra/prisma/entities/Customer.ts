@@ -1,5 +1,4 @@
-import { IPsychologist } from "@modules/psico/domain/models/IPsychologist";
-import { Customer } from "@prisma/client";
+import { Customer, Psychologist } from "@prisma/client";
 
 export class CustomerEntity implements Customer {
 	id: number;
@@ -10,5 +9,5 @@ export class CustomerEntity implements Customer {
 	selectedPsychologistId: number | null;
 	createdAt: Date;
 	updatedAt: Date;
-	psychologists: IPsychologist[];
+	psychologists: Psychologist[];
 }
