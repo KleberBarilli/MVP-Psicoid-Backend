@@ -4,17 +4,17 @@
 
 ### Stack
 
--   NodeJS - v16.16.0 LTS
+-   NodeJS - v18.14.0 LTS
 
--   Typescript - v4.7.4
+-   Typescript - v4.9.5
 
--   Express - v4.18.1
+-   Express - v4.18.2
 
--   Redis
+-   Redis - v4.6.4
 
--   PostgreSQL
+-   PostgreSQL - v8.8.0
 
--   PrismaDB -v4.1.0
+-   Prisma -v4.10.0
 
 ## 🚀 Docker Exec
 

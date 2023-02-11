@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import aws, { S3 } from "aws-sdk";
+import { S3 } from "@aws-sdk/client-s3";
 import mime from "mime-types";
 import uploadConfig from "../config/upload";
 export interface IPutObject {
@@ -14,7 +14,7 @@ export class S3StorageProvider {
 	#client: S3;
 
 	constructor() {
-		this.#client = new aws.S3({
+		this.#client = new S3({
 			region: process.env.AWS_REGION,
 		});
 	}
@@ -39,7 +39,7 @@ export class S3StorageProvider {
 			.putObject({
 				...payload,
 			})
-			.promise();
+
 
 		return payload;
 	}
@@ -50,7 +50,7 @@ export class S3StorageProvider {
 				Bucket: uploadConfig.config.aws.bucket,
 				Key: file,
 			})
-			.promise();
+
 	}
 	public async unlinkFile(originalPath: string): Promise<void> {
 		fs.promises.unlink(originalPath);
