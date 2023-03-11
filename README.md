@@ -1,4 +1,4 @@
-# PsicoID - Backend
+# Primeira versão do MVP do backend da PsicoID
 
 <img  src="https://digital-inspires-public.s3.amazonaws.com/images/stack.png">
 
